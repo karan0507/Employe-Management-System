@@ -1,0 +1,78 @@
+<main>
+	<section>
+		<div class="row">
+			<div class="col-md-6">
+				<nz-card nzTitle="Latest Posts" [nzExtra]="extraTemplate">
+					<nz-list nzItemLayout="vertical">
+						<nz-list-item *ngFor="let item of data">
+							<nz-list-item-meta>
+								<nz-list-item-meta-avatar [nzSrc]="item.avatar"></nz-list-item-meta-avatar>
+								<nz-list-item-meta-title>
+									<a href="{{ item.href }}">{{ item.title }}</a>
+								</nz-list-item-meta-title>
+								<nz-list-item-meta-description>
+									{{ item.description }}
+								</nz-list-item-meta-description>
+							</nz-list-item-meta>
+							{{ item.content }}
+							<ul nz-list-item-actions>
+								<nz-list-item-action>
+									<span nz-icon nzType="like" style="margin-right: 8px;"></span>
+									156
+								</nz-list-item-action>
+								<nz-list-item-action>
+									<span nz-icon nzType="comment" style="margin-right: 8px;"></span>
+									156
+								</nz-list-item-action>
+								<nz-list-item-action>
+									<span nz-icon nzType="share-alt" style="margin-right: 8px;"></span>
+									2
+								</nz-list-item-action>
+							</ul>
+							<nz-list-item-extra>
+							<img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />
+							</nz-list-item-extra>
+						</nz-list-item>
+					</nz-list>
+			    </nz-card>
+			    <ng-template #extraTemplate>
+					<a>View All</a>
+			    </ng-template>
+			</div>
+			<div class="col-md-6">
+				<nz-card nzTitle="Strong Followers" [nzExtra]="extraTemplate">
+					<nz-list nzItemLayout="vertical">
+						<nz-list-item *ngFor="let item of data">
+							<nz-list-item-meta>
+								<nz-list-item-meta-avatar [nzSrc]="item.avatar"></nz-list-item-meta-avatar>
+								<nz-list-item-meta-title>
+									<a href="{{ item.href }}">{{ item.title }}</a>
+								</nz-list-item-meta-title>
+							</nz-list-item-meta>
+							{{ item.content }}
+							<ul nz-list-item-actions>
+								<nz-list-item-action>
+									<span nz-icon nzType="like" style="margin-right: 8px;"></span>
+									156
+								</nz-list-item-action>
+								<nz-list-item-action>
+									<span nz-icon nzType="comment" style="margin-right: 8px;"></span>
+									156
+								</nz-list-item-action>
+								<nz-list-item-action>
+									<span nz-icon nzType="share-alt" style="margin-right: 8px;"></span>
+									2
+								</nz-list-item-action>
+							</ul>
+							<nz-list-item-extra>
+							</nz-list-item-extra>
+						</nz-list-item>
+					</nz-list>
+			    </nz-card>
+			    <ng-template #extraTemplate>
+					<a>View All</a>
+			    </ng-template>
+			</div>
+		</div>
+	</section>
+</main>

@@ -1,0 +1,353 @@
+<main class="dashboard">
+    <div class="row">
+        <div class="col-md-12">
+            <nz-card class="my-3" nzTitle="State President" [nzLoading]="api_call_loader['cardLoader3']">
+                <!-- <h5>State President</h5> -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                            <input type="text" nz-input placeholder="Search text"
+                                [(ngModel)]="gs_wise_seaarch" />
+                        </nz-input-group>
+                        <ng-template #suffixIconButton>
+                            <button nz-button nzType="secondary" nzSearch>
+                                <i nz-icon nzType="search"></i>
+                            </button>
+                        </ng-template>
+                    </div>
+                    <div class="col-md-2 d-flex justify-content-start">
+                        <button nz-button nzType="default" nzShape="circle" (click)="resetFilter('sp')">
+                            <i nz-icon nzType="undo"></i>
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex justify-content-end">
+                            <button nz-button nz-tooltip nzTooltipTitle="Export" nzSize="small"
+                                (click)="global.exportTableData(spDataList, 'State_president', 'something')">
+                                Export </button>
+                        </div>
+                    </div>
+                </div>
+                <nz-table [nzData]="spDataList" [nzShowPagination]="false"
+                    [nzScroll]="{ x: ('1000px'),y: '40vh'}">
+                    <thead>
+                        <tr>
+                            <th nzWidth="3rem">Sr. No</th>
+                            <th><label style="white-space: pre">Name</label></th>
+                            <th>Vote Count</th>
+                            <th>Paid Vote</th>
+                            <th>Unpaid Vote</th>
+                            <th>Performance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of spDataList |filter:gs_wise_seaarch; let a_data = index">
+                            <td nzWidth="3rem">{{a_data + 1}}</td>
+                            <td><label style="white-space: pre-wrap">{{ data?.name }}</label></td>
+                            <td>{{ numberWithCommas(data?.vote_count) }}</td>
+                            <td>
+                                <div class=".d-flex flex-column">
+                                    <div>{{numberWithCommas(data?.paid_vote) }}</div>
+                                    <div>{{'₹' + (numberWithCommas(data?.paid_amount))}}</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class=".d-flex flex-column">
+                                    <div>{{numberWithCommas(data?.unpaid_vote) }}</div>
+                                    <div>{{'₹' + (numberWithCommas(data?.unpaid_amount))}}</div>
+                                </div>
+                            </td>
+                            <td>{{numberWithCommas(data?.performance) | number :'1.2-2'}} %</td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </nz-card>
+        </div>
+        <div class="col-md-12">
+            <nz-card [nzLoading]="api_call_Loader['card']" nzTitle="GS Candidate">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                            <input type="text" nz-input placeholder="Search text" [(ngModel)]="searchValue" />
+                        </nz-input-group>
+                        <ng-template #suffixIconButton>
+                            <button nz-button nzType="secondary" nzSearch>
+                                <i nz-icon nzType="search"></i>
+                            </button>
+                        </ng-template>
+                    </div>
+                    <div class="col-md-2 d-flex justify-content-start">
+                        <button nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Reset Filter"
+                            class="mx-3" (click)="reset()">
+                            <i nz-icon nzType="undo"></i>
+                        </button>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-end">
+                        <button nz-button nz-tooltip nzTooltipTitle="Export"
+                            (click)="global.exportTableData(exportData,'GS_candidate','something')"> Export </button>
+                    </div>
+
+                    <div class="col-md-12">
+                        <nz-table [nzData]="gsDataList" [nzShowPagination]="false"
+                            [nzLoading]="api_call_Loader['listGS']" [nzScroll]="{ x: ('1900px'),y: '40vh'}">
+                            <thead>
+                                <tr>
+                                    <th nzWidth="5rem">Sr. No</th>
+                                    <th><label style="white-space: pre-wrap">Candidate Name</label> </th>
+                                    <th>Total Votes</th>
+                                    <th>Votes</th>
+                                    <th>Performance</th>
+                                    <th>Paid Votes</th>
+                                    <th>Paid Amount</th>
+                                    <th>UnPaid Votes</th>
+                                    <th>UnPaid Amount</th>
+                                    <th> Our Age </th>
+                                    <th> Opp Age </th>
+                                    <th> Total Age</th>
+                                    <!-- <th>Total Duplicate</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of storeTempData((gsDataList |filter:searchValue)); let a_data = index;">
+                                    <td nzWidth="5rem">{{a_data + 1}}</td>
+                                    <td><label style="white-space: pre-wrap">
+                                            {{data?.candidate_name}}</label> </td>
+                                    <td>{{data?.candidate_vote_count}}</td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <div class="">{{data?.our_vote}} </div>
+
+                                            <div> {{data?.opp_vote}}</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <div class="">{{data?.our_performance}} % </div>
+
+                                            <div> {{data?.opp_performance}} %</div>
+                                        </div>
+
+                                    </td>
+                                    <td>
+
+                                        <div class="d-flex flex-column">
+                                            <div class=""> {{data?.our_paid_vote}} </div>
+
+                                            <div> {{data?.opp_paid_vote}}</div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <div class=""> {{'₹' + global.numberWithCommas(data?.our_paid_amount)}}
+                                            </div>
+
+                                            <div> {{'₹' + global.numberWithCommas(data?.opp_paid_amount)}}</div>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <div class=""> {{data?.our_un_paid_vote}}</div>
+
+                                            <div> {{data?.opp_un_paid_vote}}</div>
+                                        </div>
+
+
+                                    </td>
+                                    <td>
+
+                                        <div class="d-flex flex-column">
+                                            <div class="">{{'₹' + global.numberWithCommas(data?.our_un_paid_amount)}}
+                                            </div>
+
+                                            <div> {{'₹' + global.numberWithCommas(data?.opp_un_paid_amount)}}</div>
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <div class="">{{ data?.our_age_verified_value }}</div>
+
+                                            <div> {{(data?.our_age_verified_percentage) + ' %'}} </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <div class="">{{ data?.opp_age_verified_value}}</div>
+
+                                            <div> {{(data?.opp_age_verified_percentage) + ' %'}} </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex flex-column">
+                                            <div class="">{{ data?.total_age_verified_value }}</div>
+
+                                            <div> {{(data?.total_age_verified_percentage) + ' %'}} </div>
+                                        </div>
+                                    </td>
+                                    <!-- <td>
+										<div class="d-flex flex-column">
+											<div class="">{{ data?.total_duplicates }}</div>
+
+											<div> {{(data?.total_duplicates_percentage) + ' %'}} </div>
+										</div>
+									</td> -->
+                                </tr>
+                            </tbody>
+                        </nz-table>
+                    </div>
+                </div>
+            </nz-card>
+        </div>
+
+        <div class="col-md-12" *ngFor="let main_araay of candidateLists; let i_main = index">
+            <nz-card [nzLoading]="main_araay.api_call_loader" nzTitle="{{main_araay?.name}}">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                            <input type="text" nz-input placeholder="Search text"
+                                [(ngModel)]="main_araay.searchValue" />
+                        </nz-input-group>
+                        <ng-template #suffixIconButton>
+                            <button nz-button nzType="secondary" nzSearch>
+                                <i nz-icon nzType="search"></i>
+                            </button>
+                        </ng-template>
+                    </div>
+                    <div class="col-md-4 mb-3 d-flex justify-content-start">
+                        <button nz-button nzType="default" nzShape="circle" nz-tooltip nzTooltipTitle="Reset Filter"
+                            class="mx-3" (click)="resetFilter(i_main)">
+                            <i nz-icon nzType="undo"></i>
+                        </button>
+                    </div>
+                    <div class="col-md-4 mb-3 d-flex justify-content-end">
+                        <div></div>
+                        <nz-select *ngIf="i_main == 1" nzShowSearch class="w-100 mx-3" [(ngModel)]="current_district"
+                            (nzFocus)="global.globalMasterFilter('District')"
+                            (keyup)="global.searchStaticDataGlobalFunction('District','master',$event)" nzAllowClear
+                            nzPlaceHolder="Select District" (ngModelChange)="getAssemblyData()">
+                            <nz-option *ngFor="let item of global.districtData" [nzValue]="item" [nzLabel]="item?.name">
+                            </nz-option>
+                        </nz-select>
+                        <button nz-button nz-tooltip nzTooltipTitle="Export"
+                            (click)="global.exportTableData(main_araay?.name == 'Assembly' ? assemblyExport : districtExport, main_araay?.name + '_Candidate', 'something')">
+                            Export </button>
+                    </div>
+                    <div class="col-md-12">
+                        <nz-table [nzData]="main_araay.dataList"
+                            [nzLoading]="this.api_call_Loader[main_araay?.name == 'Assembly' ? 'listAssembly' : 'listDistrict']"
+                            [nzShowPagination]="false" [nzScroll]="{ x: ('1900px'),y: '40vh'}">
+                            <thead>
+                                <tr>
+                                    <th nzWidth="5rem">Sr. No</th>
+                                    <th>Name</th>
+                                    <th>Vote Count</th>
+                                    <th>Candidate Name</th>
+                                    <th>Candidate Vote Count</th>
+                                    <th>Candidate Percentage
+                                        <!-- <nz-input-group nzSearch>
+                                            <input type="text" nz-input placeholder="Search text"
+                                                [(ngModel)]="candidatePerformance" />
+                                        </nz-input-group> -->
+                                    </th>
+                                    <th> Votes</th>
+                                    <th> Performance</th>
+                                    <th>Paid Votes</th>
+                                    <th>Paid Amount</th>
+                                    <th>UnPaid Votes</th>
+                                    <th>UnPaid Amount</th>
+                                    <th> Our Age </th>
+                                    <th> Opp Age </th>
+                                    <th> Total Age</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container>
+                                    <tr *ngFor="let a_data of storeTempData((main_araay.dataList |filter:main_araay.searchValue),main_araay?.name); let i_in = index">
+                                        <td nzWidth="5rem">{{i_in + 1}}</td>
+                                        <td> <label style="white-space: pre-wrap">{{ i_main == 0 ? a_data?.district_name : a_data?.assembly_name }}</label></td>
+                                        <td> {{ a_data?.vote_count }}</td>
+                                        <td> <label style="white-space: pre-wrap">{{ a_data?.candidate_name }}</label>
+                                        </td>
+                                        <td>{{a_data?.candidate_vote_count}}</td>
+                                        <td>{{a_data?.candidate_percentage + ' %'}}</td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <div class="">{{a_data?.our_vote}} </div>
+
+                                                <div> {{a_data?.opp_vote}}</div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <div class="">{{a_data?.our_performance}} % </div>
+
+                                                <div> {{a_data?.opp_performance}} %</div>
+                                            </div>
+
+                                        </td>
+                                        <td>
+
+                                            <div class="d-flex flex-column">
+                                                <div class=""> {{a_data?.our_paid_vote}} </div>
+
+                                                <div> {{a_data?.opp_paid_vote}}</div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <div class=""> {{'₹' + global.numberWithCommas(a_data?.our_paid_amount)}}
+                                                </div>
+
+                                                <div> {{'₹' + global.numberWithCommas(a_data?.opp_paid_amount)}}</div>
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <div class=""> {{a_data?.our_un_paid_vote}}</div>
+
+                                                <div> {{a_data?.opp_un_paid_vote}}</div>
+                                            </div>
+                                        </td>
+                                        <td>
+
+                                            <div class="d-flex flex-column">
+                                                <div class="">{{'₹' +
+                                                    global.numberWithCommas(a_data?.our_un_paid_amount)}}</div>
+
+                                                <div> {{'₹' + global.numberWithCommas(a_data?.opp_un_paid_amount)}}</div>
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <div class="">{{ a_data?.our_age_verified_value }}</div>
+
+                                                <div> {{(a_data?.our_age_verified_percentage) + ' %'}} </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <div class="">{{ a_data?.opp_age_verified_value}}</div>
+
+                                                <div> {{(a_data?.opp_age_verified_percentage) + ' %'}} </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-column">
+                                                <div class="">{{ a_data?.total_age_verified_value }}</div>
+
+                                                <div> {{(a_data?.total_age_verified_percentage) + ' %'}} </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </nz-table>
+                    </div>
+                </div>
+            </nz-card>
+        </div>
+    </div>
+</main>

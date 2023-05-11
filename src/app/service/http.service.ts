@@ -69,9 +69,8 @@ export class HttpService {
     return this.http.get(this.url + end_point, { headers: headers });
   }
 
-  public enrollVoterList(toggle) {
-    // votes/get-enroller-votes-list?is_payment_recorded=true
-    return this.http.get(this.url + `votes/get-enroller-votes-list`, { params: toggle });
+  public getDataFromBackgroundFunction(params_data) {
+    return this.http.get(this.url + `social_media/v1/post-detail/get-data-from-background`, { params: params_data });
   }
 
   public addVoterToList(data) {

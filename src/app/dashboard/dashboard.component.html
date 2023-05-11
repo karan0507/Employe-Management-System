@@ -4,33 +4,34 @@
 			<div class="col-md-6">
 				<nz-card nzTitle="Latest Posts" [nzExtra]="extraTemplate">
 					<nz-list nzItemLayout="vertical">
-						<nz-list-item *ngFor="let item of data">
+						<nz-list-item *ngFor="let item of LatestPostDataSet">
 							<nz-list-item-meta>
-								<nz-list-item-meta-avatar [nzSrc]="item.avatar"></nz-list-item-meta-avatar>
+								<nz-list-item-meta-avatar [nzSrc]="'assets/images/avatars/dy_profile_image.jpg'"></nz-list-item-meta-avatar>
 								<nz-list-item-meta-title>
-									<a href="{{ item.href }}">{{ item.title }}</a>
+									<a href="{{ item.post_url }}">{{ item.post_id }}</a>
 								</nz-list-item-meta-title>
 								<nz-list-item-meta-description>
-									{{ item.description }}
+									{{ item.post_on }}
 								</nz-list-item-meta-description>
 							</nz-list-item-meta>
-							{{ item.content }}
+							{{ item.title }}
 							<ul nz-list-item-actions>
 								<nz-list-item-action>
 									<span nz-icon nzType="like" style="margin-right: 8px;"></span>
-									156
+									{{item.total_likes}}
 								</nz-list-item-action>
 								<nz-list-item-action>
 									<span nz-icon nzType="comment" style="margin-right: 8px;"></span>
-									156
+									{{item.total_comments}}
 								</nz-list-item-action>
 								<nz-list-item-action>
 									<span nz-icon nzType="share-alt" style="margin-right: 8px;"></span>
-									2
+									{{item.total_shares}}
 								</nz-list-item-action>
 							</ul>
 							<nz-list-item-extra>
-							<img width="272" alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />
+							<!-- <img width="272" class="post_image_style" alt="logo" src="assets/images/avatars/dy_post_image.jpg" /> -->
+							<img width="272" class="post_image_style" alt="logo" src="{{item.image_url}}" />
 							</nz-list-item-extra>
 						</nz-list-item>
 					</nz-list>
@@ -40,28 +41,49 @@
 			    </ng-template>
 			</div>
 			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-8" *ngFor="let a_data of listMatricsData; index as i">
+						<!-- <nz-card >
+							<div class="d-flex justify-content-center align-items-center">
+								<span nz-icon nzType="logout" nzTheme="outline" style="font-size: 3rem"></span> 
+								<h4 class="pl-3">Something</h4>
+							</div>
+					    </nz-card> -->
+					    <nz-card class="h-100 d-flex align-items-center pointer">
+					      <div class="media align-items-center">
+					        <nz-avatar [nzSize]="60" [nzIcon]="api_calling_loader ? 'loading' : a_data.icon" [ngClass]="a_data.class"></nz-avatar>
+					        <div class="m-l-15">
+					          <h4 class="m-b-0">{{a_data.count}}</h4>
+					          <p class="m-b-0 text-dark">{{a_data.name}}</p>
+					        </div>
+					      </div>
+					    </nz-card>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
 				<nz-card nzTitle="Strong Followers" [nzExtra]="extraTemplate">
 					<nz-list nzItemLayout="vertical">
-						<nz-list-item *ngFor="let item of data">
+						<nz-list-item *ngFor="let item of StrongFollowersList">
 							<nz-list-item-meta>
 								<nz-list-item-meta-avatar [nzSrc]="item.avatar"></nz-list-item-meta-avatar>
 								<nz-list-item-meta-title>
-									<a href="{{ item.href }}">{{ item.title }}</a>
+									<a href="{{ item.href }}">User ID - {{ item.user_details.user_id }}</a>
 								</nz-list-item-meta-title>
 							</nz-list-item-meta>
-							{{ item.content }}
+							{{ item.user_details.name }}
 							<ul nz-list-item-actions>
 								<nz-list-item-action>
 									<span nz-icon nzType="like" style="margin-right: 8px;"></span>
-									156
+									{{item.total_likes}}
 								</nz-list-item-action>
 								<nz-list-item-action>
 									<span nz-icon nzType="comment" style="margin-right: 8px;"></span>
-									156
+									{{item.total_comments}}
 								</nz-list-item-action>
 								<nz-list-item-action>
 									<span nz-icon nzType="share-alt" style="margin-right: 8px;"></span>
-									2
+									{{item.total_shares}}
 								</nz-list-item-action>
 							</ul>
 							<nz-list-item-extra>

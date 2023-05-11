@@ -1,0 +1,102 @@
+<main>
+	<section style="height: 20rem; overflow: hidden;">
+		<div class="row">
+			<div class="col-md-3">
+				<img src="{{postDetailData?.image_url}}" class="w-100" />
+			</div>
+			<div class="col-md-9">
+				<h3>Post ID - {{postDetailData?.post_id}}</h3>
+				<h3>{{postDetailData?.title}}</h3>
+
+				<h3>Post Date - {{postDetailData?.post_on}}</h3>
+
+				<div class="row">
+					<div class="col-md-4" *ngFor="let a_data of listMatricsData; index as i">
+					    <nz-card class="h-100 d-flex align-items-center pointer">
+					      <div class="media align-items-center">
+					        <nz-avatar [nzSize]="60" [nzIcon]="a_data.icon" [ngClass]="a_data.class"></nz-avatar>
+					        <div class="m-l-15">
+					          <h4 class="m-b-0">{{a_data.count}}</h4>
+					          <p class="m-b-0 text-dark">{{a_data.name}}</p>
+					        </div>
+					      </div>
+					    </nz-card>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+	<section class="pt-3">
+		<nz-table #basicTable [nzData]="shareTableData">
+	      <thead>
+	        <tr>
+	          <th>Sr No.</th>
+	          <th>Name</th>
+	          <th>User ID</th>
+	          <th>Action Type</th>
+	          <th>Re-Share</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr *ngFor="let data of basicTable.data; let i = index">
+	          <td>{{i+1}}</td>
+	          <td>{{ data.user_details.name }}</td>
+	          <td>{{ data.response_type }}</td>
+	          <td>{{ data.user_details.user_id }}</td>
+	          <td>0</td>
+	        </tr>
+	      </tbody>
+	    </nz-table>
+	</section>
+
+	<section>
+		<div class="row">
+			<div class="col-md-6">
+				<nz-table #likesDataTableSet [nzData]="likesTableData">
+			      <thead>
+			        <tr>
+			          <th>Sr No.</th>
+			          <th>Name</th>
+			          <th>User ID</th>
+			          <th>Action Type</th>
+			          <th>Reaction Type</th>
+			        </tr>
+			      </thead>
+			      <tbody>
+			        <tr *ngFor="let data of likesDataTableSet.data; let i = index">
+			          <td>{{i+1}}</td>
+			          <td>{{ data.user_details.name }}</td>
+			          <td>{{ data.response_type }}</td>
+			          <td>{{ data.user_details.user_id }}</td>
+			          <td>{{ data.reaction_type }}</td>
+			        </tr>
+			      </tbody>
+			    </nz-table>
+			</div>
+			<div class="col-md-6">
+				<nz-table #commentDataTableSet [nzData]="commentTableData">
+			      <thead>
+			        <tr>
+			          <th>Sr No.</th>
+			          <th>Name</th>
+			          <th>User ID</th>
+			          <th>Action Type</th>
+			          <th>Comment</th>
+			        </tr>
+			      </thead>
+			      <tbody>
+			        <tr *ngFor="let data of commentDataTableSet.data; let i = index">
+			          <td>{{i+1}}</td>
+			          <td>{{ data.user_details.name }}</td>
+			          <td>{{ data.response_type }}</td>
+			          <td>{{ data.user_details.user_id }}</td>
+			          <td>{{ data.comment_text }}</td>
+			        </tr>
+			      </tbody>
+			    </nz-table>
+			</div>
+		</div>
+	</section>
+</main>

@@ -67,39 +67,39 @@ export class GlobalService {
     }
   }
 
-  export(type) {
-    const generateloader = this.message.loading('Generating File..', { nzDuration: 0 }).messageId;
-    this.http.exportMaster(type).subscribe((res: any) => {
-      if (res.size > 41) {
-        this.message.success('File Exported');
-        this.downloadFile(type, res);
-      } else {
-        this.message.error("No Report to download");
-      }
-      this.message.remove(generateloader);
-      var downloadURL = window.URL.createObjectURL(res);
-      var link = document.createElement('a');
-      link.href = downloadURL;
-      link.download = '' + '.' + '';
-      link.click();
-    }, error => {
-      this.message.remove(generateloader);
-    })
-  }
+  // export(type) {
+  //   const generateloader = this.message.loading('Generating File..', { nzDuration: 0 }).messageId;
+  //   this.http.exportMaster(type).subscribe((res: any) => {
+  //     if (res.size > 41) {
+  //       this.message.success('File Exported');
+  //       this.downloadFile(type, res);
+  //     } else {
+  //       this.message.error("No Report to download");
+  //     }
+  //     this.message.remove(generateloader);
+  //     var downloadURL = window.URL.createObjectURL(res);
+  //     var link = document.createElement('a');
+  //     link.href = downloadURL;
+  //     link.download = '' + '.' + '';
+  //     link.click();
+  //   }, error => {
+  //     this.message.remove(generateloader);
+  //   })
+  // }
 
-  exportMasterAPI(type,data ) {
-    const generateloader = this.message.loading('Generating File..', { nzDuration: 0 }).messageId;
-    this.http.exportMasterAPIWithMultipleFilters(data).subscribe((res: any) => {
-      this.message.remove(generateloader);
-      var downloadURL = window.URL.createObjectURL(res);
-      var link = document.createElement('a');
-      link.href = downloadURL;
-      link.download = '' + '.' + '';
-      link.click();
-    }, error => {
-      this.message.remove(generateloader);
-    })
-  }
+  // exportMasterAPI(type,data ) {
+  //   const generateloader = this.message.loading('Generating File..', { nzDuration: 0 }).messageId;
+  //   this.http.exportMasterAPIWithMultipleFilters(data).subscribe((res: any) => {
+  //     this.message.remove(generateloader);
+  //     var downloadURL = window.URL.createObjectURL(res);
+  //     var link = document.createElement('a');
+  //     link.href = downloadURL;
+  //     link.download = '' + '.' + '';
+  //     link.click();
+  //   }, error => {
+  //     this.message.remove(generateloader);
+  //   })
+  // }
 
   downloadFile(type, data) {
     saveAs(data, `${type}.xlsx`);

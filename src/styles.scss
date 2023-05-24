@@ -8,6 +8,11 @@
     text-align: left;
 }
 
+.cardBorder{
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.05);
+        backface-visibility: hidden;
+}
+
 p{
     color: #53535f
 }
@@ -76,4 +81,23 @@ body{
 .post_image_style{
     object-fit: cover;
     height: 10rem;
+}
+
+.bg-circles{
+  background-image: url('/src/assets/images/Ext_Images/bubbles.svg')
+}
+.login-bg-setter{
+  border: 2px;
+  border-radius: 20px;
+  top: -1rem;
+  position: relative;
+  // padding-top: 100px;
+}
+
+.carouselBanner {
+  overflow: scroll;
+    scroll-behavior: smooth;
+    overflow-x: overlay;
+    overflow-y: hidden;
+    
 }

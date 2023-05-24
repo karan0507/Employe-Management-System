@@ -1,0 +1,56 @@
+<section>
+    <main>
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input type="text" nz-input placeholder="Search By Activity Name/ Month" [(ngModel)]="_currSearchValue" />
+                </nz-input-group>
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="secondary" nzSearch>
+                        <i nz-icon nzType="search"></i>
+                    </button>
+                </ng-template>
+            </div>
+            <div class="col-md-12" *ngFor="let item of listOfActivity">
+                <nz-card class="cardBorder my-3">
+                    <h5>{{item?.name}}</h5>
+                    <nz-steps [nzProgressDot]="true" [nzCurrent]="1" nzDirection="vertical">
+                        <nz-step   [nzTitle]="titleTemplate"
+                            [nzDescription]="descriptionTemplate">
+                        </nz-step>
+                        <nz-step [nzTitle]="titleTemplate"
+                            [nzDescription]="descriptionTemplate"></nz-step>
+                        <nz-step [nzTitle]="titleTemplate"
+                            [nzDescription]="descriptionTemplate"></nz-step>
+                    </nz-steps>
+
+                    <ng-template #descriptionTemplate>
+                        <div class="d-flex justify-content-between">
+                            <label >{{item.description}}</label>
+                            <label class="font-size-12 text-muted">{{item?.updated_at}}</label>
+                        </div>
+                    </ng-template>
+                    
+                   <ng-template #titleTemplate>
+                    <div class="d-flex justify-content-between">
+                        <label class="m-0 font-size-16 font-weight-semibold" nz-dropdown [nzDropdownMenu]="latestUploadDropDown">{{item?.voter_name}} 
+                            <span nz-icon nzType="down" nzTheme="outline" class="ml-2"></span>
+                        </label>
+                        <label class="font-size-14">{{item?.added_at}}</label>
+                    </div>
+                   
+                    <nz-dropdown-menu #latestUploadDropDown="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                          <li nz-menu-item>1st menu item</li>
+                        </ul>
+                      </nz-dropdown-menu>
+                   </ng-template>
+                </nz-card>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button nz-button nzType="primary" class="font-weight-semibold">Load Mored</button>
+        </div>
+       
+    </main>
+</section>

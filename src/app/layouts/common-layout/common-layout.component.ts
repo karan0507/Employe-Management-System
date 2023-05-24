@@ -24,6 +24,9 @@ export class CommonLayoutComponent  {
     selectedHeaderColor: string;
     showBreadCrumb: any;
     isSlash : boolean = false;
+
+    // Extra Data
+    _currHeaderData : any
     constructor(private router: Router,  private activatedRoute: ActivatedRoute, private themeService: ThemeConstantService, private globaldata: GlobalService, private message:NzMessageService,
          private http: HttpService,private permissionsService: NgxPermissionsService) {
         this.router.events.pipe(
@@ -49,10 +52,11 @@ export class CommonLayoutComponent  {
     ngOnInit() {
         if (localStorage.getItem('iyc_user_token')) {
             this.VerifyUserFunction()
-        } else {
-            this.message.error('Authentication Data not Found, kindly login again')
-            this.router.navigate(['/authentication/login']);
-        }
+        } 
+        // else {
+        //     this.message.error('Authentication Data not Found, kindly login again')
+        //     this.router.navigate(['/authentication/select-language']);
+        // }
         // alert('Common Layout working');
         this.breadcrumbs$ = this.router.events.pipe(
             startWith(new NavigationEnd(0, '/', '/')),
@@ -86,10 +90,11 @@ export class CommonLayoutComponent  {
                     this.isSlash = false
                 }
                 this.showBreadCrumb = route.routeConfig.data['parent'];
+                this._currHeaderData = route.routeConfig.data
             }
         }
 
-        const nextUrl = path && path !== '/dashboard' ? `${url}${path}` : url;
+        const nextUrl = path && path !== '/select-language' ? `${url}${path}` : url;
         const breadcrumb = <IBreadcrumb>{
             label: label, url: nextUrl, title: title
         };

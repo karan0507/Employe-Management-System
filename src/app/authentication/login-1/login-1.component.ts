@@ -39,11 +39,46 @@ export class Login1Component {
     private active_route: ActivatedRoute,
     private permissionsService: NgxPermissionsService
   ) {}
+    _currentLanguage : any
+  loginPageContext = {
+    header:{
+      mlaName:'', greeting:'', subHeading:''
+    },
+    login:{title:'',subtitle:'',placeholder_mob:'',mob_error :'',placeholder_name:'',name_error:''},
+    btn:{btn1:'',btn2:''}
+   }
 
   ngOnInit(): void {
+    this._currentLanguage = localStorage.getItem('appLanguage') || 'en'
+    if(this._currentLanguage == 'en'){
+      this.loginPageContext = {
+        header:{
+          mlaName:'MLA Devendra Yadav', greeting:'Hello', subHeading:"Let's get started"
+        },
+        login:
+          {title:'Please login to continue',subtitle:'We will send you a One Time Password on this mobile number',
+          placeholder_mob:'Enter your Mobile Number',mob_error:'Please input your Mobile Number!',
+          placeholder_name:'Enter your Full Name',name_error:''},
+        btn:{btn1:'Get OTP', btn2:''}
+       }
+    }else{
+      this.loginPageContext = {
+        header:{
+          mlaName:'MLA Devendra Yadav', greeting:'नमस्ते', subHeading:"आएँ शुरू करें"
+        },
+        login:
+          {title:'जारी रखने के लिए कृपया लॉगिन करें',subtitle:'हम आपको इस मोबाइल नंबर पर एक वन टाइम पासवर्ड भेजेंगे',
+          placeholder_mob:'अपना मोबाइल संख्या दर्ज करे',mob_error:'कृपया अपना मोबाइल नंबर डालें!',
+          placeholder_name:'अपना पूरा नाम भरें',name_error:'कृपया पूरा नाम दर्ज करें'},
+        btn:{btn1:'ओटीपी प्राप्त करें', btn2:''}
+       }
+    }
+
     this.loginForm = this.fb.group({
+      mobile_prefix:['India',[Validators.required]],
         mobile: [null, [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{4}$')]],
-    });
+        full_name : ['',[Validators.required, Validators.minLength(3)]]
+      });
 
     this.loginForm.controls['mobile'].valueChanges.subscribe(value => {
         // console.log(value)
@@ -81,7 +116,7 @@ export class Login1Component {
     );
     data.append("mobile", form.value.mobile);
     this._apiCallLoader["loginloader"] = true;
-    var end_point ="users/v1/auth/send-otp";
+    var end_point ="/users/v1/auth/send-otp";
     this.HttpService.UserLoginSendOTP(data, end_point).subscribe((res) => {
           this.setTimerFromStart();
           this._apiCallLoader['loginloader'] = false
@@ -118,7 +153,9 @@ export class Login1Component {
     if (localStorage.getItem('iyc_user_token')) {
       if (localStorage.getItem('iyc_user_data')) {
         if(res.data?.user_type?.name == 'Superuser'){
-          this.router.navigate(["/dashboard/home"]);
+          // this.router.navigate(["/dashboard/home"]);
+          this.router.navigate(["/home"]);
+
         } else if(res.data?.user_type?.name == 'Data Operator' || res.data?.user_type?.name == 'Supervisor'){
           this.router.navigate(["/data-operator/home"]);
         }  else if(res.data?.user_type?.name == 'Account Manager'){
@@ -152,7 +189,8 @@ export class Login1Component {
             this.permissionsService.loadPermissions(permissions);
             
             if(res.data?.user_type?.name == 'Superuser'){
-              this.router.navigate(["/dashboard/home"]);
+              this.router.navigate(["/home"]);
+              // this.router.navigate(["/dashboard/home"]);
             } else if(res.data?.user_type?.name == 'Data Operator' || res.data?.user_type?.name == 'Supervisor'){
               this.router.navigate(["/data-operator/home"]);
             }
@@ -189,4 +227,16 @@ export class Login1Component {
         this.realCountertimer = value;
       });
   }
+
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.loginForm.controls;
+    for (const name in controls) {
+        if (controls[name].invalid) {
+            invalid.push(name);
+        }
+    }
+    let temp = invalid.length > 1    
+    return temp;
+}
 }

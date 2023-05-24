@@ -10,6 +10,7 @@ import { ThemeConstantService } from './services/theme-constant.service';
 import { SearchPipe } from './pipes/search.pipe';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { AvoidNumbersDirective } from '../../app/shared/directives/avoid-numbers.directive';
 
 @NgModule({
     exports: [
@@ -19,7 +20,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
         HttpClientJsonpModule,
         NzIconModule,
         PerfectScrollbarModule,
-        SearchPipe
+        SearchPipe,
+        // AvoidNumbersDirective,
     ],
     imports: [
         RouterModule,
@@ -27,7 +29,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
         NzIconModule,
         NzToolTipModule,
         PerfectScrollbarModule,
-        NzModalModule
+        NzModalModule,
         // NgxPermissionsModule.forChild(),
     ],
     declarations: [

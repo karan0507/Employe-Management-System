@@ -20,6 +20,8 @@ import { Error1Component } from './error-1/error-1.component';
 import { Error2Component } from './error-2/error-2.component';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { SelectLanguageComponent } from './select-language/select-language.component';
+import { DemoNgZorroAntdModule } from '../ng-zorro-antd.module';
 // import { NgOtpInputModule } from 'ng-otp-input';
 
 const antdModule= [
@@ -40,6 +42,7 @@ const antdModule= [
         FormsModule,
         NzFormModule,
         NgOtpInputModule,
+        DemoNgZorroAntdModule,
         NgxPermissionsModule.forChild(),
         ...antdModule
     ],
@@ -51,7 +54,8 @@ const antdModule= [
         SignUp2Component,
         SignUp3Component,
         Error1Component,
-        Error2Component
+        Error2Component,
+        SelectLanguageComponent
     ]
 })
 

@@ -11,7 +11,8 @@ import { Error1Component } from './authentication/error-1/error-1.component';
 const appRoutes: Routes = [
     {
         path: '',
-        redirectTo: '/dashboard/home',
+        // redirectTo: '/dashboard/home',
+        redirectTo: '/home',
         pathMatch: 'full',
     },
     { 

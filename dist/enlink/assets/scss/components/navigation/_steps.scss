@@ -19,6 +19,7 @@
 }
 
 .ant-steps-item-title {
+    width: 100%;
     color: $gray-dark;
 }
 
@@ -45,6 +46,7 @@
 
             > .ant-steps-item-title {
                 color: $gray-light;
+                width: 100%;
             }
         }
     }
@@ -69,7 +71,7 @@
 
         > .ant-steps-item-title {
             color: $gray-dark;
-
+            width: 100%;
             &:after {
                 background-color: $border-color;
             }
@@ -116,7 +118,7 @@
 
             .ant-steps-item-title {
                 color: $gray-dark;
-
+                width: 100%;
                 &:after {
                     background-color: $step-theme-colors;
                 }
@@ -148,6 +150,7 @@
             > .ant-steps-item-description,
             > .ant-steps-item-title {
                 color:$brand-danger;
+                width: 100%;
             }
         }
     }
@@ -158,7 +161,7 @@
     &.ant-steps-next-error {
 
         .ant-steps-item-title {
-
+            width: 100%;
             &:after {
                 background: $brand-danger;
             }
@@ -168,6 +171,7 @@
 
 .ant-steps-item-tail,
 .ant-steps-item-title {
+    width: 100%;
     &::after {
         height: $step-line-width;
     }

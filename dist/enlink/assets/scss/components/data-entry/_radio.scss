@@ -105,12 +105,13 @@
 
     &:not(:first-child) {
         &:before {
-            background-color: $border-color;
+            // background-color: $border-color;
+            background-color: transparent;
         }
     }
 
     &:hover {
-        color: $radio-theme-color;
+        // color: $radio-theme-color;
     }
 }
 
@@ -157,12 +158,12 @@
 
     &:not(.ant-radio-button-wrapper-disabled) {
         &:before {
-            background-color: $radio-theme-color;
+            // background-color: $radio-theme-color;
         }
 
         &:hover {
             &:before {
-                background-color: $radio-theme-color;
+                // background-color: $radio-theme-color;
             }
         }
 
@@ -174,6 +175,10 @@
     }
 }
 
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover::before {
+    background-color: #ffffff;
+}
+
 .ant-radio-button-wrapper-disabled {
     color: rgba($body-color, 0.25);
     background-color: $btn-disabled-color;
@@ -183,7 +188,7 @@
     &:hover {
         color: rgba($body-color, 0.25);
         background-color: $btn-disabled-color;
-        border-color: $border-color;
+        // border-color: $border-color;
     }
 
     &.ant-radio-button-wrapper-checked {

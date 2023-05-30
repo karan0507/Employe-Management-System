@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { HttpService } from 'src/app/service/http.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -11,9 +14,9 @@ export class UserProfileComponent implements OnInit {
     {id:1,name:'Change Language', url:'', icon:'zhihu'},
     {id:1,name:'Communication History', url:'/profile/commounication-history', icon:'notification'},
     {id:1,name:'FAQ’s & Help', url:'', icon:'info-circle'},
-    {id:1,name:'Logout', url:'', icon:'logout',isClick : true},
   ]
-  constructor(private modal:NzModalService) { }
+  constructor(private modal:NzModalService, private http:HttpService, private message: NzMessageService,
+    private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -31,6 +34,16 @@ export class UserProfileComponent implements OnInit {
     });
 }
 
-logoutUserFunction(){}
+logoutUserFunction(){
+  this.http.logOutUser().subscribe((res:any)=>{
+    if(res.success){
+      this.message.success(res.message);
+      this.router.navigateByUrl('/authentication/login')
+      localStorage.removeItem('iyc_user_token')
+      localStorage.removeItem('iyc_user_data')
+      localStorage.removeItem('global_account_data')
+    }
+  })
+}
 
 }

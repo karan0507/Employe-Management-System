@@ -17,4 +17,8 @@ export const CommonLayout_ROUTES: Routes = [
         path: 'home',
         loadChildren: () => import('../../home/home.module').then(m => m.HomeModule),
     },
+    {
+        path: 'voter',
+        loadChildren: () => import('../../voter/voter.module').then(m => m.VoterModule),
+    },
 ];

@@ -12,7 +12,7 @@ export class HttpService {
   globalUserPermissionsData = new ReplaySubject<any>();
   // https://api.chatiyc.com/admin
   // url = 'https://iycapi.dixitsir.com/'   
-  url = 'http://api.chatiyc.com'
+  url = 'https://api.chatiyc.com'
   // url = 'https://iycapi.dixitsir.com/'
 
   // url = this.valueFunction()
@@ -212,6 +212,25 @@ export class HttpService {
     return this.http.post(this.url + `/voters/v1/voter-activity/add-voter-activity/`, { params: data })
   }
 
+
+
+  public getVoterFollowup(data) {
+    return this.http.get(this.url + '/voters/v1/voter-activity/get-voter-activity', { params: data })
+  }
+
+  public deleteVoterFollowup(id) {
+    return this.http.delete(this.url + '/voters/v1/voter-activity/delete-voter-activity/' + id + '/')
+  }
+
+  public editVoterFollowup(id, data) {
+    return this.http.put(this.url + `/voters/v1/voter-activity/edit-voter-activity/` + id`/`, { params: data })
+  }
+
+  public addVoterFollowup(data) {
+    return this.http.post(this.url + `/voters/v1/voter-activity/add-voter-activity/`, { params: data })
+  }
+
+  
   public logOutUser() {
     return this.http.get(this.url + `/users/v1/auth/logout-user`);
   }
@@ -219,6 +238,33 @@ export class HttpService {
 
   // Get User Profile Details
   public getUserProfile(data) {
-    return this.http.get(this.url + ``,{params:data})
+    return this.http.get(this.url + `/users/v1/auth/get-user-profile`,{params:data})
   }
+
+  public getGlobalAdminData(data) {
+    return this.http.get(this.url + `/users/v1/user/add-global-account`,{params:data})
+  }
+
+  public getVoterList(data){
+    return this.http.get(this.url + `/social_media/v1/post-detail/get-data-from-background`,{params:data})
+  }
+
+  public getVoterDetails(data){
+    return this.http.get(this.url + `/social_media/v1/post-detail/get-data-from-background`,{params:data})
+  }
+
+  public addEditVoterActivityList(data){
+    return this.http.get(this.url + `/voters/v1/voter-activity/get-voter-activity`,{params:data})
+  }
+
+
+  public getVoterFollowUp(data){
+    return this.http.get(this.url + `/voters/v1/voter-followup/get-voter-followup`,{params:data})
+  }
+  
+  public getMasterData(data){
+    return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`,{params:data})  
+  }
+  
+  
 }

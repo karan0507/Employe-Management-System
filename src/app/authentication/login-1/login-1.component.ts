@@ -38,62 +38,78 @@ export class Login1Component {
     private router: Router,
     private active_route: ActivatedRoute,
     private permissionsService: NgxPermissionsService
-  ) {}
-    _currentLanguage : any
+  ) { }
+  _currentLanguage: any
   loginPageContext = {
-    header:{
-      mlaName:'', greeting:'', subHeading:''
+    header: {
+      mlaName: '', greeting: '', subHeading: ''
     },
-    login:{title:'',subtitle:'',placeholder_mob:'',mob_error :'',placeholder_name:'',name_error:''},
-    btn:{btn1:'',btn2:''}
-   }
+    login: { title: '', subtitle: '', placeholder_mob: '', mob_error: '', placeholder_name: '', name_error: '' },
+    btn: { btn1: '', btn2: '' },
+    otp: { title: '', subtitle: '', resendOtp:'',btnOtp: '', btnSubText: '' },
+    successScreen:''
+  }
 
   ngOnInit(): void {
-    this._currentLanguage = localStorage.getItem('appLanguage') || 'en'
-    if(this._currentLanguage == 'en'){
+    if (localStorage.getItem('appLanguage')) {
+      this._currentLanguage = localStorage.getItem('appLanguage');
+    } else {
+      this._currentLanguage = 'en';
+      localStorage.setItem('appLanguage', 'en')
+    }
+    if (this._currentLanguage == 'en') {
       this.loginPageContext = {
-        header:{
-          mlaName:'MLA Devendra Yadav', greeting:'Hello', subHeading:"Let's get started"
+        header: {
+          mlaName: 'MLA Devendra Yadav', greeting: 'Hello', subHeading: "Let's get started"
         },
         login:
-          {title:'Please login to continue',subtitle:'We will send you a One Time Password on this mobile number',
-          placeholder_mob:'Enter your Mobile Number',mob_error:'Please input your Mobile Number!',
-          placeholder_name:'Enter your Full Name',name_error:''},
-        btn:{btn1:'Get OTP', btn2:''}
-       }
-    }else{
+        {
+          title: 'Please login to continue', subtitle: 'We will send you a One Time Password on this mobile number',
+          placeholder_mob: 'Enter your Mobile Number', mob_error: 'Please input your Mobile Number!',
+          placeholder_name: 'Enter your Full Name', name_error: ''
+        },
+        btn: { btn1: 'Get OTP', btn2: '' },
+        otp: { title: 'Enter Verification Code', subtitle: 'Type the 6-digit verification code sent on your registered Mobile associated with code',
+         btnOtp: 'Verify', btnSubText: 'Didn’t receive an OTP?', resendOtp:'Resend OTP' },
+         successScreen:'Your Mobile number has been successfully verified'
+      }
+    } else {
       this.loginPageContext = {
-        header:{
-          mlaName:'MLA Devendra Yadav', greeting:'नमस्ते', subHeading:"आएँ शुरू करें"
+        header: {
+          mlaName: 'MLA Devendra Yadav', greeting: 'नमस्ते', subHeading: "आएँ शुरू करें"
         },
         login:
-          {title:'जारी रखने के लिए कृपया लॉगिन करें',subtitle:'हम आपको इस मोबाइल नंबर पर एक वन टाइम पासवर्ड भेजेंगे',
-          placeholder_mob:'अपना मोबाइल संख्या दर्ज करे',mob_error:'कृपया अपना मोबाइल नंबर डालें!',
-          placeholder_name:'अपना पूरा नाम भरें',name_error:'कृपया पूरा नाम दर्ज करें'},
-        btn:{btn1:'ओटीपी प्राप्त करें', btn2:''}
-       }
+        {
+          title: 'जारी रखने के लिए कृपया लॉगिन करें', subtitle: 'हम आपको इस मोबाइल नंबर पर एक वन टाइम पासवर्ड भेजेंगे',
+          placeholder_mob: 'अपना मोबाइल संख्या दर्ज करे', mob_error: 'कृपया अपना मोबाइल नंबर डालें!',
+          placeholder_name: 'अपना पूरा नाम भरें', name_error: 'कृपया पूरा नाम दर्ज करें'
+        },
+        btn: { btn1: 'ओटीपी प्राप्त करें', btn2: '' },
+        otp: { title: 'सत्यापन कोड दर्ज करें', subtitle: 'कोड से जुड़े अपने पंजीकृत मोबाइल पर भेजा गया 6 अंकों का सत्यापन कोड टाइप करें', resendOtp:'ओटीपी पुनः भेजें', btnOtp: 'सत्यापित करना', btnSubText: 'क्या आपको ओटीपी नहीं मिला?' },
+        successScreen:'आपका मोबाइल नंबर हो गया है सफलतापूर्वक सत्यापित'
+      }
     }
 
     this.loginForm = this.fb.group({
-      mobile_prefix:['India',[Validators.required]],
-        mobile: [null, [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{4}$')]],
-        full_name : ['',[Validators.required, Validators.minLength(3)]]
-      });
+      mobile_prefix: ['India', [Validators.required]],
+      mobile: [null, [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{4}$')]],
+      full_name: ['', [Validators.required, Validators.minLength(3)]]
+    });
 
     this.loginForm.controls['mobile'].valueChanges.subscribe(value => {
-        // console.log(value)
-        let isnum = /^[A-Z]{2}/.test(value);
-        if (isnum) {
-            this.loginForm.get('mobile').setValidators([Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{4}$')]);
-            this.loginForm.get('mobile').updateValueAndValidity({ emitEvent: false });
-            this.isStockistCode = true
-        } else {
-            this.loginForm.get('mobile').setValidators([Validators.required, Validators.pattern('^[6-9][0-9]{9}$')]);
-            this.loginForm.get('mobile').updateValueAndValidity({ emitEvent: false });
-            this.isStockistCode = false
-        }
+      // console.log(value)
+      let isnum = /^[A-Z]{2}/.test(value);
+      if (isnum) {
+        this.loginForm.get('mobile').setValidators([Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{4}$')]);
+        this.loginForm.get('mobile').updateValueAndValidity({ emitEvent: false });
+        this.isStockistCode = true
+      } else {
+        this.loginForm.get('mobile').setValidators([Validators.required, Validators.pattern('^[6-9][0-9]{9}$')]);
+        this.loginForm.get('mobile').updateValueAndValidity({ emitEvent: false });
+        this.isStockistCode = false
+      }
     });
-    if(localStorage.getItem('iyc_user_data')){
+    if (localStorage.getItem('iyc_user_data')) {
       this.VerifyUserFunction()
     }
   }
@@ -116,27 +132,31 @@ export class Login1Component {
     );
     data.append("mobile", form.value.mobile);
     this._apiCallLoader["loginloader"] = true;
-    var end_point ="/users/v1/auth/send-otp";
+    var end_point = "/users/v1/auth/send-otp";
     this.HttpService.UserLoginSendOTP(data, end_point).subscribe((res) => {
-          this.setTimerFromStart();
-          this._apiCallLoader['loginloader'] = false
-          if (res.success) {
-                this.message.success(res.message)
-                this._currentSection = 'OTPVerification'
-          }
+      this.setTimerFromStart();
+      this._apiCallLoader['loginloader'] = false
+      if (res.success) {
+        this.message.success(res.message)
+        this._currentSection = 'OTPVerification'
+      }
     }, (err) => {
-          this._apiCallLoader['loginloader'] = false
+      this._apiCallLoader['loginloader'] = false
     })
   }
 
   VerifyUserFunction() {
-    var end_point = 'users/v1/auth/verify-user';
+    var end_point = '/users/v1/auth/verify-user';
     var device_type = this.globalFunction.checkBrowserType();
     let data = new FormData();
+    console.log('In checkusr log');
+
     this.HttpService.verifyUserAPI(end_point).subscribe(
       (res) => {
-        if (res.result) {
+        if (res.success) {
           this.globalFunction.sendUserData(res);
+          console.log('In checkusr log');
+
           localStorage.setItem("iyc_user_data", JSON.stringify(res.data));
           this.checkUserLoggedInOrNot(res);
         }
@@ -149,21 +169,30 @@ export class Login1Component {
     );
   }
 
+  ifTokenAuthorized: boolean = false;
   checkUserLoggedInOrNot(res?) {
+    this.ifTokenAuthorized = false
     if (localStorage.getItem('iyc_user_token')) {
-      if (localStorage.getItem('iyc_user_data')) {
-        if(res.data?.user_type?.name == 'Superuser'){
-          // this.router.navigate(["/dashboard/home"]);
-          this.router.navigate(["/home"]);
+      console.log('In checkusr log');
 
-        } else if(res.data?.user_type?.name == 'Data Operator' || res.data?.user_type?.name == 'Supervisor'){
+      if (localStorage.getItem('iyc_user_data')) {
+        console.log('In checkusr log');
+
+        if (res.data?.user_type?.name == 'Superuser') {
+          this.ifTokenAuthorized = true
+          setTimeout(() => {
+            this.ifTokenAuthorized = false;
+            this.router.navigate(["/home"]);
+          }, 6000);
+
+        } else if (res.data?.user_type?.name == 'Data Operator' || res.data?.user_type?.name == 'Supervisor') {
           this.router.navigate(["/data-operator/home"]);
-        }  else if(res.data?.user_type?.name == 'Account Manager'){
+        } else if (res.data?.user_type?.name == 'Account Manager') {
           this.router.navigate(["/accounts/vouchers"]);
         }
       }
     }
-}
+  }
 
   verifyOTPFunction(form) {
     if (this.otpBoxValue.length < 6) {
@@ -175,7 +204,7 @@ export class Login1Component {
     var device_type = this.globalFunction.checkBrowserType();
     data.append("otp", this.otpBoxValue);
     this._apiCallLoader["verifyOTP"] = true;
-    var end_point = "users/v1/auth/verify-otp";
+    var end_point = "/users/v1/auth/verify-otp";
     this.HttpService.verifyOTPAPI(data, end_point).subscribe(
       (res) => {
         this._apiCallLoader["verifyOTP"] = false;
@@ -187,14 +216,14 @@ export class Login1Component {
             var permissions = res.permissions
             permissions.push('');
             this.permissionsService.loadPermissions(permissions);
-            
-            if(res.data?.user_type?.name == 'Superuser'){
+
+            if (res.data?.user_type?.name == 'Superuser') {
               this.router.navigate(["/home"]);
               // this.router.navigate(["/dashboard/home"]);
-            } else if(res.data?.user_type?.name == 'Data Operator' || res.data?.user_type?.name == 'Supervisor'){
+            } else if (res.data?.user_type?.name == 'Data Operator' || res.data?.user_type?.name == 'Supervisor') {
               this.router.navigate(["/data-operator/home"]);
             }
-             else if(res.data?.user_type?.name == 'Account Manager'){
+            else if (res.data?.user_type?.name == 'Account Manager') {
               this.router.navigate(["/accounts/vouchers"]);
             }
           }, 0);
@@ -232,11 +261,11 @@ export class Login1Component {
     const invalid = [];
     const controls = this.loginForm.controls;
     for (const name in controls) {
-        if (controls[name].invalid) {
-            invalid.push(name);
-        }
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
     }
-    let temp = invalid.length > 1    
+    let temp = invalid.length > 1
     return temp;
-}
+  }
 }

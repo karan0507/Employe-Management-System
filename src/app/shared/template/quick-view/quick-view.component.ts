@@ -49,5 +49,47 @@ export class QuickViewComponent {
         });
     }
 
+    allChecked = false;
+  indeterminate = true;
+  checkOptionsOne = [
+    { label: 'Hindu', value: 'hindu', checked: false },
+    { label: 'Muslim', value: 'muslim', checked: false },
+    { label: 'Christian', value: 'christian', checked: false }
+  ];
+
+  updateAllChecked(type?): void {
+    if(type){
+        this.checkOptionsOne = this.checkOptionsOne.map(item => ({
+            ...item,
+            checked: false
+          }));
+          return
+    }
+    this.indeterminate = false;
+    if (this.allChecked) {
+      this.checkOptionsOne = this.checkOptionsOne.map(item => ({
+        ...item,
+        checked: true
+      }));
+    } else {
+      this.checkOptionsOne = this.checkOptionsOne.map(item => ({
+        ...item,
+        checked: false
+      }));
+    }
+  }
+
+  updateSingleChecked(): void {
+    if (this.checkOptionsOne.every(item => !item.checked)) {
+      this.allChecked = false;
+      this.indeterminate = false;
+    } else if (this.checkOptionsOne.every(item => item.checked)) {
+      this.allChecked = true;
+      this.indeterminate = false;
+    } else {
+      this.indeterminate = true;
+    }
+  }
+
 }
 

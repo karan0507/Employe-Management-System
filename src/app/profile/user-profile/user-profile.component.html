@@ -16,12 +16,12 @@
                     </div>
                 </nz-card>
             </div>
-            <div class="col-md-12 mt-3" *ngFor="let item of prfileCataloug">
+            <div class="col-md-12 my-3" *ngFor="let item of prfileCataloug">
                 <div class="d-flex flex-wrap justify-content-between align-items-center">
                     <div class="d-flex align-items-center" [routerLink]="item?.url">
                         <span nz-icon class="mr-3 font-size-20 iconBg" [nzType]="item?.icon" 
                             nzTheme="outline"></span>
-                        <label class="text-dark font-size-16" (click)="item?.isClick ? showLogoutModalConfirm() : ''">{{item?.name}}</label>
+                            <label class="text-dark font-size-16">{{item?.name}}</label>
                     </div>
                     <span nz-icon nzType="right" class="font-size-18 font-weight-bold text-dark" nzTheme="outline"></span>
                 </div>
@@ -30,6 +30,9 @@
 
                 </div>
             </div>
+        </div>
+        <div class="d-flex justify-content-center mt-5">
+            <button class="font-size-16 px-5 login-form-button" nz-button nzType="primary"  (click)="showLogoutModalConfirm()">Logout</button>
         </div>
     </main>
 </section>

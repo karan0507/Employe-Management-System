@@ -19,16 +19,20 @@ export class GlobalService {
   debounce: any
   api_call_loader: any = { 'selectLoader': false }
 
-
   // Current App Nav;
   public globalNavValue = new ReplaySubject<any>();
 
   constructor(public message: NzMessageService, public http: HttpService) { }
 
   public globalUserData = new ReplaySubject<any>();
+  public globalAccountData = new ReplaySubject<any>();
 
   sendUserData(data: any) {
     this.globalUserData.next(data);
+  }
+
+  sendGlobalAccountData(data: any) {
+    this.globalAccountData.next(data);
   }
 
   setCurrNavValue(data){

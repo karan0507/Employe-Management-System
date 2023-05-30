@@ -53,10 +53,10 @@ export class CommonLayoutComponent  {
         if (localStorage.getItem('iyc_user_token')) {
             this.VerifyUserFunction()
         } 
-        // else {
-        //     this.message.error('Authentication Data not Found, kindly login again')
-        //     this.router.navigate(['/authentication/select-language']);
-        // }
+        else {
+            this.message.error('Authentication Data not Found, kindly login again')
+            this.router.navigate(['/authentication/login']);
+        }
         // alert('Common Layout working');
         this.breadcrumbs$ = this.router.events.pipe(
             startWith(new NavigationEnd(0, '/', '/')),
@@ -109,12 +109,14 @@ export class CommonLayoutComponent  {
 
     VerifyUserFunction() {
         // var end_point = JSON.parse(localStorage.getItem('biomech_user_data')).user_type.name == 'Stockists' ? 'stockist/client-auth/verify-user' : 'employee/employee-auth/verify-user'
-        var end_point = 'users/v1/auth/verify-user';
+        var end_point = '/users/v1/auth/verify-user';
         var device_type = this.globaldata.checkBrowserType()
         let data = new FormData()
         this.http.verifyUserAPI(end_point).subscribe((res: any) => {
             if (res.success) {
-                this.globaldata.sendUserData(res);
+                this.globaldata.sendUserData(res.data);
+                // Get GlobalAccount Data
+                this.getGlobalAccData()
                 localStorage.setItem("iyc_user_data", JSON.stringify(res));
                 if(localStorage.getItem('iyc_user_data')){
                     var permissions = JSON.parse(localStorage.getItem('iyc_user_data')).permissions;
@@ -134,6 +136,20 @@ export class CommonLayoutComponent  {
             this.router.navigate(['/authentication/login']);
             localStorage.removeItem('iyc_user_token')
             localStorage.removeItem('iyc_user_data')
+        })
+    }
+
+    globalAccData : any
+    _currLang:any
+    getGlobalAccData(){
+        let data={}
+        this.http.getGlobalAdminData(data).subscribe((res:any)=>{
+            if(res.success){
+                this._currLang = localStorage.getItem('appLanguage')
+                this.globalAccData = res.data;
+                this.globaldata.sendGlobalAccountData(res.data);
+                localStorage.setItem('global_account_data',res.data)
+            }
         })
     }
 

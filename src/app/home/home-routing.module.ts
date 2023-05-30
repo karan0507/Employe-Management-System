@@ -27,7 +27,7 @@ const routes: Routes = [
           parent: 'Congress',
           isButton: true,
           url:'/home',
-          isHome: false,
+          isHome: true,
         }
       }
     ]

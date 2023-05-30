@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { HttpService } from 'src/app/service/http.service';
 import { ThemeConstantService } from '../../services/theme-constant.service';
+import { GlobalService } from 'src/app/service/global.service';
 
 @Component({
     selector: 'app-header',
@@ -16,9 +17,16 @@ export class HeaderComponent{
     isFolded : boolean;
     isExpand : boolean;
 
-    constructor( private themeService: ThemeConstantService, private modal: NzModalService, private http: HttpService, private router: Router) {}
-
+    constructor( private themeService: ThemeConstantService, private modal: NzModalService, 
+        private http: HttpService, private router: Router, private global:GlobalService) {}
+    
+    globalAccData : any;
     ngOnInit(): void {
+        this.global.globalAccountData.subscribe((res:any)=>{
+            if(res){
+                this.globalAccData = res;
+            }
+        })
         this.themeService.isMenuFoldedChanges.subscribe(isFolded => this.isFolded = isFolded);
         this.themeService.isExpandChanges.subscribe(isExpand => this.isExpand = isExpand);
     }

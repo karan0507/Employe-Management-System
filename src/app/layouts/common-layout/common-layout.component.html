@@ -11,9 +11,9 @@
             <div class="main-content-header d-flex justify-content-between mb-0 py-2 flex-wrap" *ngIf="showBreadCrumb">
                 <div class="d-flex flex-wrap align-items-center">
                     <div class="d-flex justify-content-start align-items-center" *ngIf="_currHeaderData?.isHome">
-                        <!-- <img src="../../../assets/images/Ext_Images/Ellipse 1201cng_log.svg" alt="" height="50px"
+                        <img src="../../../assets/images/Ext_Images/Ellipse 1201cng_log.svg" routerLink="/home" alt="" height="50px"
                             class="h-auto mr-3">
-                        <h6>MLA Devendra Yadav</h6> -->
+                        <h4>{{_currLang == 'en' ? globalAccData?.name?.en : globalAccData?.name?.hi}}</h4>
                     </div>
                     <span *ngIf="_currHeaderData?.isButton && !(_currHeaderData?.isHome)"
                         [routerLink]="_currHeaderData?.url" class="font-size-18 mr-3 text-dark" nz-icon
@@ -39,7 +39,7 @@
             <h4 class="font-weight-semibold d-none" [ngClass]="showBreadCrumb ? 'mt-4' : ''"
                 *ngIf="breadcrumbs$ | async; let breadcrumbs">{{(breadcrumbs[breadcrumbs.length - 1]?.label)}}</h4>
         </div>
-        <div class="main-content p-4" [ngClass]="contentHeaderDisplay !== 'none' ? 'pt-3' : ''">
+        <div class="main-content p-3" [ngClass]="contentHeaderDisplay !== 'none' ? 'pt-3' : ''">
             <router-outlet></router-outlet>
         </div>
         <app-footer></app-footer>

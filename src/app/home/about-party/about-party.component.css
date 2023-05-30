@@ -49,4 +49,8 @@
     text-align: center;
   }
   
+  .mlaBanner{
+    background-image: url('../../../assets/images/Ext_Images/mla_banner.svg');
+    background-size: cover;
+  }
   

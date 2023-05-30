@@ -1,1 +1,15 @@
-dfds
+<div class="d-flex justify-content-between">
+    <label
+      nz-checkbox
+      [(ngModel)]="allChecked"
+      (ngModelChange)="updateAllChecked()"
+      [nzIndeterminate]="indeterminate"
+    >
+      Select All
+    </label>
+    <br />
+    <a class="text-primary font-weight-semibold" (click)="updateAllChecked(true); allChecked = false">Clear All</a>
+  </div>
+ 
+  <nz-checkbox-group style="width: 70%;" [(ngModel)]="checkOptionsOne" (ngModelChange)="updateSingleChecked()">
+  </nz-checkbox-group>

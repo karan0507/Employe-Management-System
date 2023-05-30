@@ -24,6 +24,7 @@ import { SideNavDirective } from "../directives/side-nav.directive";
 import { ThemeConstantService } from '../services/theme-constant.service';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 
 const antdModule = [
     NzAvatarModule,
@@ -35,7 +36,8 @@ const antdModule = [
     NzDividerModule,
     NzSwitchModule,
     NzInputModule,
-    NzButtonModule
+    NzButtonModule,
+    NzCheckboxModule
 ]
 
 @NgModule({

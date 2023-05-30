@@ -1,69 +1,75 @@
 <div class="d-flex align-items-center">
     <!-- <div class="col-10 mb-3"> -->
-        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-            <input type="text" nz-input placeholder="Search By Activity Name/ Month" [(ngModel)]="_currSearchValue" />
-        </nz-input-group>
-        <ng-template #suffixIconButton>
-            <button nz-button nzType="secondary" nzSearch>
-                <i nz-icon nzType="search"></i>
-            </button>
-        </ng-template>
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+        <input type="text" nz-input placeholder="Search By Activity Name/ Month" [(ngModel)]="_currSearchValue" />
+    </nz-input-group>
+    <ng-template #suffixIconButton>
+        <button nz-button nzType="secondary" nzSearch>
+            <i nz-icon nzType="search"></i>
+        </button>
+    </ng-template>
     <!-- </div> -->
     <!-- <div class="col-2 mb-3"> -->
-        <span nz-icon nzType="filter" class="font-size-24 ml-3" nzTheme="outline" (click)="quickViewVisible = true"></span>
+    <span nz-icon nzType="filter" class="font-size-24 ml-3" nzTheme="outline" (click)="quickViewVisible = true"></span>
     <!-- </div> -->
 </div>
 
 <main>
     <!-- <section class="header-image"> -->
-        <!-- <div class="header-image-text">
+    <!-- <div class="header-image-text">
           <h1>Hero Image.
             <p>Text Text Text</p>
           </h1>
         </div> -->
-      <!-- </section> -->
-        <div class="container bannerContext">
-            <!-- <div class="bannerContext"> -->
-                <img src="../../../assets/images/Ext_Images/bannerImage.svg" class="w-100 img my-3" alt="">
-                <div class="d-flex flex-column align-items-center justify-content-center context py-3">
-                    <img src="../../../assets/images/Ext_Images/Ellipse 1201cng_log.svg" alt="" height="40px">
-                    <h6 class="text-white d-flex d-lg-none mb-0">Congress Party</h6>
-                    <h3 class="text-white d-lg-flex d-none mb-0 font-size-24">Congress Party</h3>
-                    <h4 class="text-white d-flex d-lg-none" style="white-space: nowrap;">Devendra Yadav</h4>
-                    <h1 class="text-white d-lg-flex d-none font-size-60" style="white-space: nowrap;">Devendra Yadav</h1>
-                    <button nz-button nzType="link" [routerLink]="'/home/about-party'"
-                     class="d-xs-none d-lg-none d-flex bg-white text-primary" nzSize="small">Know More 
-                        <span nz-icon
-                        nzType="arrow-right" nzTheme="outline"></span>    
-                    </button>
-                    <button nz-button nzType="link" [routerLink]="'/home/about-party'"
-                    class="d-xs-none d-lg-flex bg-white text-primary d-none font-weight-bold" nzSize="large">Know More 
-                       <span nz-icon
-                       nzType="arrow-right" nzTheme="outline"></span>    
-                   </button>
-                </div>
+    <!-- </section> -->
+    <div class="container bannerContext" *ngIf="isBannerVisible">
+        <!-- <div class="bannerContext"> -->
+        <span nz-icon nzType="close" nzTheme="outline" class="text-white font-size-16 font-weight-bold"
+            style="position: absolute; right: 1rem; top: 2rem;" (click)="isBannerVisible = false"></span>
+        <img src="../../../assets/images/Ext_Images/bannerImage.svg" class="w-100 img my-3" alt="">
+        <div class="d-flex flex-column align-items-center justify-content-center context py-3">
+            <img src="../../../assets/images/Ext_Images/Ellipse 1201cng_log.svg" alt="" height="40px">
+            <h6 class="text-white d-flex d-lg-none mb-0">{{_currLanguage == 'en' ? globalData?.party_name?.en : globalData?.party_name?.hi}}</h6>
+            <h3 class="text-white d-lg-flex d-none mb-0 font-size-24">{{_currLanguage == 'en' ? globalData?.party_name?.en : globalData?.party_name?.hi}}</h3>
+            <h4 class="text-white d-flex d-lg-none" style="white-space: nowrap;">{{_currLanguage == 'en' ? globalData?.name?.en : globalData?.name?.hi}}</h4>
+            <h1 class="text-white d-lg-flex d-none font-size-60" style="white-space: nowrap;">{{_currLanguage == 'en' ? globalData?.name?.en : globalData?.name?.hi}}</h1>
+            <button nz-button nzType="link" [routerLink]="'/home/about-party'"
+                class="d-xs-none d-lg-none d-flex bg-white text-primary" nzSize="small">{{_currLanguage == 'en' ? 'Know More' : 'अधिक जानकारी'}}
+                <span nz-icon nzType="arrow-right" nzTheme="outline"></span>
+            </button>
+            <button nz-button nzType="link" [routerLink]="'/home/about-party'"
+                class="d-xs-none d-lg-flex bg-white text-primary d-none font-weight-bold" nzSize="large">{{_currLanguage == 'en' ? 'Know More' : 'अधिक जानकारी'}}
+                <span nz-icon nzType="arrow-right" nzTheme="outline"></span>
+            </button>
         </div>
-        <div class="row">
-            <div class="col-md-12" *ngFor="let item of votersist">
-                <div class="d-flex align-items-center p-3 mt-2">
-                    <img nzIcon="user" width="80" height="80" class="mr-4 rounded-circle"
-                    [src]="item?.url">
-                    <div class="d-flex flex-column">
-                        <h4 class="text-dark">{{item?.user_name}}</h4>
-                        <label class="text-primary mb-2">EPIC_NO: {{item?.epic_no}}</label>
-                        <div class="d-flex justify-content-between">
-                            <nz-tag *ngFor="let data of item?.tags">{{data?.value}}</nz-tag>
+    </div>
+    <div class="row">
+        <div class="col-md-12" *ngFor="let item of votersList">
+            <div class="d-flex align-items-center p-3 mt-2" [routerLink]="'/voter'" [queryParams]="{id:item?.id}">
+                <img nzIcon="user" width="80" height="80" class="mr-5 rounded-circle" [src]="'../.././../assets/images/avatars/thumb-10.jpg'">
+                <div class="d-flex flex-column">
+                    <h6 class="text-dark">{{_currLanguage == 'en' ? item?.full_name_en : item?.full_name_hi}}</h6>
+                    <label class="text-primary mb-2">EPIC_NO: {{item?.epic_no}}</label>
+                    <div class="d-flex justify-content-between">
+                        <nz-tag class="mr-3">Booth No 5</nz-tag>  <nz-tag>Ward No J</nz-tag>
                         
-                        </div>
                     </div>
-
                 </div>
+
             </div>
         </div>
-    </main>
+    </div>
+</main>
 
 <section *ngIf="quickViewVisible">
-    <nz-drawer  [nzWidth]="280" nzTitle="Quick View" [nzClosable]="false" [nzVisible]="quickViewVisible" nzPlacement="right" (nzOnClose)="quickViewToggle()">
+    <nz-drawer [nzWidth]="280" [nzTitle]="filtersTemplate" [nzClosable]="false" [nzVisible]="quickViewVisible"
+        nzPlacement="right" (nzOnClose)="quickViewToggle()">
         <app-quick-view></app-quick-view>
-    </nz-drawer> 
+        <ng-template #filtersTemplate>
+            <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">Filters</h6>
+                <!-- <button nz-button nzType="link" class="text-primary font-weight-semibold">Clear All</button> -->
+            </div>
+        </ng-template>
+    </nz-drawer>
 </section>

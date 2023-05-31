@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const FullLayout_ROUTES = [{\n  path: 'authentication',\n  loadChildren: () => import('../../authentication/authentication.module').then(m => m.AuthenticationModule)\n}];","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

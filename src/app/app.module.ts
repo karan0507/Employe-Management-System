@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
@@ -23,6 +23,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CustomInterceptor } from './service/custom.interceptor';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { AgmCoreModule } from '@agm/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
 // import { NgxGoogleMapModule } from 'ngx-google-map';
 registerLocaleData(en);
 
@@ -57,6 +58,12 @@ registerLocaleData(en);
         //   }),
      
         NgxPermissionsModule.forRoot(),
+        ServiceWorkerModule.register('ngsw-worker.js', {
+          enabled: !isDevMode(),
+          // Register the ServiceWorker as soon as the application is stable
+          // or after 30 seconds (whichever comes first).
+          registrationStrategy: 'registerWhenStable:30000'
+        }),
         
     ],
     providers: [

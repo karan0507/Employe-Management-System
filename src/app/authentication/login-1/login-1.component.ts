@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NzMessageService } from "ng-zorro-antd/message";
 import { timer } from "rxjs";
@@ -13,7 +13,7 @@ import { NgxPermissionsService } from 'ngx-permissions';
   templateUrl: "./login-1.component.html",
 })
 export class Login1Component {
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
   modalHeadingTitle = "Terms of service";
   termConditionModal: boolean = false;
   _currentSection = "loginForm";
@@ -32,7 +32,7 @@ export class Login1Component {
 
   constructor(
     private globalFunction: GlobalService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private HttpService: HttpService,
     private message: NzMessageService,
     private router: Router,

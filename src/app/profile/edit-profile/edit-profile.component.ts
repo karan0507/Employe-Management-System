@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -11,7 +11,7 @@ import { HttpService } from 'src/app/service/http.service';
   styleUrls: ['./edit-profile.component.css']
 })
 export class EditProfileComponent implements OnInit {
-  profileForm : FormGroup;
+  profileForm : UntypedFormGroup;
   _currUserId:any
 
   disabledDate = (current: Date): boolean =>
@@ -27,7 +27,7 @@ customRanges = {
   'This Year': [new Date(new Date().getFullYear(), 0, 1), new Date()],
   'Last Year': [new Date(new Date().getFullYear() - 1, 0, 1), new Date(new Date().getFullYear() - 1, 11, 31)],
 };
-  constructor(private fb:FormBuilder, private message:NzMessageService, private router:Router, 
+  constructor(private fb:UntypedFormBuilder, private message:NzMessageService, private router:Router, 
     private acroute:ActivatedRoute, private http:HttpService) { }
 
   ngOnInit(): void {

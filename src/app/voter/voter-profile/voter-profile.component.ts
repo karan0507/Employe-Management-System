@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzMarks } from 'ng-zorro-antd/slider/public-api';
@@ -12,7 +12,7 @@ import { HttpService } from 'src/app/service/http.service';
   styleUrls: ['./voter-profile.component.css']
 })
 export class VoterProfileComponent implements OnInit {
-  followUpForm: FormGroup
+  followUpForm: UntypedFormGroup
   api_loading = {
     'card': false,
     'cardActvity': false,
@@ -60,7 +60,7 @@ export class VoterProfileComponent implements OnInit {
   _currLanguage: any
   quickViewVisible: boolean = false;
   constructor(private router: Router, private acRoute: ActivatedRoute, private message: NzMessageService,
-    private global: GlobalService, private http: HttpService, private fb: FormBuilder) { }
+    private global: GlobalService, private http: HttpService, private fb: UntypedFormBuilder) { }
 
   ngOnInit(): void {
     this._currLanguage = localStorage.getItem("appLanguage") || 'en';

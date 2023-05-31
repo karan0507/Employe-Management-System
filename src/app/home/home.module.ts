@@ -15,6 +15,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { SharedModule } from '../shared/shared.module';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { AboutPartyComponent } from './about-party/about-party.component';
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { AboutPartyComponent } from './about-party/about-party.component';
         ReactiveFormsModule,
         NzFormModule,
         NzTagModule,
-        SharedModule
+        SharedModule,
+        NzCardModule
     ]
 })
 export class HomeModule { }

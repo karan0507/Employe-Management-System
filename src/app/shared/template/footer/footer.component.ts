@@ -14,17 +14,24 @@ export class FooterComponent implements OnInit{
     constructor(private global:GlobalService, public router:Router){}
 
     ngOnInit(){
-        this.global.globalNavValue.subscribe(res=>{
-            if(res){
-                this.radioValue = res;
-            }
-        })
+        console.log('res');
+     this.radioValue = localStorage.getItem('menuItem') ? localStorage.getItem('menuItem') : 'home'
+        // this.global.globalNavValue.subscribe(res=>{
+        //     console.log(res);
+            
+        //     if(res){
+        //         this.radioValue = res;
+        //     }else{
+        //         this.global.setCurrNavValue('home') 
+        //     }
+        // })
     }
 
     changeAppNav(){
         // this.radioValue = event
         console.log(this.radioValue)
-        this.global.setCurrNavValue(this.radioValue)    
+        // this.global.setCurrNavValue(this.radioValue)
+        localStorage.setItem('menuItem',this.radioValue)    
         this.router.navigateByUrl("/"+this.radioValue)
     }
 }

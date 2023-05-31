@@ -11,6 +11,7 @@ import { HttpService } from 'src/app/service/http.service';
 export class HomeComponent implements OnInit {
   quickViewVisible : boolean = false;
   _currSearchValue : any;
+  api_loader = {'list':false}
   votersist:any = [
     {user_name:'Amit Jain',epic_no:'1685419',url:'../.././../assets/images/avatars/dy_post_image.jpg', tags:[{value:'Booth no 5'},{value:'Ward No 8'}]},
     {user_name:'Ayesha',epic_no:'1685419',url:'../.././../assets/images/avatars/thumb-9.jpg', tags:[{value:'Booth no 5'},{value:'Ward No 8'}]},
@@ -37,12 +38,16 @@ export class HomeComponent implements OnInit {
   pageIndex= 1;
   globalPageSize = 30;
   getVotersList(){
+    this.api_loader['list'] = true
     let data = {'end_point':'FETCH_VOTER_LIST_API_URL'}
     data['page'] = this.pageIndex;
     data['limit'] = this.globalPageSize;
       this.http.getVoterList(data).subscribe((res:any)=>{
         if(res.success){
           this.votersList = res.data;
+          this.api_loader['list'] = false
+        }else{
+           this.api_loader['list'] = false
         }
       })
   }

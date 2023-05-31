@@ -34,15 +34,16 @@
             <h4 class="text-white d-flex d-lg-none" style="white-space: nowrap;">{{_currLanguage == 'en' ? globalData?.name?.en : globalData?.name?.hi}}</h4>
             <h1 class="text-white d-lg-flex d-none font-size-60" style="white-space: nowrap;">{{_currLanguage == 'en' ? globalData?.name?.en : globalData?.name?.hi}}</h1>
             <button nz-button nzType="link" [routerLink]="'/home/about-party'"
-                class="d-xs-none d-lg-none d-flex bg-white text-primary" nzSize="small">{{_currLanguage == 'en' ? 'Know More' : 'अधिक जानकारी'}}
+                class="d-xs-none d-lg-none d-flex bg-white text-primary align-items-center" nzSize="small">{{_currLanguage == 'en' ? 'Know More' : 'अधिक जानकारी'}}
                 <span nz-icon nzType="arrow-right" nzTheme="outline"></span>
             </button>
             <button nz-button nzType="link" [routerLink]="'/home/about-party'"
-                class="d-xs-none d-lg-flex bg-white text-primary d-none font-weight-bold" nzSize="large">{{_currLanguage == 'en' ? 'Know More' : 'अधिक जानकारी'}}
+                class="d-xs-none d-lg-flex bg-white align-items-center text-primary d-none font-weight-bold" nzSize="large">{{_currLanguage == 'en' ? 'Know More' : 'अधिक जानकारी'}}
                 <span nz-icon nzType="arrow-right" nzTheme="outline"></span>
             </button>
         </div>
     </div>
+  <nz-card [nzLoading]="api_loader['list']">
     <div class="row">
         <div class="col-md-12" *ngFor="let item of votersList">
             <div class="d-flex align-items-center p-3 mt-2" [routerLink]="'/voter'" [queryParams]="{id:item?.id}">
@@ -59,6 +60,7 @@
             </div>
         </div>
     </div>
+  </nz-card>
 </main>
 
 <section *ngIf="quickViewVisible">

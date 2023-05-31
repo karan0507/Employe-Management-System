@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { ReplaySubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { HttpService } from './http.service';
 import * as CryptoJS from 'crypto-js';
 import { saveAs } from "file-saver";
@@ -20,7 +20,7 @@ export class GlobalService {
   api_call_loader: any = { 'selectLoader': false }
 
   // Current App Nav;
-  public globalNavValue = new ReplaySubject<any>();
+  public globalNavValue = new BehaviorSubject<any>('');
 
   constructor(public message: NzMessageService, public http: HttpService) { }
 

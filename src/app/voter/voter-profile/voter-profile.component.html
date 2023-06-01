@@ -19,8 +19,8 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <button nz-button nzType="link" class="d-flex align-items-center"
-                        style="border: 1px solid #3C0480;">
+                    <button nz-button nzType="link" class="d-flex align-items-center" style="border: 1px solid #3C0480;"
+                        (click)="createVoterProfileForm()">
                         <span nz-icon nzType="form" nzTheme="outline" class="mr-2"></span> Edit</button>
 
                 </div>
@@ -49,30 +49,33 @@
         <div>
             <nz-tabset [nzTabPosition]="'top'" [(nzSelectedIndex)]="_currTabName"
                 (nzSelectChange)="onTabChange($event)">
-                <nz-tab class="text-gray" *ngFor="let tab of partyTabs" [nzTitle]="tabName" [nzForceRender]="'true'">
+                <nz-tab class="text-gray" *ngFor="let tab of partyTabs" [nzDisabled]="isEdit ? true : false"
+                    [nzTitle]="tabName" [nzForceRender]="'true'">
                     <ng-template #tabName>
                         <h6>{{tab?.name}}</h6>
                     </ng-template>
                     <section *ngIf="_currTabName == 0">
-                        <div class="row">
-                            <div class="col-md-12 my-3" *ngFor="let item of profileLogs">
-                                <div class="d-flex justify-content-between align-items-center w-100">
-                                    <div class="d-flex flex-column">
-                                        <label>{{item?.title}}</label>
-                                        <h6 class="mb-0">{{item?.value}}</h6>
+                        <section>
+                            <div class="row">
+                                <div class="col-md-12 my-3" *ngFor="let item of profileLogs">
+                                    <div class="d-flex justify-content-between align-items-center w-100">
+                                        <div class="d-flex flex-column">
+                                            <label>{{item?.title}}</label>
+                                            <h6 class="mb-0">{{item?.value}}</h6>
+                                        </div>
+                                        <div>
+                                            <img [src]="item?.icon" alt="">
+                                        </div>
                                     </div>
-                                    <div>
-                                        <img [src]="item?.icon" alt="">
-                                    </div>
+                                    <nz-divider class="my-2"></nz-divider>
                                 </div>
-                                <nz-divider class="my-2"></nz-divider>
                             </div>
+                        </section>
 
-                        </div>
                     </section>
 
 
-                    <!-- Activity -->
+
                     <section *ngIf="_currTabName == 1">
 
                         <div class="row">
@@ -123,6 +126,9 @@
                         </div>
                     </section>
 
+
+
+                    <!-- Activity -->
                     <section *ngIf="_currTabName == 2">
 
                         <div class="row">
@@ -276,7 +282,7 @@
                                             nzShowSearch nzAllowClear (nzFocus)="getActivityList()"
                                             (click)="isDirty= true">
                                             <nz-option *ngFor="let item of activityList" [nzValue]="item?.id"
-                                                [nzLabel]="item?.name">
+                                                [nzLabel]="_currLanguage == 'en' ? item?.name?.en : item?.name?.hi">
                                             </nz-option>
                                         </nz-select>
                                     </nz-form-control>
@@ -285,25 +291,24 @@
 
                             <div class="col-md-12" *ngIf="currFormType == 'followUp'">
                                 <nz-form-item>
-                                    <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Time
+                                    <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Mark Followup
                                     </nz-form-label>
-                                    <nz-form-control [nzSm]="16" [nzXs]="24" nzErrorTip="Please select your activity!">
-                                        <nz-time-picker formControlName="followupTime" nzSize="large"></nz-time-picker>
-                                        <!-- <nz-time-picker formControlName="followupHour"></nz-time-picker> -->
-                                        <!-- <nz-select nzPlaceHolder="Select Actvity" formControlName="activity_type" nzShowSearch
-                                            nzAllowClear (nzFocus)="getActivityList()" (click)="isDirty= true">
-                                            <nz-option *ngFor="let item of activityList" [nzValue]="item?.id"
-                                                [nzLabel]="item?.name">
+                                    <nz-form-control [nzSm]="16" [nzXs]="24"
+                                        nzErrorTip="Please select your followup type!">
+                                        <nz-select nzPlaceHolder="Select Follow up" formControlName="followup_type"
+                                            nzShowSearch nzAllowClear (nzFocus)="getFolloupList()"
+                                            (click)="isDirty= true">
+                                            <nz-option *ngFor="let item of followUpList" [nzValue]="item?.id"
+                                                [nzLabel]="_currLanguage == 'en' ? item?.name?.en : item?.name?.hi">
                                             </nz-option>
-                                        </nz-select> -->
+                                        </nz-select>
                                     </nz-form-control>
                                 </nz-form-item>
                             </div>
 
                             <div class="col-md-12">
                                 <nz-form-item>
-                                    <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired
-                                        nzFor="name">Comments
+                                    <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Comments
                                     </nz-form-label>
                                     <nz-form-control [nzSm]="16" [nzXs]="24" nzErrorTip="Please enter comments!">
                                         <textarea rows="4" nz-input formControlName="comments"
@@ -349,7 +354,7 @@
                 </div>
                 <div class="col-md-12">
                     <nz-slider [(ngModel)]="rating" [nzMarks]="marks" [nzMin]="0" [nzMax]="10"></nz-slider>
-                        {{rating+'/10'}}
+                    {{rating+'/10'}}
                 </div>
                 <div class="col-md-12 mt-5">
                     <button nz-button nzType="primary" (click)="rateVoter()" nzBlock>Submit</button>

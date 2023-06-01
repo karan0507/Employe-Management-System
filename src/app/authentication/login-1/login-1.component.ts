@@ -46,8 +46,8 @@ export class Login1Component {
     },
     login: { title: '', subtitle: '', placeholder_mob: '', mob_error: '', placeholder_name: '', name_error: '' },
     btn: { btn1: '', btn2: '' },
-    otp: { title: '', subtitle: '', resendOtp:'',btnOtp: '', btnSubText: '' },
-    successScreen:''
+    otp: { title: '', subtitle: '', resendOtp: '', btnOtp: '', btnSubText: '' },
+    successScreen: ''
   }
 
   ngOnInit(): void {
@@ -69,9 +69,11 @@ export class Login1Component {
           placeholder_name: 'Enter your Full Name', name_error: ''
         },
         btn: { btn1: 'Get OTP', btn2: '' },
-        otp: { title: 'Enter Verification Code', subtitle: 'Type the 6-digit verification code sent on your registered Mobile associated with code',
-         btnOtp: 'Verify', btnSubText: 'Didn’t receive an OTP?', resendOtp:'Resend OTP' },
-         successScreen:'Your Mobile number has been successfully verified'
+        otp: {
+          title: 'Enter Verification Code', subtitle: 'Type the 6-digit verification code sent on your registered Mobile associated with code',
+          btnOtp: 'Verify', btnSubText: 'Didn’t receive an OTP?', resendOtp: 'Resend OTP'
+        },
+        successScreen: 'Your Mobile number has been successfully verified'
       }
     } else {
       this.loginPageContext = {
@@ -85,8 +87,8 @@ export class Login1Component {
           placeholder_name: 'अपना पूरा नाम भरें', name_error: 'कृपया पूरा नाम दर्ज करें'
         },
         btn: { btn1: 'ओटीपी प्राप्त करें', btn2: '' },
-        otp: { title: 'सत्यापन कोड दर्ज करें', subtitle: 'कोड से जुड़े अपने पंजीकृत मोबाइल पर भेजा गया 6 अंकों का सत्यापन कोड टाइप करें', resendOtp:'ओटीपी पुनः भेजें', btnOtp: 'सत्यापित करना', btnSubText: 'क्या आपको ओटीपी नहीं मिला?' },
-        successScreen:'आपका मोबाइल नंबर हो गया है सफलतापूर्वक सत्यापित'
+        otp: { title: 'सत्यापन कोड दर्ज करें', subtitle: 'कोड से जुड़े अपने पंजीकृत मोबाइल पर भेजा गया 6 अंकों का सत्यापन कोड टाइप करें', resendOtp: 'ओटीपी पुनः भेजें', btnOtp: 'सत्यापित करना', btnSubText: 'क्या आपको ओटीपी नहीं मिला?' },
+        successScreen: 'आपका मोबाइल नंबर हो गया है सफलतापूर्वक सत्यापित'
       }
     }
 
@@ -165,6 +167,8 @@ export class Login1Component {
         this.router.navigate(["/authentication/login"]);
         localStorage.removeItem("iyc_user_data");
         localStorage.removeItem("iyc_user_token");
+        localStorage.removeItem('appLanguage')
+        localStorage.removeItem('menuItem')
       }
     );
   }

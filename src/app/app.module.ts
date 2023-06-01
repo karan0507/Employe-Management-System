@@ -23,6 +23,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CustomInterceptor } from './service/custom.interceptor';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { AgmCoreModule } from '@agm/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 // import { NgxGoogleMapModule } from 'ngx-google-map';
 registerLocaleData(en);
 
@@ -57,6 +59,7 @@ registerLocaleData(en);
         //   }),
      
         NgxPermissionsModule.forRoot(),
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
         
     ],
     providers: [

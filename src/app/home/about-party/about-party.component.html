@@ -82,23 +82,25 @@
             </div>
         </section>
         <section *ngIf="tab.name == 'Members' || _currTabName == 2">
-     
-            <div class="row">
-                <div class="col-md-12" *ngFor="let item of votersList">
-                    <div class="d-flex align-items-center p-3 mt-2" [routerLink]="'/voter'" [queryParams]="{id:item?.id}">
-                        <img nzIcon="user" width="80" height="80" class="mr-5 rounded-circle" [src]="'../.././../assets/images/avatars/thumb-10.jpg'">
-                        <div class="d-flex flex-column">
-                            <h6 class="text-dark">{{_currLanguage == 'en' ? item?.full_name_en : item?.full_name_hi}}</h6>
-                            <label class="text-primary mb-2">EPIC_NO: {{item?.epic_no}}</label>
-                            <div class="d-flex justify-content-between">
-                                <nz-tag class="mr-3">Booth No 5</nz-tag>  <nz-tag>Ward No J</nz-tag>
-                                
-                            </div>
+     <nz-card [nzLoading]="api_call['list']">
+
+        <div class="row">
+            <div class="col-md-12" *ngFor="let item of votersList">
+                <div class="d-flex align-items-center p-3 mt-2" [routerLink]="'/voter'" [queryParams]="{id:item?.id}">
+                    <img nzIcon="user" width="80" height="80" class="mr-5 rounded-circle" [src]="'../.././../assets/images/avatars/thumb-10.jpg'">
+                    <div class="d-flex flex-column">
+                        <h6 class="text-dark">{{_currLanguage == 'en' ? item?.full_name_en : item?.full_name_hi}}</h6>
+                        <label class="text-primary mb-2">EPIC_NO: {{item?.epic_no}}</label>
+                        <div class="d-flex justify-content-between">
+                            <nz-tag class="mr-3">Booth No 5</nz-tag>  <nz-tag>Ward No J</nz-tag>
+                            
                         </div>
-        
                     </div>
+    
                 </div>
             </div>
+        </div>
+     </nz-card>
         </section>
     </nz-tab>
 </nz-tabset>

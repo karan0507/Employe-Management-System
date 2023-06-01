@@ -209,7 +209,7 @@ export class HttpService {
   }
 
   public addVoterActivity(data) {
-    return this.http.post(this.url + `/voters/v1/voter-activity/add-voter-activity/`, { params: data })
+    return this.http.post(this.url + `/voters/v1/voter-activity/add-voter-activity`,data)
   }
 
 
@@ -227,7 +227,7 @@ export class HttpService {
   }
 
   public addVoterFollowup(data) {
-    return this.http.post(this.url + `/voters/v1/voter-activity/add-voter-activity/`, { params: data })
+    return this.http.post(this.url + `/voters/v1/voter-followup/add-voter-followup`, data)
   }
 
   

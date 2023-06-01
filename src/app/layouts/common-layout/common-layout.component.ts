@@ -131,11 +131,13 @@ export class CommonLayoutComponent  {
                 this.router.navigate(['/authentication/employee-login']);
                 localStorage.removeItem('iyc_user_token')
                 localStorage.removeItem('iyc_user_data')
+                localStorage.removeItem('appLanguage') 
             }
         }, (err) => {
             this.router.navigate(['/authentication/login']);
             localStorage.removeItem('iyc_user_token')
             localStorage.removeItem('iyc_user_data')
+            localStorage.removeItem('menuItem') 
         })
     }
 

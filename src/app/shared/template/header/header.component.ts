@@ -66,7 +66,9 @@ export class HeaderComponent{
           this.modal.closeAll()
           this.router.navigate(['/authentication/login']);
           localStorage.removeItem("iyc_user_token");
-          localStorage.removeItem("iyc_user_data")
+          localStorage.removeItem("iyc_user_data");
+          localStorage.removeItem('appLanguage') 
+          localStorage.removeItem('menuItem') 
         })
       }
 

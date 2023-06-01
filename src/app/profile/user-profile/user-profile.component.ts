@@ -40,7 +40,9 @@ logoutUserFunction(){
       this.message.success(res.message);
       this.router.navigateByUrl('/authentication/login')
       localStorage.removeItem('iyc_user_token')
-      localStorage.removeItem('iyc_user_data')
+      localStorage.removeItem('iyc_user_data') 
+      localStorage.removeItem('appLanguage') 
+      localStorage.removeItem('menuItem') 
       localStorage.removeItem('global_account_data')
     }
   })

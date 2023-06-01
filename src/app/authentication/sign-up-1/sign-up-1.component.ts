@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup,  Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup,  Validators } from '@angular/forms';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup,  Validators }
 
 export class SignUp1Component {
 
-    signUpForm: UntypedFormGroup;
+    signUpForm: FormGroup;
 
     submitForm(): void {
         for (const i in this.signUpForm.controls) {
@@ -21,7 +21,7 @@ export class SignUp1Component {
         Promise.resolve().then(() => this.signUpForm.controls.checkPassword.updateValueAndValidity());
     }
 
-    confirmationValidator = (control: UntypedFormControl): { [s: string]: boolean } => {
+    confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
         if (!control.value) {
             return { required: true };
         } else if (control.value !== this.signUpForm.controls.password.value) {
@@ -29,7 +29,7 @@ export class SignUp1Component {
         }
     }
 
-    constructor(private fb: UntypedFormBuilder) {
+    constructor(private fb: FormBuilder) {
     }
 
     ngOnInit(): void {

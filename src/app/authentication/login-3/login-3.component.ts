@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { UntypedFormBuilder, UntypedFormGroup,  Validators } from '@angular/forms';
+import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
 
 
 @Component({
@@ -7,7 +7,7 @@ import { UntypedFormBuilder, UntypedFormGroup,  Validators } from '@angular/form
 })
 
 export class Login3Component {
-    loginForm: UntypedFormGroup;
+    loginForm: FormGroup;
 
     submitForm(): void {
         for (const i in this.loginForm.controls) {
@@ -16,7 +16,7 @@ export class Login3Component {
         }
     }
 
-    constructor(private fb: UntypedFormBuilder) {
+    constructor(private fb: FormBuilder) {
     }
 
     ngOnInit(): void {

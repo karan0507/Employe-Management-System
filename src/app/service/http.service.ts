@@ -266,5 +266,25 @@ export class HttpService {
     return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`,{params:data})  
   }
   
+  // Rating voter
+  public getVoterRating(data){
+    return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`,{params:data})  
+  }
+  
+  public addVoterRating(data){
+    
+    return this.http.get(this.url + `/voters/v1/voter-rating/add-voter-rating`,{params:data})  
+  }
+  
+
+  public editVoterRating(data){
+    return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`,{params:data})  
+  }
+  
+  public deleteoterRating(data){
+    return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`,{params:data})  
+  }
+  
+
   
 }

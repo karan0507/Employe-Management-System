@@ -1,1 +1,0 @@
-{"ast":null,"code":"export const ROUTES = [{\n  path: \"/dashboard/home\",\n  title: \"Dashboard\",\n  iconType: \"nzIcon\",\n  iconTheme: \"outline\",\n  icon: \"dashboard\",\n  permission: 'view_dashboard',\n  submenu: []\n}];","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

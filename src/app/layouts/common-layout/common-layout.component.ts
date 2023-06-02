@@ -50,6 +50,7 @@ export class CommonLayoutComponent  {
     }
 
     ngOnInit() {
+        // console.log(this.device.getDeviceInfo())
         if (localStorage.getItem('iyc_user_token')) {
             this.VerifyUserFunction()
         } 
@@ -140,6 +141,7 @@ export class CommonLayoutComponent  {
             localStorage.removeItem('menuItem') 
         })
     }
+    
 
     globalAccData : any
     _currLang:any

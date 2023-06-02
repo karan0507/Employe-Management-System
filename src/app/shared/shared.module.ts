@@ -11,6 +11,7 @@ import { SearchPipe } from './pipes/search.pipe';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { AvoidNumbersDirective } from '../../app/shared/directives/avoid-numbers.directive';
+// import { DeviceDetectorService } from 'ngx-device-detector';
 
 @NgModule({
     exports: [
@@ -30,7 +31,9 @@ import { AvoidNumbersDirective } from '../../app/shared/directives/avoid-numbers
         NzToolTipModule,
         PerfectScrollbarModule,
         NzModalModule,
-        // NgxPermissionsModule.forChild(),
+        // DeviceDetectorService,
+        // DeviceDetectorService.forRoot()
+        NgxPermissionsModule.forChild(),
     ],
     declarations: [
         SearchPipe

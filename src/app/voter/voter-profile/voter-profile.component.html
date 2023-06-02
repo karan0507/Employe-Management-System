@@ -357,7 +357,7 @@
                     {{rating+'/10'}}
                 </div>
                 <div class="col-md-12 mt-5">
-                    <button nz-button nzType="primary" (click)="rateVoter()" nzBlock>Submit</button>
+                    <button nz-button nzType="primary" (click)="rateVoter()" [nzLoading]="api_loading['btn_Rating']" nzBlock>Submit</button>
                 </div>
             </div>
         </nz-drawer>

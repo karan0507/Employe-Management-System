@@ -24,6 +24,7 @@ export class VoterProfileComponent implements OnInit {
     'cardFollowup': false,
     'button_markActivity': false,
     'button_markFolloup': false,
+    'btn_Rating':false
   }
   _currTabName: any;
   partyTabs: any = [
@@ -297,7 +298,24 @@ export class VoterProfileComponent implements OnInit {
   }
 
   rateVoter(){
-
+    this.api_loading['btn_Rating'] = true;
+    let data= {}
+    data['voter_id'] = this._currVoterId
+    data['rating'] = this.rating
+    this.http.addVoterRating(data).subscribe((res:any)=>{
+      if(res.success){
+        this.api_loading['btn_Rating'] = false
+        this.isRatingDrawer = false
+        this.message.success(res.message)
+      }else{
+        this.api_loading['btn_Rating'] = false
+        this.isRatingDrawer = false
+        this.message.success(res.message)
+      }
+    },error=>{
+      this.api_loading['btn_Rating'] = false
+      this.isRatingDrawer = false
+    })
   }
 
   createVoterProfileForm(){

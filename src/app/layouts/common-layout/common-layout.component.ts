@@ -50,7 +50,6 @@ export class CommonLayoutComponent  {
     }
 
     ngOnInit() {
-        // console.log(this.device.getDeviceInfo())
         if (localStorage.getItem('iyc_user_token')) {
             this.VerifyUserFunction()
         } 

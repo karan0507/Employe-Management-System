@@ -34,6 +34,7 @@
     "date-fns": "^2.29.1",
     "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
+    "http-server": "^14.1.1",
     "jquery": "^3.5.1",
     "ng-chartjs": "^0.2.1",
     "ng-otp-input": "^1.7.7",

@@ -23,7 +23,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CustomInterceptor } from './service/custom.interceptor';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { AgmCoreModule } from '@agm/core';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { ServiceWorkerModule } from '@angular/service-worker'
+import { DeviceDetectorService } from 'ngx-device-detector';;
 // import { NgxGoogleMapModule } from 'ngx-google-map';
 registerLocaleData(en);
 
@@ -80,6 +81,10 @@ registerLocaleData(en);
             useClass: CustomInterceptor,
             multi: true
         },
+        // {
+        //     provide: DeviceDetectorService,
+        //     useClass: UniversalDeviceDetectorService
+        // },
         ThemeConstantService,NzMessageService
     ],
     bootstrap: [AppComponent]

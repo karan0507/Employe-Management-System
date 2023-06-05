@@ -8,6 +8,7 @@ import { GlobalService } from 'src/app/service/global.service';
 import { HttpService } from 'src/app/service/http.service';
 import { IBreadcrumb } from "../../shared/interfaces/breadcrumb.type";
 import { ThemeConstantService } from '../../shared/services/theme-constant.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
     selector: 'app-common-layout',
@@ -28,7 +29,7 @@ export class CommonLayoutComponent  {
     // Extra Data
     _currHeaderData : any
     constructor(private router: Router,  private activatedRoute: ActivatedRoute, private themeService: ThemeConstantService, private globaldata: GlobalService, private message:NzMessageService,
-         private http: HttpService,private permissionsService: NgxPermissionsService) {
+         private http: HttpService,private permissionsService: NgxPermissionsService, private device:DeviceDetectorService) {
         this.router.events.pipe(
             filter(event => event instanceof NavigationEnd),
             map(() => {
@@ -50,6 +51,8 @@ export class CommonLayoutComponent  {
     }
 
     ngOnInit() {
+        console.log("This device id=>", this.device.getDeviceInfo(), this.device.device); 
+        alert(JSON.stringify(this.device.getDeviceInfo()))
         if (localStorage.getItem('iyc_user_token')) {
             this.VerifyUserFunction()
         } 

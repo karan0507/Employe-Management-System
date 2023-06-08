@@ -1,17 +1,35 @@
-<div class="d-flex align-items-center">
-    <!-- <div class="col-10 mb-3"> -->
-    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-        <input type="text" nz-input placeholder="Search By Activity Name/ Month" [(ngModel)]="_currSearchValue" />
-    </nz-input-group>
-    <ng-template #suffixIconButton>
-        <button nz-button nzType="secondary" nzSearch>
-            <i nz-icon nzType="search"></i>
-        </button>
-    </ng-template>
-    <!-- </div> -->
-    <!-- <div class="col-2 mb-3"> -->
-    <span nz-icon nzType="filter" class="font-size-24 ml-3" nzTheme="outline" (click)="quickViewVisible = true"></span>
-    <!-- </div> -->
+<div class="d-block align-items-center mb-3">
+    <div class="row">
+        <div class="col-12 col-lg-4 mb-3">
+           <div class="d-flex">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input type="text" nz-input placeholder="Search By Activity Name/ Month"
+                    [(ngModel)]="_currSearchValue" />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+                <button nz-button nzType="secondary" nzSearch>
+                    <i nz-icon nzType="search"></i>
+                </button>
+            </ng-template>
+            <!-- </div> -->
+            <!-- <div class="col-2 mb-3"> -->
+            <span nz-icon nzType="filter" class="d-inline d-lg-none font-size-24 ml-3" nzTheme="outline"
+                (click)="quickViewVisible = true"></span>
+           </div>
+        </div>
+        <div class="col-lg-8 col-12 mb-3 d-flex flex-wrap justify-content-start">
+            <button nz-button nzType="default" class="mr-3 mb-3" nzShape="circle" (click)="resetFilter()">
+                <i nz-icon nzType="undo"></i>
+            </button>
+            <nz-select nzShowSearch class="selectFilter" [(ngModel)]="_currBooth" (nzFocus)="searchStaticDataGlobalFunction()"
+                (keyup)="searchStaticDataGlobalFunction($event)" nzAllowClear nzPlaceHolder="Select Booth"
+                (ngModelChange)="getVotersList()">
+                <nz-option *ngFor="let item of boothList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                </nz-option>
+            </nz-select>
+        </div>
+    </div>
+    
 </div>
 
 <main>
@@ -24,7 +42,7 @@
     <!-- </section> -->
     <div class="container bannerContext" *ngIf="isBannerVisible">
         <!-- <div class="bannerContext"> -->
-        <span nz-icon nzType="close" nzTheme="outline" class="text-white font-size-16 font-weight-bold"
+        <!-- <span nz-icon nzType="close" nzTheme="outline" class="text-white font-size-16 font-weight-bold"
             style="position: absolute; right: 1rem; top: 2rem;" (click)="isBannerVisible = false"></span>
         <img src="../../../assets/images/Ext_Images/bannerImage.svg" class="w-100 img my-3" alt="">
         <div class="d-flex flex-column align-items-center justify-content-center context py-3">
@@ -41,26 +59,87 @@
                 class="d-xs-none d-lg-flex bg-white align-items-center text-primary d-none font-weight-bold" nzSize="large">{{_currLanguage == 'en' ? 'Know More' : 'अधिक जानकारी'}}
                 <span nz-icon nzType="arrow-right" nzTheme="outline"></span>
             </button>
-        </div>
+        </div> -->
     </div>
-  <nz-card [nzLoading]="api_loader['list']">
-    <div class="row">
-        <div class="col-md-12" *ngFor="let item of votersList">
-            <div class="d-flex align-items-center p-3 mt-2" [routerLink]="'/voter'" [queryParams]="{id:item?.id}">
-                <img nzIcon="user" width="80" height="80" class="mr-5 rounded-circle" [src]="'../.././../assets/images/avatars/thumb-10.jpg'">
-                <div class="d-flex flex-column">
-                    <h6 class="text-dark">{{_currLanguage == 'en' ? item?.full_name_en : item?.full_name_hi}}</h6>
-                    <label class="text-primary mb-2">EPIC_NO: {{item?.epic_no}}</label>
-                    <div class="d-flex justify-content-between">
-                        <nz-tag class="mr-3">Booth No 5</nz-tag>  <nz-tag>Ward No J</nz-tag>
-                        
+    <nz-card [nzLoading]="api_loader['list']" class="d-flex d-lg-none">
+        <div class="row">
+            <div class="col-md-12 p-0" *ngFor="let item of votersList">
+                <div class="d-flex align-items-center mt-2" [routerLink]="'/voter'" [queryParams]="{id:item?.id}">
+                    <img nzIcon="user" width="80" height="80" class="mr-4 rounded-circle"
+                        [src]="'../.././../assets/images/avatars/thumb-10.jpg'">
+                    <div class="d-flex flex-column">
+                        <h6 class="text-dark">{{_currLanguage == 'en' ? item?.full_name_en : item?.full_name_hi}}</h6>
+                        <label class="text-primary mb-2">EPIC_NO: {{item?.epic_no}}</label>
+                        <div class="d-flex justify-content-start flex-wrap">
+                            <nz-tag class="mr-2" style="max-width: fit-content;">Booth No {{item?.booth}}</nz-tag>
+                            <nz-tag style="max-width: fit-content;">Ward No J</nz-tag>
+                        </div>
                     </div>
                 </div>
-
+                <nz-divider class="my-0"></nz-divider>
             </div>
         </div>
+    </nz-card>
+
+   <div class="d-none d-lg-block">
+    <div class="row">
+        <div class="col-md-12">
+            <nz-card [nzLoading]="api_loader['list']">
+                <div class="totalCount">
+                    <nz-table #rowSelectionTable [nzData]="votersList" [nzTotal]="total_count" [nzFrontPagination]="false"
+                        [nzShowSizeChanger]="true" [nzPageIndex]="pageIndex" [nzPageSize]="globalPageSize"
+                        (nzQueryParams)="votersList[0] ? getVotersList($event) : null" [nzShowTotal]="botTotalCount"
+                        [nzLoading]="api_loader['card']" [nzScroll]="{ x: '1000px', y: '50vh' }">
+                        <thead>
+                            <tr>
+                                <th nzWidth="4rem">Sr. No</th>
+                                <th nzWidth="8rem" class="text-left">Full Name</th>
+                                <th nzWidth="8rem">Epic No</th>
+                                <th nzWidth="8rem">Age</th>
+                                <th nzWidth="8rem">Gender</th>
+                                <th nzWidth="8rem">Part Name</th>
+                                <th nzWidth="8rem">Part No</th>
+                                <th nzWidth="8rem">Section Name</th>
+                                <th nzWidth="8rem">Section No</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let data of votersList; index as i">
+                                <tr>
+                                    <td nzWidth="4rem" *ngIf="pageIndex == 1">{{i+1}}</td>
+                                    <td nzWidth="4rem" *ngIf="pageIndex > 1">{{( (pageIndex-1) * globalPageSize) + (i+1)}}
+                                    </td>
+                                    <td nzWidth="8rem" class="text-left">
+                                        <a [routerLink]="['/voter/edi-voter']" [queryParams]="{id:data.id}">
+                                            {{_currLanguage == 'en' ? data?.full_name_en : full_name_hi}}
+                                        </a>
+                                    </td>
+                                    <td nzWidth="8rem">{{data?.epic_no}}</td>
+                                    <td nzWidth="8rem">{{data?.age}} </td>
+                                    <td nzWidth="8rem">{{data?.gender}}</td>
+                                    <td nzWidth="8rem">{{_currLanguage == 'en' ? data?.part_name_en : data?.part_name_hi}}
+                                    </td>
+                                    <td nzWidth="8rem">{{data?.part_no}}</td>
+                                    <td nzWidth="8rem">{{_currLanguage == 'en' ? data?.section_name_en :
+                                        ata?.section_name_hi}}</td>
+                                    <td nzWidth="8rem">{{_currLanguage == 'en' ? data?.section_no : ata?.section_no}}</td>
+    
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </nz-table>
+                    <ng-template #botTotalCount>
+                        <div class="font-weight-semibold">
+                            <b>{{total_count}} Results Found </b>
+                        </div>
+                    </ng-template>
+                </div>
+            </nz-card>
+        </div>
+       
     </div>
-  </nz-card>
+   </div>
+
 </main>
 
 <section *ngIf="quickViewVisible">

@@ -98,6 +98,8 @@ body{
   overflow: scroll;
     scroll-behavior: smooth;
     overflow-x: overlay;
-    overflow-y: hidden;
-    
+    overflow-y: hidden; 
+}
+.selectFilter{
+    min-width: 16rem;
 }

@@ -20,7 +20,7 @@
                 </div>
                 <div class="d-flex justify-content-between">
                     <button nz-button nzType="link" class="d-flex align-items-center" style="border: 1px solid #3C0480;"
-                        (click)="createVoterProfileForm()">
+                        (click)="createVoterProfileForm()" routerLink="/voter/edit-voter" [queryParams]="{id:_currVoterId}">
                         <span nz-icon nzType="form" nzTheme="outline" class="mr-2"></span> Edit</button>
 
                 </div>
@@ -201,38 +201,38 @@
                                     <div class="row">
                                         <div class="col-md-12" *ngFor="let item of followUpList">
                                             <nz-card class="cardBorder my-3">
-                                                <h5>{{item?.name}}</h5>
+                                                <h5>{{_currLanguage == 'en' ? item?.followup_type?.name?.en : item?.followup_type?.name?.hi}}</h5>
                                                 <nz-steps [nzProgressDot]="true" [nzCurrent]="1" nzDirection="vertical">
                                                     <nz-step [nzTitle]="titleTemplate"
                                                         [nzDescription]="descriptionTemplate">
                                                     </nz-step>
-                                                    <nz-step [nzTitle]="titleTemplate"
+                                                    <!-- <nz-step [nzTitle]="titleTemplate"
                                                         [nzDescription]="descriptionTemplate"></nz-step>
                                                     <nz-step [nzTitle]="titleTemplate"
-                                                        [nzDescription]="descriptionTemplate"></nz-step>
+                                                        [nzDescription]="descriptionTemplate"></nz-step> -->
                                                 </nz-steps>
 
                                                 <ng-template #descriptionTemplate>
                                                     <div class="d-flex justify-content-between">
-                                                        <label>{{item.description}}</label>
-                                                        <label
-                                                            class="font-size-12 text-muted">{{item?.updated_at}}</label>
+                                                        <!-- <label>{{item.created_by?.first_name + item.created_by?.last_name }}</label> -->
+                                                        <!-- <label
+                                                            class="font-size-12 text-muted">{{item?.updated_at}}</label> -->
                                                     </div>
                                                 </ng-template>
 
                                                 <ng-template #titleTemplate>
                                                     <div class="d-flex justify-content-between">
                                                         <label class="m-0 font-size-16 font-weight-semibold" nz-dropdown
-                                                            [nzDropdownMenu]="latestUploadDropDown">{{item?.voter_name}}
+                                                            [nzDropdownMenu]="latestUploadDropDown">{{item.created_by?.first_name + item.created_by?.last_name }}
                                                             <span nz-icon nzType="down" nzTheme="outline"
                                                                 class="ml-2"></span>
                                                         </label>
-                                                        <label class="font-size-14">{{item?.added_at}}</label>
+                                                        <label class="font-size-14">{{item?.followup_datetime | date:'medium'}}</label>
                                                     </div>
 
                                                     <nz-dropdown-menu #latestUploadDropDown="nzDropdownMenu">
                                                         <ul nz-menu nzSelectable>
-                                                            <li nz-menu-item>1st menu item</li>
+                                                            <li nz-menu-item>{{_currLanguage == 'en' ? item?.comments?.en : item?.comments?.hi}}</li>
                                                         </ul>
                                                     </nz-dropdown-menu>
                                                 </ng-template>
@@ -253,7 +253,7 @@
 
     <section *ngIf="quickViewVisible">
         <nz-drawer [nzWidth]="280" height="500" [nzBodyStyle]="{height:'85vh'}" [nzTitle]="null" [nzClosable]="false"
-            [nzVisible]="quickViewVisible" nzPlacement="bottom" (nzOnClose)="quickViewToggle()" [nzHeight]="600">
+            [nzVisible]="quickViewVisible" nzPlacement="bottom" (nzOnClose)="callMultipleAPI();quickViewToggle()" [nzHeight]="600">
             <!-- <app-quick-view></app-quick-view> -->
             <div class="row mx-3">
                 <div class="col-md-12">

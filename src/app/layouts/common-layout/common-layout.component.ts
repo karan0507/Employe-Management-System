@@ -51,8 +51,8 @@ export class CommonLayoutComponent  {
     }
 
     ngOnInit() {
-        console.log("This device id=>", this.device.getDeviceInfo(), this.device.device); 
-        alert(JSON.stringify(this.device.getDeviceInfo()))
+        // console.log("This device id=>", this.device.getDeviceInfo(), this.device.device); 
+        // alert(JSON.stringify(this.device.getDeviceInfo()))
         if (localStorage.getItem('iyc_user_token')) {
             this.VerifyUserFunction()
         } 

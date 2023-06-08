@@ -1,1 +1,235 @@
-<p>add-edit-voter works!</p>
+<section>
+    <nz-card [nzLoading]="api_loading['card']">
+        <form nz-form [formGroup]="voterForm">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'First Name' : 'पहला नाम'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your first name' : 'कृपया अपना पहला नाम दें'">
+                            <input type="text"  nz-input formControlName="FIRST_NAME"
+                                [placeholder]="_currLanguage == 'en' ? 'First Name' : 'पहला नाम'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Last Name' : 'उपनाम'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your first name' : 'कृपया अपना अंतिम नाम दर्ज करें'">
+                            <input type="text"  nz-input formControlName="FIRST_NAME"
+                                [placeholder]="_currLanguage == 'en' ? 'Last Name' : 'उपनाम'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Full Name' : 'पूरा नाम'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your first name' : 'कृपया अपना पूरा नाम दें'">
+                            <input type="text"  nz-input formControlName="FULL_NAME"
+                                [placeholder]="_currLanguage == 'en' ? 'Full Name' : 'पूरा नाम'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Gender' : 'लिंग'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your Gender' : 'कृपया अपना लिंग दर्ज करें'">
+                            <input type="text"  nz-input formControlName="GENDER"
+                                [placeholder]="_currLanguage == 'en' ? 'Gender' : 'लिंग'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Age' : 'आयु'}}   
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your age' : 'कृपया अपना आयु दर्ज करें'">
+                            <input type="text"  nz-input formControlName="AGE"
+                                [placeholder]="_currLanguage == 'en' ? 'Age' : 'आयु'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+               
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            ' Epic No' : 'Epic No'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your Epic No' : 'Please enter your Epic No'">
+                            <input type="text"  nz-input formControlName="EPIC_NO"
+                                [placeholder]="_currLanguage == 'en' ? 'Epic No' : ' Epic No'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'PSBUILDING Name' : 'PSBUILDING Name'}}   
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your PSBUILDING Name' : 'Please enter your PSBUILDING Name'">
+                            <input type="text"  nz-input formControlName="PSBUILDING_NAME"
+                                [placeholder]="_currLanguage == 'en' ? 'PSBUILDING Name' : 'PSBUILDING Name'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                  
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Section Name' : 'अनुभाग का नाम'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your Section Name' : 'अनुभाग का नाम'">
+                            <input type="text"  nz-input formControlName="SECTION_NAME"
+                                [placeholder]="_currLanguage == 'en' ? 'Section Name' : 'अनुभाग का नाम'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'PART_NAME' : 'PART_NAME'}}   
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your PART_NAME' : 'Please enter your PART_NAME'">
+                            <input type="text"  nz-input formControlName="PART_NAME"
+                                [placeholder]="_currLanguage == 'en' ? 'PART_NAME' : 'PART_NAME'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'SLNOINPART' : 'SLNOINPART'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your SLNOINPART' : 'Please enter your SLNOINPART'">
+                            <input type="text"  nz-input formControlName="SLNOINPART"
+                                [placeholder]="_currLanguage == 'en' ? 'SLNOINPART' : 'SLNOINPART'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'PART_NO' : 'PART_NO'}}   
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your PART_NO' : 'Please enter your PART_NO'">
+                            <input type="text"  nz-input formControlName="PART_NO"
+                                [placeholder]="_currLanguage == 'en' ? 'PART_NO' : 'PART_NO'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'SECTION_NO' : 'SECTION_NO'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your SECTION_NO' : 'Please enter your SECTION_NO'">
+                            <input type="text"  nz-input formControlName="SECTION_NO"
+                                [placeholder]="_currLanguage == 'en' ? 'SECTION_NO' : 'SECTION_NO'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'House No' : 'मकान नंबर'}}   
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your House No' : 'कृपया अपना हाउस नंबर दर्ज करें'">
+                            <input type="text"  nz-input formControlName="HOUSE_NO"
+                                [placeholder]="_currLanguage == 'en' ? 'House No' : 'मकान नंबर'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <!-- Relation Data -->
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Relation Type' : 'संबंध प्रकार'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter relation type' : 'कृपया अपना संबंध प्रकार दें'">
+                            <input type="text"  nz-input formControlName="RLN_TYPE"
+                                [placeholder]="_currLanguage == 'en' ? 'Relation Type' : 'संबंध प्रकार'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Relation First Name' : 'संबंध प्रथम नाम'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your first name' : 'कृपया संबंध प्रथम नाम दें'">
+                            <input type="text"  nz-input formControlName="RLN_FIRST_NAME"
+                                [placeholder]="_currLanguage == 'en' ? 'Relation First Name' : 'संबंध प्रथम नाम'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Relation Last Name' : 'संबंध अंतिम नाम'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your first name' : 'संबंध अंतिम नाम'">
+                            <input type="text"  nz-input formControlName="RLN_FIRST_NAME"
+                                [placeholder]="_currLanguage == 'en' ? 'Relation Last Name' : 'कृपया संबंध अंतिम नाम दें'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Relation Full Name' : 'संबंध का पूरा नाम'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your first name' : 'कृपया अपना संबंध का पूरा नाम दें'">
+                            <input type="text"  nz-input formControlName="FULL_NAME"
+                                [placeholder]="_currLanguage == 'en' ? 'Relation Full Name' : 'संबंध का पूरा नाम'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+        <div class="d-flex justify-content-center">
+            <button nz-button nzType="primary" class="px-5" (click)="submitForm()">Save</button>
+            <button nz-button nzType="link" class="ml-3 px-5 border">Cancel</button>
+        </div>
+    </nz-card>
+</section>

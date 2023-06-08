@@ -116,6 +116,7 @@ export class VoterProfileComponent implements OnInit {
   followUpList: any = []
   getFollowUpDetails() {
     this.api_loading['cardFollowup'] = true;
+    this.followUpList = [];
     let data = { 'voter_id': this._currVoterId }
     this.http.getVoterFollowUp(data).subscribe((res: any) => {
       if (res.success) {
@@ -211,6 +212,13 @@ export class VoterProfileComponent implements OnInit {
 
   quickViewToggle(): void {
     this.quickViewVisible = !this.quickViewVisible;
+    
+  }
+
+  callMultipleAPI(){
+    this.getVoterDetals();
+    this.getFollowUpDetails();
+    this.getActivityDetails();
   }
 
   activityList: any = []
@@ -259,15 +267,19 @@ export class VoterProfileComponent implements OnInit {
     data.append('voter_id', this._currVoterId)
     this.currFormType == 'activity' ?   data.append('activity_type', this.followUpForm.get('activity_type').value) : data.append('followup_type', this.followUpForm.get('followup_type').value) ;
     data.append('comments', this.followUpForm.get('comments').value)
-    this.currFormType == 'activity' ? '' : data.append('followup_datetime', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD HH:mm:ss"));
+
+    this.currFormType == 'activity' ? 
+    data.append('activity_date', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD HH:mm:ss")) :
+    data.append('followup_datetime', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD HH:mm:ss"));
+    
     let url =  this.currFormType == 'activity' ? this.http.addVoterActivity(data) : this.http.addVoterFollowup(data)
     url.subscribe((res:any)=>{
       if(res.success){
+        this.callMultipleAPI();
         this.quickViewVisible = false
         this.followUpForm.reset();
         this.message.success(res.message)
-        this.api_loading['button_markActivity'] = false
-
+        this.api_loading['button_markActivity'] = false;
       }else{
         this.message.error(res.message)
         this.api_loading['button_markActivity'] = false

@@ -223,7 +223,7 @@ export class HttpService {
   }
 
   public editVoterFollowup(id, data) {
-    return this.http.put(this.url + `/voters/v1/voter-activity/edit-voter-activity/` + id`/`, { params: data })
+    return this.http.put(this.url + `/voters/v1/voter-activity/edit-voter-activity/` + id+`/`, { params: data })
   }
 
   public addVoterFollowup(data) {
@@ -272,19 +272,30 @@ export class HttpService {
   }
   
   public addVoterRating(data){
-    
     return this.http.get(this.url + `/voters/v1/voter-rating/add-voter-rating`,{params:data})  
   }
   
 
-  public editVoterRating(data){
-    return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`,{params:data})  
+  public editVoterRating(id,data){
+    // data= {voter_id,  rating}
+    return this.http.put(this.url + `/voters/v1/voter-rating/edit-voter-rating/`+id+`/`,{params:data})  
   }
   
-  public deleteoterRating(data){
-    return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`,{params:data})  
+  public deleteoterRating(id){
+    return this.http.delete(this.url + `/voters/v1/voter-rating/delete-voter-rating/`+id+`/`)  
   }
   
 
+  public editVoter(id, data) {
+    return this.http.put(this.url + `/voters/v1/voter-data/edit-voter-data/` + id+`/`, data)
+  }
+
+  public addVoter(data) {
+    return this.http.post(this.url + `/voters/v1/voter-data/add-voter-data`, data)
+  }
+
+  public getVoterStatus(data){
+    return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`,data)
+  }
   
 }

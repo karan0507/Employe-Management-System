@@ -16,6 +16,8 @@ import { SharedModule } from '../shared/shared.module';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { AboutPartyComponent } from './about-party/about-party.component';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 
 @NgModule({
@@ -35,7 +37,9 @@ import { NzCardModule } from 'ng-zorro-antd/card';
         NzFormModule,
         NzTagModule,
         SharedModule,
-        NzCardModule
+        NzCardModule,
+        NzTableModule,
+        NzSelectModule
     ]
 })
 export class HomeModule { }

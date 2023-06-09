@@ -221,22 +221,31 @@ export class VoterProfileComponent implements OnInit {
     this.getActivityDetails();
   }
 
-  activityList: any = []
+  activityList: any = [];
+  _currActivityFollowupId:any;
   currFormType = ''
-  createNewFollow(type?) {
+  createNewFollow(type?,data?) {
+    if(data){console.log(data);
+    
+      this.isEdit = true;
+      this._currActivityFollowupId = data.id
+      type == 'activity' ? this.getActivityList() : this.getFolloupList()
+    }else{
+      this.isEdit = false
+    }
     this.currFormType = type;
     this.quickViewVisible = true;
     if (type == 'activity') {
       this.followUpForm = this.fb.group({
-        followup_datetime: ['', Validators.required],
-        activity_type: ['', [Validators.required]],
-        comments: ['', [Validators.required]]
+        followup_datetime: [  data?.activity_date,   [Validators.required]],
+        activity_type: [data?.activity_type?.id, [Validators.required]],
+        comments: [this._currLanguage == 'en' ? data?.comments?.en : data?.comments?.hi, [Validators.required]]
       })
     } else {
       this.followUpForm = this.fb.group({
-        followup_datetime: ['', Validators.required],
-        followup_type: ['', [Validators.required]],
-        comments: ['', [Validators.required]]
+        followup_datetime: [data?.followup_datetime, Validators.required],
+        followup_type: [data?.followup_type?.id, [Validators.required]],
+        comments: [this._currLanguage == 'en' ? data?.comments?.en : data?.comments?.hi, [Validators.required]]
       })
     }
   }
@@ -269,10 +278,12 @@ export class VoterProfileComponent implements OnInit {
     data.append('comments', this.followUpForm.get('comments').value)
 
     this.currFormType == 'activity' ? 
-    data.append('activity_date', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD HH:mm:ss")) :
+    data.append('activity_date', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD")) :
     data.append('followup_datetime', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD HH:mm:ss"));
+    console.log(this.isEdit,this._currActivityFollowupId);
     
-    let url =  this.currFormType == 'activity' ? this.http.addVoterActivity(data) : this.http.addVoterFollowup(data)
+    let url =  this.currFormType == 'activity' ? (this.isEdit ? this.http.editVoterActivity(this._currActivityFollowupId,data) : this.http.addVoterActivity(data)) :
+    (this.isEdit ? this.http.editVoterFollowup(this._currActivityFollowupId,data) : this.http.addVoterFollowup(data)) 
     url.subscribe((res:any)=>{
       if(res.success){
         this.callMultipleAPI();
@@ -331,7 +342,7 @@ export class VoterProfileComponent implements OnInit {
   }
 
   createVoterProfileForm(){
-    this.isEdit = true
+    // this.isEdit = true
     this.voterProfileForm = this.fb.group({
       name:[this.voterDetails ? (this._currLanguage == 'en' ? this.voterDetails?.full_name_en : this.voterDetails?.full_name_hi) : '',[Validators.required]],
       gender:[this.voterDetails ? this.voterDetails?.gender  : '',[Validators.required]],

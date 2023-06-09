@@ -18,10 +18,12 @@ import { AboutPartyComponent } from './about-party/about-party.component';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { ProfileImgPipe} from '../pipes/profile-img-pipe.pipe';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 
 
 @NgModule({
-    declarations: [HomeComponent, AboutPartyComponent],
+    declarations: [HomeComponent, AboutPartyComponent, ProfileImgPipe],
     imports: [
         CommonModule,
         HomeRoutingModule,
@@ -39,7 +41,8 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
         SharedModule,
         NzCardModule,
         NzTableModule,
-        NzSelectModule
+        NzSelectModule,
+        NzAvatarModule
     ]
 })
 export class HomeModule { }

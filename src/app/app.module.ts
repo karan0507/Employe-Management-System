@@ -24,8 +24,8 @@ import { CustomInterceptor } from './service/custom.interceptor';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { AgmCoreModule } from '@agm/core';
 import { ServiceWorkerModule } from '@angular/service-worker'
-import { DeviceDetectorService } from 'ngx-device-detector';import { environment } from 'src/environments/environment';
-;
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { environment } from 'src/environments/environment';
 // import { NgxGoogleMapModule } from 'ngx-google-map';
 registerLocaleData(en);
 
@@ -33,7 +33,8 @@ registerLocaleData(en);
     declarations: [
         AppComponent,
         CommonLayoutComponent,
-        FullLayoutComponent
+        FullLayoutComponent,
+        // ProfileImgPipePipe
     ],
     imports: [
         BrowserModule,
@@ -67,6 +68,9 @@ registerLocaleData(en);
           registrationStrategy: 'registerWhenStable:30000'
         }),
         
+    ],
+    exports:[
+        // ProfileImgPipePipe
     ],
     providers: [
         { 

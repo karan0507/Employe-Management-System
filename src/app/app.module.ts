@@ -25,7 +25,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
 import { AgmCoreModule } from '@agm/core';
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { DeviceDetectorService } from 'ngx-device-detector';
-// import { ProfileImgPipePipe } from './pipes/profile-img-pipe.pipe';
+import { environment } from 'src/environments/environment';
 // import { NgxGoogleMapModule } from 'ngx-google-map';
 registerLocaleData(en);
 
@@ -62,7 +62,7 @@ registerLocaleData(en);
      
         NgxPermissionsModule.forRoot(),
         ServiceWorkerModule.register('ngsw-worker.js', {
-          enabled: !isDevMode(),
+          enabled: environment.production,
           // Register the ServiceWorker as soon as the application is stable
           // or after 30 seconds (whichever comes first).
           registrationStrategy: 'registerWhenStable:30000'

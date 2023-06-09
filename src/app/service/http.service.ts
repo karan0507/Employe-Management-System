@@ -70,7 +70,7 @@ export class HttpService {
   }
 
   public getDataFromBackgroundFunction(params_data) {
-    return this.http.get(this.url + `social_media/v1/post-detail/get-data-from-background`, { params: params_data });
+    return this.http.get(this.url + `/social_media/v1/post-detail/get-data-from-background`, { params: params_data });
   }
 
   public addVoterToList(data) {

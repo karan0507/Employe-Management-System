@@ -205,10 +205,11 @@ export class HttpService {
   }
 
   public editVoterActivity(id, data) {
-    return this.http.put(this.url + `/voters/v1/voter-activity/edit-voter-activity/` + id`/`, { params: data })
+    return this.http.put(this.url + '/voters/v1/voter-activity/edit-voter-activity/' + id+`/`,data )
   }
 
   public addVoterActivity(data) {
+   
     return this.http.post(this.url + `/voters/v1/voter-activity/add-voter-activity`,data)
   }
 
@@ -223,7 +224,7 @@ export class HttpService {
   }
 
   public editVoterFollowup(id, data) {
-    return this.http.put(this.url + `/voters/v1/voter-activity/edit-voter-activity/` + id+`/`, { params: data })
+    return this.http.put(this.url + `/voters/v1/voter-activity/edit-voter-activity/` + id+`/`, data)
   }
 
   public addVoterFollowup(data) {

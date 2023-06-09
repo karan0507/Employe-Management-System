@@ -21,4 +21,8 @@ export const CommonLayout_ROUTES: Routes = [
         path: 'voter',
         loadChildren: () => import('../../voter/voter.module').then(m => m.VoterModule),
     },
+    {
+        path: 'task-management',
+        loadChildren: () => import('../../task-management/task-management.module').then(m => m.TaskManagementModule),
+    },
 ];

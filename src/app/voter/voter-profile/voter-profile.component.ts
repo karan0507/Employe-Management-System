@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzMarks } from 'ng-zorro-antd/slider/public-api';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { GlobalService } from 'src/app/service/global.service';
 import { HttpService } from 'src/app/service/http.service';
 
@@ -244,6 +245,7 @@ export class VoterProfileComponent implements OnInit {
     } else {
       this.followUpForm = this.fb.group({
         followup_datetime: [data?.followup_datetime, Validators.required],
+        followup_time : [data?.followup_time,[Validators.required]],
         followup_type: [data?.followup_type?.id, [Validators.required]],
         comments: [this._currLanguage == 'en' ? data?.comments?.en : data?.comments?.hi, [Validators.required]]
       })
@@ -279,9 +281,8 @@ export class VoterProfileComponent implements OnInit {
 
     this.currFormType == 'activity' ? 
     data.append('activity_date', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD")) :
-    data.append('followup_datetime', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD HH:mm:ss"));
-    console.log(this.isEdit,this._currActivityFollowupId);
-    
+    data.append('followup_datetime', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD"));
+    this.currFormType == 'followUp' ? data.append('followup_time',moment(this.followUpForm.get('followup_datetime').value).format("HH:mm:ss")):'';
     let url =  this.currFormType == 'activity' ? (this.isEdit ? this.http.editVoterActivity(this._currActivityFollowupId,data) : this.http.addVoterActivity(data)) :
     (this.isEdit ? this.http.editVoterFollowup(this._currActivityFollowupId,data) : this.http.addVoterFollowup(data)) 
     url.subscribe((res:any)=>{
@@ -356,167 +357,20 @@ export class VoterProfileComponent implements OnInit {
       college:['',[Validators.required]],
     })
   }
+
+  fileList : any = [];
+  _currentFileName : any;
+  beforeUploadName = (file: NzUploadFile): boolean => {
+    // if (!((file?.type == 'pdf') || (file?.type == 'application/pdf') || (file?.type == 'img') || (file?.type == 'jpeg') || (file?.type == 'png') || (file?.type == 'image/jpeg') || (file?.type == 'image/png'))) {
+    //   this.fileList = [];
+    //   this._currentFileName = null;
+    //   this.message.error('Please check the file type')
+    //   return false
+    // }
+    this.fileList = [];
+    this.fileList = this.fileList.concat(file);
+    this._currentFileName = file;
+    return false;
+  };
+
 }
-
-
-
-
-/*
-
-
-
-                        <section *ngIf="isEdit">
-                            <form nz-form [formGroup]="voterProfileForm">
-                                <div class="row mt-3">
-                                    <div class="col-md-12">
-                                        <nz-form-item>
-                                            <div class="d-flex justify-content-between w-100">
-                                                <label>Name</label>
-                                                <div><img src="../../../assets/images/icons/Framevoter_profile.svg"
-                                                        alt=""></div>
-                                            </div>
-                                            <nz-form-control [nzSm]="16" [nzXs]="24"
-                                                nzErrorTip="Please check your customer code!">
-                                                <input type="text" [readonly]="true" nz-input formControlName="name"
-                                                    placeholder="Customer Code" />
-                                            </nz-form-control>
-                                        </nz-form-item>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <nz-form-item>
-                                            <div class="d-flex justify-content-between w-100">
-                                                <label>Gender</label>
-                                                <div><img src="../../../assets/images/icons/Framevoter_profile.svg"
-                                                        alt=""></div>
-                                            </div>
-                                            <nz-form-control [nzSm]="16" [nzXs]="24"
-                                                nzErrorTip="Please enter your gender!">
-                                                <input type="text" [readonly]="true" nz-input formControlName="gender"
-                                                    placeholder="Gender" />
-                                            </nz-form-control>
-                                        </nz-form-item>
-                                    </div>
-
-
-
-
-                                    <div class="col-md-12">
-                                        <nz-form-item>
-                                            <div class="d-flex justify-content-between w-100">
-                                                <label>Date Of Birth</label>
-                                                <div><img src="../../../assets/images/icons/Vectorbirthday.svg" alt="">
-                                                </div>
-                                            </div>
-                                            <nz-form-control [nzSm]="16" [nzXs]="24"
-                                                nzErrorTip="Please select your birthdate!">
-                                                <nz-date-picker formControlName="dob"></nz-date-picker>
-                                            </nz-form-control>
-                                        </nz-form-item>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <nz-form-item>
-                                            <div class="d-flex justify-content-between w-100">
-                                                <label>Mobile Number</label>
-                                                <div><img src="../../../assets/images/icons/Framephone.svg"
-                                                        alt=""></div>
-                                            </div>
-                                            <nz-form-control [nzSm]="16" [nzXs]="24"
-                                                nzErrorTip="Please enter your gender!">
-                                                <input type="text" [readonly]="true" nz-input formControlName="mobile"
-                                                    placeholder="Enter Mobile Number" />
-                                            </nz-form-control>
-                                        </nz-form-item>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <nz-form-item>
-                                            <div class="d-flex justify-content-between w-100">
-                                                <label>Occupation</label>
-                                                <div><img src="../../../assets/images/icons/Frameorg.svg"
-                                                        alt=""></div>
-                                            </div>
-                                            <nz-form-control [nzSm]="16" [nzXs]="24"
-                                                nzErrorTip="Please enter your Occupation">
-                                                <input type="text" [readonly]="true" nz-input formControlName="occupation"
-                                                    placeholder="Enter Occupation" />
-                                            </nz-form-control>
-                                        </nz-form-item>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <nz-form-item>
-                                            <div class="d-flex justify-content-between w-100">
-                                                <label>Area</label>
-                                                <div><img src="../../../assets/images/icons/Vectorlocation.svg"
-                                                        alt=""></div>
-                                            </div>
-                                            <nz-form-control [nzSm]="16" [nzXs]="24"
-                                                nzErrorTip="Please enter your area!">
-                                                <input type="text" [readonly]="true" nz-input formControlName="area"
-                                                    placeholder="Enter Area" />
-                                            </nz-form-control>
-                                        </nz-form-item>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <nz-form-item>
-                                            <div class="d-flex justify-content-between w-100">
-                                                <label>Street</label>
-                                                <div><img src="../../../assets/images/icons/Vectorlocation.svg"
-                                                        alt=""></div>
-                                            </div>
-                                            <nz-form-control [nzSm]="16" [nzXs]="24"
-                                                nzErrorTip="Please enter your gender!">
-                                                <input type="text" [readonly]="true" nz-input formControlName="gender"
-                                                    placeholder="Gender" />
-                                            </nz-form-control>
-                                        </nz-form-item>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <nz-form-item>
-                                            <div class="d-flex justify-content-between w-100">
-                                                <label>School</label>
-                                                <div><img src="../../../assets/images/icons/Framevoter_profile.svg"
-                                                        alt=""></div>
-                                            </div>
-                                            <nz-form-control [nzSm]="16" [nzXs]="24"
-                                                nzErrorTip="Please enter your gender!">
-                                                <input type="text" [readonly]="true" nz-input formControlName="gender"
-                                                    placeholder="Gender" />
-                                            </nz-form-control>
-                                        </nz-form-item>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <nz-form-item>
-                                            <div class="d-flex justify-content-between w-100">
-                                                <label>College</label>
-                                                <div><img src="../../../assets/images/icons/Framevoter_profile.svg"
-                                                        alt=""></div>
-                                            </div>
-                                            <nz-form-control [nzSm]="16" [nzXs]="24"
-                                                nzErrorTip="Please enter your gender!">
-                                                <input type="text" [readonly]="true" nz-input formControlName="college"
-                                                    placeholder="Enter School" />
-                                            </nz-form-control>
-                                        </nz-form-item>
-                                    </div>
-
-                                    <!-- <div class="col-md-12">
-                                        <nz-form-item>
-                                            <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Date
-                                            </nz-form-label>
-                                            <nz-form-control [nzSm]="16" [nzXs]="24"
-                                                [nzErrorTip]="'Please select Date'">
-                                                <nz-input-group>
-                                                    [nzDisabledDate]="disabledDate"
-                                                    <nz-date-picker
-                                                        formControlName="followup_datetime"></nz-date-picker>
-                                                </nz-input-group>
-                                            </nz-form-control>
-                                        </nz-form-item>
-                                    </div> -->
-                                </div>
-                            </form>
-                        </section>
-
-
-
-*/ 

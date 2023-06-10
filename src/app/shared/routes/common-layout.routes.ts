@@ -25,4 +25,8 @@ export const CommonLayout_ROUTES: Routes = [
         path: 'task-management',
         loadChildren: () => import('../../task-management/task-management.module').then(m => m.TaskManagementModule),
     },
+    {
+        path: 'team-management',
+        loadChildren: () => import('../../team/team.module').then(m => m.TeamModule),
+    },
 ];

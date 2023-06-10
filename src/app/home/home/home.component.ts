@@ -13,6 +13,10 @@ export class HomeComponent implements OnInit {
   _currSearchValue: any;
   total_count: any;
   _currBooth: any;
+  _currWard: any;
+  _currSector: any;
+
+
   api_loader = { 'list': false }
   votersist: any = [
     { user_name: 'Amit Jain', epic_no: '1685419', url: '../.././../assets/images/avatars/dy_post_image.jpg', tags: [{ value: 'Booth no 5' }, { value: 'Ward No 8' }] },
@@ -52,8 +56,16 @@ export class HomeComponent implements OnInit {
       data['limit'] = this.globalPageSize
     }
     if (this._currBooth) {
-      data['booth'] = this._currBooth
+      data['booth'] = this._currBooth;
     }
+    if (this._currWard) {
+      data['ward'] = this._currWard;
+    }
+    if (this._currSector) {
+      data['sector'] = this._currSector;
+    }
+
+
     if (this._currSearchValue) {
       let temp = this._currLanguage == 'en' ? 'full_name_en' : 'full_name_hi'
       data[temp] = this._currSearchValue;
@@ -78,7 +90,7 @@ export class HomeComponent implements OnInit {
   searchStaticDataGlobalFunction(event?) {
     clearTimeout(this.debounce);
     this.debounce = setTimeout(() => {
-      let data = { model_name: 'Booth' }
+      let data = { model_name: event }
       this.http.getMasterData(data).subscribe((res: any) => {
         if (res.success) {
           this.boothList = res.data;
@@ -90,20 +102,22 @@ export class HomeComponent implements OnInit {
   resetFilter() {
     this._currSearchValue = null;
     this._currBooth = null;
+    this._currSector = null;
+    this._currWard = null;
     this.getVotersList()
   }
 
-  getPipeValue(data){
+  getPipeValue(data) {
     let temp = data.split(' ');
     let value;
-   if(temp.length > 0){
-    for (let i = 0; i < temp.length; i++) {
+    if (temp.length > 0) {
+      for (let i = 0; i < temp.length; i++) {
 
-     if(temp[i] == 0){
-        value = temp[0].substring(0, 1) + (temp[temp.length -1].substring(0, 1) ? temp[temp.length -1].substring(0, 1) : '--');
-     }
+        if (temp[i] == 0) {
+          value = temp[0].substring(0, 1) + (temp[temp.length - 1].substring(0, 1) ? temp[temp.length - 1].substring(0, 1) : '--');
+        }
+      }
     }
-   }
     return value;
   }
 }

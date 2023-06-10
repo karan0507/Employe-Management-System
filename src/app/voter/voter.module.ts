@@ -23,6 +23,7 @@ import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { NzTableModule } from 'ng-zorro-antd/table';
     NzTimePickerModule,
     NzTagModule,
     NzSliderModule,
-    NzTableModule
+    NzTableModule,
+    NzUploadModule
   ]
 })
 export class VoterModule { }

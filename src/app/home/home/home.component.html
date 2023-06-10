@@ -1,27 +1,37 @@
 <div class="d-block align-items-center mb-3">
     <div class="row">
-        <div class="col-12 col-lg-4 mb-3">
+        <div class="col-12 col-lg-4 mb-2">
            <div class="d-flex">
             <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
                 <input type="text" nz-input placeholder="Search By Activity Name/ Month"
-                    [(ngModel)]="_currSearchValue" />
+                    [(ngModel)]="_currSearchValue" (keyup.enter)="getVotersList()" />
             </nz-input-group>
             <ng-template #suffixIconButton>
-                <button nz-button nzType="secondary" nzSearch>
+                <button nz-button nzType="secondary" nzSearch (click)="getVotersList()">
                     <i nz-icon nzType="search"></i>
                 </button>
             </ng-template>
-            <!-- <div class="col-2 mb-3"> -->
-            <span nz-icon nzType="filter" class="d-inline d-lg-none font-size-24 ml-3" nzTheme="outline"
-                (click)="quickViewVisible = true"></span>
-           </div>
-        </div>
-        <div class="col-lg-8 col-12 mb-3 d-flex flex-wrap justify-content-start">
-            <button nz-button nzType="default" class="mr-3 mb-3" nzShape="circle" (click)="resetFilter()">
+            <button nz-button nzType="default" class="ml-3 mb-2" nzShape="circle" (click)="resetFilter()">
                 <i nz-icon nzType="undo"></i>
             </button>
-            <nz-select nzShowSearch class="selectFilter mb-3 mr-3" [(ngModel)]="_currBooth" (nzFocus)="searchStaticDataGlobalFunction()"
+           </div>
+        </div>
+        <div class="col-lg-8 col-12 mb-2 d-flex flex-wrap justify-content-start">
+           
+            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currBooth" (nzFocus)="searchStaticDataGlobalFunction('Booth')"
                 (keyup)="searchStaticDataGlobalFunction($event)" nzAllowClear nzPlaceHolder="Select Booth"
+                (ngModelChange)="getVotersList()">
+                <nz-option *ngFor="let item of boothList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                </nz-option>
+            </nz-select>
+            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currWard" (nzFocus)="searchStaticDataGlobalFunction('Ward')"
+                (keyup)="searchStaticDataGlobalFunction($event)" nzAllowClear nzPlaceHolder="Select Ward"
+                (ngModelChange)="getVotersList()">
+                <nz-option *ngFor="let item of boothList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                </nz-option>
+            </nz-select>
+            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currSector" (nzFocus)="searchStaticDataGlobalFunction('Sector')"
+                (keyup)="searchStaticDataGlobalFunction($event)" nzAllowClear nzPlaceHolder="Select Sector"
                 (ngModelChange)="getVotersList()">
                 <nz-option *ngFor="let item of boothList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
                 </nz-option>
@@ -54,7 +64,7 @@
             </button>
         </div> -->
     </div>
-    <nz-card [nzLoading]="api_loader['list']" class="d-flex d-lg-none">
+    <nz-card [nzLoading]="api_loader['list']" class="d-md-none d-flex">
         <div class="row">
             <div class="col-md-12 p-0" *ngFor="let item of votersList">
                 <div class="d-flex justify-content-between my-3 align-items-center" [routerLink]="'/voter'" [queryParams]="{id:item?.id}">
@@ -77,7 +87,7 @@
         </div>
     </nz-card>
 
-   <div class="d-none d-lg-block">
+   <div class="d-md-block d-none">
     <div class="row">
         <div class="col-md-12">
             <nz-card [nzLoading]="api_loader['list']">

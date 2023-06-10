@@ -1,7 +1,7 @@
 <nz-card [nzLoading]="api_loading['card']">
     <section>
         <main>
-            <div class="d-flex justify-content-between p-3 mt-2">
+            <div class="d-flex flex-wrap justify-content-between p-3 mt-2">
                 <div class="d-flex">
                     <img nzIcon="user" width="80" height="80" class="mr-3 rounded-circle"
                         [src]="'../.././../assets/images/avatars/thumb-10.jpg'">
@@ -12,10 +12,14 @@
                         </h6>
                         <label class="text-primary mb-2">Voter ID : {{_currLanguage == 'en' ? voterDetails?.id :
                             voterDetails?.id}}</label>
-                        <label class="text-primary mb-2">Rating : 8/10</label>
-                        <nz-tag [nzColor]="'purple'" class="border text-primary text-center align-self-start">
-                            <span nz-icon [nzType]="'star'" [nzTheme]="'fill'" class="text-warning mr-2"></span> 8/10 >
-                        </nz-tag>
+                        <div class="d-flex flex-wrap">
+                            <label class="text-primary mb-2 mr-3">Rating : </label>
+                            <nz-tag [nzColor]="'purple'" class="border text-primary text-center align-self-start">
+                                <span nz-icon [nzType]="'star'" *ngIf="voterDetails?.rating" [nzTheme]="'fill'"
+                                    class="text-warning mr-2"></span>
+                                {{voterDetails?.rating ? voterDetails?.rating + '/10': 'No Rating'}}
+                            </nz-tag>
+                        </div>
                     </div>
                 </div>
                 <div class="d-flex justify-content-between">
@@ -140,7 +144,8 @@
                                             <h6>Voter Rating</h6>
                                             <label for="">
                                                 <span nz-icon [nzType]="'star'" [nzTheme]="'fill'"
-                                                    class="text-warning mr-2"></span> 8/10 >
+                                                    class="text-warning mr-2"></span>{{voterDetails?.rating ?
+                                                voterDetails?.rating : 'No Rating'}}
                                             </label>
                                         </div>
                                         <div class="">
@@ -155,57 +160,60 @@
                                 <nz-card [nzLoading]="api_loading['cardActvity']" nzTitle="Activity Information">
                                     <div class="d-block d-lg-none">
                                         <nz-table #rowSelectionTable [nzData]="listOfActivity"
-                                        [nzTotal]="listOfActivity.length" [nzFrontPagination]="false"
-                                        [nzShowSizeChanger]="false" [nzScroll]="{ x: '1000px', y: '50vh' }">
-                                        <thead>
-                                            <tr>
-                                                <th nzWidth="4rem">Sr. No</th>
-                                                <th class="text-left">Activity Type</th>
-                                                <th>Time Stamp</th>
-                                                <th>Created By</th>
-                                                <th>Comments</th>
-                                                <th nzRight>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <ng-container *ngFor="let data of listOfActivity; index as i">
+                                            [nzTotal]="listOfActivity.length" [nzFrontPagination]="false"
+                                            [nzShowSizeChanger]="false" [nzScroll]="{ x: '1000px', y: '50vh' }">
+                                            <thead>
                                                 <tr>
-                                                    <td nzWidth="4rem">{{i+1}}</td>
-                                                    <td class="text-left">{{_currLanguage == 'en' ? data?.activity_type?.name?.en
-                                                        : data?.activity_type?.name?.hi}}</td>
-                                                    <td class="text-left">{{data?.activity_date | date:'medium'}} </td>
-                                                    <td>
-                                                        <div class="d-flex flex-column">
-                                                            <label>
-                                                                {{_currLanguage == 'en' ?
-                                                                data?.created_by?.first_name +
-                                                                data?.created_by?.last_name :
-                                                                data?.created_by?.first_name +
-                                                                data?.created_by?.last_name}}
-                                                            </label>
-                                                            <label>
-                                                                {{_currLanguage == 'en' ?
-                                                                data?.created_by?.mobile :
-                                                                data?.created_by?.mobile}}
-                                                            </label>
-                                                        </div>
-                                                    </td>
-                                                    <td >{{_currLanguage == 'en' ?
-                                                        data?.comments?.en : data?.comments?.hi}}</td>
-                                                        <td nzRight><button nz-button nzType="link" clas="border" (click)="createNewFollow('activity',data)">Edit</button></td>
+                                                    <th nzWidth="4rem">Sr. No</th>
+                                                    <th class="text-left">Activity Type</th>
+                                                    <th>Time Stamp</th>
+                                                    <th>Created By</th>
+                                                    <th>Comments</th>
+                                                    <th nzRight>Action</th>
                                                 </tr>
-                                            </ng-container>
-                                        </tbody>
-                                    </nz-table>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let data of listOfActivity; index as i">
+                                                    <tr>
+                                                        <td nzWidth="4rem">{{i+1}}</td>
+                                                        <td class="text-left">{{_currLanguage == 'en' ?
+                                                            data?.activity_type?.name?.en
+                                                            : data?.activity_type?.name?.hi}}</td>
+                                                        <td class="text-left">{{data?.activity_date | date:'medium'}}
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex flex-column">
+                                                                <label>
+                                                                    {{_currLanguage == 'en' ?
+                                                                    data?.created_by?.first_name +
+                                                                    data?.created_by?.last_name :
+                                                                    data?.created_by?.first_name +
+                                                                    data?.created_by?.last_name}}
+                                                                </label>
+                                                                <label>
+                                                                    {{_currLanguage == 'en' ?
+                                                                    data?.created_by?.mobile :
+                                                                    data?.created_by?.mobile}}
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{_currLanguage == 'en' ?
+                                                            data?.comments?.en : data?.comments?.hi}}</td>
+                                                        <td nzRight><button nz-button nzType="link" clas="border"
+                                                                (click)="createNewFollow('activity',data)">Edit</button>
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
+                                            </tbody>
+                                        </nz-table>
                                     </div>
-                                  
+
 
                                     <div class="d-lg-block d-none" *ngFor="let item of listOfActivity">
                                         <nz-card class="cardBorder my-3">
                                             <h5>{{_currLanguage == 'en' ? item?.activity_type?.name?.en :
                                                 item?.activity_type?.name?.hi}}</h5>
-                                            <nz-steps [nzProgressDot]="true" [nzCurrent]="1"
-                                                nzDirection="vertical">
+                                            <nz-steps [nzProgressDot]="true" [nzCurrent]="1" nzDirection="vertical">
                                                 <nz-step [nzTitle]="titleTemplate"
                                                     [nzDescription]="descriptionTemplate">
                                                 </nz-step>
@@ -218,8 +226,7 @@
 
                                             <ng-template #titleTemplate>
                                                 <div class="d-flex justify-content-between">
-                                                    <label class="m-0 font-size-16 font-weight-semibold"
-                                                        nz-dropdown
+                                                    <label class="m-0 font-size-16 font-weight-semibold" nz-dropdown
                                                         [nzDropdownMenu]="latestUploadDropDown">{{item.created_by?.first_name
                                                         + item.created_by?.last_name }}
                                                         <span nz-icon nzType="down" nzTheme="outline"
@@ -228,11 +235,12 @@
                                                     <div class="d-flex">
                                                         <label class="font-size-14 mr-3">{{item?.activity_date |
                                                             date:'medium'}}</label>
-                                                        <button nz-button nzType="link" class="border" nzSize="small" (click)="createNewFollow('activity',item)">
+                                                        <button nz-button nzType="link" class="border" nzSize="small"
+                                                            (click)="createNewFollow('activity',item)">
                                                             Edit
                                                         </button>
                                                     </div>
-                                                   
+
                                                 </div>
 
                                                 <nz-dropdown-menu #latestUploadDropDown="nzDropdownMenu">
@@ -250,54 +258,59 @@
                             <div class="col-md-12">
                                 <nz-card [nzLoading]="api_loading['cardFollowup']" nzTitle="Follow up Information">
                                     <div class="row">
-                                        <div class="col-md-12" >
+                                        <div class="col-md-12">
                                             <!-- <nz-card class="cardBorder my-3"> -->
                                             <div class="d-block d-lg-none">
                                                 <nz-table #rowSelectionTable [nzData]="followUpList"
-                                                [nzTotal]="followUpList.length" [nzFrontPagination]="false"
-                                                [nzShowSizeChanger]="false" [nzScroll]="{ x: '1000px', y: '50vh' }">
-                                                <thead>
-                                                    <tr>
-                                                        <th nzWidth="4rem">Sr. No</th>
-                                                        <th class="text-left">Followup Type</th>
-                                                        <th>Time Stamp</th>
-                                                        <th>Created By</th>
-                                                        <th>Comments</th>
-                                                        <th nzRight>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <ng-container *ngFor="let data of followUpList; index as i">
+                                                    [nzTotal]="followUpList.length" [nzFrontPagination]="false"
+                                                    [nzShowSizeChanger]="false" [nzScroll]="{ x: '1000px', y: '50vh' }">
+                                                    <thead>
                                                         <tr>
-                                                            <td nzWidth="4rem">{{i+1}}</td>
-                                                            <td class="text-left">{{_currLanguage == 'en' ? data?.followup_type?.name?.en
-                                                                : data?.followup_type?.name?.hi}}</td>
-                                                            <td class="text-left">{{data?.followup_datetime | date:'medium'}} </td>
-                                                            <td>
-                                                                <div class="d-flex flex-column">
-                                                                    <label>
-                                                                        {{_currLanguage == 'en' ?
-                                                                        data?.created_by?.first_name +
-                                                                        data?.created_by?.last_name :
-                                                                        data?.created_by?.first_name +
-                                                                        data?.created_by?.last_name}}
-                                                                    </label>
-                                                                    <label>
-                                                                        {{_currLanguage == 'en' ?
-                                                                        data?.created_by?.mobile :
-                                                                        data?.created_by?.mobile}}
-                                                                    </label>
-                                                                </div>
-                                                            </td>
-                                                            <td >{{_currLanguage == 'en' ?
-                                                                data?.comments?.en : data?.comments?.hi}}</td>
-                                                                <td nzRight><button nz-button nzType="link" clas="border" (click)="createNewFollow('followUp',data)">Edit</button></td>
+                                                            <th nzWidth="4rem">Sr. No</th>
+                                                            <th class="text-left">Followup Type</th>
+                                                            <th>Time Stamp</th>
+                                                            <th>Created By</th>
+                                                            <th>Comments</th>
+                                                            <th nzRight>Action</th>
                                                         </tr>
-                                                    </ng-container>
-                                                </tbody>
-                                            </nz-table>
+                                                    </thead>
+                                                    <tbody>
+                                                        <ng-container *ngFor="let data of followUpList; index as i">
+                                                            <tr>
+                                                                <td nzWidth="4rem">{{i+1}}</td>
+                                                                <td class="text-left">{{_currLanguage == 'en' ?
+                                                                    data?.followup_type?.name?.en
+                                                                    : data?.followup_type?.name?.hi}}</td>
+                                                                <td class="text-left">{{data?.followup_datetime |
+                                                                    date:'medium'}} </td>
+                                                                <td>
+                                                                    <div class="d-flex flex-column">
+                                                                        <label>
+                                                                            {{_currLanguage == 'en' ?
+                                                                            data?.created_by?.first_name +
+                                                                            data?.created_by?.last_name :
+                                                                            data?.created_by?.first_name +
+                                                                            data?.created_by?.last_name}}
+                                                                        </label>
+                                                                        <label>
+                                                                            {{_currLanguage == 'en' ?
+                                                                            data?.created_by?.mobile :
+                                                                            data?.created_by?.mobile}}
+                                                                        </label>
+                                                                    </div>
+                                                                </td>
+                                                                <td>{{_currLanguage == 'en' ?
+                                                                    data?.comments?.en : data?.comments?.hi}}</td>
+                                                                <td nzRight><button nz-button nzType="link"
+                                                                        clas="border"
+                                                                        (click)="createNewFollow('followUp',data)">Edit</button>
+                                                                </td>
+                                                            </tr>
+                                                        </ng-container>
+                                                    </tbody>
+                                                </nz-table>
                                             </div>
-                                          
+
 
                                             <div class="d-lg-block d-none" *ngFor="let item of followUpList">
                                                 <nz-card class="cardBorder my-3">
@@ -325,13 +338,17 @@
                                                                     class="ml-2"></span>
                                                             </label>
                                                             <div class="d-flex">
-                                                                <label class="font-size-14 mr-3">{{item?.followup_datetime |
+                                                                <label
+                                                                    class="font-size-14 mr-3">{{item?.followup_datetime
+                                                                    |
                                                                     date:'medium'}}</label>
-                                                                <button nz-button nzType="link" class="border" nzSize="small" (click)="createNewFollow('followUp',item)">
+                                                                <button nz-button nzType="link" class="border"
+                                                                    nzSize="small"
+                                                                    (click)="createNewFollow('followUp',item)">
                                                                     Edit
                                                                 </button>
                                                             </div>
-                                                           
+
                                                         </div>
 
                                                         <nz-dropdown-menu #latestUploadDropDown="nzDropdownMenu">
@@ -379,6 +396,36 @@
                                 </nz-form-item>
                             </div>
 
+                            <div class="col-md-12" *ngIf="currFormType == 'followUp'">
+                                <nz-form-item>
+                                    <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Time
+                                    </nz-form-label>
+                                    <nz-form-control [nzSm]="16" [nzXs]="24" [nzErrorTip]="'Please select Date'">
+                                        <nz-input-group>
+                                            <!-- [nzDisabledDate]="disabledDate" -->
+                                            <nz-time-picker formControlName="followup_time"></nz-time-picker>
+                                        </nz-input-group>
+                                    </nz-form-control>
+                                </nz-form-item>
+                            </div>
+
+
+                            <div class="col-md-12" *ngIf="currFormType == 'followUp'">
+                                <nz-form-item>
+                                    <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Upload Files
+                                    </nz-form-label>
+                                    <!-- <nz-form-control [nzSm]="16" [nzXs]="24" [nzErrorTip]="'Please select Date'"> -->
+                                        <nz-upload nzListType="picture" nzType="drag"
+                                            [nzBeforeUpload]="beforeUploadName" [nzMultiple]="false"
+                                            [(nzFileList)]="fileList">
+                                            <!-- <p class="ant-upload-text">or</p> -->
+                                            <button class="my-md-4" nz-button nzType="primary">Upload</button>
+                                        </nz-upload>
+                                    <!-- </nz-form-control> -->
+                                </nz-form-item>
+                            </div>
+
+
 
                             <div class="col-md-12" *ngIf="currFormType == 'activity'">
                                 <nz-form-item>
@@ -396,7 +443,7 @@
                                 </nz-form-item>
                             </div>
 
-                            <div class="col-md-12" *ngIf="currFormType == 'followUp'">
+                            <div class="col-md-12 mt-5" *ngIf="currFormType == 'followUp'">
                                 <nz-form-item>
                                     <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Mark Followup
                                     </nz-form-label>

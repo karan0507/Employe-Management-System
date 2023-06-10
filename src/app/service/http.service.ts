@@ -298,5 +298,41 @@ export class HttpService {
   public getVoterStatus(data){
     return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`,data)
   }
+
+  // Task Management
   
+  public getTaskList(data){
+    return this.http.get(this.url + `/users/v1/task-management/fetch-task-list`,{params:data})
+  }
+
+  public editTasks(id, data) {
+    return this.http.put(this.url + `/users/v1/task-management/edit-task/` + id+`/`, data)
+  }
+
+  public addTasks(data) {
+    return this.http.post(this.url + `/users/v1/task-management/create-task`, data)
+  }
+
+  public changeTaskStatus(id, data) {
+    return this.http.put(this.url + `/users/v1/task-management/edit-task/` + id+`/`, data)
+  }
+
+
+  // Team Management
+  public getTeamList(data){
+    return this.http.get(this.url + `/users/v1/user-management/get-user`,data)
+  }
+
+  public editTeamMember(id, data) {
+    return this.http.put(this.url + `/users/v1/user-management/edit-user/` + id+`/`, data)
+  }
+
+  public addTeamMember(data) {
+    return this.http.post(this.url + `/users/v1/user-management/add-user`, data)
+  }
+
+  public changeTeamStatus(id, data) {
+    return this.http.post(this.url + `/users/v1/user-management/change-user-status`, data)
+  }
+
 }

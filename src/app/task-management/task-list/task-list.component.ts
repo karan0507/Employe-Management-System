@@ -40,9 +40,8 @@ _currLanguage: any;
       data['limit'] = this.globalPageSize
     }
     if (this._currBooth) {
-      console.log(this._currBooth);
       
-      // data['booth'] = this._currBooth;
+      data['booth'] = this._currBooth;
     }
     if (this._currWard) {
       data['ward'] = this._currWard;

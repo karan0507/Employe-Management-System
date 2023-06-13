@@ -1,0 +1,238 @@
+<div class="d-block align-items-center mb-3">
+    <div class="row">
+        <div class="col-12 col-lg-4 mb-2">
+            <div class="d-flex">
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input type="text" nz-input placeholder="Search By Activity Name/ Month"
+                        [(ngModel)]="_currSearchValue" (keyup.enter)="getVotersList()" />
+                </nz-input-group>
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="secondary" nzSearch (click)="getVotersList()">
+                        <i nz-icon nzType="search"></i>
+                    </button>
+                </ng-template>
+                <button nz-button nzType="default" class="ml-3 mb-2" nzShape="circle" (click)="resetFilter()">
+                    <i nz-icon nzType="undo"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-8 col-12 mb-2 d-flex flex-wrap justify-content-end">
+            <button nz-button [nzType]="'link'" (click)="quickViewToggle()" class="border px-3 mx-3">Filters</button>
+
+            <button nz-button nzType="primary" routerLink="/voter/add-voter">+ Add Voter</button>
+        </div>
+    </div>
+
+</div>
+
+<main>
+    <div class="container bannerContext" *ngIf="isBannerVisible">
+        <!-- <div class="bannerContext"> -->
+        <!-- <span nz-icon nzType="close" nzTheme="outline" class="text-white font-size-16 font-weight-bold"
+            style="position: absolute; right: 1rem; top: 2rem;" (click)="isBannerVisible = false"></span>
+        <img src="../../../assets/images/Ext_Images/bannerImage.svg" class="w-100 img my-3" alt="">
+        <div class="d-flex flex-column align-items-center justify-content-center context py-3">
+            <img src="../../../assets/images/Ext_Images/Ellipse 1201cng_log.svg" alt="" height="40px">
+            <h6 class="text-white d-flex d-lg-none mb-0">{{_currLanguage == 'en' ? globalData?.party_name?.en : globalData?.party_name?.hi}}</h6>
+            <h3 class="text-white d-lg-flex d-none mb-0 font-size-24">{{_currLanguage == 'en' ? globalData?.party_name?.en : globalData?.party_name?.hi}}</h3>
+            <h4 class="text-white d-flex d-lg-none" style="white-space: nowrap;">{{_currLanguage == 'en' ? globalData?.name?.en : globalData?.name?.hi}}</h4>
+            <h1 class="text-white d-lg-flex d-none font-size-60" style="white-space: nowrap;">{{_currLanguage == 'en' ? globalData?.name?.en : globalData?.name?.hi}}</h1>
+            <button nz-button nzType="link" [routerLink]="'/home/about-party'"
+                class="d-xs-none d-lg-none d-flex bg-white text-primary align-items-center" nzSize="small">{{_currLanguage == 'en' ? 'Know More' : 'अधिक जानकारी'}}
+                <span nz-icon nzType="arrow-right" nzTheme="outline"></span>
+            </button>
+            <button nz-button nzType="link" [routerLink]="'/home/about-party'"
+                class="d-xs-none d-lg-flex bg-white align-items-center text-primary d-none font-weight-bold" nzSize="large">{{_currLanguage == 'en' ? 'Know More' : 'अधिक जानकारी'}}
+                <span nz-icon nzType="arrow-right" nzTheme="outline"></span>
+            </button>
+        </div> -->
+    </div>
+    <nz-card [nzLoading]="api_loader['list']" class="d-md-none d-flex">
+        <div class="row">
+            <div class="col-md-12 p-0" *ngFor="let item of votersList">
+                <div class="d-flex justify-content-between my-3 align-items-center" [routerLink]="'/voter'"
+                    [queryParams]="{id:item?.id}">
+                    <!-- <img nzIcon="user" width="80" height="80" class="mr-4 rounded-circle"
+                        [src]="'../.././../assets/images/avatars/thumb-10.jpg'"> -->
+                    <nz-avatar nzSize="large" style="background-color: #2a4550" class="mr-4 text-center"
+                        [nzText]="getPipeValue(item?.full_name_en)"></nz-avatar>
+
+                    <div class="d-flex flex-column">
+                        <h6 class="text-dark">{{_currLanguage == 'en' ? item?.full_name_en : item?.full_name_hi}}</h6>
+                        <label class="text-primary mb-2">EPIC_NO: {{item?.epic_no}}</label>
+                        <div class="d-flex justify-content-start flex-wrap">
+                            <nz-tag class="mr-2" style="max-width: fit-content;">Booth No {{item?.booth}}</nz-tag>
+                            <nz-tag style="max-width: fit-content;">Ward No J</nz-tag>
+                        </div>
+                    </div>
+                    <span nz-icon nzType="right" nzSize="large" nzTheme="outline"
+                        class="font-size-16 align-self-center"></span>
+                </div>
+                <nz-divider class="my-0"></nz-divider>
+            </div>
+        </div>
+    </nz-card>
+
+    <div class="d-md-block d-none">
+        <div class="row">
+            <div class="col-md-12">
+                <nz-card [nzLoading]="api_loader['list']">
+                    <div class="totalCount">
+                        <nz-table #rowSelectionTable [nzData]="votersList" [nzTotal]="total_count"
+                            [nzFrontPagination]="false" [nzShowSizeChanger]="true" [nzPageIndex]="pageIndex"
+                            [nzPageSize]="globalPageSize" (nzQueryParams)="votersList[0] ? getVotersList($event) : null"
+                            [nzShowTotal]="botTotalCount" [nzLoading]="api_loader['card']"
+                            [nzScroll]="{ x: '1500px', y: '50vh' }">
+                            <thead>
+                                <tr>
+                                    <th nzWidth="4rem">Sr. No</th>
+                                    <th class="text-left" [nzWidth]="'14rem'">Full Name</th>
+                                    <th>Epic No</th>
+                                    <th>Age/ Gender</th>
+                                    <th>Is Benificary</th>
+                                    <th>Gali</th>
+                                    <th>Booth</th>
+                                    <th>Part No</th>
+                                    <th>Section Name</th>
+                                    <th>Section No</th>
+                                    <th nzRight>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <ng-container *ngFor="let data of votersList; index as i">
+                                    <tr>
+                                        <td nzWidth="4rem" *ngIf="pageIndex == 1">{{i+1}}</td>
+                                        <td nzWidth="4rem" *ngIf="pageIndex > 1">{{( (pageIndex-1) * globalPageSize) +
+                                            (i+1)}}
+                                        </td>
+                                        <td class="text-left" [nzWidth]="'14rem'">
+                                            <a [routerLink]="['/voter/view-profile']" [queryParams]="{id:data.id}">
+                                                {{_currLanguage == 'en' ? data?.full_name_en : full_name_hi}}
+                                            </a>
+                                        </td>
+                                        <td>{{data?.epic_no}}</td>
+                                        <td>{{data?.age + " / " + data?.gender}} </td>
+                                        <td>
+                                            <span nz-icon *ngIf="data?.is_benificary" nzType="check-circle"
+                                                class="text-success" nzTheme="outline"></span>
+                                            <span nz-icon *ngIf="!data?.is_benificary else noBenificary;"
+                                                nzType="close-circle" class="text-danger" nzTheme="outline"></span>
+                                            <ng-template #noBenificary>
+                                                Not updated
+                                            </ng-template>
+                                        </td>
+                                        <td>{{data?.gali ? data?.gali : '-'}}</td>
+                                        <td>{{data?.booth ? data?.booth : '-'}}</td>
+                                        <td>{{data?.part_no}}</td>
+                                        <td>{{_currLanguage == 'en' ? data?.section_name_en :
+                                            ata?.section_name_hi}}</td>
+                                        <td>{{_currLanguage == 'en' ? data?.section_no : data?.section_no}}</td>
+                                        <td nzRight>
+                                            <div>
+                                                <a class="text-dark font-size-20" nz-dropdown [nzClickHide]="false"
+                                                    [nzTrigger]="'click'" (click)="getSwitchValue(data)"
+                                                    [nzPlacement]="'bottomRight'"
+                                                    [nzDropdownMenu]="latestUploadDropDown">
+                                                    <i nz-icon nzType="ellipsis" nzTheme="outline"></i>
+                                                </a>
+                                                <nz-dropdown-menu #latestUploadDropDown="nzDropdownMenu">
+                                                    <ul nz-menu>
+                                                        <!-- *ngxPermissionsOnly="''" -->
+                                                        <li nz-menu-item [routerLink]="['/voter/view-profile']"
+                                                        [queryParams]="{id:data.id}">
+                                                            <span class="m-l-5">View Voter</span>
+                                                        </li>
+                                                        <li nz-menu-item [routerLink]="['/voter/edit-voter']"
+                                                            [queryParams]="{id:data.id}">
+                                                            <span class="m-l-5">Edit</span>
+                                                        </li>
+                                                        <li nz-menu-item>
+                                                            <span class="m-l-5">View Benificary</span>
+                                                        </li>
+
+                                                        <!-- *ngxPermissionsOnly="'" -->
+
+                                                    </ul>
+                                                </nz-dropdown-menu>
+                                            </div>
+                                            <!-- <button nz-button nzTyp="link" class="border" routerLink="/voter/edit-voter"
+                                                [queryParams]="{id:data.id}">Edit</button> -->
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </tbody>
+                        </nz-table>
+                        <ng-template #botTotalCount>
+                            <div class="font-weight-semibold">
+                                <b>{{total_count}} Results Found </b>
+                            </div>
+                        </ng-template>
+                    </div>
+                </nz-card>
+            </div>
+
+        </div>
+    </div>
+
+</main>
+
+<section *ngIf="quickViewVisible">
+    <nz-drawer [nzWidth]="300" [nzTitle]="filtersTemplate" [nzClosable]="false" [nzVisible]="quickViewVisible"
+        nzPlacement="right" (nzOnClose)="quickViewToggle()">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="d-flex flex-column">
+                <div class="d-flex align-items-start flex-column mb-3">
+                    <label>Booth: </label>
+                    <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currBooth"
+                        (nzFocus)="searchStaticDataGlobalFunction('Booth')"
+                        (keyup)="searchStaticDataGlobalFunction('booth',$event)" nzAllowClear
+                        nzPlaceHolder="Select Booth/Ward">
+                        <nz-option *ngFor="let item of boothList" [nzValue]="item.id"
+                            [nzLabel]="_currLanguage == 'en' ? item?.name?.en + '/' + item?.Ward?.name?.en : item?.name?.hi + '/' + item?.Ward?.name?.hi">
+                        </nz-option>
+                    </nz-select>
+                </div>
+                <div class="d-flex align-items-start flex-column mb-3">
+                    <label>Ward: </label>
+                    <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currWard"
+                        (nzFocus)="searchStaticDataGlobalFunction('Ward')"
+                        (keyup)="searchStaticDataGlobalFunction('Ward',$event)" nzAllowClear
+                        nzPlaceHolder="Select Ward">
+                        <nz-option *ngFor="let item of wardList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                        </nz-option>
+                    </nz-select>
+                </div>
+
+                <div class="d-flex align-items-start flex-column mb-3">
+                    <label>Sector: </label>
+                    <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currSector"
+                        (nzFocus)="searchStaticDataGlobalFunction('Sector')"
+                        (keyup)="searchStaticDataGlobalFunction('Sector',$event)" nzAllowClear
+                        nzPlaceHolder="Select Sector">
+                        <nz-option *ngFor="let item of sectorList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                        </nz-option>
+                    </nz-select>
+                </div>
+                <div class="d-flex align-items-start flex-column mb-3">
+                    <label>Is Benificary: </label>
+                    <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currBenificary" nzAllowClear
+                        nzPlaceHolder="Select Is Benificary">
+                        <nz-option [nzValue]="true" [nzLabel]="'True'"> </nz-option>
+                        <nz-option [nzValue]="false" [nzLabel]="'False'"></nz-option>
+                    </nz-select>
+                </div>
+
+                <div class="d-flex justify-content-center mt-5 align-items-center">
+                    <button nz-button nzType="primary" class="mr-3"
+                        (click)="quickViewToggle(); getVotersList()">Apply</button>
+                    <button nz-button nzType="link" (click)="resetFilter()">Reset</button>
+                </div>
+            </div>
+            <!-- <button nz-button nzType="link" class="text-primary font-weight-semibold">Clear All</button> -->
+        </div>
+        <!-- <app-quick-view></app-quick-view> -->
+        <ng-template #filtersTemplate>
+            Filters
+        </ng-template>
+    </nz-drawer>
+</section>

@@ -28,11 +28,13 @@ export class Error1Component {
           return;
         }
         if(res.data?.user_type?.name == 'Superuser'){
-          this.router.navigate(["/data-operator/home"]);
+          this.router.navigate(["/voter"]);
           } else if(res.data?.user_type?.name == 'Data Operator'){
-            this.router.navigate(["/data-operator/home"]);
+            this.router.navigate(["/voter"]);
           }  else if(res.data?.user_type?.name == 'Account Manager'){
             this.router.navigate(["/accounts/vouchers"]);
-          } 
+          } else{
+            this.router.navigate(["/authentication/login"]);
+          }
     }
 }    

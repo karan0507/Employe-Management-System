@@ -24,11 +24,13 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { VoterListComponent } from './voter-list/voter-list.component';
 
 @NgModule({
   declarations: [
     VoterProfileComponent,
-    AddEditVoterComponent
+    AddEditVoterComponent,
+    VoterListComponent
   ],
   imports: [
     CommonModule,
@@ -53,7 +55,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
     NzTagModule,
     NzSliderModule,
     NzTableModule,
-    NzUploadModule
+    NzUploadModule,
   ]
 })
 export class VoterModule { }

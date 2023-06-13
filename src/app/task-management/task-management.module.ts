@@ -15,6 +15,10 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { AddEditTaskComponent } from './add-edit-task/add-edit-task.component';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 
 @NgModule({
@@ -33,7 +37,11 @@ import { AddEditTaskComponent } from './add-edit-task/add-edit-task.component';
     NzInputModule,
     NzDatePickerModule,
     NzIconModule,
-    NzAvatarModule
+    NzAvatarModule,
+    NzDropDownModule,
+    NzDrawerModule,
+    NzUploadModule,
+    NzModalModule
   ]
 })
 export class TaskManagementModule { }

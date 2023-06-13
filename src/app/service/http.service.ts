@@ -116,7 +116,7 @@ export class HttpService {
   }
 
   public logout() {
-    return this.http.get(this.url + 'users/auth/logout-user')
+    return this.http.get(this.url + '/users/v1/auth/logout-user')
   }
 
   public getEnrollerData(data) {
@@ -335,4 +335,8 @@ export class HttpService {
     return this.http.post(this.url + `/users/v1/user-management/change-user-status`, data)
   }
 
+  public importTask(data) {
+    return this.http.post(this.url + `/users/v1/task-management/import-task`, data)
+  }
+  
 }

@@ -2,26 +2,33 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { VoterProfileComponent } from './voter-profile/voter-profile.component';
 import { AddEditVoterComponent } from './add-edit-voter/add-edit-voter.component';
+import { VoterListComponent } from './voter-list/voter-list.component';
 
 const routes: Routes = [
+
+ 
+
   {
     path: '',
     // canActivate: [NgxPermissionsGuard],
-    component: VoterProfileComponent,
+    
+    component: VoterListComponent,
     data: {
-      parent: 'Voter Profile ',
-      isButton: true,
+      parent: 'Voters',
+      title:'Voter List ',
+      isButton: false,
       isHome: false,
-      url:'/home'
+      custom_url:'/voter'
       // headerDisplay: "none",
     }
   },
   {
     path: '',
     // canActivate: [NgxPermissionsGuard],
-    data: {
-      parent: 'Voter Profile ',
-      // headerDisplay: "none",
+    data:{
+      parent: 'Voters',
+      title:'Voter List ',
+      custom_url:'/voter'
     },
     children:[
       {
@@ -29,10 +36,11 @@ const routes: Routes = [
         // canActivate: [NgxPermissionsGuard],
         component: AddEditVoterComponent,
         data: {
-          parent: 'Add Voter',
+          parent: 'Voter',
+          title:'Add Voter',
           isButton: true,
           isHome: false,
-          url:'/home'
+          custom_url:'/add-voter'
         }
       },
       {
@@ -40,10 +48,24 @@ const routes: Routes = [
         // canActivate: [NgxPermissionsGuard],
         component: AddEditVoterComponent,
         data: {
-          parent: 'Edit Voter',
+          title:'Edit Voter',
+          parent: 'Voter',
+          isButton: false,
+          isHome: false,
+          custom_url:'/edit-voter'
+        }
+      },
+      {
+        path: 'view-profile',
+        // canActivate: [NgxPermissionsGuard],
+        component: VoterProfileComponent,
+        data: {
+          title:'Voter Profile',
+          parent: 'Voter',
           isButton: true,
           isHome: false,
-          url:'/home'
+          custom_url:'/view-profile'
+          // headerDisplay: "none",
         }
       },
     ]

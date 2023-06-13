@@ -12,7 +12,7 @@ const appRoutes: Routes = [
     {
         path: '',
         // redirectTo: '/dashboard/home',
-        redirectTo: '/home',
+        redirectTo: '/voter',
         pathMatch: 'full',
     },
     { 

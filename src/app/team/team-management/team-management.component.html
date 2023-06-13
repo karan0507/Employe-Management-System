@@ -1,1 +1,148 @@
-<p>team-management works!</p>
+<div class="d-block align-items-center mb-3">
+    <div class="row">
+        <div class="col-12 col-lg-4 mb-2">
+            <div class="d-flex">
+                <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                    <input type="text" nz-input placeholder="Search By Activity Name/ Month"
+                        [(ngModel)]="_currSearchValue" (keyup.enter)="getTeamList()" />
+                </nz-input-group>
+                <ng-template #suffixIconButton>
+                    <button nz-button nzType="secondary" nzSearch (click)="getTeamList()">
+                        <i nz-icon nzType="search"></i>
+                    </button>
+                </ng-template>
+                <button nz-button nzType="default" class="ml-3 mb-2" nzShape="circle" (click)="resetFilter()">
+                    <i nz-icon nzType="undo"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-lg-8 col-12 mb-2 d-flex flex-wrap justify-content-start">
+
+            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currBooth"
+                (nzFocus)="searchStaticDataGlobalFunction('Booth')" (keyup)="searchStaticDataGlobalFunction($event)"
+                nzAllowClear nzPlaceHolder="Select Booth" (ngModelChange)="getTeamList()">
+                <nz-option *ngFor="let item of boothList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                </nz-option>
+            </nz-select>
+            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currWard"
+                (nzFocus)="searchStaticDataGlobalFunction('Ward')" (keyup)="searchStaticDataGlobalFunction($event)"
+                nzAllowClear nzPlaceHolder="Select Ward" (ngModelChange)="getTeamList()">
+                <nz-option *ngFor="let item of boothList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                </nz-option>
+            </nz-select>
+            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currSector"
+                (nzFocus)="searchStaticDataGlobalFunction('Sector')" (keyup)="searchStaticDataGlobalFunction($event)"
+                nzAllowClear nzPlaceHolder="Select Sector" (ngModelChange)="getTeamList()">
+                <nz-option *ngFor="let item of boothList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                </nz-option>
+            </nz-select>
+            <button nz-button nzType="primary" class="mb-2 mr-3" routerLink="/task-management/add-task">+ Add New Task</button>
+            <button nz-button nzType="primary" class="mb-2 mr-3" (click)="getTeamList()"
+                [nzLoading]="api_loader['list']">
+                Export</button>
+        </div>
+    </div>
+
+</div>
+
+<div class="d-flex justify-content-end mb-3">
+
+</div>
+<nz-card>
+    <div class="totalCount">
+        <nz-table #rowSelectionTable [nzData]="teamList" [nzTotal]="total_count" [nzFrontPagination]="false"
+            [nzShowSizeChanger]="true" [nzPageIndex]="page" [nzPageSize]="globalPageSize"
+            (nzQueryParams)="teamList[0] ? getTeamList($event) : null" [nzShowTotal]="botTotalCount"
+            [nzLoading]="api_loader['list']" [nzScroll]="{ x: '1500px', y: '50vh' }">
+            <thead>
+                <tr>
+                    <!-- <th nzWidth="2rem"></th> -->
+                    <!-- <th nzWidth="2rem" [nzChecked]=" customersDataset[0] ? checked : false"
+                    [nzIndeterminate]=" customersDataset[0] ? indeterminate : false"
+                    (nzCheckedChange)="customersDataset[0] ? onAllChecked($event) : false">
+                </th> -->
+                    <th nzWidth="4rem">Sr. No</th>
+                    <th nzWidth="8rem" class="text-left">Full Name</th>
+                    <th nzWidth="8rem" class="text-left">User Type</th>
+                    <th nzWidth="8rem">Contact Details</th>
+                    <th nzWidth="8rem">Internal User</th>
+                    <th nzWidth="8rem">User Type</th>
+                    <th nzWidth="8rem">Status</th>
+                    <!-- <th nzWidth="8rem">Created At</th> -->
+                    <th nzWidth="8rem">Created By</th>
+                    <th nzWidth="8rem" nzRight>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let data of teamList; index as i">
+                    <tr>
+                        <!-- <td nzWidth="2rem" [nzExpand]="expandSet.has(data.id)"
+                        (nzExpandChange)="onExpandChange(data.id, $event, i)"></td> -->
+                        <!-- <td nzWidth="2rem" [nzChecked]="setOfCheckedId.has(data.id)" [nzDisabled]="data.disabled"
+                        (nzCheckedChange)="onItemChecked(data.id, $event)"></td> -->
+                        <td nzWidth="4rem" *ngIf="page == 1">{{i+1}}</td>
+                        <td nzWidth="4rem" *ngIf="page > 1">{{( (page-1) * globalPageSize) + (i+1)}}</td>
+                        <td nzWidth="8rem" class="text-left">
+                            <a [routerLink]="['/task-management/edit-task']" [queryParams]="{id:data.id}"> {{ _currLanguage == 'en' ?
+                                ((data?.first_name ? data?.first_name : ' ') + (data?.last_name ? ' ' + data?.last_name : '')) : data?.first_name + data?.last_name}}</a>
+                        </td>
+                        <td nzWidth="8rem">{{ data?.user_type?.name  ? data?.user_type?.name :
+                            '-'}} </td>
+
+                        <td nzWidth="8rem" class="text-left">
+                           <div class="d-flex flex-column">
+                            <label for="">
+                               {{data?.email}}
+                            </label>
+                            <label for="">
+                                {{data?.mobile}}
+                             </label>
+                           </div>
+                        </td>
+
+
+                        <td nzWidth="8rem">{{ _currLanguage == 'en' ?
+                            (data?.internal_user?.first_name + data?.internal_user?.last_name) :
+                            (data?.internal_user?.first_name + data?.internal_user?.last_name)}} </td>
+
+                        <td nzWidth="8rem">{{ _currLanguage == 'en' ?
+                            data?.internal_user?.user_type?.name :
+                            data?.internal_user?.user_type?.name }} </td>
+                        <td nzWidth="8rem">{{data?.status ? data?.status : ''}}</td>
+                        <!-- <td nzWidth="8rem">{{ _currLanguage == 'en' ? (data?.task_type?.created_at | date:'medium') :
+                            data?.task_type?.created_at}} </td> -->
+
+
+                        <!-- <td nzWidth="8rem">{{ data?.created_at ? (data?.created_at | date: "medium") : '--' }}</td> -->
+                        <td nzWidth="8rem">{{(data?.created_by ? ' ' + data?.created_by : '-')}}</td>
+
+                        <td nzWidth="8rem" nzRight>
+                            <button nz-button nzType="primary" routerLink="/task-management/edit-task" [queryParams]="{id:data?.id}">Edit</button>
+                            <!-- <a class="text-dark font-size-20" nz-dropdown [nzClickHide]="false" [nzTrigger]="'click'"
+                                [nzPlacement]="'bottomRight'" [nzDropdownMenu]="latestUploadDropDown">
+                                <i nz-icon nzType="ellipsis" theme="outline"></i>
+                            </a>
+                            <nz-dropdown-menu #latestUploadDropDown="nzDropdownMenu">
+                                <ul nz-menu>
+                                    <li nz-menu-item *ngxPermissionsOnly="'view_customer_dashboard'"
+                                        [routerLink]="['view-customer']" [queryParams]="{id:data.id}">
+                                        <span class="m-l-5">View Customer</span>
+                                    </li>
+                                    <li nz-menu-item *ngxPermissionsOnly="'edit_customer'"
+                                        [routerLink]="['edit-customer']" [queryParams]="{id:data.id}">
+                                        <span class="m-l-5">Edit</span>
+                                    </li>
+                                </ul>
+                            </nz-dropdown-menu> -->
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </nz-table>
+        <ng-template #botTotalCount>
+            <div class="font-weight-semibold">
+                <b>{{total_count}} Results Found </b>
+            </div>
+        </ng-template>
+    </div>
+</nz-card>

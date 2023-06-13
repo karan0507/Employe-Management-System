@@ -1,1 +1,123 @@
-<p>add-edit-task works!</p>
+<section>
+    <nz-card [nzLoading]="api_loading['card']">
+        <div class="d-flex  justify-content-end align-items-center flex-wrap mb-5">
+            <h6>Status: 
+                <span class="font-weight-normal mx-2" [ngClass]="taskDetails?.status == 'DONE' ? 'text-success' : (taskDetails?.status == 'TO-DO' ? 'text-danger' : 'text-info')">
+                    {{taskDetails?.status}}
+                </span>
+            </h6>
+            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [ngModel]="taskDetails?.status"
+            [nzPlaceHolder]="_currLanguage == 'en' ? 'Change Status' : 'अवस्था बदलो'" (ngModelChange)="changeTaskStatus($event)">
+            <nz-option [nzValue]="'TO-DO'" [nzLabel]="'TO-DO'"> </nz-option>
+            <nz-option [nzValue]="'IN-PROGRESS'" [nzLabel]="'IN-PROGRESS'"> </nz-option>
+                <nz-option [nzValue]="'DONE'" [nzLabel]="'DONE'"> </nz-option>
+           
+        </nz-select> 
+        </div>
+        <form nz-form [formGroup]="taskForm">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Task Type' : 'कार्य प्रकार'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select task type' : 'कृपया कार्य चुनें'">
+
+                            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="task_type"
+                                (nzFocus)="gettaskLists()" (keyup)="gettaskLists($event)" nzAllowClear
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Task Type' : 'कृपया कार्य चुनें'" (ngModelChange)="gettaskLists($event)">
+                                <nz-option *ngFor="let item of taskList" [nzValue]="item.id"
+                                    [nzLabel]="item?.name?.en">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Description' : 'विवरण'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter description' : 'कृपया विवरण दर्ज करें'">
+                            <input type="text" nz-input formControlName="discription"
+                                [placeholder]="_currLanguage == 'en' ? 'Enter Description' : 'विवरण दर्ज करें'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Enter name' : 'नाम दर्ज करें'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter name' : 'कृपया नाम दर्ज करें'">
+                            <input type="text" nz-input formControlName="name"
+                                [placeholder]="_currLanguage == 'en' ? 'Enter name' : 'नाम दर्ज करें'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <!-- Select for internal user -->
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Select Internal User' : 'आंतरिक उपयोगकर्ता का चयन करें'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select internal user' : 'कृपया आंतरिक उपयोगकर्ता का चयन करें'">
+
+                            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="internal_user"
+                                (nzFocus)="getInternalUser()" (keyup)="getInternalUser($event)" nzAllowClear
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Internal User' : 'आंतरिक उपयोगकर्ता का चयन करें'" (ngModelChange)="getInternalUser($event)">
+                                <nz-option *ngFor="let item of internal_user_list" [nzValue]="item.id"
+                                    [nzLabel]="(item?.first_name ? item?.first_name : '') + (item?.last_name ? ' ' + item?.last_name : '') "> 
+                                </nz-option>
+                            </nz-select>
+
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <!-- Voters -->
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Select Voters' : 'मतदाताओं का चयन करें'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select voters' : 'कृपया मतदाताओं का चयन करें'">
+                            <nz-select  [nzMode]="'multiple'" class="selectFilter mb-2 mr-3" formControlName="voters"
+                                (nzFocus)="getVoters()" (keyup)="getVoters($event)" nzAllowClear  [nzMaxTagCount]="2"
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Voters' : 'मतदाताओं का चयन करें'" (ngModelChange)="getVoters($event)">
+                                <nz-option *ngFor="let item of voters" [nzValue]="item.id"
+                                    [nzLabel]=" _currLanguage == 'en' ?  item?.full_name_en : full_name_hi">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Task Date' : 'कार्य तिथि'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select task date' : 'कृपया कार्य तिथि'">
+                            <nz-date-picker nzInputReadOnly="true" formControlName="task_date"
+                            class="w-100"></nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+        <div class="d-flex justify-content-center">
+            <button nz-button nzType="primary" class="px-5" (click)="submitForm()" [nzLoading]="api_loading['button']">Save</button>
+            <button nz-button nzType="link" class="ml-3 px-5 border">Cancel</button>
+        </div>
+    </nz-card>
+</section>

@@ -35,6 +35,7 @@ export class AddEditVoterComponent implements OnInit {
   }
 
   getVoterDetails() {
+    this.searchStaticDataGlobalFunction('Booth');
     let data = { id: this.curr_voterId, 'end_point': 'FETCH_VOTER_LIST_API_URL' }
     this.api_loading['card'] = true;
 
@@ -70,6 +71,7 @@ export class AddEditVoterComponent implements OnInit {
       PART_NAME: [(data ? (this._currLanguage == 'en' ? data?.part_name_en : data?.part_name_hi) : ''), [Validators.required]],
       SLNOINPART: [(data ? (this._currLanguage == 'en' ? data?.slnoinpart : data?.slnoinpart) : ''), [Validators.required]],
       PART_NO: [(data ? (this._currLanguage == 'en' ? data?.part_no : data?.part_no) : ''), [Validators.required]],
+      booth: [(data ? (this._currLanguage == 'en' ? data?.booth : data?.booth) : ''), [Validators.required]],
       SECTION_NO: [(data ? (this._currLanguage == 'en' ? data?.section_no : data?.section_no) : ''), [Validators.required]],
       HOUSE_NO: [(data ? (this._currLanguage == 'en' ? data?.house_no : data?.house_no) : ''), [Validators.required]],
 
@@ -103,6 +105,7 @@ export class AddEditVoterComponent implements OnInit {
     form_data.append('PART_NAME',this.voterForm.get('PART_NAME').value);
     form_data.append('SLNOINPART',this.voterForm.get('SLNOINPART').value);
     form_data.append('PART_NO',this.voterForm.get('PART_NO').value);
+    form_data.append('booth',this.voterForm.get('booth').value);
     form_data.append('SECTION_NO',this.voterForm.get('SECTION_NO').value);
     form_data.append('HOUSE_NO',this.voterForm.get('HOUSE_NO').value);
     let url = this.isEdit == false ? this.http.addVoter(form_data) : this.http.editVoter(this.curr_voterId, form_data);
@@ -117,5 +120,27 @@ export class AddEditVoterComponent implements OnInit {
     }, errpr => {
       this.api_loading['button'] = false;
     })
+  }
+
+  debounce: any;
+  boothList: any = [];
+  wardList: any = [];
+  sectorList:any = []
+  searchStaticDataGlobalFunction(event, data?) {
+    clearTimeout(this.debounce);
+    this.debounce = setTimeout(() => {
+      let data = { model_name: event }
+      this.http.getMasterData(data).subscribe((res: any) => {
+        if (res.success) {
+         if(event == 'Booth'){
+          this.boothList = res.data;
+         }else if(event == 'Ward'){
+          this.wardList = res.data;
+         } else if(event == 'Sector'){
+          this.sectorList = res.data;
+         }
+        }
+      })
+    }, 500);
   }
 }

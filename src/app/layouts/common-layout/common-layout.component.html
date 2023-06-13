@@ -3,32 +3,30 @@
         'is-side-nav-dark' : isSideNavDark,
         'is-expand' : isExpand
     }">
-    <app-header class="d-md-block d-none"></app-header>
+    <app-header ></app-header>
     <app-sidenav class="d-md-block d-none"></app-sidenav>
-    <div class="page-container pt-3 mt-md-3">
-        <div class="bg-white main-content h-unset p-3 pt-md-5 cardBorder"
+    <div class="page-container pt-3 pt-5">
+        <div class="bg-white main-content h-unset pt-5 pb-3"
             [ngClass]="!showBreadCrumb ? 'd-flex align-items-center' : ''" *ngIf="contentHeaderDisplay !== 'none'">
             <div class="main-content-header d-flex justify-content-between mb-0 py-2 flex-wrap" *ngIf="showBreadCrumb">
                 <div class="d-flex flex-wrap align-items-center">
-                    <div class="d-flex justify-content-start align-items-center" *ngIf="_currHeaderData?.isHome">
+                    <!-- <div class="d-flex justify-content-start align-items-center" *ngIf="_currHeaderData?.isHome">
                         <img src="../../../assets/images/Ext_Images/Ellipse 1201cng_log.svg" routerLink="/home" alt="" height="50px"
                             class="h-auto mr-3">
                         <h4>{{_currLang == 'en' ? globalAccData?.name?.en : globalAccData?.name?.hi}}</h4>
-                    </div>
-                    <span *ngIf="_currHeaderData?.isButton && !(_currHeaderData?.isHome)"
+                    </div> -->
+                    <!-- <span *ngIf="_currHeaderData?.isButton && !(_currHeaderData?.isHome)"
                         [routerLink]="_currHeaderData?.url" class="font-size-18 mr-3 text-dark" nz-icon
-                        nzType="arrow-left" nzTheme="outline"></span>
-                    <h5 class="page-title mb-0 mr-2 text-dark"
-                        *ngIf="!(_currHeaderData?.isHome) && breadcrumbs$ | async; let breadcrumbs">{{showBreadCrumb}}
-                    </h5>
-                    <nz-breadcrumb>
-                        <span *ngIf="isSlash">/</span>
-                        <nz-breadcrumb-item class="pl-2" *ngFor="let breadcrumb of breadcrumbs$ | async">
-                            <a [routerLink]="breadcrumb.url" [queryParams]="breadcrumb.params">
-                                {{ breadcrumb.label }}
-                            </a>
-                        </nz-breadcrumb-item>
-                    </nz-breadcrumb>
+                        nzType="arrow-left" nzTheme="outline"></span> -->
+                        <h5 class="page-title mr-2 mb-0" *ngIf="breadcrumbs$ | async; let breadcrumbs">{{showBreadCrumb}}</h5>
+                        <nz-breadcrumb>
+                            <span *ngIf="isSlash">/</span>
+                            <nz-breadcrumb-item class="pl-2" *ngFor="let breadcrumb of breadcrumbs$ | async">
+                                <a [routerLink]="breadcrumb.url" [queryParams]="breadcrumb.params">
+                                    {{ breadcrumb.label }}
+                                </a>
+                            </nz-breadcrumb-item>
+                        </nz-breadcrumb>
                 </div>
             </div>
 
@@ -39,9 +37,10 @@
             <h4 class="font-weight-semibold d-none" [ngClass]="showBreadCrumb ? 'mt-4' : ''"
                 *ngIf="breadcrumbs$ | async; let breadcrumbs">{{(breadcrumbs[breadcrumbs.length - 1]?.label)}}</h4>
         </div>
-        <div class="main-content p-3" [ngClass]="contentHeaderDisplay !== 'none' ? 'pt-3' : ''">
+        <div class="main-content p-3 pt-5" [ngClass]="contentHeaderDisplay !== 'none' ? 'pt-5' : ''">
             <router-outlet></router-outlet>
         </div>
         <app-footer class="d-md-none d-flex"></app-footer>
     </div>
 </div>
+

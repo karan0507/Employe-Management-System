@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { HttpService } from 'src/app/service/http.service';
 
 @Component({
   selector: 'app-add-edit-task',
@@ -7,9 +13,206 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddEditTaskComponent implements OnInit {
 
-  constructor() { }
+  _currTaskId: any;
+  taskDetails: any;
+  taskForm: FormGroup;
+  _currLanguage: any;
+  isEdit: boolean = false;
+  api_loading = { card: false, button: false }
+  constructor(private fb: FormBuilder, private router: Router, private acRoute: ActivatedRoute, private message: NzMessageService,
+    private http: HttpService, private modal: NzModalService) { }
 
   ngOnInit(): void {
+    this._currLanguage = localStorage.getItem("appLanguage") || 'en';
+    this.acRoute.queryParams.subscribe((params: any) => {
+      if (params['id']) {
+        this._currTaskId = params.id;
+        this.isEdit = true;
+        if (this._currTaskId) {
+          this.getInternalUser();
+          this.getVoters();
+          this.gettaskLists();
+          this.getTaskDetails();
+        }
+      }
+      this.createTask();
+
+    })
   }
 
-}
+  getTaskDetails() {
+
+    let data = { id: this._currTaskId, 'end_point': 'FETCH_VOTER_LIST_API_URL' }
+    this.api_loading['card'] = true;
+
+    this.http.getTaskList(data).subscribe((res: any) => {
+      if (res.success) {
+        this.taskDetails = res.data[0];
+        console.log('Task Details');
+
+        this.createTask(res.data[0])
+        this.api_loading['card'] = false;
+      } else {
+        this.api_loading['card'] = false;
+      }
+    }, error => { this.api_loading['card'] = false; })
+  }
+
+
+  createTask(data?) {
+    this.taskForm = this.fb.group({
+      task_type: [(data ? data?.task_type?.id : ''), [Validators.required]],
+      name: [(data ? (this._currLanguage == 'en' ? data?.name?.en : data?.name?.hi) : ''), [Validators.required]],
+      discription: [(data ? (this._currLanguage == 'en' ? data?.discription?.en : data?.discription?.hi) : ''), [Validators.required]],
+      internal_user: [(data ? data?.internal_user?.id : ''), [Validators.required]],
+      voters: [data?.voters ? JSON.parse(data?.voters) : null, [Validators.required]],
+      task_date: [data?.task_date ? data?.task_date : null, [Validators.required]],
+    })
+
+  }
+
+  submitForm() {
+    if (this.taskForm.invalid) { return }
+    this.api_loading['button'] = true;
+    console.log(this.taskForm.value);
+    var form_data = new FormData();
+    form_data.append('task_type', this.taskForm.get('task_type').value);
+    form_data.append('name', this.taskForm.get('name').value);
+    form_data.append('discription', this.taskForm.get('discription').value);
+    form_data.append('internal_user', this.taskForm.get('internal_user').value);
+    form_data.append('voters', JSON.stringify(this.taskForm.get('voters').value));
+    form_data.append('task_date', this.taskForm.get('task_date').value ? moment(this.taskForm.get('task_date').value).format("YYYY-MM-DD") : '');
+
+    let url = this.isEdit == false ? this.http.addTasks(form_data) : this.http.editTasks(this._currTaskId, form_data);
+    url.subscribe((res: any) => {
+      if (res.success) {
+        this.message.success(res.message);
+        this.router.navigateByUrl('/task-management');
+        this.api_loading['button'] = false;
+      } else {
+        this.api_loading['button'] = false;
+      }
+    }, errpr => {
+      this.api_loading['button'] = false;
+    })
+  }
+
+  taskList: any = [];
+  task_debounce: any;
+  gettaskLists(key?) {
+    if (key) {
+      clearTimeout(this.task_debounce);
+      this.task_debounce = setTimeout(() => {
+        let data = { model_name: 'Tasks' }
+        this.http.getMasterData(data).subscribe((res: any) => {
+          if (res.success) {
+            this.taskList = res.data;
+          }
+        })
+      }, 500);
+    } else {
+      let data = { model_name: 'Tasks' }
+      this.http.getMasterData(data).subscribe((res: any) => {
+        if (res.success) {
+          this.taskList = res.data;
+        }
+      })
+    }
+  }
+
+  internal_user_list: any = [];
+  in_user_debounce: any;
+  getInternalUser(key?) {
+    if (key) {
+      clearTimeout(this.in_user_debounce);
+      this.in_user_debounce = setTimeout(() => {
+        let data = { 'end_point': 'FETCH_VOTER_LIST_API_URL' }
+        this.http.getTeamList(data).subscribe((res: any) => {
+          if (res.success) {
+            this.internal_user_list = res.data;
+          }
+        })
+      }, 500);
+    } else {
+      let data = { 'end_point': 'FETCH_VOTER_LIST_API_URL' }
+      this.http.getTeamList(data).subscribe((res: any) => {
+        if (res.success) {
+          this.internal_user_list = res.data;
+        }
+      })
+    }
+  }
+
+  voters: any = [];
+  voter_debounce: any;
+  getVoters(key?) {
+    if (key) {
+      clearTimeout(this.voter_debounce);
+      this.voter_debounce = setTimeout(() => {
+        let data = { 'end_point': 'FETCH_VOTER_LIST_API_URL' }
+        this.http.getVoterList(data).subscribe((res: any) => {
+          if (res.success) {
+            this.voters = res.data;
+          }
+        })
+      }, 500);
+    } else {
+      let data = { 'end_point': 'FETCH_VOTER_LIST_API_URL' }
+      this.http.getVoterList(data).subscribe((res: any) => {
+        if (res.success) {
+          this.voters = res.data;
+        }
+      })
+    }
+  }
+
+  debounce: any;
+  boothList: any = [];
+  searchStaticDataGlobalFunction(event?) {
+    if (event) {
+      clearTimeout(this.debounce);
+      this.debounce = setTimeout(() => {
+        let data = { model_name: event }
+        this.http.getMasterData(data).subscribe((res: any) => {
+          if (res.success) {
+            this.boothList = res.data;
+          }
+        })
+      }, 500);
+    } else {
+      let data = { model_name: event }
+      this.http.getMasterData(data).subscribe((res: any) => {
+        if (res.success) {
+          this.boothList = res.data;
+        }
+      })
+    }
+  }
+
+  changeTaskStatus(event): void {
+      // this.quickViewVisible = !this.quickViewVisible;
+      this.modal.confirm({
+          nzTitle: 'Confirm',  /*+ this.party_name + '?'*/
+          nzContent: 'Before changing status',
+          nzOkText: 'Confirm',
+          nzOkType: 'primary',
+          nzOkDanger: true,
+          nzOnOk: () => this.onCLickStatusChange(event),
+          nzCancelText: 'No',
+          nzOnCancel: () => this.modal.closeAll()
+      });
+    }
+    onCLickStatusChange(status){
+      let data = {'status':status}
+      this.http.editTasks(this._currTaskId,data).subscribe((res:any)=>{
+        if(res.success){
+          this.message.success(res.message);
+          this.getTaskDetails();
+        }else{
+          this.message.error(res.message);
+        }
+      },error=>{
+          this.message.error(error);
+      })
+    }
+  }

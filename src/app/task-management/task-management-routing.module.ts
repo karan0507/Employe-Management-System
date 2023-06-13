@@ -10,7 +10,8 @@ const routes: Routes = [
     
     component: TaskListComponent,
     data: {
-      parent: 'Task List',
+      parent: 'Task',
+      title: 'Task List',
       isButton: false,
       isHome: false,
       custom_url:'/task-management',
@@ -18,6 +19,12 @@ const routes: Routes = [
   },
   {
     path: '',
+    data:{
+      parent: 'Task',
+      title: 'Task List',
+      custom_url:'/task-management',
+
+    },
     children: [
       {
         path: 'add-task',
@@ -25,7 +32,7 @@ const routes: Routes = [
         // canActivate: [NgxPermissionsGuard],
         component: AddEditTaskComponent,
         data: {
-          parent: 'Task List',
+          parent: 'Task',
           title:'Add Task',
           isButton: false,
           isHome: false,
@@ -36,13 +43,14 @@ const routes: Routes = [
       {
         path: 'edit-task',
         // canActivate: [NgxPermissionsGuard],
-        redirectTo:'/task-management/edit-task',
+        
         component: AddEditTaskComponent,
         data: {
-          parent: 'Task List',
+          parent: 'Task',
           title:'Edit Task',
           isButton: false,
           isHome: false,
+          custom_url:'/task-management/edit-task',
           
         }
       },

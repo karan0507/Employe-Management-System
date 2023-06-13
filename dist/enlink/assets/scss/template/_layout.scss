@@ -14,12 +14,11 @@
         }    
         
         .main-content {
-            padding: calc(#{$header-height} + #{$layout-content-gutter}-80%) $layout-content-gutter $layout-content-gutter $layout-content-gutter;
-            min-height: calc(100vh - #{$footer-height});
-            background-color: #ffffff;
+            padding: calc(#{$header-height} + #{$layout-content-gutter}) $layout-content-gutter $layout-content-gutter $layout-content-gutter;
+            min-height: unset;
 
             @include screen-mobile {
-                padding: calc(#{$header-height} + #{$layout-content-gutter-sm}-80%) $layout-content-gutter-sm $layout-content-gutter-sm $layout-content-gutter-sm;
+                padding: calc(#{$header-height} + #{$layout-content-gutter-sm}) $layout-content-gutter-sm $layout-content-gutter-sm $layout-content-gutter-sm;
             }   
             
             .main-content-header {

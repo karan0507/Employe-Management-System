@@ -15,7 +15,7 @@ export class FooterComponent implements OnInit{
 
     ngOnInit(){
         console.log('res');
-     this.radioValue = localStorage.getItem('menuItem') ? localStorage.getItem('menuItem') : 'home'
+     this.radioValue = localStorage.getItem('menuItem') ? localStorage.getItem('menuItem') : 'voter'
         // this.global.globalNavValue.subscribe(res=>{
         //     console.log(res);
             

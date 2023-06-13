@@ -186,7 +186,7 @@ export class Login1Component {
           this.ifTokenAuthorized = true
           setTimeout(() => {
             this.ifTokenAuthorized = false;
-            this.router.navigate(["/home"]);
+            this.router.navigate(["/voter"]);
           }, 6000);
 
         } else if (res.data?.user_type?.name == 'Data Operator' || res.data?.user_type?.name == 'Supervisor') {
@@ -222,7 +222,7 @@ export class Login1Component {
             this.permissionsService.loadPermissions(permissions);
 
             if (res.data?.user_type?.name == 'Superuser') {
-              this.router.navigate(["/home"]);
+              this.router.navigate(["/voter"]);
               // this.router.navigate(["/dashboard/home"]);
             } else if (res.data?.user_type?.name == 'Data Operator' || res.data?.user_type?.name == 'Supervisor') {
               this.router.navigate(["/data-operator/home"]);

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import * as saveAs from 'file-saver';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { HttpService } from 'src/app/service/http.service';
 
 @Component({
@@ -8,6 +10,7 @@ import { HttpService } from 'src/app/service/http.service';
   styleUrls: ['./task-list.component.css']
 })
 export class TaskListComponent implements OnInit {
+  quickViewVisible: boolean = false;
   // Table:
   taskList:any = [];
   total_count : any;
@@ -76,15 +79,74 @@ _currLanguage: any;
 
   debounce: any;
   boothList: any = [];
-  searchStaticDataGlobalFunction(event?) {
+  wardList: any = [];
+  sectorList:any = []
+  searchStaticDataGlobalFunction(event, data?) {
     clearTimeout(this.debounce);
     this.debounce = setTimeout(() => {
       let data = { model_name: event }
       this.http.getMasterData(data).subscribe((res: any) => {
         if (res.success) {
+         if(event == 'Booth'){
           this.boothList = res.data;
+         }else if(event == 'Ward'){
+          this.wardList = res.data;
+         } else if(event == 'Sector'){
+          this.sectorList = res.data;
+         }
         }
       })
     }, 500);
+  }
+
+  quickViewToggle(): void {
+    this.quickViewVisible = !this.quickViewVisible;
+  }
+
+  onDownloadSampleFile() {
+    const downloadloader = this.message.loading('Downloading File..', { nzDuration: 0 }).messageId;
+    let result = '../assets/static_files/TaskManagement.xlsx'
+    saveAs(result, 'TaskManagement.xlsx');
+
+    this.message.remove(downloadloader);
+  }
+
+  isImport : boolean = false;
+  fileList : any = [];
+  _currentFileName : any;
+  beforeUploadName = (file: NzUploadFile): boolean => {
+    console.log(file?.type);
+    
+    if (!((file?.type == 'xlsx' || file?.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'))) {
+      this.fileList = [];
+      this._currentFileName = null;
+      this.message.error('Please check the file type')
+      return false
+    }
+    this.fileList = [];
+    this.fileList = this.fileList.concat(file);
+    this._currentFileName = file;
+    return false;
+  };
+
+  isOkBtn : boolean = false;
+  handleOk(){
+    this.isOkBtn = true;
+      let formData = new FormData();
+      formData.append('file',this._currentFileName);
+      this.http.importTask(formData).subscribe((res:any)=>{
+        if(res.success){
+          this.message.success('File uploaded successfully');
+          this.isOkBtn = false;
+          this.isImport = false;
+          this.fileList = []
+          this.getTaskList();
+        }else{
+          this.isOkBtn = false;
+          this.isImport = false;
+          this.fileList = []
+          this.message.error(res.message);
+        }
+      })
   }
 }

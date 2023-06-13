@@ -4,6 +4,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { HttpService } from 'src/app/service/http.service';
 import { ThemeConstantService } from '../../services/theme-constant.service';
 import { GlobalService } from 'src/app/service/global.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
     selector: 'app-header',
@@ -16,12 +17,14 @@ export class HeaderComponent{
     quickViewVisible : boolean = false;
     isFolded : boolean;
     isExpand : boolean;
-
+    _currLang : any
     constructor( private themeService: ThemeConstantService, private modal: NzModalService, 
-        private http: HttpService, private router: Router, private global:GlobalService) {}
+        private http: HttpService, private router: Router, public global:GlobalService, private message: NzMessageService) {}
     
     globalAccData : any;
     ngOnInit(): void {
+        this.globalAccData = localStorage.getItem('global_account_data')
+        this._currLang = localStorage.getItem('appLanguage') || 'en';
         this.global.globalAccountData.subscribe((res:any)=>{
             if(res){
                 this.globalAccData = res;
@@ -62,13 +65,18 @@ export class HeaderComponent{
     }
 
     onClickLogOut(){
-        this.http.logout().subscribe((res)=>{
-          this.modal.closeAll()
-          this.router.navigate(['/authentication/login']);
-          localStorage.removeItem("iyc_user_token");
-          localStorage.removeItem("iyc_user_data");
-          localStorage.removeItem('appLanguage') 
-          localStorage.removeItem('menuItem') 
+        this.http.logout().subscribe((res : any)=>{
+            if(res.success){
+                this.message.success(res.message);
+                this.modal.closeAll()
+                this.router.navigate(['/authentication/login']);
+                localStorage.removeItem("iyc_user_token");
+                localStorage.removeItem("iyc_user_data");
+                localStorage.removeItem('appLanguage');
+                localStorage.removeItem('menuItem') ;
+                localStorage.removeItem('global_account_data') ;
+              }
+        
         })
       }
 

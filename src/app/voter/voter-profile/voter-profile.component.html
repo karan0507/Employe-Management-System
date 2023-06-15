@@ -17,8 +17,12 @@
                             <nz-tag [nzColor]="'purple'" class="border text-primary text-center align-self-start">
                                 <span nz-icon [nzType]="'star'" *ngIf="voterDetails?.rating" [nzTheme]="'fill'"
                                     class="text-warning mr-2"></span>
-                                {{voterDetails?.rating ? voterDetails?.rating + '/10': 'No Rating'}}
+                                {{voterDetails?.rating ? voterDetails?.rating + '/5': 'No Rating'}}
+
                             </nz-tag>
+                            <label *ngIf="voterDetails?.rating" class="font-size-12 mb-2"
+                                [ngClass]="voterDetails?.rating > 3 ? 'text-success' : (voterDetails?.rating < 3 ? 'text-danger' : 'text-secondary') ">{{
+                                ' ('+ formatter(voterDetails?.rating) + ') '}}</label>
                         </div>
                     </div>
                 </div>
@@ -169,7 +173,7 @@
                                                     <th>Time Stamp</th>
                                                     <th>Created By</th>
                                                     <th>Comments</th>
-                                                    <th nzRight>Action</th>
+                                                    <th nzRight nzWidth="6rem">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -199,7 +203,8 @@
                                                         </td>
                                                         <td>{{_currLanguage == 'en' ?
                                                             data?.comments?.en : data?.comments?.hi}}</td>
-                                                        <td nzRight><button nz-button nzType="link" clas="border"
+                                                        <td nzRight nzWidth="6rem"><button nz-button nzType="link"
+                                                                class="border" nzSize="small"
                                                                 (click)="createNewFollow('activity',data)">Edit</button>
                                                         </td>
                                                     </tr>
@@ -388,10 +393,7 @@
                                     <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Date
                                     </nz-form-label>
                                     <nz-form-control [nzSm]="16" [nzXs]="24" [nzErrorTip]="'Please select Date'">
-                                        <nz-input-group>
-                                            <!-- [nzDisabledDate]="disabledDate" -->
-                                            <nz-date-picker formControlName="followup_datetime"></nz-date-picker>
-                                        </nz-input-group>
+                                        <nz-date-picker  formControlName="followup_datetime"></nz-date-picker>
                                     </nz-form-control>
                                 </nz-form-item>
                             </div>
@@ -402,7 +404,6 @@
                                     </nz-form-label>
                                     <nz-form-control [nzSm]="16" [nzXs]="24" [nzErrorTip]="'Please select Date'">
                                         <nz-input-group>
-                                            <!-- [nzDisabledDate]="disabledDate" -->
                                             <nz-time-picker formControlName="followup_time"></nz-time-picker>
                                         </nz-input-group>
                                     </nz-form-control>
@@ -410,19 +411,29 @@
                             </div>
 
 
-                            <div class="col-md-12" *ngIf="currFormType == 'followUp'">
+                            <div class="col-md-12">
                                 <nz-form-item>
                                     <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Upload Files
                                     </nz-form-label>
                                     <!-- <nz-form-control [nzSm]="16" [nzXs]="24" [nzErrorTip]="'Please select Date'"> -->
-                                        <nz-upload nzListType="picture" nzType="drag"
-                                            [nzBeforeUpload]="beforeUploadName" [nzMultiple]="false"
-                                            [(nzFileList)]="fileList">
+                                    <div class="d-flex flex-wrap justify-content-between">
+                                        <nz-upload nzListType="text" [nzBeforeUpload]="beforeUploadName"
+                                            [nzMultiple]="true">
                                             <!-- <p class="ant-upload-text">or</p> -->
                                             <button class="my-md-4" nz-button nzType="primary">Upload</button>
                                         </nz-upload>
+                                        <div *ngIf="fileList?.length > 0" class="d-flex flex-column mt-3 w-100" style=" height: auto; max-height: 10rem; overflow-y: scroll;">
+                                            <div *ngFor="let item of fileList; let i = index" 
+                                                class="d-flex justify-content-between text-muted align-items-center px-2">
+                                                <label class="m-2"> {{item?.name}}</label>
+                                                <span nz-icon [nzType]="'delete'" [nzTheme]="'outline'"
+                                                    class="text-danger ml-2" (click)="deleteEmployee(i)"></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!-- </nz-form-control> -->
                                 </nz-form-item>
+
                             </div>
 
 
@@ -507,8 +518,10 @@
                     <h6>Rate Voter</h6>
                 </div>
                 <div class="col-md-12">
-                    <nz-slider [(ngModel)]="rating" [nzMarks]="marks" [nzMin]="0" [nzMax]="10"></nz-slider>
-                    {{rating+'/10'}}
+                    <nz-slider [(ngModel)]="rating" [nzMarks]="marks" [nzMin]="1" [nzMax]="5"
+                        [nzTipFormatter]="formatter"></nz-slider>
+                    <label for=""> {{rating+'/5' }} <span class="font-size-12 text-primary">{{( rating ? ' (' +
+                            formatter(rating) + ')': '')}}</span> </label>
                 </div>
                 <div class="col-md-12 mt-5">
                     <button nz-button nzType="primary" (click)="rateVoter()" [nzLoading]="api_loading['btn_Rating']"

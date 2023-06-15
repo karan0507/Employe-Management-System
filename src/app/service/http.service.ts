@@ -320,7 +320,7 @@ export class HttpService {
 
   // Team Management
   public getTeamList(data){
-    return this.http.get(this.url + `/users/v1/user-management/get-user`,data)
+    return this.http.get(this.url + `/users/v1/user-management/get-user`,{params:data})
   }
 
   public editTeamMember(id, data) {

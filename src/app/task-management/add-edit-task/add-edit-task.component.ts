@@ -64,7 +64,7 @@ export class AddEditTaskComponent implements OnInit {
       task_type: [(data ? data?.task_type?.id : ''), [Validators.required]],
       name: [(data ? (this._currLanguage == 'en' ? data?.name?.en : data?.name?.hi) : ''), [Validators.required]],
       discription: [(data ? (this._currLanguage == 'en' ? data?.discription?.en : data?.discription?.hi) : ''), [Validators.required]],
-      internal_user: [(data ? data?.internal_user?.id : ''), [Validators.required]],
+      internal_user: [[], [Validators.required]],
       voters: [data?.voters ? JSON.parse(data?.voters) : null, [Validators.required]],
       task_date: [data?.task_date ? data?.task_date : null, [Validators.required]],
     })
@@ -123,6 +123,7 @@ export class AddEditTaskComponent implements OnInit {
   internal_user_list: any = [];
   in_user_debounce: any;
   getInternalUser(key?) {
+    
     if (key) {
       clearTimeout(this.in_user_debounce);
       this.in_user_debounce = setTimeout(() => {
@@ -130,6 +131,7 @@ export class AddEditTaskComponent implements OnInit {
         this.http.getTeamList(data).subscribe((res: any) => {
           if (res.success) {
             this.internal_user_list = res.data;
+            console.log(this.internal_user_list)
           }
         })
       }, 500);
@@ -138,6 +140,7 @@ export class AddEditTaskComponent implements OnInit {
       this.http.getTeamList(data).subscribe((res: any) => {
         if (res.success) {
           this.internal_user_list = res.data;
+          console.log(this.internal_user_list)
         }
       })
     }

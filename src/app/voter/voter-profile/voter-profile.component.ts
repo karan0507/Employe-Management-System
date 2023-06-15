@@ -64,7 +64,8 @@ export class VoterProfileComponent implements OnInit {
 
   _currVoterId: any
   voterDetails: any;
-  _currLanguage: any
+  _currLanguage: any;
+  dateFormat = "YYYY-MM-dd";
   quickViewVisible: boolean = false;
   constructor(private router: Router, private acRoute: ActivatedRoute, private message: NzMessageService,
     private global: GlobalService, private http: HttpService, private fb: FormBuilder) { }
@@ -91,11 +92,8 @@ export class VoterProfileComponent implements OnInit {
   }
 
   onTabChange(data) {
-    console.log(data?.index);
-
     this._currTabName = data?.index
     this.router.navigate([this.router.url.split('?')[0]], { queryParams: { id: this._currVoterId, tabSection: this._currTabName } });
-    console.log('1');
   }
 
 
@@ -141,14 +139,6 @@ export class VoterProfileComponent implements OnInit {
     this.http.getVoterDetails(data).subscribe((res: any) => {
       if (res.success) {
         this.voterDetails = res.data[0]
-
-        /* Remaining values:
-         
-        (ac_no, part_no, ) in hindi, ward_no Booth, Societies, Associations, Affiliation, Rating
-
-        // Activity Information Tab Details API, have added the Follow up Details
-        */
-
         this.profileLogs = [
           {
             title: 'Name', icon: '../../../assets/images/icons/Framevoter_profile.svg',
@@ -200,7 +190,6 @@ export class VoterProfileComponent implements OnInit {
           { title: 'Rating :', icon: '../../../assets/images/icons/Vectorrating.svg', value: 'ABC College', isDark: true },
         ]
         this.api_loading['card'] = false;
-        console.log(this.voterDetails, this.profileLogs);
 
       } else {
         this.api_loading['card'] = false;
@@ -226,8 +215,8 @@ export class VoterProfileComponent implements OnInit {
   _currActivityFollowupId:any;
   currFormType = ''
   createNewFollow(type?,data?) {
-    if(data){console.log(data);
-    
+    if(data){    
+      console.log(data?.activity_date)
       this.isEdit = true;
       this._currActivityFollowupId = data.id
       type == 'activity' ? this.getActivityList() : this.getFolloupList()
@@ -238,18 +227,21 @@ export class VoterProfileComponent implements OnInit {
     this.quickViewVisible = true;
     if (type == 'activity') {
       this.followUpForm = this.fb.group({
-        followup_datetime: [  data?.activity_date,   [Validators.required]],
+        followup_datetime: [  data?.activity_date ?  data?.activity_date  : '',   [Validators.required]],
         activity_type: [data?.activity_type?.id, [Validators.required]],
         comments: [this._currLanguage == 'en' ? data?.comments?.en : data?.comments?.hi, [Validators.required]]
       })
+      console.log(this.followUpForm.get('followup_datetime').value)
     } else {
       this.followUpForm = this.fb.group({
-        followup_datetime: [data?.followup_datetime, Validators.required],
+        followup_datetime: [data?.followup_datetime, [Validators.required]],
         followup_time : [data?.followup_time,[Validators.required]],
         followup_type: [data?.followup_type?.id, [Validators.required]],
         comments: [this._currLanguage == 'en' ? data?.comments?.en : data?.comments?.hi, [Validators.required]]
       })
     }
+    ;
+    
   }
 
   getActivityList() {
@@ -279,10 +271,12 @@ export class VoterProfileComponent implements OnInit {
     this.currFormType == 'activity' ?   data.append('activity_type', this.followUpForm.get('activity_type').value) : data.append('followup_type', this.followUpForm.get('followup_type').value) ;
     data.append('comments', this.followUpForm.get('comments').value)
 
+    console.log(this.followUpForm.get('followup_datetime').value);
+    
     this.currFormType == 'activity' ? 
     data.append('activity_date', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD")) :
-    data.append('followup_datetime', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD"));
-    this.currFormType == 'followUp' ? data.append('followup_time',moment(this.followUpForm.get('followup_datetime').value).format("HH:mm:ss")):'';
+    data.append('followup_datetime', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD") + ' ' +moment(this.followUpForm.get('followup_datetime').value).format("HH:mm:ss"));
+    // this.currFormType == 'followUp' ? data.append('followup_time',moment(this.followUpForm.get('followup_datetime').value).format("HH:mm:ss")):'';
     let url =  this.currFormType == 'activity' ? (this.isEdit ? this.http.editVoterActivity(this._currActivityFollowupId,data) : this.http.addVoterActivity(data)) :
     (this.isEdit ? this.http.editVoterFollowup(this._currActivityFollowupId,data) : this.http.addVoterFollowup(data)) 
     url.subscribe((res:any)=>{
@@ -301,35 +295,31 @@ export class VoterProfileComponent implements OnInit {
     })
   }
   
-  rating = 0
+  rating = 1;
   isRatingDrawer:boolean = false;
   openRatingModal(){
 
   }
 
   marks: NzMarks = {
-    0: '0',
+ 
     1: '1',
     2: '2',
     3: '3',
     4: '4',
     5: '5',
-    6: '6',
-    7: '7',
-    8: '8',
-    9: '9',
-    10: '10',
   }
 
   rateVoter(){
     this.api_loading['btn_Rating'] = true;
-    let data= {}
-    data['voter_id'] = this._currVoterId
-    data['rating'] = this.rating
-    this.http.addVoterRating(data).subscribe((res:any)=>{
+    let data= new FormData();
+    // data['voter_id'] = this._currVoterId
+    data.append('rating',JSON.stringify(this.rating));
+    this.http.editVoter(this._currVoterId,data).subscribe((res:any)=>{
       if(res.success){
         this.api_loading['btn_Rating'] = false
         this.isRatingDrawer = false
+        this.getVoterDetals();
         this.message.success(res.message)
       }else{
         this.api_loading['btn_Rating'] = false
@@ -367,10 +357,32 @@ export class VoterProfileComponent implements OnInit {
     //   this.message.error('Please check the file type')
     //   return false
     // }
-    this.fileList = [];
+    // this.fileList = [];
     this.fileList = this.fileList.concat(file);
-    this._currentFileName = file;
+    // this._currentFileName = file;
     return false;
   };
 
+  formatter(value: number): string {
+    let returnData = '';
+   if(value == 1 ){
+      returnData = 'Pro BJP - 100% BJP'
+    }else if(value == 2 ){
+      returnData = 'BJP Positive'
+    }else if(value == 3 ){
+      returnData = 'Neutral'
+    }else if(value == 4 ){
+      returnData = 'Congress positive'
+    }else if(value == 5 ){
+      returnData = 'Pro Congress - 100% congress'
+    }
+    return returnData;
+  }
+
+deleteEmployee(i)
+{
+  this.fileList.splice(i,1);
+  console.log(this.fileList);
+  
+}
 }

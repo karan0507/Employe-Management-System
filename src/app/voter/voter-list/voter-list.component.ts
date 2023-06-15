@@ -44,7 +44,8 @@ export class VoterListComponent implements OnInit {
   pageIndex = 1;
   globalPageSize = 30;
   getVotersList(tableFilter?) {
-    this.api_loader['list'] = true
+    this.api_loader['list'] = true;
+    this.votersList = []
     let data = { 'end_point': 'FETCH_VOTER_LIST_API_URL' }
     if (tableFilter) {
       this.pageIndex = tableFilter?.pageIndex;
@@ -69,7 +70,7 @@ export class VoterListComponent implements OnInit {
     }
 
     if (this._currSearchValue) {
-      let temp = this._currLanguage == 'en' ? 'full_name_en' : 'full_name_hi'
+      let temp = this._currLanguage == 'en' ? 'FULL_NAME_EN' : 'full_name_hi'
       data[temp] = this._currSearchValue;
     }
     this.http.getVoterList(data).subscribe((res: any) => {

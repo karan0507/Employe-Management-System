@@ -143,4 +143,10 @@ export class AddEditVoterComponent implements OnInit {
       })
     }, 500);
   }
+
+  cancelForm(){
+    console.log(this.router.url.split('voter')[1].includes('/add-'));
+    
+    // this.router.navigate([this.router.url.split('?')[0]], { queryParams: { tabSection: this.curr_voterId } });
+  }
 }

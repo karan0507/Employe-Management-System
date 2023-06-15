@@ -202,6 +202,7 @@ export class AddEditTaskComponent implements OnInit {
           nzOnCancel: () => this.modal.closeAll()
       });
     }
+    
     onCLickStatusChange(status){
       let data = {'status':status}
       this.http.editTasks(this._currTaskId,data).subscribe((res:any)=>{

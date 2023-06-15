@@ -1,1 +1,183 @@
-<p>ad-edit-team works!</p>
+<section>
+    <nz-card [nzLoading]="api_loader['card']">
+        <div class="d-flex  justify-content-end align-items-center flex-wrap mb-5">
+            <h6>Status: 
+                <span class="font-weight-normal mx-2" [ngClass]="teamDetails?.status == 'DONE' ? 'text-success' : (teamDetails?.status == 'TO-DO' ? 'text-danger' : 'text-info')">
+                    {{teamDetails?.status}}
+                </span>
+            </h6>
+            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currStatus"
+            (nzFocus)="searchStaticDataGlobalFunction('UserStatus')"
+            (ngModelChange)="changeTaskStatus()" nzAllowClear
+            nzPlaceHolder="Select Sector">
+            <nz-option *ngFor="let item of statusList" [nzValue]="item.id" [nzLabel]="item?.name">
+            </nz-option>
+        </nz-select>
+        </div>
+        <form nz-form [formGroup]="teamForm">
+            <div class="row">
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'First Name' : 'पहला नाम'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter first name' : 'कृपया पहला नाम जोड़ें'">
+                            <input type="text" nz-input formControlName="first_name"
+                                [placeholder]="_currLanguage == 'en' ? 'Enter First Name' : 'कृपया पहला नाम जोड़ें'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Last Name' : 'अंतिम नाम'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter last name' : 'कृपया अंतिम नाम जोड़ें'">
+                            <input type="text" nz-input formControlName="last_name"
+                                [placeholder]="_currLanguage == 'en' ? 'Enter Last Name' : 'कृपया अंतिम नाम जोड़ें'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Mobile' : 'मोबाइल'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter mobile' : 'कृपया मोबाइल नंबर जांचें'">
+                            <input type="text" nz-input formControlName="mobile"
+                                [placeholder]="_currLanguage == 'en' ? 'Enter Mobile' : 'कृपया मोबाइल नंबर जांचें'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Email' : 'ईमेल'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter email' : 'कृपया ईमेल जांचें'">
+                            <input type="text" nz-input formControlName="email"
+                                [placeholder]="_currLanguage == 'en' ? 'Enter email' : 'कृपया ईमेल जांचें'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Team Type' : 'टीम का प्रकार'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select Team type' : 'कृपया टीम का प्रकार चुनें'">
+                            <!-- (keyup)="getUserType()" -->
+                            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="user_type"
+                                (nzFocus)="getUserType()"  nzAllowClear
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Team Type' : 'कृपया टीम का प्रकार चुनें'">
+                                <nz-option *ngFor="let item of userList" [nzValue]="item.id"
+                                    [nzLabel]="item?.name">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Designation' : 'पद'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select Designation' : 'कृपया पद का प्रकार चुनें'">
+                            <!-- (keyup)="getUserType()" -->
+                            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="designation"
+                                (nzFocus)="getdesignationList()"  nzAllowClear
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Designation' : 'कृपया पद का प्रकार चुनें'">
+                                <nz-option *ngFor="let item of designationList" [nzValue]="item.id"
+                                    [nzLabel]="item?.name">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <!-- ********Other details******** -->
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left">{{_currLanguage == 'en' ?
+                            'Landline Number' : 'लैंडलाइन नंबर'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter Landline Number' : 'कृपया लैंडलाइन नंबर जांचें'">
+                            <input type="text" nz-input formControlName="landline_number"
+                                [placeholder]="_currLanguage == 'en' ? 'Enter Landline Number' : 'कृपया लैंडलाइन नंबर जांचें'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left">{{_currLanguage == 'en' ?
+                            'Studies' : 'अध्ययन करते हैं'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter studies' : 'कृपया अध्ययन जांचें'">
+                            <input type="text" nz-input formControlName="studies"
+                                [placeholder]="_currLanguage == 'en' ? 'Enter studies' : 'कृपया अध्ययन करते हैं जांचें'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Speed' : 'रफ़्तार'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter Speed' : 'कृपया रफ़्तार जांचें'">
+                            <input type="text" nz-input formControlName="speed"
+                                [placeholder]="_currLanguage == 'en' ? 'Enter sresidentialpeed' : 'कृपया रफ़्तार जांचें'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Residential' : 'आवासीय'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter residential' : 'कृपया आवासीय जांचें'">
+                            <input type="text" nz-input formControlName="residential"
+                                [placeholder]="_currLanguage == 'en' ? 'Enter residential' : 'कृपया आवासीय जांचें'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <!-- <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Email' : 'ईमेल'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter email' : 'कृपया ईमेल जांचें'">
+                            <input type="text" nz-input formControlName="email"
+                                [placeholder]="_currLanguage == 'en' ? 'Enter email' : 'कृपया ईमेल जांचें'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div> -->
+
+            </div>
+        </form>
+        <div class="d-flex justify-content-center">
+            <button nz-button nzType="primary" class="px-5" (click)="submitForm()" [nzLoading]="api_loader['button']">Save</button>
+            <button nz-button nzType="link" class="ml-3 px-5 border" routerLink="/team-management">Cancel</button>
+        </div>
+    </nz-card>
+</section>

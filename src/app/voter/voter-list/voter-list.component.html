@@ -86,7 +86,7 @@
                             [nzScroll]="{ x: '1500px', y: '50vh' }">
                             <thead>
                                 <tr>
-                                    <th></th>
+                                    <th  nzWidth="3rem">#</th>
                                     <th nzWidth="3rem" [nzChecked]=" votersList[0] ? checked : false"
                                         [nzIndeterminate]=" votersList[0] ? indeterminate : false"
                                         (nzCheckedChange)="votersList[0] ? onAllChecked($event) : false">
@@ -107,7 +107,7 @@
                             <tbody>
                                 <ng-container *ngFor="let data of votersList; index as i">
                                     <tr>
-                                        <td nzWidth="2rem" [nzExpand]="expandSet.has(data.id)"
+                                        <td nzWidth="3rem" [nzExpand]="expandSet.has(data.id)"
                                             (nzExpandChange)="onExpandChange(data.id, $event, i)"></td>
                                         <td nzWidth="3rem" [nzChecked]="setOfCheckedId.has(data.id)"
                                             [nzDisabled]="data.disabled"
@@ -178,18 +178,21 @@
                                             </nz-page-header>
                                             <nz-card class="mb-md-0 border"
                                                 [nzLoading]="_currentAuditId == data.id ? api_loader['accordian'] : null">
-                                                <div class="d-flex justify-content-between" *ngFor="let item of data?.auditDataset">
-                                                    <div class="d-flex justify-content-start flex-wrap" *ngFor="let sub of item?.key_changes">
-                                                       
-                                                    </div>
-                                                </div>
+
+                                                <nz-collapse nzAccordion [nzExpandIconPosition]="right">
+                                                    <nz-collapse-panel *ngFor="let item of data?.auditDataset" [nzHeader]="item?.created_by">
+                                                      <p>{{ item.name }} content</p>
+                                                    </nz-collapse-panel>
+                                                  </nz-collapse>
+
+                                                
                                             </nz-card>
                                             <ng-template #trailTitle>
                                                 <div class="ml-md-2">
-                                                    <h6 class="mb-0 text-white">
+                                                    <h5 class="mb-0">
                                                         <!-- <i nz-icon class="mr-2" nzType="user" nzTheme="outline"></i> -->
                                                         Audit Trail
-                                                    </h6>
+                                                    </h5>
                                                 </div>
                                             </ng-template>
                                         </div>

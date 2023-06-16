@@ -25,6 +25,8 @@ import { NzSliderModule } from 'ng-zorro-antd/slider';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { VoterListComponent } from './voter-list/voter-list.component';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { VoterListComponent } from './voter-list/voter-list.component';
     NzSliderModule,
     NzTableModule,
     NzUploadModule,
+    NzPageHeaderModule,
+    NzCollapseModule
   ]
 })
 export class VoterModule { }

@@ -38,7 +38,7 @@ export class AddEditVoterComponent implements OnInit {
     this.searchStaticDataGlobalFunction('Booth');
     let data = { id: this.curr_voterId, 'end_point': 'FETCH_VOTER_LIST_API_URL' }
     this.api_loading['card'] = true;
-
+    console.log(this.curr_voterId)
     this.http.getVoterDetails(data).subscribe((res: any) => {
       if (res.success) {
         this.voterDetails = res.data[0];
@@ -79,7 +79,9 @@ export class AddEditVoterComponent implements OnInit {
   }
 
   submitForm() {
-    if (this.voterForm.invalid) { return }
+    if (this.voterForm.invalid) { 
+      console.log(this.voterForm)
+      return }
     this.api_loading['button'] = true;
     console.log(this.voterForm.value);
     var form_data = new FormData();

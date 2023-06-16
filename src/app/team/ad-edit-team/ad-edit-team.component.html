@@ -9,7 +9,7 @@
             </h6>
             <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_curStatusId"
                 (nzFocus)="searchStaticDataGlobalFunction('UserStatus')" (ngModelChange)="changeTaskStatus($event)"
-                nzAllowClear nzPlaceHolder="Select Sector">
+                nzAllowClear nzPlaceHolder="Select Status">
                 <nz-option *ngFor="let item of statusList" [nzValue]="item.id" [nzLabel]="item?.name">
                 </nz-option>
             </nz-select>

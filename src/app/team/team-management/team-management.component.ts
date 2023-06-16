@@ -83,6 +83,11 @@ export class TeamManagementComponent implements OnInit {
     this._currBooth = null;
     this._currSector = null;
     this._currWard = null;
+    this._currLane = null;
+    this._crrAssembly = null;
+    this._currStreet = null;
+    this.page = 1;
+    this.quickViewVisible = false;
     this.getTeamList()
   }
 

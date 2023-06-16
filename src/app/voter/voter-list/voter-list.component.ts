@@ -41,6 +41,39 @@ export class VoterListComponent implements OnInit {
     })
   }
 
+
+  tempTrail = [   {
+    "key_changes": [
+        {
+            "key": "Updated at",
+            "old_value": "2023-06-14T09:39:31.001Z",
+            "new_value": "2023-06-14T09:42:06.283Z"
+        },
+        {
+            "key": "Rating",
+            "old_value": null,
+            "new_value": 5
+        }
+    ],
+    "created_at": "2023-06-14T09:42:06.283156Z",
+    "created_by": "8828349328"
+},
+{
+    "key_changes": [
+        {
+            "key": "Age",
+            "old_value": "18",
+            "new_value": "25"
+        },
+        {
+            "key": "Updated at",
+            "old_value": "2023-06-13T11:33:41.009Z",
+            "new_value": "2023-06-13T11:34:48.903Z"
+        }
+    ],
+    "created_at": "2023-06-13T11:34:48.902754Z",
+    "created_by": "8828349328"
+},]
   votersList: any = []
   pageIndex = 1;
   globalPageSize = 30;
@@ -145,6 +178,9 @@ export class VoterListComponent implements OnInit {
     this._currLane = null;
     this._currStreet = null;
     this._crrAssembly = null;
+    this.pageIndex = 1;
+    this.quickViewVisible = false;
+    
     this.getVotersList()
   }
 
@@ -224,15 +260,18 @@ export class VoterListComponent implements OnInit {
   }
 
   getAuditTrail(arrayIndex){
-    let data = {id:this._currentAuditId, model_name:'electoralchattdataset'}
-    this.http.getAuditTrail(data).subscribe((res:any)=>{
-      if(res.success){
-        this.votersList['auditDataset'] = res.data
-      }else{
-        this.votersList['auditDataset'] = []
-      }
-    },error=>{
-      this.votersList['auditDataset'] =[]
-    })
+    this.votersList[arrayIndex]['auditDataset']= this.tempTrail;
+    console.log(this.votersList[arrayIndex]);
+    
+    // let data = {id:this._currentAuditId, model_name:'electoralchattdataset'}
+    // this.http.getAuditTrail(data).subscribe((res:any)=>{
+    //   if(res.success){
+    //     this.votersList[arrayIndex]['auditDataset'] = res.data
+    //   }else{
+    //     this.votersList[arrayIndex]['auditDataset'] = []
+    //   }
+    // },error=>{
+    //   this.votersList[arrayIndex]['auditDataset'] =[]
+    // })
   }
 }

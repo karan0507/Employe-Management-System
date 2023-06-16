@@ -200,7 +200,7 @@
                                 nzAllowClear [nzMaxTagCount]="2"
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Places' : 'स्थानों का चयन करें'">
                                 <nz-option *ngFor="let item of placeList" [nzValue]="item.id"
-                                    [nzLabel]=" _currLanguage == 'en' ?  item?.full_name_en : full_name_hi">
+                                    [nzLabel]=" _currLanguage == 'en' ?  item?.name?.en : item?.name?.hi">
                                 </nz-option>
                             </nz-select>
                         </nz-form-control>
@@ -211,7 +211,7 @@
         </form>
         <div class="d-flex justify-content-center">
             <button nz-button nzType="primary" class="px-5" (click)="submitForm()"
-                [nzLoading]="api_loading['button']">Save</button>
+                [nzLoading]="api_loading['button']" [disabled]="taskForm.invalid ? true : false">Save</button>
             <button nz-button nzType="link" class="ml-3 px-5 border" routerLink="/task-management">Cancel</button>
         </div>
     </nz-card>

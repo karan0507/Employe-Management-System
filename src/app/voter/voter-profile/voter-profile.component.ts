@@ -225,6 +225,7 @@ export class VoterProfileComponent implements OnInit {
     }
     this.currFormType = type;
     this.quickViewVisible = true;
+    this.fileList = []
     if (type == 'activity') {
       this.followUpForm = this.fb.group({
         followup_datetime: [  data?.activity_date ?  data?.activity_date  : '',   [Validators.required]],
@@ -276,6 +277,8 @@ export class VoterProfileComponent implements OnInit {
     this.currFormType == 'activity' ? 
     data.append('activity_date', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD")) :
     data.append('followup_datetime', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD") + ' ' +moment(this.followUpForm.get('followup_datetime').value).format("HH:mm:ss"));
+
+    data.append('file_set', JSON.stringify(Array.from(this._currentFileName)))
     // this.currFormType == 'followUp' ? data.append('followup_time',moment(this.followUpForm.get('followup_datetime').value).format("HH:mm:ss")):'';
     let url =  this.currFormType == 'activity' ? (this.isEdit ? this.http.editVoterActivity(this._currActivityFollowupId,data) : this.http.addVoterActivity(data)) :
     (this.isEdit ? this.http.editVoterFollowup(this._currActivityFollowupId,data) : this.http.addVoterFollowup(data)) 
@@ -349,7 +352,7 @@ export class VoterProfileComponent implements OnInit {
   }
 
   fileList : any = [];
-  _currentFileName : any;
+  _currentFileName : any=[];
   beforeUploadName = (file: NzUploadFile): boolean => {
     // if (!((file?.type == 'pdf') || (file?.type == 'application/pdf') || (file?.type == 'img') || (file?.type == 'jpeg') || (file?.type == 'png') || (file?.type == 'image/jpeg') || (file?.type == 'image/png'))) {
     //   this.fileList = [];
@@ -359,7 +362,7 @@ export class VoterProfileComponent implements OnInit {
     // }
     // this.fileList = [];
     this.fileList = this.fileList.concat(file);
-    // this._currentFileName = file;
+    this._currentFileName.push(file);
     return false;
   };
 

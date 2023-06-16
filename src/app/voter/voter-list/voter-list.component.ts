@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Data } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { GlobalService } from 'src/app/service/global.service';
 import { HttpService } from 'src/app/service/http.service';
@@ -17,7 +18,7 @@ export class VoterListComponent implements OnInit {
   _currSector: any;
   _currBenificary: any;
 
-  api_loader = { 'list': false }
+  api_loader = { 'list': false, 'accordian':false }
   votersist: any = [
     { user_name: 'Amit Jain', epic_no: '1685419', url: '../.././../assets/images/avatars/dy_post_image.jpg', tags: [{ value: 'Booth no 5' }, { value: 'Ward No 8' }] },
     { user_name: 'Ayesha', epic_no: '1685419', url: '../.././../assets/images/avatars/thumb-9.jpg', tags: [{ value: 'Booth no 5' }, { value: 'Ward No 8' }] },
@@ -65,12 +66,23 @@ export class VoterListComponent implements OnInit {
     if (this._currSector) {
       data['sector'] = this._currSector;
     }
+
+    if (this._currLane) {
+      data['lane'] = this._currLane;
+    }
+    if (this._crrAssembly) {
+      data['assembly'] = this._crrAssembly;
+    }
+    if (this._currStreet) {
+      data['street'] = this._currStreet;
+    }
+
     if (this._currBenificary) {
       data['is_benificary'] = this._currBenificary;
     }
 
     if (this._currSearchValue) {
-      let temp = this._currLanguage == 'en' ? 'FULL_NAME_EN' : 'full_name_hi'
+      let temp = this._currLanguage == 'en' ? 'search_param' : 'search_param'
       data[temp] = this._currSearchValue;
     }
     this.http.getVoterList(data).subscribe((res: any) => {
@@ -91,20 +103,35 @@ export class VoterListComponent implements OnInit {
   debounce: any;
   boothList: any = [];
   wardList: any = [];
-  sectorList:any = []
+  sectorList: any = [];
+  _crrAssembly:any;
+  assemblyList : any = [];
+  _currStreet : any;
+  streetList:any = [];
+  _currLane: any;
+  laneList : any = [];
+
   searchStaticDataGlobalFunction(event, data?) {
     clearTimeout(this.debounce);
     this.debounce = setTimeout(() => {
       let data = { model_name: event }
       this.http.getMasterData(data).subscribe((res: any) => {
         if (res.success) {
-         if(event == 'Booth'){
-          this.boothList = res.data;
-         }else if(event == 'Ward'){
-          this.wardList = res.data;
-         } else if(event == 'Sector'){
-          this.sectorList = res.data;
-         }
+          if (event == 'Booth') {
+            this.boothList = res.data;
+          } else if (event == 'Ward') {
+            this.wardList = res.data;
+          } else if (event == 'Sector') {
+            this.sectorList = res.data;
+          }  else if (event == 'Street') {
+            this.streetList = res.data;
+          }
+          else if (event == 'Lane') {
+            this.laneList = res.data;
+          }
+          else if (event == 'Assembly') {
+            this.assemblyList = res.data;
+          }
         }
       })
     }, 500);
@@ -115,6 +142,9 @@ export class VoterListComponent implements OnInit {
     this._currBooth = null;
     this._currSector = null;
     this._currWard = null;
+    this._currLane = null;
+    this._currStreet = null;
+    this._crrAssembly = null;
     this.getVotersList()
   }
 
@@ -132,8 +162,8 @@ export class VoterListComponent implements OnInit {
     return value;
   }
 
-  switchValue : any;
-  currVoterDetails : any;
+  switchValue: any;
+  currVoterDetails: any;
   getSwitchValue(data) {
     if (data?.status == 'Inactive') {
       this.switchValue = false;
@@ -142,5 +172,67 @@ export class VoterListComponent implements OnInit {
     }
     this.currVoterDetails = data
     return this.switchValue
+  }
+
+  _currentAuditId : any;
+  checked: boolean = false;
+  indeterminate: boolean = false;
+  listOfCurrentPageData: readonly Data[] = [];
+  setOfCheckedId = new Set<number>();
+  // Table Dropdowns functions
+  expandSet = new Set<number>();
+  onExpandChange(id: number, checked: boolean, index): void {
+
+    if (checked) {
+      this.expandSet.add(id);
+      this._currentAuditId = id
+      this.getAuditTrail(index);
+    } else {
+      this.expandSet.delete(id);
+    }
+  }
+
+  updateCheckedSet(id: number, checked: boolean): void {
+    if (checked) {
+      this.setOfCheckedId.add(id);
+    } else {
+      this.setOfCheckedId.delete(id);
+    }
+  }
+
+  onCurrentPageDataChange(listOfCurrentPageData: Data[]): void {
+    this.listOfCurrentPageData = listOfCurrentPageData;
+    this.refreshCheckedStatus();
+  }
+
+  onItemChecked(id: number, checked: boolean): void {
+    this.updateCheckedSet(id, checked);
+    this.refreshCheckedStatus();
+  }
+
+  onAllChecked(checked: boolean): void {
+    this.listOfCurrentPageData
+      .filter(({ disabled }) => !disabled)
+      .forEach(({ id }) => this.updateCheckedSet(id, checked));
+    this.refreshCheckedStatus();
+  }
+
+  refreshCheckedStatus(): void {
+    const listOfEnabledData = this.listOfCurrentPageData.filter(({ disabled }) => !disabled);
+    this.checked = listOfEnabledData.every(({ id }) => this.setOfCheckedId.has(id));
+    this.indeterminate = listOfEnabledData.some(({ id }) => this.setOfCheckedId.has(id)) && !this.checked;
+  }
+
+  getAuditTrail(arrayIndex){
+    let data = {id:this._currentAuditId, model_name:'electoralchattdataset'}
+    this.http.getAuditTrail(data).subscribe((res:any)=>{
+      if(res.success){
+        this.votersList['auditDataset'] = res.data
+      }else{
+        this.votersList['auditDataset'] = []
+      }
+    },error=>{
+      this.votersList['auditDataset'] =[]
+    })
   }
 }

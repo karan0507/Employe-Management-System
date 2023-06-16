@@ -19,6 +19,13 @@ const routes: Routes = [
   },
   {
     path: '',
+    data: {
+      title:'Team Management List',
+      parent: 'Team Management',
+      isButton: false,
+      isHome: false,
+      custom_url:'/team-management',
+    },
     children: [
       {
         path: 'add-team',

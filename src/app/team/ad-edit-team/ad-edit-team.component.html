@@ -1,18 +1,18 @@
 <section>
     <nz-card [nzLoading]="api_loader['card']">
         <div class="d-flex  justify-content-end align-items-center flex-wrap mb-5">
-            <h6>Status: 
-                <span class="font-weight-normal mx-2" [ngClass]="teamDetails?.status == 'DONE' ? 'text-success' : (teamDetails?.status == 'TO-DO' ? 'text-danger' : 'text-info')">
-                    {{teamDetails?.status}}
+            <h6>Status:
+                <span class="font-weight-normal mx-2"
+                    [ngClass]="teamDetails?.status == 'DONE' ? 'text-success' : (teamDetails?.status == 'TO-DO' ? 'text-danger' : 'text-info')">
+                    {{teamDetails?.status?.name}}
                 </span>
             </h6>
-            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currStatus"
-            (nzFocus)="searchStaticDataGlobalFunction('UserStatus')"
-            (ngModelChange)="changeTaskStatus()" nzAllowClear
-            nzPlaceHolder="Select Sector">
-            <nz-option *ngFor="let item of statusList" [nzValue]="item.id" [nzLabel]="item?.name">
-            </nz-option>
-        </nz-select>
+            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_curStatusId"
+                (nzFocus)="searchStaticDataGlobalFunction('UserStatus')" (ngModelChange)="changeTaskStatus($event)"
+                nzAllowClear nzPlaceHolder="Select Sector">
+                <nz-option *ngFor="let item of statusList" [nzValue]="item.id" [nzLabel]="item?.name">
+                </nz-option>
+            </nz-select>
         </div>
         <form nz-form [formGroup]="teamForm">
             <div class="row">
@@ -79,10 +79,9 @@
                             [nzErrorTip]="_currLanguage == 'en' ? 'Please select Team type' : 'कृपया टीम का प्रकार चुनें'">
                             <!-- (keyup)="getUserType()" -->
                             <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="user_type"
-                                (nzFocus)="getUserType()"  nzAllowClear
+                                (nzFocus)="getUserType()" nzAllowClear
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Team Type' : 'कृपया टीम का प्रकार चुनें'">
-                                <nz-option *ngFor="let item of userList" [nzValue]="item.id"
-                                    [nzLabel]="item?.name">
+                                <nz-option *ngFor="let item of userList" [nzValue]="item.id" [nzLabel]="item?.name">
                                 </nz-option>
                             </nz-select>
                         </nz-form-control>
@@ -96,14 +95,15 @@
                         </nz-form-label>
                         <nz-form-control [nzSm]="16" [nzXs]="24"
                             [nzErrorTip]="_currLanguage == 'en' ? 'Please select Designation' : 'कृपया पद का प्रकार चुनें'">
-                            <!-- (keyup)="getUserType()" -->
-                            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="designation"
+                            <input type="text" nz-input formControlName="designation"
+                                [placeholder]="_currLanguage == 'en' ? 'Select Designation' : 'कृपया पद का प्रकार चुनें'" />
+                            <!-- <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="designation"
                                 (nzFocus)="getdesignationList()"  nzAllowClear
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Designation' : 'कृपया पद का प्रकार चुनें'">
                                 <nz-option *ngFor="let item of designationList" [nzValue]="item.id"
                                     [nzLabel]="item?.name">
                                 </nz-option>
-                            </nz-select>
+                            </nz-select> -->
                         </nz-form-control>
                     </nz-form-item>
                 </div>
@@ -176,7 +176,8 @@
             </div>
         </form>
         <div class="d-flex justify-content-center">
-            <button nz-button nzType="primary" class="px-5" (click)="submitForm()" [nzLoading]="api_loader['button']">Save</button>
+            <button nz-button nzType="primary" class="px-5" (click)="submitForm()"
+                [nzLoading]="api_loader['button']">Save</button>
             <button nz-button nzType="link" class="ml-3 px-5 border" routerLink="/team-management">Cancel</button>
         </div>
     </nz-card>

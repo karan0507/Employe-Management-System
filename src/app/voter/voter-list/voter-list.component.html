@@ -3,7 +3,7 @@
         <div class="col-12 col-lg-4 mb-2">
             <div class="d-flex">
                 <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-                    <input type="text" nz-input placeholder="Search By Activity Name/ Month"
+                    <input type="text" nz-input placeholder="Search By Activity Name & Table details"
                         [(ngModel)]="_currSearchValue" (keyup.enter)="getVotersList()" />
                 </nz-input-group>
                 <ng-template #suffixIconButton>
@@ -82,9 +82,15 @@
                             [nzFrontPagination]="false" [nzShowSizeChanger]="true" [nzPageIndex]="pageIndex"
                             [nzPageSize]="globalPageSize" (nzQueryParams)="votersList[0] ? getVotersList($event) : null"
                             [nzShowTotal]="botTotalCount" [nzLoading]="api_loader['card']"
+                            (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
                             [nzScroll]="{ x: '1500px', y: '50vh' }">
                             <thead>
                                 <tr>
+                                    <th></th>
+                                    <th nzWidth="3rem" [nzChecked]=" votersList[0] ? checked : false"
+                                        [nzIndeterminate]=" votersList[0] ? indeterminate : false"
+                                        (nzCheckedChange)="votersList[0] ? onAllChecked($event) : false">
+                                    </th>
                                     <th nzWidth="4rem">Sr. No</th>
                                     <th class="text-left" [nzWidth]="'14rem'">Full Name</th>
                                     <th>Epic No</th>
@@ -101,6 +107,11 @@
                             <tbody>
                                 <ng-container *ngFor="let data of votersList; index as i">
                                     <tr>
+                                        <td nzWidth="2rem" [nzExpand]="expandSet.has(data.id)"
+                                            (nzExpandChange)="onExpandChange(data.id, $event, i)"></td>
+                                        <td nzWidth="3rem" [nzChecked]="setOfCheckedId.has(data.id)"
+                                            [nzDisabled]="data.disabled"
+                                            (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
                                         <td nzWidth="4rem" *ngIf="pageIndex == 1">{{i+1}}</td>
                                         <td nzWidth="4rem" *ngIf="pageIndex > 1">{{( (pageIndex-1) * globalPageSize) +
                                             (i+1)}}
@@ -139,7 +150,7 @@
                                                     <ul nz-menu>
                                                         <!-- *ngxPermissionsOnly="''" -->
                                                         <li nz-menu-item [routerLink]="['/voter/view-profile']"
-                                                        [queryParams]="{id:data.id}">
+                                                            [queryParams]="{id:data.id}">
                                                             <span class="m-l-5">View Voter</span>
                                                         </li>
                                                         <li nz-menu-item [routerLink]="['/voter/edit-voter']"
@@ -155,10 +166,37 @@
                                                     </ul>
                                                 </nz-dropdown-menu>
                                             </div>
-                                            <!-- <button nz-button nzTyp="link" class="border" routerLink="/voter/edit-voter"
-                                                [queryParams]="{id:data.id}">Edit</button> -->
                                         </td>
                                     </tr>
+
+
+
+                                    <tr [nzExpand]="expandSet.has(data.id)">
+                                        <div class="justify-content-center">
+                                            <nz-page-header class="site-page-header header_bg_dark"
+                                                [nzTitle]="trailTitle">
+                                            </nz-page-header>
+                                            <nz-card class="mb-md-0 border"
+                                                [nzLoading]="_currentAuditId == data.id ? api_loader['accordian'] : null">
+                                                <div class="d-flex justify-content-between" *ngFor="let item of data?.auditDataset">
+                                                    <div class="d-flex justify-content-start flex-wrap" *ngFor="let sub of item?.key_changes">
+                                                       
+                                                    </div>
+                                                </div>
+                                            </nz-card>
+                                            <ng-template #trailTitle>
+                                                <div class="ml-md-2">
+                                                    <h6 class="mb-0 text-white">
+                                                        <!-- <i nz-icon class="mr-2" nzType="user" nzTheme="outline"></i> -->
+                                                        Audit Trail
+                                                    </h6>
+                                                </div>
+                                            </ng-template>
+                                        </div>
+                                    </tr>
+
+
+
                                 </ng-container>
                             </tbody>
                         </nz-table>
@@ -177,9 +215,9 @@
 </main>
 
 <section *ngIf="quickViewVisible">
-    <nz-drawer [nzWidth]="300" [nzTitle]="filtersTemplate" [nzClosable]="false" [nzVisible]="quickViewVisible"
+    <nz-drawer [nzWidth]="'80%'" [nzTitle]="filtersTemplate" [nzClosable]="false" [nzVisible]="quickViewVisible"
         nzPlacement="right" (nzOnClose)="quickViewToggle()">
-        <div class="d-flex justify-content-center align-items-center">
+        <div class="d-flex flex-wrap justify-content-start align-items-center">
             <div class="d-flex flex-column">
                 <div class="d-flex align-items-start flex-column mb-3">
                     <label>Booth: </label>
@@ -213,6 +251,40 @@
                         </nz-option>
                     </nz-select>
                 </div>
+
+                <div class="d-flex align-items-start flex-column mb-3">
+                    <label>Assembly: </label>
+                    <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_crrAssembly"
+                        (nzFocus)="searchStaticDataGlobalFunction('Assembly')"
+                        (keyup)="searchStaticDataGlobalFunction('Assembly',$event)" nzAllowClear
+                        nzPlaceHolder="Select Assembly">
+                        <nz-option *ngFor="let item of assemblyList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                        </nz-option>
+                    </nz-select>
+                </div>
+
+                <div class="d-flex align-items-start flex-column mb-3">
+                    <label>Street: </label>
+                    <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currStreet"
+                        (nzFocus)="searchStaticDataGlobalFunction('Street')"
+                        (keyup)="searchStaticDataGlobalFunction('Street',$event)" nzAllowClear
+                        nzPlaceHolder="Select Street">
+                        <nz-option *ngFor="let item of streetList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                        </nz-option>
+                    </nz-select>
+                </div>
+
+                <div class="d-flex align-items-start flex-column mb-3">
+                    <label>Lane: </label>
+                    <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currLane"
+                        (nzFocus)="searchStaticDataGlobalFunction('Lane')"
+                        (keyup)="searchStaticDataGlobalFunction('Lane',$event)" nzAllowClear
+                        nzPlaceHolder="Select Lane">
+                        <nz-option *ngFor="let item of laneList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                        </nz-option>
+                    </nz-select>
+                </div>
+
                 <div class="d-flex align-items-start flex-column mb-3">
                     <label>Is Benificary: </label>
                     <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currBenificary" nzAllowClear

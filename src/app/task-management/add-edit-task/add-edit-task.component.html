@@ -96,25 +96,6 @@
                         </nz-form-control>
                     </nz-form-item>
                 </div>
-                <!-- Voters -->
-                <div class="col-lg-6 col-12">
-                    <nz-form-item>
-                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
-                            'Select Voters' : 'मतदाताओं का चयन करें'}}
-                        </nz-form-label>
-                        <nz-form-control [nzSm]="16" [nzXs]="24"
-                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select voters' : 'कृपया मतदाताओं का चयन करें'">
-                            <nz-select [nzMode]="'multiple'" class="selectFilter mb-2 mr-3" formControlName="voters"
-                                (nzFocus)="getVoters()" (keyup)="getVoters($event)" nzAllowClear [nzMaxTagCount]="2"
-                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Voters' : 'मतदाताओं का चयन करें'"
-                                (ngModelChange)="getVoters($event)">
-                                <nz-option *ngFor="let item of voters" [nzValue]="item.id"
-                                    [nzLabel]=" _currLanguage == 'en' ?  item?.full_name_en : full_name_hi">
-                                </nz-option>
-                            </nz-select>
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
 
                 <div class="col-lg-6 col-12">
                     <nz-form-item>
@@ -128,6 +109,104 @@
                         </nz-form-control>
                     </nz-form-item>
                 </div>
+
+                <!-- Voters -->
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Select Voters' : 'मतदाताओं का चयन करें'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select voters' : 'कृपया मतदाताओं का चयन करें'">
+                            <nz-select [nzMode]="'multiple'" class="selectFilter mb-2 mr-3" formControlName="voters"
+                                (nzFocus)="getVoters()" (keyup)="getVoters($event)" nzAllowClear [nzMaxTagCount]="2"
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Voters' : 'मतदाताओं का चयन करें'">
+                                <nz-option *ngFor="let item of voters" [nzValue]="item.id"
+                                    [nzLabel]=" _currLanguage == 'en' ?  item?.full_name_en : full_name_hi">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Select Booth' : 'बूथ का चयन करें'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select Booth' : 'कृपया बूथ का चयन करें'">
+                            <nz-select [nzMode]="'multiple'" class="selectFilter mb-2 mr-3" formControlName="booth"
+                                (nzFocus)="searchMasterData('Booth')" (keyup)="searchMasterData('Booth',$event)"
+                                nzAllowClear [nzMaxTagCount]="2"
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Booth' : 'बूथ का चयन करें'">
+                                <nz-option *ngFor="let item of boothList" [nzValue]="item.id"
+                                    [nzLabel]=" _currLanguage == 'en' ? item?.name?.en : item?.name?.hi">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <!-- Ward -->
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Select Ward' : 'वार्ड का चयन करें'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select Ward' : 'कृपया वार्ड का चयन करें'">
+                            <nz-select [nzMode]="'multiple'" class="selectFilter mb-2 mr-3" formControlName="ward"
+                                (nzFocus)="searchMasterData('Ward')" (keyup)="searchMasterData('Ward',$event)"
+                                nzAllowClear [nzMaxTagCount]="2"
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Ward' : 'वार्ड का चयन करें'">
+                                <nz-option *ngFor="let item of wardList" [nzValue]="item.id"
+                                    [nzLabel]=" _currLanguage == 'en' ?  item?.name?.en : item?.name?.hi">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <!-- Sector -->
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Select Sector' : 'सेक्टर का चयन करें'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select Sector' : 'कृपया सेक्टर का चयन करें'">
+                            <nz-select [nzMode]="'multiple'" class="selectFilter mb-2 mr-3" formControlName="sector"
+                                (nzFocus)="searchMasterData('Sector')" (keyup)="searchMasterData('Sector',$event)"
+                                nzAllowClear [nzMaxTagCount]="2"
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Sector' : 'सेक्टर का चयन करें'">
+                                <nz-option *ngFor="let item of sectorList" [nzValue]="item.id"
+                                    [nzLabel]=" _currLanguage == 'en' ?  item?.name?.en : item?.name?.hi">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Select Places' : 'स्थानों का चयन करें'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select Places' : 'कृपया स्थानों का चयन करें'">
+                            <nz-select [nzMode]="'multiple'" class="selectFilter mb-2 mr-3" formControlName="places"
+                                (nzFocus)="searchMasterData('Places')" (keyup)="searchMasterData('Places',$event)"
+                                nzAllowClear [nzMaxTagCount]="2"
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Places' : 'स्थानों का चयन करें'">
+                                <nz-option *ngFor="let item of placeList" [nzValue]="item.id"
+                                    [nzLabel]=" _currLanguage == 'en' ?  item?.full_name_en : full_name_hi">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
             </div>
         </form>
         <div class="d-flex justify-content-center">

@@ -37,16 +37,16 @@ export class AdEditTeamComponent implements OnInit {
       this.createTeam();
     })
   }
-
+  _curStatusId : any;
   _currTeamData: any;
   getTeamDetails() {
     this.api_loader['list'] = true;
-    console.log('In Get');
-
     let data = { id: this._currTeamId, 'end_point': 'FETCH_VOTER_LIST_API_URL' }
     this.http.getTeamList(data).subscribe((res: any) => {
       if (res.success) {
+        this.searchStaticDataGlobalFunction('UserStatus');
         this._currTeamData = res.data[0];
+        console.log(this._curStatusId = res.data[0]?.status?.id, res.data?.status)
         this.getUserType();
         this.createTeam(this._currTeamData)
       }
@@ -59,7 +59,7 @@ export class AdEditTeamComponent implements OnInit {
       first_name: [(data ? (this._currLanguage == 'en' ? data?.first_name : data?.first_name) : ''), [Validators.required]],
       last_name: [(data ? (this._currLanguage == 'en' ? data?.last_name : data?.last_name) : ''), [Validators.required]],
       user_type: [(data ? data?.user_type?.id : ''), [Validators.required]],
-      designation: [(data ? (this._currLanguage == 'en' ? data?.designation_en : data?.designation_hi) : ''), [Validators.required]],
+      designation: [(data ? (this._currLanguage == 'en' ? data?.designation : data?.designation) : ''), [Validators.required]],
       mobile: [(data ? (this._currLanguage == 'en' ? data?.mobile : data?.mobile) : ''), [Validators.required]],
       email: [(data ? (this._currLanguage == 'en' ? data?.email : data?.email) : ''), [Validators.required]],
       whatsapp_number: [data?.whatsapp_number ? data?.whatsapp_number : ''],
@@ -70,7 +70,7 @@ export class AdEditTeamComponent implements OnInit {
     })
   }
 
-  changeTaskStatus(): void {
+  changeTaskStatus(event): void {
     // this.quickViewVisible = !this.quickViewVisible;
     this.modal.confirm({
       nzTitle: 'Confirm',  /*+ this.party_name + '?'*/
@@ -86,7 +86,9 @@ export class AdEditTeamComponent implements OnInit {
 
 
   onCLickStatusChange(status) {
-    let data = { 'status': status }
+    let data  = new FormData();
+     data.append('status',status),
+     data.append('internal_user',this._currTeamId)
     this.http.changeTeamStatus(this._currTeamId, data).subscribe((res: any) => {
       if (res.success) {
         this.message.success(res.message);
@@ -144,23 +146,31 @@ export class AdEditTeamComponent implements OnInit {
   }
 
   submitForm() {
-    let data = {}
-    data['first_name'] = this.teamForm.get('first_name').value
-    data['last_name'] = this.teamForm.get('last_name').value
-    data['user_type'] = this.teamForm.get('user_type').value
-    data['designation'] = this.teamForm.get('designation').value
-    data['mobile'] = this.teamForm.get('mobile').value
-    data['email'] = this.teamForm.get('email').value
-    data['whatsapp_number'] = this.teamForm.get('whatsapp_number').value
-    data['landline_number'] = this.teamForm.get('landline_number').value
-    data['studies'] = this.teamForm.get('studies').value
-    data['speed'] = this.teamForm.get('speed').value
-    data['residential'] = this.teamForm.get('residential').value;
+    let data = new FormData();
+    data.append('first_name', this.teamForm.get('first_name').value)
+    data.append('last_name', this.teamForm.get('last_name').value)
+    data.append('user_type', this.teamForm.get('user_type').value)
+    data.append('designation', this.teamForm.get('designation').value)
+    data.append('mobile', this.teamForm.get('mobile').value)
+    data.append('email', this.teamForm.get('email').value)
+    data.append('whatsapp_number', this.teamForm.get('whatsapp_number').value)
+    data.append('landline_number', this.teamForm.get('landline_number').value)
+    data.append('studies', this.teamForm.get('studies').value)
+    data.append('speed', this.teamForm.get('speed').value)
+    data.append('residential', this.teamForm.get('residential').value)
+    this.api_loader['button'] = true;
+    let url = this.isEdit ? this.http.editTeamMember(this._currTeamId, data) : this.http.addTeamMember(data);
+    url.subscribe((res: any) => {
+      if (res.success) {
+        if (res.success) {
+          this.message.success(res.message);
+          this.api_loader['button'] = false;
+          this.router.navigateByUrl('/team-management');
+        } else {
+          this.message.error(res.message);
+          this.api_loader['button'] = false;
 
-    let url = this.isEdit ? this.http.editTeamMember(this._currTeamId,data) : this.http.addTeamMember(data);
-    url.subscribe((res:any)=>{
-      if(res.success){
-
+        }
       }
     })
   }

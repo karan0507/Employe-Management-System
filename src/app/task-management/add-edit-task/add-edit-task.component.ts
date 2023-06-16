@@ -66,6 +66,11 @@ export class AddEditTaskComponent implements OnInit {
       discription: [(data ? (this._currLanguage == 'en' ? data?.discription?.en : data?.discription?.hi) : ''), [Validators.required]],
       internal_user: [[], [Validators.required]],
       voters: [data?.voters ? JSON.parse(data?.voters) : null, [Validators.required]],
+      booth: [data?.booth ? JSON.parse(data?.booth) : null, [Validators.required]],
+      ward: [data?.ward ? JSON.parse(data?.ward) : null, [Validators.required]],
+      street: [data?.street ? JSON.parse(data?.street) : null, [Validators.required]],
+      places: [data?.places ? JSON.parse(data?.places) : null, [Validators.required]],
+      sector: [data?.sector ? JSON.parse(data?.sector) : null, [Validators.required]], 
       task_date: [data?.task_date ? data?.task_date : null, [Validators.required]],
     })
 
@@ -79,8 +84,12 @@ export class AddEditTaskComponent implements OnInit {
     form_data.append('task_type', this.taskForm.get('task_type').value);
     form_data.append('name', this.taskForm.get('name').value);
     form_data.append('discription', this.taskForm.get('discription').value);
-    form_data.append('internal_user', this.taskForm.get('internal_user').value);
+    form_data.append('internal_user', JSON.stringify(this.taskForm.get('internal_user').value));
     form_data.append('voters', JSON.stringify(this.taskForm.get('voters').value));
+    form_data.append('booth', JSON.stringify(this.taskForm.get('booth').value));
+    form_data.append('ward', JSON.stringify(this.taskForm.get('ward').value));
+    form_data.append('street', JSON.stringify(this.taskForm.get('street').value));
+    form_data.append('sector', JSON.stringify(this.taskForm.get('sector').value));
     form_data.append('task_date', this.taskForm.get('task_date').value ? moment(this.taskForm.get('task_date').value).format("YYYY-MM-DD") : '');
 
     let url = this.isEdit == false ? this.http.addTasks(form_data) : this.http.editTasks(this._currTaskId, form_data);
@@ -153,6 +162,9 @@ export class AddEditTaskComponent implements OnInit {
       clearTimeout(this.voter_debounce);
       this.voter_debounce = setTimeout(() => {
         let data = { 'end_point': 'FETCH_VOTER_LIST_API_URL' }
+        if(key){
+          data['search_param'] = key.target.value
+        }
         this.http.getVoterList(data).subscribe((res: any) => {
           if (res.success) {
             this.voters = res.data;
@@ -169,28 +181,6 @@ export class AddEditTaskComponent implements OnInit {
     }
   }
 
-  debounce: any;
-  boothList: any = [];
-  searchStaticDataGlobalFunction(event?) {
-    if (event) {
-      clearTimeout(this.debounce);
-      this.debounce = setTimeout(() => {
-        let data = { model_name: event }
-        this.http.getMasterData(data).subscribe((res: any) => {
-          if (res.success) {
-            this.boothList = res.data;
-          }
-        })
-      }, 500);
-    } else {
-      let data = { model_name: event }
-      this.http.getMasterData(data).subscribe((res: any) => {
-        if (res.success) {
-          this.boothList = res.data;
-        }
-      })
-    }
-  }
 
   changeTaskStatus(event): void {
       // this.quickViewVisible = !this.quickViewVisible;
@@ -219,4 +209,52 @@ export class AddEditTaskComponent implements OnInit {
           this.message.error(error);
       })
     }
+
+
+
+  debounce: any;
+  boothList: any = [];
+  wardList: any = [];
+  sectorList: any = [];
+  _crrAssembly:any;
+  assemblyList : any = [];
+  _currStreet : any;
+  streetList:any = [];
+  _currLane: any;
+  laneList : any = [];
+  placeList : any = []
+  searchMasterData(event, data?) {
+    clearTimeout(this.debounce);
+    let param = {}
+    this.debounce = setTimeout(() => {
+    //  if(event == 'Places'){
+    //    param = { master_model: event }
+    //  }else{
+    //    param = { model_name: event }
+    //  }
+    param = { model_name: event }
+      this.http.getMasterData(param).subscribe((res: any) => {
+        if (res.success) {
+          if (event == 'Booth') {
+            this.boothList = res.data;
+          } else if (event == 'Ward') {
+            this.wardList = res.data;
+          } else if (event == 'Sector') {
+            this.sectorList = res.data;
+          }  else if (event == 'Street') {
+            this.streetList = res.data;
+          }
+          else if (event == 'Lane') {
+            this.laneList = res.data;
+          }
+          else if (event == 'Assembly') {
+            this.assemblyList = res.data;
+          }else if (event == 'Places') {
+            this.placeList = res.data;
+          }
+          
+        }
+      })
+    }, 500);
+  }
   }

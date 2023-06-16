@@ -130,10 +130,21 @@
         </ng-template>
     </div>
 </nz-card>
+
+<nz-modal [(nzVisible)]="isImport" nzTitle="Import Tasks" (nzOnCancel)="isImport = false;" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+
+        <nz-upload nzListType="picture" nzType="drag" [nzBeforeUpload]="beforeUploadName" [nzMultiple]="false"
+            [(nzFileList)]="fileList">
+            <button class="my-md-4" nz-button nzType="primary">Upload</button>
+        </nz-upload>
+    </ng-container>
+</nz-modal>
+
 <section *ngIf="quickViewVisible">
-    <nz-drawer [nzWidth]="300" [nzTitle]="filtersTemplate" [nzClosable]="false" [nzVisible]="quickViewVisible"
+    <nz-drawer [nzWidth]="'80%'" [nzTitle]="filtersTemplate" [nzClosable]="false" [nzVisible]="quickViewVisible"
         nzPlacement="right" (nzOnClose)="quickViewToggle()">
-        <div class="d-flex justify-content-center align-items-center">
+        <div class="d-flex flex-wrap justify-content-start align-items-center">
             <div class="d-flex flex-column">
                 <div class="d-flex align-items-start flex-column mb-3">
                     <label>Booth: </label>
@@ -167,18 +178,68 @@
                         </nz-option>
                     </nz-select>
                 </div>
+
                 <div class="d-flex align-items-start flex-column mb-3">
-                    <label>Is Benificary: </label>
-                    <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currBenificary" nzAllowClear
-                        nzPlaceHolder="Select Is Benificary">
-                        <nz-option [nzValue]="true" [nzLabel]="'True'"> </nz-option>
-                        <nz-option [nzValue]="false" [nzLabel]="'False'"></nz-option>
+                    <label>Assembly: </label>
+                    <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_crrAssembly"
+                        (nzFocus)="searchStaticDataGlobalFunction('Assembly')"
+                        (keyup)="searchStaticDataGlobalFunction('Sector',$event)" nzAllowClear
+                        nzPlaceHolder="Select Sector">
+                        <nz-option *ngFor="let item of assemblyList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                        </nz-option>
                     </nz-select>
                 </div>
 
+                <div class="d-flex align-items-start flex-column mb-3">
+                    <label>Street: </label>
+                    <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currStreet"
+                        (nzFocus)="searchStaticDataGlobalFunction('Street')"
+                        (keyup)="searchStaticDataGlobalFunction('Street',$event)" nzAllowClear
+                        nzPlaceHolder="Select Sector">
+                        <nz-option *ngFor="let item of streetList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                        </nz-option>
+                    </nz-select>
+                </div>
+
+                <div class="d-flex align-items-start flex-column mb-3">
+                    <label>Lane: </label>
+                    <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currLane"
+                        (nzFocus)="searchStaticDataGlobalFunction('Lane')"
+                        (keyup)="searchStaticDataGlobalFunction('Lane',$event)" nzAllowClear
+                        nzPlaceHolder="Select Sector">
+                        <nz-option *ngFor="let item of laneList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                        </nz-option>
+                    </nz-select>
+                </div>
+
+                <div class="d-flex align-items-start flex-column mb-3">
+                    <label>Date: </label>
+                    <nz-range-picker style="min-width: 10rem" [(ngModel)]="date" class="mb-2 me-2 mr-md-0"
+                        [nzDisabledDate]="disabledDate" [nzRanges]="customRanges">
+                    </nz-range-picker>
+
+                </div>
+
+                <div class="d-flex align-items-start flex-column mb-3">
+                    <label>Internal User: </label>
+                    <nz-select class="selectFilter mb-2 mr-3" [(ngModel)]="_currUser"
+                        (nzFocus)="getInternalUser()" (keyup)="getInternalUser($event)" nzAllowClear
+                        [nzMode]="'multiple'" [nzMaxTagCount]="2"
+                        [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Internal User' : 'मतदाताओं का चयन करें'"
+                        (ngModelChange)="getInternalUser($event)">
+                        <nz-option *ngFor="let item of internal_user_list"
+                            [nzLabel]=" _currLanguage == 'en' ?  (item?.first_name ? (item?.first_name + (item?.last_name ? ' '+item?.last_name : '')) : '') : first_name"
+                            [nzValue]="item.id">
+                        </nz-option>
+                    </nz-select>
+
+                </div>
+
+
+
                 <div class="d-flex justify-content-center mt-5 align-items-center">
                     <button nz-button nzType="primary" class="mr-3"
-                        (click)="quickViewToggle(); getVotersList()">Apply</button>
+                        (click)="quickViewToggle(); getTaskList()">Apply</button>
                     <button nz-button nzType="link" (click)="resetFilter()">Reset</button>
                 </div>
             </div>
@@ -190,14 +251,3 @@
         </ng-template>
     </nz-drawer>
 </section>
-
-
-<nz-modal [(nzVisible)]="isImport" nzTitle="Import Tasks" (nzOnCancel)="isImport = false;" (nzOnOk)="handleOk()">
-    <ng-container *nzModalContent>
-
-        <nz-upload nzListType="picture" nzType="drag" [nzBeforeUpload]="beforeUploadName" [nzMultiple]="false"
-            [(nzFileList)]="fileList">
-            <button class="my-md-4" nz-button nzType="primary">Upload</button>
-        </nz-upload>
-    </ng-container>
-</nz-modal>

@@ -299,6 +299,10 @@ export class HttpService {
     return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`,data)
   }
 
+  public getAuditTrail(data){
+    return this.http.get(this.url + `/platform_central/v1/audit-trail/get-audit-trail`, {params:data})
+  }
+
   // Task Management
   
   public getTaskList(data){

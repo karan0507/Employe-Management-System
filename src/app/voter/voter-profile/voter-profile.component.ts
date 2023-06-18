@@ -265,10 +265,11 @@ export class VoterProfileComponent implements OnInit {
   }
 
   submitForm(form?) {
+    console.log(JSON.stringify(Array.from(this._currVoterId)), )
     if (this.followUpForm.invalid) { return }
     this.api_loading['button_markActivity'] = true
     let data = new FormData();
-    data.append('voter_id', this._currVoterId)
+    data.append('voter_id',JSON.stringify([this._currVoterId]))
     this.currFormType == 'activity' ?   data.append('activity_type', this.followUpForm.get('activity_type').value) : data.append('followup_type', this.followUpForm.get('followup_type').value) ;
     data.append('comments', this.followUpForm.get('comments').value)
 

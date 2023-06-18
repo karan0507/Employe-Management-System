@@ -111,14 +111,13 @@ export class HeaderComponent{
     ];
 
     switchToggle(){
-        console.log(this._currToggleValue)
         this._currToggleValue = !this._currToggleValue;
         !this._currToggleValue ? localStorage.setItem('globalToggleValue','1') : localStorage.setItem('globalToggleValue','2')
-        // if(!this._currToggleValue){
-        //     localStorage.setItem('globalToggleValue','1')
-        // }else{
-        //     localStorage.setItem('globalToggleValue','2')
-        // }
+        if(!this._currToggleValue){
+            this.router.navigateByUrl("/voter");
+        }else{
+            this.router.navigateByUrl("/dashboard/home");
+        }
         window.location.reload();
     }
 }

@@ -236,7 +236,7 @@
                     <label>Booth: </label>
                     <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currBooth"
                         (nzFocus)="searchStaticDataGlobalFunction('Booth')"
-                        (keyup)="searchStaticDataGlobalFunction('booth',$event)" nzAllowClear
+                        (keyup)="searchStaticDataGlobalFunction('Booth',$event)" nzAllowClear
                         nzPlaceHolder="Select Booth/Ward">
                         <nz-option *ngFor="let item of boothList" [nzValue]="item.id"
                             [nzLabel]="_currLanguage == 'en' ? item?.name?.en + '/' + item?.Ward?.name?.en : item?.name?.hi + '/' + item?.Ward?.name?.hi">

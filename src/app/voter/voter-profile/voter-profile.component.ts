@@ -216,7 +216,7 @@ export class VoterProfileComponent implements OnInit {
   currFormType = ''
   createNewFollow(type?,data?) {
     if(data){    
-      console.log(data?.activity_date)
+      console.log(data?.activity_date,data?.followup_datetime, moment(new Date(data?.activity_date,data?.followup_datetime).toString()).format("HH:mm:ss"))
       this.isEdit = true;
       this._currActivityFollowupId = data.id
       type == 'activity' ? this.getActivityList() : this.getFolloupList()
@@ -232,11 +232,10 @@ export class VoterProfileComponent implements OnInit {
         activity_type: [data?.activity_type?.id, [Validators.required]],
         comments: [this._currLanguage == 'en' ? data?.comments?.en : data?.comments?.hi, [Validators.required]]
       })
-      console.log(this.followUpForm.get('followup_datetime').value)
     } else {
       this.followUpForm = this.fb.group({
         followup_datetime: [data?.followup_datetime, [Validators.required]],
-        followup_time : [data?.followup_time,[Validators.required]],
+        followup_time : [data?.followup_datetime,[Validators.required]],
         followup_type: [data?.followup_type?.id, [Validators.required]],
         comments: [this._currLanguage == 'en' ? data?.comments?.en : data?.comments?.hi, [Validators.required]]
       })
@@ -268,12 +267,10 @@ export class VoterProfileComponent implements OnInit {
     if (this.followUpForm.invalid) { return }
     this.api_loading['button_markActivity'] = true
     let data = new FormData();
-    data.append('voter_id', this._currVoterId)
+    data.append('voter_id', this._currActivityFollowupId)
     this.currFormType == 'activity' ?   data.append('activity_type', this.followUpForm.get('activity_type').value) : data.append('followup_type', this.followUpForm.get('followup_type').value) ;
     data.append('comments', this.followUpForm.get('comments').value)
 
-    console.log(this.followUpForm.get('followup_datetime').value);
-    
     this.currFormType == 'activity' ? 
     data.append('activity_date', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD")) :
     data.append('followup_datetime', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD") + ' ' +moment(this.followUpForm.get('followup_datetime').value).format("HH:mm:ss"));
@@ -386,8 +383,6 @@ export class VoterProfileComponent implements OnInit {
 
 deleteEmployee(i)
 {
-  this.fileList.splice(i,1);
-  console.log(this.fileList);
-  
+  this.fileList.splice(i,1);  
 }
 }

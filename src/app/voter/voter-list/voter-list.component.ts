@@ -270,12 +270,10 @@ export class VoterListComponent implements OnInit {
         this.votersList[arrayIndex]['auditDataset'] = res.data;
         this.api_loader['accordian'] = false;
       }else{
-        this.votersList[arrayIndex]['auditDataset'] = [];
         this.api_loader['accordian'] = false;
       }
       console.log(this.votersList[arrayIndex]['auditDataset'])
     },error=>{
-      this.votersList[arrayIndex]['auditDataset'] =[]
     })
   }
 }

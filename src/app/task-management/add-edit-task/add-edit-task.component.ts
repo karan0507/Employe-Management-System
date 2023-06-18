@@ -48,7 +48,7 @@ export class AddEditTaskComponent implements OnInit {
     this.http.getTaskList(data).subscribe((res: any) => {
       if (res.success) {
         this.taskDetails = res.data[0];
-        console.log('Task Details');
+        console.log('Task Details',this.taskDetails);
 
         this.createTask(res.data[0])
         this.api_loading['card'] = false;
@@ -64,7 +64,7 @@ export class AddEditTaskComponent implements OnInit {
       task_type: [(data ? data?.task_type?.id : ''), [Validators.required]],
       name: [(data ? (this._currLanguage == 'en' ? data?.name?.en : data?.name?.hi) : ''), [Validators.required]],
       discription: [(data ? (this._currLanguage == 'en' ? data?.discription?.en : data?.discription?.hi) : ''), [Validators.required]],
-      internal_user: [[], [Validators.required]],
+      internal_user: [[data?.internal_user?.id ? data?.internal_user?.id : '' ], [Validators.required]],
       voters: [data?.voters ? JSON.parse(data?.voters) : null, [Validators.required]],
       booth: [data?.booth ? JSON.parse(data?.booth) : null, [Validators.required]],
       ward: [data?.ward ? JSON.parse(data?.ward) : null, [Validators.required]],

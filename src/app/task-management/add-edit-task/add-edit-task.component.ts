@@ -77,7 +77,9 @@ export class AddEditTaskComponent implements OnInit {
   }
 
   submitForm() {
-    if (this.taskForm.invalid) { return }
+    if (this.taskForm.invalid) { 
+      console.log(this.taskForm)
+      return }
     this.api_loading['button'] = true;
     console.log(this.taskForm.value);
     var form_data = new FormData();
@@ -91,7 +93,8 @@ export class AddEditTaskComponent implements OnInit {
     form_data.append('street', JSON.stringify(this.taskForm.get('street').value));
     form_data.append('sector', JSON.stringify(this.taskForm.get('sector').value));
     form_data.append('task_date', this.taskForm.get('task_date').value ? moment(this.taskForm.get('task_date').value).format("YYYY-MM-DD") : '');
-
+    form_data.append('place', this.taskForm.get('places').value ? this.taskForm.get('places').value : '');
+    
     let url = this.isEdit == false ? this.http.addTasks(form_data) : this.http.editTasks(this._currTaskId, form_data);
     url.subscribe((res: any) => {
       if (res.success) {
@@ -257,4 +260,5 @@ export class AddEditTaskComponent implements OnInit {
       })
     }, 500);
   }
+
   }

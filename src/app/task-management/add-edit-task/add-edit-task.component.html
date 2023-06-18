@@ -1,6 +1,6 @@
 <section>
     <nz-card [nzLoading]="api_loading['card']">
-        <div class="d-flex  justify-content-end align-items-center flex-wrap mb-5">
+        <div class="d-flex  justify-content-end align-items-center flex-wrap mb-5" *ngIf="isEdit">
             <h6>Status:
                 <span class="font-weight-normal mx-2"
                     [ngClass]="taskDetails?.status == 'DONE' ? 'text-success' : (taskDetails?.status == 'TO-DO' ? 'text-danger' : 'text-info')">
@@ -207,11 +207,31 @@
                     </nz-form-item>
                 </div>
 
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Select Street' : 'स्थानों का चयन करें'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select Street' : 'कृपया स्थानों का चयन करें'">
+                            <nz-select [nzMode]="'multiple'" class="selectFilter mb-2 mr-3" formControlName="street"
+                                (nzFocus)="searchMasterData('Street')" (keyup)="searchMasterData('Street',$event)"
+                                nzAllowClear [nzMaxTagCount]="2"
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Street' : 'स्थानों का चयन करें'">
+                                <nz-option *ngFor="let item of streetList" [nzValue]="item.id"
+                                    [nzLabel]=" _currLanguage == 'en' ?  item?.name?.en : item?.name?.hi">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
             </div>
         </form>
         <div class="d-flex justify-content-center">
             <button nz-button nzType="primary" class="px-5" (click)="submitForm()"
-                [nzLoading]="api_loading['button']" [disabled]="taskForm.invalid ? true : false">Save</button>
+                [nzLoading]="api_loading['button']" >Save</button>
+                <!-- [disabled]="taskForm.invalid ? true : false" -->
             <button nz-button nzType="link" class="ml-3 px-5 border" routerLink="/task-management">Cancel</button>
         </div>
     </nz-card>

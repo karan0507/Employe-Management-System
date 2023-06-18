@@ -1,14 +1,24 @@
 import { SideNavInterface } from "../../interfaces/side-nav.type";
+
 export const ROUTES: SideNavInterface[] = [
-  // {
-  //   path: "/dashboard/home",
-  //   title: "Dashboard",
-  //   iconType: "nzIcon",
-  //   iconTheme: "outline",
-  //   icon: "dashboard",
-  //   permission: 'view_dashboard',
-  //   submenu: [],
-  // },
+  {
+    path: "/dashboard/home",
+    title: "Dashboard",
+    iconType: "nzIcon",
+    iconTheme: "outline",
+    icon: "dashboard",
+    permission: (localStorage.getItem('globalToggleValue') == '1' ) ?  false : '',
+    submenu: [],
+  },
+  {
+    path: "/media-account",
+    title: "Social Media List",
+    iconType: "nzIcon",
+    iconTheme: "outline",
+    icon: "share-alt",
+    permission: (localStorage.getItem('globalToggleValue') == '1' ) ?  false : '',
+    submenu: [],
+  },
   {
     path: "/voter",
     title: "Voter",

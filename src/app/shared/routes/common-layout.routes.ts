@@ -29,4 +29,8 @@ export const CommonLayout_ROUTES: Routes = [
         path: 'team-management',
         loadChildren: () => import('../../team/team.module').then(m => m.TeamModule),
     },
+    {
+        path: 'media-account',
+        loadChildren: () => import('../../account/account.module').then(m => m.AccountModule),
+    },
 ];

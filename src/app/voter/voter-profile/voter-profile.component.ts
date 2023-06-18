@@ -277,8 +277,10 @@ export class VoterProfileComponent implements OnInit {
     this.currFormType == 'activity' ? 
     data.append('activity_date', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD")) :
     data.append('followup_datetime', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD") + ' ' +moment(this.followUpForm.get('followup_datetime').value).format("HH:mm:ss"));
-
-    data.append('file_set', JSON.stringify(Array.from(this._currentFileName)))
+    this.fileList.forEach((file: any, index: number) => {
+      data.append(`file_set`, file); // Assuming file is a File object
+    });
+    // data.append('file_set', JSON.stringify(Array.from(this.fileList)))
     // this.currFormType == 'followUp' ? data.append('followup_time',moment(this.followUpForm.get('followup_datetime').value).format("HH:mm:ss")):'';
     let url =  this.currFormType == 'activity' ? (this.isEdit ? this.http.editVoterActivity(this._currActivityFollowupId,data) : this.http.addVoterActivity(data)) :
     (this.isEdit ? this.http.editVoterFollowup(this._currActivityFollowupId,data) : this.http.addVoterFollowup(data)) 

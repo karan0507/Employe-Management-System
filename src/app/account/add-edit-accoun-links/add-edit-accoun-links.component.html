@@ -1,0 +1,59 @@
+<section>
+    <nz-card [nzLoading]="api_loading['card']">
+
+        <form nz-form [formGroup]="accountForm">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Link Name' : 'लिंक नाम'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter Link Name' : 'कृपया लिंक नाम'">
+                            <input type="text" nz-input formControlName="link"
+                                [placeholder]="_currLanguage == 'en' ? 'Enter Link Name' : 'लिंक नाम'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Link Type' : 'लिंक प्रकार'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select link type' : 'लिंक प्रकार'">
+                            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="link_type">
+                                <nz-option [nzValue]="'FOR'" [nzLabel]="'For'">
+                                </nz-option>
+                                <nz-option [nzValue]="'AGAINSST'" [nzLabel]="'Against'">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Social Media' : 'कार्य प्रकार'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select task type' : 'कृपया कार्य चुनें'">
+                            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="social_handle">
+                                <nz-option [nzValue]="'FACEBOOK'" [nzLabel]="'Facebook'">
+                                </nz-option>
+                                <nz-option [nzValue]="'TWITTER'" [nzLabel]="'Twitter'"></nz-option>
+                                <nz-option [nzValue]="'LINKED-IN'" [nzLabel]="' LinkedIn'">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+            </div>
+        </form>
+        <div class="d-flex justify-content-center">
+            <button nz-button nzType="primary" class="px-5" (click)="submitForm()" [nzLoading]="api_loading['button']"
+                [disabled]="accountForm.invalid ? true : false">Save</button>
+            <button nz-button nzType="link" class="ml-3 px-5 border" routerLink="/task-management">Cancel</button>
+        </div>
+    </nz-card>
+</section>

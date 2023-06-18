@@ -62,7 +62,7 @@ export class AddEditVoterComponent implements OnInit {
       RLN_FIRST_NAME: [(data ? (this._currLanguage == 'en' ? data?.rln_first_name_en : data?.rln_first_name_hi) : ''), [Validators.required]],
       RLN_LAST_NAME: [(data ? (this._currLanguage == 'en' ? data?.rln_last_name_en : data?.rln_last_name_hi) : ''), [Validators.required]],
       RLN_FULL_NAME: [(data ? (this._currLanguage == 'en' ? data?.rln_full_name_en : data?.rln_full_name_hi) : ''), [Validators.required]],
-      FULL_NAME_WITH_RLN: [(data ? (this._currLanguage == 'en' ? data?.full_name_en_with_rln : data?.full_name_hi_with_rln) : ''), [Validators.required]],
+      // FULL_NAME_WITH_RLN: [(data ? (this._currLanguage == 'en' ? data?.full_name_en_with_rln : data?.full_name_hi_with_rln) : ''), [Validators.required]],
       GENDER: [(data ? (this._currLanguage == 'en' ? data?.gender : data?.gender) : ''), [Validators.required]],
       AGE: [(data ? (this._currLanguage == 'en' ? data?.age : data?.age) : ''), [Validators.required]],
       EPIC_NO: [(data ? (this._currLanguage == 'en' ? data?.epic_no : data?.epic_no) : ''), [Validators.required]],
@@ -98,7 +98,7 @@ export class AddEditVoterComponent implements OnInit {
     form_data.append('RLN_FIRST_NAME',this.voterForm.get('RLN_FIRST_NAME').value);
     form_data.append('RLN_LAST_NAME',this.voterForm.get('RLN_LAST_NAME').value);
     form_data.append('RLN_FULL_NAME',this.voterForm.get('RLN_FULL_NAME').value);
-    form_data.append('FULL_NAME_WITH_RLN',this.voterForm.get('FULL_NAME_WITH_RLN').value);
+    // form_data.append('FULL_NAME_WITH_RLN',this.voterForm.get('FULL_NAME_WITH_RLN').value);
     form_data.append('GENDER',this.voterForm.get('GENDER').value);
     form_data.append('AGE',this.voterForm.get('AGE').value);
     form_data.append('EPIC_NO',this.voterForm.get('EPIC_NO').value);
@@ -114,7 +114,7 @@ export class AddEditVoterComponent implements OnInit {
     url.subscribe((res: any) => {
       if (res.success) {
         this.message.success(res.message);
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/voter');
         this.api_loading['button'] = false;
       } else {
         this.api_loading['button'] = false;

@@ -18,11 +18,14 @@ export class HeaderComponent{
     isFolded : boolean;
     isExpand : boolean;
     _currLang : any
+    _currToggleValue : any
+    
     constructor( private themeService: ThemeConstantService, private modal: NzModalService, 
         private http: HttpService, private router: Router, public global:GlobalService, private message: NzMessageService) {}
     
     globalAccData : any;
     ngOnInit(): void {
+        this._currToggleValue = localStorage.getItem('globalToggleValue') == '2' ? true : false;
         this.globalAccData = localStorage.getItem('global_account_data')
         this._currLang = localStorage.getItem('appLanguage') || 'en';
         this.global.globalAccountData.subscribe((res:any)=>{
@@ -106,4 +109,16 @@ export class HeaderComponent{
             color: 'ant-avatar-' + 'gold'
         }
     ];
+
+    switchToggle(){
+        console.log(this._currToggleValue)
+        this._currToggleValue = !this._currToggleValue;
+        !this._currToggleValue ? localStorage.setItem('globalToggleValue','1') : localStorage.setItem('globalToggleValue','2')
+        // if(!this._currToggleValue){
+        //     localStorage.setItem('globalToggleValue','1')
+        // }else{
+        //     localStorage.setItem('globalToggleValue','2')
+        // }
+        window.location.reload();
+    }
 }

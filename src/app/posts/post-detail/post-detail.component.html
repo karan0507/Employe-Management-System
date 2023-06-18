@@ -1,3 +1,9 @@
+<div class="d-flex mb-3">
+	<h4><a routerLink="/dashboard/home" class="text-dark">
+		<span class="font-size-16 font-weight-semibold mx-3" nz-icon nzType="home" nzTheme="fill"></span>Dashboard
+	</a></h4>
+	
+</div>
 <main>
 	<section style="height: 20rem; overflow: hidden;">
 		<div class="row">
@@ -12,90 +18,154 @@
 
 				<div class="row">
 					<div class="col-md-4" *ngFor="let a_data of listMatricsData; index as i">
-					    <nz-card class="h-100 d-flex align-items-center pointer">
-					      <div class="media align-items-center">
-					        <nz-avatar [nzSize]="60" [nzIcon]="a_data.icon" [ngClass]="a_data.class"></nz-avatar>
-					        <div class="m-l-15">
-					          <h4 class="m-b-0">{{a_data.count}}</h4>
-					          <p class="m-b-0 text-dark">{{a_data.name}}</p>
-					        </div>
-					      </div>
-					    </nz-card>
+						<nz-card class="h-100 d-flex align-items-center pointer">
+						  <div class="media align-items-center">
+							<nz-avatar [nzSize]="60" [nzIcon]="a_data.icon" [ngClass]="a_data.class"></nz-avatar>
+							<div class="m-l-15">
+							  <h4 class="m-b-0">{{a_data.count}}</h4>
+							  <p class="m-b-0 text-dark">{{a_data.name}}</p>
+							</div>
+						  </div>
+						</nz-card>
 					</div>
 				</div>
 
 			</div>
 		</div>
+		
 	</section>
 
 	<section class="pt-3">
-		<nz-table #basicTable [nzData]="shareTableData">
-	      <thead>
-	        <tr>
-	          <th>Sr No.</th>
-	          <th>Name</th>
-	          <th>User ID</th>
-	          <th>Action Type</th>
-	          <th>Re-Share</th>
-	        </tr>
-	      </thead>
-	      <tbody>
-	        <tr *ngFor="let data of basicTable.data; let i = index">
-	          <td>{{i+1}}</td>
-	          <td>{{ data.user_details.name }}</td>
-	          <td>{{ data.response_type }}</td>
-	          <td>{{ data.user_details.user_id }}</td>
-	          <td>0</td>
-	        </tr>
-	      </tbody>
-	    </nz-table>
+		<nz-card [nzTitle]="titleShared">
+			<ng-template #titleShared>
+				<div class="d-flex">
+					<h6><span nz-icon nzType="notification" class="mr-3" nzTheme="fill"></span> Shared List</h6>
+				</div>
+			</ng-template>
+			<nz-table #basicTable [nzData]="shareTableData" [nzScroll]="{ x: '1500px', y: '50vh' }">
+				<thead>
+				  <tr>
+					<th nzWidth="5rem">#</th>
+					<th nzWidth="3rem">Sr No.</th>
+					<th>Name</th>
+					<th>Response Type</th>
+					<th>Action Type</th>
+					<th nzRight>Re-Share</th>
+				  </tr>
+				</thead>
+				<tbody>
+					<ng-container *ngFor="let data of basicTable.data; let i = index">
+						<tr >
+							<td nzWidth="5rem" [nzExpand]="expandSet.has(data.id)"
+							(nzExpandChange)="onExpandChange(data.id, $event, i)"></td>
+							<td nzWidth="3rem">{{i+1}}</td>
+							<td>{{ data.user_details.name }}</td>
+							<td>{{ data.response_type }}</td>
+							<td>{{ data.user_details.user_id }}</td>
+							<td nzRight>0</td>
+						  </tr>
+						  <tr [nzExpand]="expandSet.has(data.id)">
+							<div class="justify-content-center">
+								<nz-page-header class="site-page-header header_bg_dark"
+									[nzTitle]="trailTitle">
+								</nz-page-header>
+								<nz-card class="mb-md-0 border" *ngFor="let item of data?.auditDataset"
+									[nzLoading]="_currentAuditId == data.id ? api_loader['accordian'] : null">
+		
+									<nz-collapse nzAccordion [nzExpandIconPosition]="right">
+										<nz-collapse-panel [nzHeader]="trail_header">
+											<ng-template #trail_header>
+											   <h5>Created By: {{item?.created_by}} <span class="text-muted ml-3 font-size-12 font-weight-normal">({{item?.created_at | date:'medium'}})</span></h5>
+											  </ng-template>
+										  <div class="d-flex flex-column mb-2" *ngFor="let sub_sec_audit of item?.key_changes">
+											<h6>{{ sub_sec_audit.key }} content</h6>
+											<div class="d-flex align-items-center">
+												<label class="">{{sub_sec_audit.old_value}}</label>
+												<span nz-icon nzType="arrow-right" class="text-danger mx-3" nzTheme="outline"></span>
+												<label class="mr-3">{{sub_sec_audit.new_value}}</label>
+											</div>
+										  </div>
+										</nz-collapse-panel>
+									  </nz-collapse>
+									  
+									
+								</nz-card>
+								<ng-template #trailTitle>
+									<div class="ml-md-2">
+										<h5 class="mb-0">
+											<!-- <i nz-icon class="mr-2" nzType="user" nzTheme="outline"></i> -->
+											Reshare
+										</h5>
+									</div>
+								</ng-template>
+							</div>
+						</tr>
+					</ng-container>
+				</tbody>
+			  </nz-table>
+		</nz-card>
+	
 	</section>
 
 	<section>
 		<div class="row">
 			<div class="col-md-6">
-				<nz-table #likesDataTableSet [nzData]="likesTableData">
-			      <thead>
-			        <tr>
-			          <th>Sr No.</th>
-			          <th>Name</th>
-			          <th>User ID</th>
-			          <th>Action Type</th>
-			          <th>Reaction Type</th>
-			        </tr>
-			      </thead>
-			      <tbody>
-			        <tr *ngFor="let data of likesDataTableSet.data; let i = index">
-			          <td>{{i+1}}</td>
-			          <td>{{ data.user_details.name }}</td>
-			          <td>{{ data.response_type }}</td>
-			          <td>{{ data.user_details.user_id }}</td>
-			          <td>{{ data.reaction_type }}</td>
-			        </tr>
-			      </tbody>
-			    </nz-table>
+				<ng-template #likedTitle>
+					<div class="d-flex">
+						<h6><span nz-icon nzType="like" nzTheme="fill" class="mr-3"></span> Liked List</h6>
+					</div>
+				</ng-template>
+			<nz-card [nzTitle]="likedTitle">
+				<nz-table #likesDataTableSet [nzData]="likesTableData" [nzScroll]="{ x: '1500px', y: '50vh' }">
+					<thead>
+					  <tr>
+						<th nzWidth="3rem">Sr No.</th>
+						<th>Name</th>
+						<th>User ID</th>
+						<th>Action Type</th>
+						<th>Reaction Type</th>
+					  </tr>
+					</thead>
+					<tbody>
+					  <tr *ngFor="let data of likesDataTableSet.data; let i = index">
+						<td nzWidth="3rem"> {{i+1}}</td>
+						<td>{{ data.user_details.name }}</td>
+						<td>{{ data.response_type }}</td>
+						<td>{{ data.user_details.user_id }}</td>
+						<td>{{ data.reaction_type }}</td>
+					  </tr>
+					</tbody>
+				  </nz-table>
+			</nz-card>
 			</div>
 			<div class="col-md-6">
-				<nz-table #commentDataTableSet [nzData]="commentTableData">
-			      <thead>
-			        <tr>
-			          <th>Sr No.</th>
-			          <th>Name</th>
-			          <th>User ID</th>
-			          <th>Action Type</th>
-			          <th>Comment</th>
-			        </tr>
-			      </thead>
-			      <tbody>
-			        <tr *ngFor="let data of commentDataTableSet.data; let i = index">
-			          <td>{{i+1}}</td>
-			          <td>{{ data.user_details.name }}</td>
-			          <td>{{ data.response_type }}</td>
-			          <td>{{ data.user_details.user_id }}</td>
-			          <td>{{ data.comment_text }}</td>
-			        </tr>
-			      </tbody>
-			    </nz-table>
+				<nz-card [nzTitle]="commentTitle">
+					<ng-template #commentTitle>
+						<div class="d-flex">
+							<h6><span nz-icon nzType="message" nzTheme="fill" class="mr-3"></span> Comments List</h6>
+						</div>
+					</ng-template>
+					<nz-table #commentDataTableSet [nzData]="commentTableData" [nzScroll]="{ x: '1500px', y: '50vh' }">
+						<thead>
+						  <tr>
+							<th nzWidth="3rem">Sr No.</th>
+							<th>Name</th>
+							<th>User ID</th>
+							<th>Action Type</th>
+							<th nzRight>Comment</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr *ngFor="let data of commentDataTableSet.data; let i = index">
+							<td nzWidth="3rem">{{i+1}}</td>
+							<td>{{ data.user_details.name }}</td>
+							<td>{{ data.response_type }}</td>
+							<td>{{ data.user_details.user_id }}</td>
+							<td nzRight>{{ data.comment_text }}</td>
+						  </tr>
+						</tbody>
+					  </nz-table>
+				</nz-card>
 			</div>
 		</div>
 	</section>

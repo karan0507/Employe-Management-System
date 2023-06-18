@@ -1,0 +1,36 @@
+<div class="d-md-block d-none">
+    <div class="d-flex justify-content-end mb-3">
+        <button nz-button nzType="primary" routerLink="/media-account/add-account">+ Add New Account </button>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <nz-card [nzLoading]="api_loader['list']">
+                <nz-table #likesDataTableSet [nzData]="accountList" [nzScroll]="{ x: '1500px', y: '50vh' }">
+                    <thead>
+                        <tr>
+                            <th nzWidth="5rem">Sr. No</th>
+                            <th>Link</th>
+                            <th>Link Type</th>
+                            <th>Social Media</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of accountList; let i = index">
+                            <td nzWidth="5rem"> {{i+1}}</td>
+                            <td> <a [href]="data.link">{{ data.link }}</a> </td>
+                            <td>{{ data.link_type}}</td>
+                            <td>{{ data.social_handle }}</td>
+                            <td>
+                                <button nz-button nzType="link" class="border" nzSize="small"
+                                 routerLink="/media-account/edit-account" [queryParams]="{id:data?.id}">Edit</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+
+            </nz-card>
+        </div>
+
+    </div>
+</div>

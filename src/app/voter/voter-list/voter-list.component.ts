@@ -260,18 +260,22 @@ export class VoterListComponent implements OnInit {
   }
 
   getAuditTrail(arrayIndex){
-    this.votersList[arrayIndex]['auditDataset']= this.tempTrail;
+    this.api_loader['accordian'] = true;
+    this.votersList[arrayIndex]['auditDataset']= [];
     console.log(this.votersList[arrayIndex]);
     
-    // let data = {id:this._currentAuditId, model_name:'electoralchattdataset'}
-    // this.http.getAuditTrail(data).subscribe((res:any)=>{
-    //   if(res.success){
-    //     this.votersList[arrayIndex]['auditDataset'] = res.data
-    //   }else{
-    //     this.votersList[arrayIndex]['auditDataset'] = []
-    //   }
-    // },error=>{
-    //   this.votersList[arrayIndex]['auditDataset'] =[]
-    // })
+    let data = {id:this._currentAuditId, model_name:'electoralchattdataset'}
+    this.http.getAuditTrail(data).subscribe((res:any)=>{
+      if(res.success){
+        this.votersList[arrayIndex]['auditDataset'] = res.data;
+        this.api_loader['accordian'] = false;
+      }else{
+        this.votersList[arrayIndex]['auditDataset'] = [];
+        this.api_loader['accordian'] = false;
+      }
+      console.log(this.votersList[arrayIndex]['auditDataset'])
+    },error=>{
+      this.votersList[arrayIndex]['auditDataset'] =[]
+    })
   }
 }

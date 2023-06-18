@@ -36,6 +36,14 @@
         </ul>
         <ul class="nav-right">
             <li>
+                <div class="d-flex align-items-center mr-3">
+                    Voters List
+                    <nz-switch [ngModel]="_currToggleValue" class="mx-3" (ngModelChange)="switchToggle()"></nz-switch>
+                    Social Media
+                </div>
+            </li>
+            <li>
+               
                 <button nz-button nz-tooltip nzTooltipTitle="Export" (click)="quickViewToggle()"> Logout
                 </button>
                 <!-- <a (click)="quickViewToggle()">

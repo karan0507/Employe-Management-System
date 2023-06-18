@@ -176,15 +176,25 @@
                                             <nz-page-header class="site-page-header header_bg_dark"
                                                 [nzTitle]="trailTitle">
                                             </nz-page-header>
-                                            <nz-card class="mb-md-0 border"
+                                            <nz-card class="mb-md-0 border" *ngFor="let item of data?.auditDataset"
                                                 [nzLoading]="_currentAuditId == data.id ? api_loader['accordian'] : null">
 
                                                 <nz-collapse nzAccordion [nzExpandIconPosition]="right">
-                                                    <nz-collapse-panel *ngFor="let item of data?.auditDataset" [nzHeader]="item?.created_by">
-                                                      <p>{{ item.name }} content</p>
+                                                    <nz-collapse-panel [nzHeader]="trail_header">
+                                                        <ng-template #trail_header>
+                                                           <h5>Created By: {{item?.created_by}} <span class="text-muted ml-3 font-size-12 font-weight-normal">({{item?.created_at | date:'medium'}})</span></h5>
+                                                          </ng-template>
+                                                      <div class="d-flex flex-column mb-2" *ngFor="let sub_sec_audit of item?.key_changes">
+                                                        <h6>{{ sub_sec_audit.key }} content</h6>
+                                                        <div class="d-flex align-items-center">
+                                                            <label class="">{{sub_sec_audit.old_value}}</label>
+                                                            <span nz-icon nzType="arrow-right" class="text-danger mx-3" nzTheme="outline"></span>
+                                                            <label class="mr-3">{{sub_sec_audit.new_value}}</label>
+                                                        </div>
+                                                      </div>
                                                     </nz-collapse-panel>
                                                   </nz-collapse>
-
+                                                  
                                                 
                                             </nz-card>
                                             <ng-template #trailTitle>

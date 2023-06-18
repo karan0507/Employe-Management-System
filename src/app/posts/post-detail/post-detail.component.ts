@@ -87,4 +87,16 @@ export class PostDetailComponent implements OnInit {
     );
   }
 
+  _currReshareId :any
+  expandSet = new Set<number>();
+  onExpandChange(id: number, checked: boolean, index): void {
+
+    if (checked) {
+      this.expandSet.add(id);
+      this._currReshareId = id
+      // this.getBackgroundDataAPIFunction();
+    } else {
+      this.expandSet.delete(id);
+    }
+  }
 }

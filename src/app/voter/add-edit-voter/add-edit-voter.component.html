@@ -157,7 +157,7 @@
                             [nzErrorTip]="_currLanguage == 'en' ? 'Please sselect your Booth No' : 'Please enter your Booth No.'">
                             <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="booth"
                             (nzFocus)="searchStaticDataGlobalFunction('Booth')"
-                            (keyup)="searchStaticDataGlobalFunction('booth',$event)" nzAllowClear
+                            (keyup)="searchStaticDataGlobalFunction('Booth',$event)" nzAllowClear
                             nzPlaceHolder="Select Booth/Ward">
                             <nz-option *ngFor="let item of boothList" [nzValue]="item.id"
                                 [nzLabel]="_currLanguage == 'en' ? item?.name?.en + '/' + item?.Ward?.name?.en : item?.name?.hi + '/' + item?.Ward?.name?.hi">
@@ -239,15 +239,16 @@
                         </nz-form-label>
                         <nz-form-control [nzSm]="16" [nzXs]="24"
                             [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your first name' : 'कृपया अपना संबंध का पूरा नाम दें'">
-                            <input type="text"  nz-input formControlName="FULL_NAME"
+                            <input type="text"  nz-input formControlName="RLN_FULL_NAME"
                                 [placeholder]="_currLanguage == 'en' ? 'Relation Full Name' : 'संबंध का पूरा नाम'" />
                         </nz-form-control>
                     </nz-form-item>
                 </div>
+               
             </div>
         </form>
         <div class="d-flex justify-content-center">
-            <button nz-button nzType="primary" class="px-5" [disabled]="voterForm.invalid ? true : false" [nzLoading]="api_loading['button']" (click)="submitForm()">Save</button>
+            <button nz-button nzType="primary" class="px-5"  [nzLoading]="api_loading['button']" (click)="submitForm()">Save</button>
             <button nz-button nzType="link" class="ml-3 px-5 border" routerLink="/voter">Cancel</button>
         </div>
     </nz-card>

@@ -343,4 +343,16 @@ export class HttpService {
     return this.http.post(this.url + `/users/v1/task-management/import-task`, data)
   }
   
+  public getAccountListt(data){
+    return this.http.get(this.url + `/social_media/v1/account-link/get-account-links`,{params:data})
+  }
+
+  public editAccountList(id, data) {
+    return this.http.put(this.url + `/social_media/v1/account-link/edit-account-links/` + id+`/`, data)
+  }
+
+  public addAccountLink(data) {
+    return this.http.post(this.url + `/social_media/v1/account-link/add-account-links`, data)
+  }
+  
 }

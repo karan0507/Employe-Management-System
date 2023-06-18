@@ -24,6 +24,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzListModule } from 'ng-zorro-antd/list';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 /** Assign all ng-zorro modules to this array*/
 const antdModule = [
     NzButtonModule,
@@ -43,6 +44,7 @@ const antdModule = [
     FormsModule,
     ReactiveFormsModule,
     NzListModule,
+    NzPageHeaderModule
 ]
 
 

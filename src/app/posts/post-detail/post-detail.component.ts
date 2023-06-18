@@ -12,7 +12,7 @@ export class PostDetailComponent implements OnInit {
   listMatricsData = [
     { 'name' : 'Total Likes', 'icon' : 'like', 'count' : 104, 'class' : 'ant-avatar-green' },
     { 'name' : 'Total Comments', 'icon' : 'comment', 'count' : 96, 'class' : 'ant-avatar-blue' },
-    { 'name' : 'Total Shares', 'icon' : 'share-alt', 'count' : "2.34 Hours", 'class' : 'ant-avatar-purple' },
+    { 'name' : 'Total Shares', 'icon' : 'share-alt', 'count' : 80, 'class' : 'ant-avatar-purple' },
   ]
 
 

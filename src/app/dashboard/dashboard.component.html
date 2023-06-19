@@ -11,7 +11,7 @@
 									<a [routerLink]="['/posts/post-detail/',item?.id]" class="text-secondary">{{ item.post_id }}</a>
 								</nz-list-item-meta-title>
 								<nz-list-item-meta-description>
-									{{ item.post_on }}
+									{{ item.post_on  | date: 'medium'}}
 								</nz-list-item-meta-description>
 							</nz-list-item-meta>
 							{{ item.title }}
@@ -69,10 +69,14 @@
 								<nz-list-item-meta-avatar [nzSrc]="item.avatar"></nz-list-item-meta-avatar>
 								<nz-list-item-meta-title>
 									<!-- <a [routerLink]="['/posts/post-detail/',tem?.post_id]" class="text-secondary">{{ item.post_id }}</a> -->
-									<a href="{{ item.href }}">User ID - {{ item.user_details.user_id }}</a>
+									<div class="d-flex justify-content-start">
+										<a href="{{ item.href }}">User ID - {{ item.user_details.user_id }}</a>
+										<label class="ml-3">{{ item.user_details.name }}</label>
+									</div>
+									
 								</nz-list-item-meta-title>
 							</nz-list-item-meta>
-							{{ item.user_details.name }}
+							
 							<ul nz-list-item-actions>
 								<nz-list-item-action>
 									<span nz-icon nzType="like" style="margin-right: 8px;"></span>

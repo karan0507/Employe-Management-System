@@ -216,7 +216,6 @@ export class VoterProfileComponent implements OnInit {
   currFormType = ''
   createNewFollow(type?,data?) {
     if(data){    
-      console.log(data?.activity_date)
       this.isEdit = true;
       this._currActivityFollowupId = data.id
       type == 'activity' ? this.getActivityList() : this.getFolloupList()
@@ -227,16 +226,20 @@ export class VoterProfileComponent implements OnInit {
     this.quickViewVisible = true;
     this.fileList = []
     if (type == 'activity') {
+      
+      // console.log( moment(JSON.stringify(data?.followup_datetime)).format("HH:mm:ss"))
       this.followUpForm = this.fb.group({
         followup_datetime: [  data?.activity_date ?  data?.activity_date  : '',   [Validators.required]],
         activity_type: [data?.activity_type?.id, [Validators.required]],
         comments: [this._currLanguage == 'en' ? data?.comments?.en : data?.comments?.hi, [Validators.required]]
       })
       console.log(this.followUpForm.get('followup_datetime').value)
+      
     } else {
+      console.log(JSON.stringify(data?.followup_datetime), moment(JSON.stringify(data?.followup_datetime)).format("HH:mm:ss"))
       this.followUpForm = this.fb.group({
         followup_datetime: [data?.followup_datetime, [Validators.required]],
-        followup_time : [data?.followup_time,[Validators.required]],
+        followup_time : [moment(JSON.stringify(data?.followup_datetime)).format("HH:mm:ss"),[Validators.required]],
         followup_type: [data?.followup_type?.id, [Validators.required]],
         comments: [this._currLanguage == 'en' ? data?.comments?.en : data?.comments?.hi, [Validators.required]]
       })

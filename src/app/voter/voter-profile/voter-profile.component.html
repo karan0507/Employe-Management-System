@@ -238,7 +238,8 @@
                                                             class="ml-2"></span>
                                                     </label>
                                                     <div class="d-flex">
-                                                        <label class="font-size-14 mr-3">{{item?.activity_date }}</label>
+                                                        <label class="font-size-14 mr-3">{{item?.activity_date
+                                                            }}</label>
                                                         <button nz-button nzType="link" class="border" nzSize="small"
                                                             (click)="createNewFollow('activity',item)">
                                                             Edit
@@ -392,7 +393,7 @@
                                     <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Date
                                     </nz-form-label>
                                     <nz-form-control [nzSm]="16" [nzXs]="24" [nzErrorTip]="'Please select Date'">
-                                        <nz-date-picker  formControlName="followup_datetime"></nz-date-picker>
+                                        <nz-date-picker formControlName="followup_datetime"></nz-date-picker>
                                     </nz-form-control>
                                 </nz-form-item>
                             </div>
@@ -403,7 +404,8 @@
                                     </nz-form-label>
                                     <nz-form-control [nzSm]="16" [nzXs]="24" [nzErrorTip]="'Please select Date'">
                                         <nz-input-group>
-                                            <nz-time-picker formControlName="followup_time"></nz-time-picker>
+                                            <nz-time-picker [nzFormat]="'HH:mm:ss'"
+                                                formControlName="followup_time"></nz-time-picker>
                                         </nz-input-group>
                                     </nz-form-control>
                                 </nz-form-item>
@@ -421,8 +423,9 @@
                                             <!-- <p class="ant-upload-text">or</p> -->
                                             <button class="my-md-4" nz-button nzType="primary">Upload</button>
                                         </nz-upload>
-                                        <div *ngIf="fileList?.length > 0" class="d-flex flex-column mt-3 w-100" style=" height: auto; max-height: 10rem; overflow-y: scroll;">
-                                            <div *ngFor="let item of fileList; let i = index" 
+                                        <div *ngIf="fileList?.length > 0" class="d-flex flex-column mt-3 w-100"
+                                            style=" height: auto; max-height: 10rem; overflow-y: scroll;">
+                                            <div *ngFor="let item of fileList; let i = index"
                                                 class="d-flex justify-content-between text-muted align-items-center px-2">
                                                 <label class="m-2"> {{item?.name}}</label>
                                                 <span nz-icon [nzType]="'delete'" [nzTheme]="'outline'"
@@ -510,22 +513,37 @@
         </nz-drawer>
     </section>
     <section *ngIf="isRatingDrawer">
-        <nz-drawer [nzWidth]="480" [nzBodyStyle]="{height:'50vh'}" [nzTitle]="null" [nzClosable]="false"
+        <nz-drawer [nzWidth]="300" [nzBodyStyle]="{height:'50vh'}" [nzTitle]="null" [nzClosable]="false"
             [nzVisible]="isRatingDrawer" nzPlacement="bottom" (nzOnClose)="isRatingDrawer = false">
+            <div class="d-flex justify-content-center flex-column">
+                
+            </div>
             <div class="row">
-                <div class="col-md-12 mb-3">
+                <div class="col-sm-12 col-6 mb-3">
                     <h6>Rate Voter</h6>
                 </div>
-                <div class="col-md-12">
+               <div class="d-flex flex-column ml-5">
+                <div>
+                    <nz-slider [(ngModel)]="rating" [nzMarks]="marks" [nzMin]="1" [nzMax]="5"
+                        [nzTipFormatter]="formatter"></nz-slider>
+                    <label for="" class="mb-3"> {{rating+'/5' }} <span class="font-size-12 text-primary">{{( rating ? ' (' +
+                            formatter(rating) + ')': '')}}</span> </label>
+                    <button clas="mt-3" nz-button nzType="primary" (click)="rateVoter()" [nzLoading]="api_loading['btn_Rating']"
+                    nzBlock>Submit</button>
+                   </div>
+               </div>
+                <!-- <div class=" col-lg-4">
                     <nz-slider [(ngModel)]="rating" [nzMarks]="marks" [nzMin]="1" [nzMax]="5"
                         [nzTipFormatter]="formatter"></nz-slider>
                     <label for=""> {{rating+'/5' }} <span class="font-size-12 text-primary">{{( rating ? ' (' +
                             formatter(rating) + ')': '')}}</span> </label>
                 </div>
-                <div class="col-md-12 mt-5">
+                <div class="col-md-4 mt-5">
+                   <div>
                     <button nz-button nzType="primary" (click)="rateVoter()" [nzLoading]="api_loading['btn_Rating']"
-                        nzBlock>Submit</button>
-                </div>
+                    nzBlock>Submit</button>
+                   </div>
+                </div> -->
             </div>
         </nz-drawer>
     </section>

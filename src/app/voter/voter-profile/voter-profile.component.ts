@@ -227,12 +227,15 @@ export class VoterProfileComponent implements OnInit {
     this.quickViewVisible = true;
     this.fileList = []
     if (type == 'activity') {
+      
+      // console.log( moment(JSON.stringify(data?.followup_datetime)).format("HH:mm:ss"))
       this.followUpForm = this.fb.group({
         followup_datetime: [  data?.activity_date ?  data?.activity_date  : '',   [Validators.required]],
         activity_type: [data?.activity_type?.id, [Validators.required]],
         comments: [this._currLanguage == 'en' ? data?.comments?.en : data?.comments?.hi, [Validators.required]]
       })
     } else {
+      console.log(JSON.stringify(data?.followup_datetime), moment(JSON.stringify(data?.followup_datetime)).format("HH:mm:ss"))
       this.followUpForm = this.fb.group({
         followup_datetime: [data?.followup_datetime, [Validators.required]],
         followup_time : [data?.followup_datetime,[Validators.required]],

@@ -152,7 +152,7 @@ export class VoterProfileComponent implements OnInit {
 
           { title: 'Date of Birth', icon: '../../../assets/images/icons/Vectorbirthday.svg', value: '22 April 1998' },
 
-          { title: 'Mobile Number', icon: '../../../assets/images/icons/Vectormobile.svg', value: '+91 7081235894' },
+          { title: 'Mobile Number', icon: '../../../assets/images/icons/Vectormobile.svg', value: this.voterDetails?.mobile ? this.voterDetails?.mobile :'-' },
 
           { title: 'Occupation', icon: '../../../assets/images/icons/Frameorg.svg', value: 'IT Employee' },
 

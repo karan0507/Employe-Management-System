@@ -188,6 +188,8 @@ export class AdEditTeamComponent implements OnInit {
 
         }
       }
+    },errr=>{
+      this.api_loader['button'] = false;
     })
   }
 

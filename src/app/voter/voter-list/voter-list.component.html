@@ -93,13 +93,15 @@
                                     </th>
                                     <th nzWidth="4rem">Sr. No</th>
                                     <th class="text-left" [nzWidth]="'14rem'">Full Name</th>
+                                    <th>Mobile</th>
+                                    <th>Caste</th>
                                     <th>Epic No</th>
                                     <th>Age/ Gender</th>
                                     <th>Is Benificary</th>
                                     <th>Gali</th>
                                     <th>Booth</th>
                                     <th>Part No</th>
-                                    <th>Section Name</th>
+                                    <th nzWidth="14rem">Section Name</th>
                                     <th>Section No</th>
                                     <th nzRight>Action</th>
                                 </tr>
@@ -121,6 +123,8 @@
                                                 {{_currLanguage == 'en' ? data?.full_name_en : full_name_hi}}
                                             </a>
                                         </td>
+                                        <td>{{data?.mobile ? data?.mobile : '-'}}</td>
+                                        <td>{{data?.caste ? data?.caste : '-'}}</td>
                                         <td>{{data?.epic_no}}</td>
                                         <td>{{data?.age + " / " + data?.gender}} </td>
                                         <td>
@@ -135,8 +139,16 @@
                                         <td>{{data?.gali ? data?.gali : '-'}}</td>
                                         <td>{{data?.booth ? data?.booth : '-'}}</td>
                                         <td>{{data?.part_no}}</td>
-                                        <td>{{_currLanguage == 'en' ? data?.section_name_en :
-                                            ata?.section_name_hi}}</td>
+                                        <td nzWidth="14rem">
+                                            <!-- <label *ngIf="data.section_name_en?.length > 18 ? data.section_name_hi?.length > 18 : ''" nz-tooltip
+                                                nzTooltipTitle="{{ data.stockist_name}}">{{
+                                                data.stockist_name | slice : 0:18}} <span
+                                                    *ngIf="data.stockist_name?.length > 18">...</span></label> -->
+                                          <label nz-tooltip  [nzTooltipTitle]="data.stockist_name">
+                                            {{_currLanguage == 'en' ? (data?.section_name_en  | slice : 0:18) :
+                                            ata?.section_name_hi}}
+                                          </label>
+                                        </td>
                                         <td>{{_currLanguage == 'en' ? data?.section_no : data?.section_no}}</td>
                                         <td nzRight>
                                             <div>

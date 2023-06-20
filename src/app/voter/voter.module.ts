@@ -27,6 +27,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { VoterListComponent } from './voter-list/voter-list.component';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
     NzTableModule,
     NzUploadModule,
     NzPageHeaderModule,
-    NzCollapseModule
+    NzCollapseModule,
+    NzToolTipModule
   ]
 })
 export class VoterModule { }

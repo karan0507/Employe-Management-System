@@ -76,7 +76,7 @@ export class AdEditTeamComponent implements OnInit {
   isUpdateStatus : boolean = false;
   changeTaskStatus(event): void {
     if(this.remarks.length < 3){
-      this.message.warning('Please enter reason');
+      this.message.warning('Please enter remarks');
       return
     }
     // this.quickViewVisible = !this.quickViewVisible;

@@ -3,7 +3,7 @@
         <div class="col-12 col-lg-4 mb-2">
             <div class="d-flex">
                 <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-                    <input type="text" nz-input placeholder="Search By Activity Name & Table details"
+                    <input type="text" nz-input placeholder="Search By Full Name & Table details"
                         [(ngModel)]="_currSearchValue" (keyup.enter)="getVotersList()" />
                 </nz-input-group>
                 <ng-template #suffixIconButton>
@@ -238,7 +238,7 @@
 </main>
 
 <section *ngIf="quickViewVisible">
-    <nz-drawer [nzWidth]="'80%'" [nzTitle]="filtersTemplate" [nzClosable]="false" [nzVisible]="quickViewVisible"
+    <nz-drawer [nzWidth]="'330px'" [nzTitle]="filtersTemplate" [nzClosable]="false" [nzVisible]="quickViewVisible"
         nzPlacement="right" (nzOnClose)="quickViewToggle()">
         <div class="d-flex flex-wrap justify-content-start align-items-center">
             <div class="d-flex flex-column">

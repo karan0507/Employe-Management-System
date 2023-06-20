@@ -180,7 +180,6 @@ export class VoterListComponent implements OnInit {
     this._crrAssembly = null;
     this.pageIndex = 1;
     this.quickViewVisible = false;
-    
     this.getVotersList()
   }
 

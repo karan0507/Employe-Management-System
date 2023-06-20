@@ -51,7 +51,8 @@
                     <th nzWidth="8rem">Internal User</th>
                     <th nzWidth="8rem">User Type</th>
                     <th nzWidth="8rem">Status</th>
-                    <!-- <th nzWidth="8rem">Created At</th> -->
+                    <th nzWidth="8rem">Created At</th>
+                    <th nzWidth="8rem">Updated At</th>
                     <th nzWidth="8rem">Created By</th>
                     <th nzWidth="8rem" nzRight>Action</th>
                 </tr>
@@ -92,11 +93,8 @@
                             data?.user_type?.name :
                             data?.user_type?.name }} </td>
                         <td nzWidth="8rem">{{data?.status ? data?.status?.name : '--'}}</td>
-                        <!-- <td nzWidth="8rem">{{ _currLanguage == 'en' ? (data?.team_type?.created_at | date:'medium') :
-                            data?.team_type?.created_at}} </td> -->
-
-
-                        <!-- <td nzWidth="8rem">{{ data?.created_at ? (data?.created_at | date: "medium") : '--' }}</td> -->
+                        <td nzWidth="8rem">{{(data?.created_at ? (data?.created_at | date:'medium') : '-')}}</td>
+                        <td nzWidth="8rem">{{(data?.updated_at ? (data?.updated_at | date:'medium') : '-')}}</td>
                         <td nzWidth="8rem">{{(data?.created_by ? (data?.created_by?.first_name  ? data?.created_by?.first_name : '') + (data?.created_by?.username ? data?.created_by?.username : '') : '--')}}</td>
 
                         <td nzWidth="8rem" nzRight>

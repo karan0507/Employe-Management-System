@@ -60,24 +60,26 @@ export class AddEditTaskComponent implements OnInit {
 
 
   createTask(data?) {
+    console.log(data?.voters)
     this.taskForm = this.fb.group({
       task_type: [(data ? data?.task_type?.id : ''), [Validators.required]],
       name: [(data ? (this._currLanguage == 'en' ? data?.name?.en : data?.name?.hi) : ''), [Validators.required]],
       discription: [(data ? (this._currLanguage == 'en' ? data?.discription?.en : data?.discription?.hi) : ''), [Validators.required]],
-      internal_user: [[], [Validators.required]],
-      voters: [data?.voters ? JSON.parse(data?.voters) : null, [Validators.required]],
-      booth: [data?.booth ? JSON.parse(data?.booth) : null, [Validators.required]],
-      ward: [data?.ward ? JSON.parse(data?.ward) : null, [Validators.required]],
-      street: [data?.street ? JSON.parse(data?.street) : null, [Validators.required]],
-      places: [data?.places ? JSON.parse(data?.places) : null, [Validators.required]],
-      sector: [data?.sector ? JSON.parse(data?.sector) : null, [Validators.required]], 
+      internal_user: [data ? [data?.internal_user?.id] : [], [Validators.required]],
+      voters: [data?.voters ? data?.voters : null, [Validators.required]],
+      booth: [data?.booth ? data?.booth : null, [Validators.required]],
+      ward: [data?.ward ? data?.ward : null, [Validators.required]],
+      street: [data?.street ? data?.street : null, [Validators.required]],
+      places: [data?.places ? data?.places : null, [Validators.required]],
+      sector: [data?.sector ? data?.sector : null, [Validators.required]], 
       task_date: [data?.task_date ? data?.task_date : null, [Validators.required]],
     })
-
+console.log(this.taskForm.get('voters').value)
   }
 
   submitForm() {
     if (this.taskForm.invalid) { 
+      this.message.warning("Please check the required fields")
       console.log(this.taskForm)
       return }
     this.api_loading['button'] = true;

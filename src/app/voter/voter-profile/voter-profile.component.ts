@@ -286,8 +286,9 @@ export class VoterProfileComponent implements OnInit {
     });
     // data.append('file_set', JSON.stringify(Array.from(this.fileList)))
     // this.currFormType == 'followUp' ? data.append('followup_time',moment(this.followUpForm.get('followup_datetime').value).format("HH:mm:ss")):'';
-    let url =  this.currFormType == 'activity' ? (this.isEdit ? this.http.editVoterActivity(this._currActivityFollowupId,data) : this.http.addVoterActivity(data)) :
-    (this.isEdit ? this.http.editVoterFollowup(this._currActivityFollowupId,data) : this.http.addVoterFollowup(data)) 
+    // if(this.currFormType == 'activity'){console.log('Activity')}else{console.log('FollowUp')}
+    let url = ( this.currFormType == 'activity' ? ((this.isEdit ? this.http.editVoterActivity(this._currActivityFollowupId,data) : this.http.addVoterActivity(data))) :
+    (this.isEdit ? this.http.editVoterFollowup(this._currActivityFollowupId,data) : this.http.addVoterFollowup(data)) )
     url.subscribe((res:any)=>{
       if(res.success){
         this.callMultipleAPI();

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { HttpService } from 'src/app/service/http.service';
@@ -60,6 +61,7 @@ export class AdEditTeamComponent implements OnInit {
       last_name: [(data ? (this._currLanguage == 'en' ? data?.last_name : data?.last_name) : ''), [Validators.required]],
       user_type: [(data ? data?.user_type?.id : ''), [Validators.required]],
       designation: [(data ? (this._currLanguage == 'en' ? data?.designation : data?.designation) : ''), [Validators.required]],
+      date_of_birth : [data?.date_of_birth ? data?.date_of_birth : '',[Validators.required]],
       mobile: [(data ? (this._currLanguage == 'en' ? data?.mobile : data?.mobile) : ''), [Validators.required]],
       email: [(data ? (this._currLanguage == 'en' ? data?.email : data?.email) : ''), [Validators.required]],
       whatsapp_number: [data?.whatsapp_number ? data?.whatsapp_number : ''],
@@ -70,7 +72,13 @@ export class AdEditTeamComponent implements OnInit {
     })
   }
 
+  remarks:any = "";
+  isUpdateStatus : boolean = false;
   changeTaskStatus(event): void {
+    if(this.remarks.length < 3){
+      this.message.warning('Please enter reason');
+      return
+    }
     // this.quickViewVisible = !this.quickViewVisible;
     this.modal.confirm({
       nzTitle: 'Confirm',  /*+ this.party_name + '?'*/
@@ -87,17 +95,23 @@ export class AdEditTeamComponent implements OnInit {
 
   onCLickStatusChange(status) {
     let data  = new FormData();
-     data.append('status',status),
+     data.append('status',this._curStatusId),
+     data.append('remarks',this.remarks),
      data.append('internal_user',this._currTeamId)
     this.http.changeTeamStatus(this._currTeamId, data).subscribe((res: any) => {
       if (res.success) {
         this.message.success(res.message);
+        this.isUpdateStatus = false;;
+        this.remarks = '';
+        this._curStatusId = '';
         this.getTeamDetails();
       } else {
         this.message.error(res.message);
       }
     }, error => {
       this.message.error(error);
+      this.remarks = '';
+        this._curStatusId = '';
     })
   }
 
@@ -156,6 +170,8 @@ export class AdEditTeamComponent implements OnInit {
     data.append('whatsapp_number', this.teamForm.get('whatsapp_number').value)
     data.append('landline_number', this.teamForm.get('landline_number').value)
     data.append('studies', this.teamForm.get('studies').value)
+    data.append('date_of_birth', moment(this.teamForm.get('date_of_birth').value).format("YYYY-MM-DD"))
+    
     data.append('speed', this.teamForm.get('speed').value)
     data.append('residential', this.teamForm.get('residential').value)
     this.api_loader['button'] = true;

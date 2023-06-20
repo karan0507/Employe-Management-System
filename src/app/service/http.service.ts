@@ -224,7 +224,7 @@ export class HttpService {
   }
 
   public editVoterFollowup(id, data) {
-    return this.http.put(this.url + `/voters/v1/voter-activity/edit-voter-activity/` + id+`/`, data)
+    return this.http.put(this.url + `/voters/v1/voter-followup/edit-voter-followup/` + id+`/`, data)
   }
 
   public addVoterFollowup(data) {
@@ -353,6 +353,10 @@ export class HttpService {
 
   public addAccountLink(data) {
     return this.http.post(this.url + `/social_media/v1/account-link/add-account-links`, data)
+  }
+  
+  public changeLanguage(data) {
+    return this.http.post(this.url + `/users/v1/user/change-user-language`, data)
   }
   
 }

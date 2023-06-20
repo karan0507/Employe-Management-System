@@ -1,18 +1,13 @@
 <section>
     <nz-card [nzLoading]="api_loader['card']">
-        <div class="d-flex  justify-content-end align-items-center flex-wrap mb-5">
-            <h6>Status:
+        <div class="d-flex justify-content-end mb-3 align-items-center" *ngIf="isEdit">
+            <h6 class="mb-0">Status:
                 <span class="font-weight-normal mx-2"
-                    [ngClass]="teamDetails?.status == 'DONE' ? 'text-success' : (teamDetails?.status == 'TO-DO' ? 'text-danger' : 'text-info')">
-                    {{teamDetails?.status?.name}}
+                    [ngClass]="_currTeamData?.status?.name == 'APPROVED' ? 'text-success' : (_currTeamData?.status == 'TO-DO' ? 'text-danger' : 'text-info')">
+                    {{_currTeamData?.status?.name}}
                 </span>
-            </h6>
-            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_curStatusId"
-                (nzFocus)="searchStaticDataGlobalFunction('UserStatus')" (ngModelChange)="changeTaskStatus($event)"
-                nzAllowClear nzPlaceHolder="Select Status">
-                <nz-option *ngFor="let item of statusList" [nzValue]="item.id" [nzLabel]="item?.name">
-                </nz-option>
-            </nz-select>
+            </h6> <button nz-button nzSize="small" nzType="primary" (click)="isUpdateStatus = true">Update
+                Status</button>
         </div>
         <form nz-form [formGroup]="teamForm">
             <div class="row">
@@ -88,15 +83,30 @@
                     </nz-form-item>
                 </div>
 
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Date Of Birth' : 'जन्म की तारीख'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select Date Of Birt' : 'कृपया जन्म की तारीख चुनें'">
+                            <!-- (keyup)="getUserType()" -->
+                            <nz-date-picker formControlName="date_of_birth"></nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+               
                 <div class="col-lg-6 col-12">
                     <nz-form-item>
                         <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
                             'Designation' : 'पद'}}
                         </nz-form-label>
                         <nz-form-control [nzSm]="16" [nzXs]="24"
-                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select Designation' : 'कृपया पद का प्रकार चुनें'">
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter Designation' : 'कृपया पद का प्रकार चुनें'">
                             <input type="text" nz-input formControlName="designation"
-                                [placeholder]="_currLanguage == 'en' ? 'Select Designation' : 'कृपया पद का प्रकार चुनें'" />
+                                [placeholder]="_currLanguage == 'en' ? 'Enter Designation' : 'कृपया पद का प्रकार चुनें'" />
                             <!-- <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="designation"
                                 (nzFocus)="getdesignationList()"  nzAllowClear
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Designation' : 'कृपया पद का प्रकार चुनें'">
@@ -182,3 +192,27 @@
         </div>
     </nz-card>
 </section>
+
+
+<nz-modal [(nzVisible)]="isUpdateStatus" nzTitle="Import Tasks" (nzOnCancel)="isUpdateStatus = false;"
+    (nzOnOk)="changeTaskStatus($event)">
+    <ng-container *nzModalContent>
+        <div class="d-flex  justify-content-center align-items-center flex-column mb-5">
+
+            <div>
+                Select Status:
+                <nz-select nzShowSearch class="selectFilter mb-2 mx-3" [(ngModel)]="_curStatusId"
+                    (nzFocus)="searchStaticDataGlobalFunction('UserStatus')"
+                    nzAllowClear nzPlaceHolder="Select Status">
+                    <nz-option *ngFor="let item of statusList" [nzValue]="item.id" [nzLabel]="item?.name">
+                    </nz-option>
+                </nz-select>
+            </div>
+            <div class="d-flex">
+                Remarks: <textarea rows="4" class="mx-3" nz-input [(ngModel)]="remarks" placeholder="Enter Comments"></textarea>
+              
+            </div>
+
+        </div>
+    </ng-container>
+</nz-modal>

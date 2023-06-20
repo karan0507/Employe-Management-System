@@ -23,6 +23,7 @@ import { ViewProfileComponent } from './view-profile/view-profile.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 
 @NgModule({
@@ -45,8 +46,8 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     NzInputModule,
     NzDropDownModule,
     NzMenuModule,
-    NzDatePickerModule
-
+    NzDatePickerModule,
+    NzModalModule
   ]
 })
 export class ProfileModule { }

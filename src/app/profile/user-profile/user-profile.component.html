@@ -3,7 +3,8 @@
         <div class="row">
             <div class="col-md-12 mb-3">
                 <nz-card class="shadow-sm border">
-                    <div class="d-flex justify-content-between align-items-center py-2" routerLink="/profile/view-profile">
+                    <div class="d-flex justify-content-between align-items-center py-2"
+                        routerLink="/profile/view-profile">
                         <div class="d-flex">
                             <img nzIcon="user" width="50" height="50" class="mr-3 rounded-circle"
                                 src="../.././../assets/images/avatars/dy_post_image.jpg">
@@ -12,18 +13,19 @@
                                 <label for="">+91 8005632900</label>
                             </div>
                         </div>
-                        <span nz-icon nzType="right" class="font-size-22 font-weight-semibold text-dark" nzTheme="outline"></span>
+                        <span nz-icon nzType="right" class="font-size-22 font-weight-semibold text-dark"
+                            nzTheme="outline"></span>
                     </div>
                 </nz-card>
             </div>
             <div class="col-md-12 my-3" *ngFor="let item of prfileCataloug">
                 <div class="d-flex flex-wrap justify-content-between align-items-center">
                     <div class="d-flex align-items-center" [routerLink]="item?.url">
-                        <span nz-icon class="mr-3 font-size-20 iconBg" [nzType]="item?.icon" 
-                            nzTheme="outline"></span>
-                            <label class="text-dark font-size-16">{{item?.name}}</label>
+                        <span nz-icon class="mr-3 font-size-20 iconBg" [nzType]="item?.icon" nzTheme="outline"></span>
+                        <label class="text-dark font-size-16">{{item?.name}}</label>
                     </div>
-                    <span nz-icon nzType="right" class="font-size-18 font-weight-bold text-dark" nzTheme="outline"></span>
+                    <span nz-icon nzType="right" class="font-size-18 font-weight-bold text-dark"
+                        nzTheme="outline"></span>
                 </div>
                 <div class="mb-3 px-5 text-muted">
                     <nz-divider [nzOrientation]="'center'" class="mb-2"></nz-divider>
@@ -31,8 +33,25 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="d-flex justify-content-center mt-5">
-            <button class="font-size-16 px-5 login-form-button" nz-button nzType="primary"  (click)="showLogoutModalConfirm()">Logout</button>
-        </div> -->
+        <div class="d-flex justify-content-center mt-5">
+            <button class="font-size-16 px-5 login-form-button" nz-button nzType="primary"
+                (click)="isChangeLanguage = true">Add Language</button>
+        </div>
     </main>
 </section>
+
+<nz-modal [(nzVisible)]="isChangeLanguage" nzTitle="Import Tasks" (nzOnCancel)="isChangeLanguage = false;"
+    (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+        <div class="d-flex">
+            <label for="">Select Language</label>
+            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [ngModel]="_currLanguage"
+                [nzPlaceHolder]="_currLanguage == 'en' ? 'Change Status' : 'अवस्था बदलो'"
+                (ngModelChange)="changeTaskStatus($event)">
+                <nz-option [nzValue]="1" [nzLabel]="'English'"> </nz-option>
+                <nz-option [nzValue]="2" [nzLabel]="'Hindi'"> </nz-option>
+
+            </nz-select>
+        </div>
+    </ng-container>
+</nz-modal>

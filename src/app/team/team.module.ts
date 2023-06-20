@@ -17,6 +17,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { SharedModule } from '../shared/shared.module';
 import { TaskManagementRoutingModule } from '../task-management/task-management-routing.module';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { NzDrawerModule } from 'ng-zorro-antd/drawer';
     NzDatePickerModule,
     NzIconModule,
     NzAvatarModule,
-    NzDrawerModule
+    NzDrawerModule,
+    NzModalModule
   ]
 })
 export class TeamModule { }

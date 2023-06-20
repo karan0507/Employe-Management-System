@@ -15,6 +15,8 @@ export class UserProfileComponent implements OnInit {
     {id:1,name:'Communication History', url:'/profile/commounication-history', icon:'notification'},
     {id:1,name:'FAQ’s & Help', url:'', icon:'info-circle'},
   ]
+
+  isChangeLanguage : boolean = false;
   constructor(private modal:NzModalService, private http:HttpService, private message: NzMessageService,
     private router:Router) { }
 
@@ -46,6 +48,14 @@ logoutUserFunction(){
       localStorage.removeItem('global_account_data')
     }
   })
+}
+
+_currLanguage : any;
+handleOk(){
+  if(this._currLanguage == ''){
+    this.message.error('Please select language')
+    return
+  }
 }
 
 }

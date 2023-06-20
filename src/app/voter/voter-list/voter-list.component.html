@@ -86,7 +86,7 @@
                             [nzScroll]="{ x: '1500px', y: '50vh' }">
                             <thead>
                                 <tr>
-                                    <th  nzWidth="3rem">#</th>
+                                    <th nzWidth="3rem">#</th>
                                     <th nzWidth="3rem" [nzChecked]=" votersList[0] ? checked : false"
                                         [nzIndeterminate]=" votersList[0] ? indeterminate : false"
                                         (nzCheckedChange)="votersList[0] ? onAllChecked($event) : false">
@@ -182,20 +182,30 @@
                                                 <nz-collapse nzAccordion [nzExpandIconPosition]="right">
                                                     <nz-collapse-panel [nzHeader]="trail_header">
                                                         <ng-template #trail_header>
-                                                           <h5>Created By: {{item?.created_by}} <span class="text-muted ml-3 font-size-12 font-weight-normal">({{item?.created_at | date:'medium'}})</span></h5>
-                                                          </ng-template>
-                                                      <div class="d-flex flex-column mb-2" *ngFor="let sub_sec_audit of item?.key_changes">
-                                                        <h6>{{ sub_sec_audit.key }} content</h6>
-                                                        <div class="d-flex align-items-center">
-                                                            <label class="">{{sub_sec_audit.old_value}}</label>
-                                                            <span nz-icon nzType="arrow-right" class="text-danger mx-3" nzTheme="outline"></span>
-                                                            <label class="mr-3">{{sub_sec_audit.new_value}}</label>
+                                                            <h5>Created By: {{item?.created_by}} <span
+                                                                    class="text-muted ml-3 font-size-12 font-weight-normal">({{item?.created_at
+                                                                    | date:'medium'}})</span></h5>
+                                                        </ng-template>
+                                                        <div class="d-flex flex-column mb-2"
+                                                            *ngFor="let sub_sec_audit of item?.key_changes">
+                                                            <h6>{{ sub_sec_audit.key }} content</h6>
+                                                            <div class="d-flex align-items-center">
+                                                                <label class="">{{ sub_sec_audit.key == 'Updated at' ?
+                                                                    (sub_sec_audit.old_value | date:'medium') :
+                                                                    sub_sec_audit.old_value}}</label>
+                                                                <span nz-icon nzType="arrow-right"
+                                                                    class="text-danger mx-3" nzTheme="outline"></span>
+                                                                <label class="mr-3">
+                                                                    {{ sub_sec_audit.key == 'Updated at' ?
+                                                                    (sub_sec_audit.new_value | date:'medium') :
+                                                                    sub_sec_audit.new_value}}
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                      </div>
                                                     </nz-collapse-panel>
-                                                  </nz-collapse>
-                                                  
-                                                
+                                                </nz-collapse>
+
+
                                             </nz-card>
                                             <ng-template #trailTitle>
                                                 <div class="ml-md-2">

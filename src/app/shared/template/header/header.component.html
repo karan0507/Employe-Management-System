@@ -28,14 +28,14 @@
             </li>
             <li>
              <div class="d-flex align-items-center">
-                <img src="../../../assets/images/Ext_Images/Ellipse 1201cng_log.svg" routerLink="/home" alt="" height="50px"
+                <img src="../../../assets/images/Ext_Images/Ellipse 1201cng_log.svg" routerLink="/voter" alt="" height="50px"
                 class="h-auto mr-3">
             <h4>{{_currLang == 'en' ? globalAccData?.name?.en : globalAccData?.name?.hi}}</h4>
              </div>
             </li>
         </ul>
         <ul class="nav-right">
-            <li>
+            <li class="d-lg-flex d-none">
                 <div class="d-flex align-items-center mr-3">
                     Voters List
                     <nz-switch [ngModel]="_currToggleValue" class="mx-3" (ngModelChange)="switchToggle()"></nz-switch>

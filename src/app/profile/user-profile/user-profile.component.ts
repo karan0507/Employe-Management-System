@@ -56,6 +56,16 @@ handleOk(){
     this.message.error('Please select language')
     return
   }
+  let data = {'language':this._currLanguage}
+  this.http.changeLanguage(data).subscribe((res:any)=>{
+    if(res.success){
+      this.message.success(res.message);
+      this.isChangeLanguage = false;
+    }else{
+      this.message.error(res.message);
+      this.isChangeLanguage = false;
+    }
+  })
 }
 
 }

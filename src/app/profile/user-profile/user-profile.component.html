@@ -40,11 +40,11 @@
     </main>
 </section>
 
-<nz-modal [(nzVisible)]="isChangeLanguage" nzTitle="Import Tasks" (nzOnCancel)="isChangeLanguage = false;"
+<nz-modal [(nzVisible)]="isChangeLanguage" nzTitle="Change Language" (nzOnCancel)="isChangeLanguage = false;"
     (nzOnOk)="handleOk()">
     <ng-container *nzModalContent>
         <div class="d-flex">
-            <label for="">Select Language</label>
+            <label class="mr-3">Select Language</label>
             <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [ngModel]="_currLanguage"
                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Change Status' : 'अवस्था बदलो'"
                 (ngModelChange)="changeTaskStatus($event)">

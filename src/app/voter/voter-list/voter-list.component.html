@@ -3,7 +3,7 @@
         <div class="col-12 col-lg-4 mb-2">
             <div class="d-flex">
                 <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-                    <input type="text" nz-input placeholder="Search By Activity Name & Table details"
+                    <input type="text" nz-input placeholder="Search By Full Name & Table details"
                         [(ngModel)]="_currSearchValue" (keyup.enter)="getVotersList()" />
                 </nz-input-group>
                 <ng-template #suffixIconButton>
@@ -86,20 +86,22 @@
                             [nzScroll]="{ x: '1500px', y: '50vh' }">
                             <thead>
                                 <tr>
-                                    <th  nzWidth="3rem">#</th>
+                                    <th nzWidth="3rem">#</th>
                                     <th nzWidth="3rem" [nzChecked]=" votersList[0] ? checked : false"
                                         [nzIndeterminate]=" votersList[0] ? indeterminate : false"
                                         (nzCheckedChange)="votersList[0] ? onAllChecked($event) : false">
                                     </th>
                                     <th nzWidth="4rem">Sr. No</th>
                                     <th class="text-left" [nzWidth]="'14rem'">Full Name</th>
+                                    <th>Mobile</th>
+                                    <th>Caste</th>
                                     <th>Epic No</th>
                                     <th>Age/ Gender</th>
                                     <th>Is Benificary</th>
                                     <th>Gali</th>
                                     <th>Booth</th>
                                     <th>Part No</th>
-                                    <th>Section Name</th>
+                                    <th nzWidth="14rem">Section Name</th>
                                     <th>Section No</th>
                                     <th nzRight>Action</th>
                                 </tr>
@@ -121,6 +123,8 @@
                                                 {{_currLanguage == 'en' ? data?.full_name_en : full_name_hi}}
                                             </a>
                                         </td>
+                                        <td>{{data?.mobile ? data?.mobile : '-'}}</td>
+                                        <td>{{data?.caste ? data?.caste : '-'}}</td>
                                         <td>{{data?.epic_no}}</td>
                                         <td>{{data?.age + " / " + data?.gender}} </td>
                                         <td>
@@ -135,8 +139,16 @@
                                         <td>{{data?.gali ? data?.gali : '-'}}</td>
                                         <td>{{data?.booth ? data?.booth : '-'}}</td>
                                         <td>{{data?.part_no}}</td>
-                                        <td>{{_currLanguage == 'en' ? data?.section_name_en :
-                                            ata?.section_name_hi}}</td>
+                                        <td nzWidth="14rem">
+                                            <!-- <label *ngIf="data.section_name_en?.length > 18 ? data.section_name_hi?.length > 18 : ''" nz-tooltip
+                                                nzTooltipTitle="{{ data.stockist_name}}">{{
+                                                data.stockist_name | slice : 0:18}} <span
+                                                    *ngIf="data.stockist_name?.length > 18">...</span></label> -->
+                                          <label nz-tooltip  [nzTooltipTitle]="data.stockist_name">
+                                            {{_currLanguage == 'en' ? (data?.section_name_en  | slice : 0:18) :
+                                            ata?.section_name_hi}}
+                                          </label>
+                                        </td>
                                         <td>{{_currLanguage == 'en' ? data?.section_no : data?.section_no}}</td>
                                         <td nzRight>
                                             <div>
@@ -182,20 +194,30 @@
                                                 <nz-collapse nzAccordion [nzExpandIconPosition]="right">
                                                     <nz-collapse-panel [nzHeader]="trail_header">
                                                         <ng-template #trail_header>
-                                                           <h5>Created By: {{item?.created_by}} <span class="text-muted ml-3 font-size-12 font-weight-normal">({{item?.created_at | date:'medium'}})</span></h5>
-                                                          </ng-template>
-                                                      <div class="d-flex flex-column mb-2" *ngFor="let sub_sec_audit of item?.key_changes">
-                                                        <h6>{{ sub_sec_audit.key }} content</h6>
-                                                        <div class="d-flex align-items-center">
-                                                            <label class="">{{sub_sec_audit.old_value}}</label>
-                                                            <span nz-icon nzType="arrow-right" class="text-danger mx-3" nzTheme="outline"></span>
-                                                            <label class="mr-3">{{sub_sec_audit.new_value}}</label>
+                                                            <h5>Created By: {{item?.created_by}} <span
+                                                                    class="text-muted ml-3 font-size-12 font-weight-normal">({{item?.created_at
+                                                                    | date:'medium'}})</span></h5>
+                                                        </ng-template>
+                                                        <div class="d-flex flex-column mb-2"
+                                                            *ngFor="let sub_sec_audit of item?.key_changes">
+                                                            <h6>{{ sub_sec_audit.key }} content</h6>
+                                                            <div class="d-flex align-items-center">
+                                                                <label class="">{{ sub_sec_audit.key == 'Updated at' ?
+                                                                    (sub_sec_audit.old_value | date:'medium') :
+                                                                    sub_sec_audit.old_value}}</label>
+                                                                <span nz-icon nzType="arrow-right"
+                                                                    class="text-danger mx-3" nzTheme="outline"></span>
+                                                                <label class="mr-3">
+                                                                    {{ sub_sec_audit.key == 'Updated at' ?
+                                                                    (sub_sec_audit.new_value | date:'medium') :
+                                                                    sub_sec_audit.new_value}}
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                      </div>
                                                     </nz-collapse-panel>
-                                                  </nz-collapse>
-                                                  
-                                                
+                                                </nz-collapse>
+
+
                                             </nz-card>
                                             <ng-template #trailTitle>
                                                 <div class="ml-md-2">
@@ -228,7 +250,7 @@
 </main>
 
 <section *ngIf="quickViewVisible">
-    <nz-drawer [nzWidth]="'80%'" [nzTitle]="filtersTemplate" [nzClosable]="false" [nzVisible]="quickViewVisible"
+    <nz-drawer [nzWidth]="'330px'" [nzTitle]="filtersTemplate" [nzClosable]="false" [nzVisible]="quickViewVisible"
         nzPlacement="right" (nzOnClose)="quickViewToggle()">
         <div class="d-flex flex-wrap justify-content-start align-items-center">
             <div class="d-flex flex-column">

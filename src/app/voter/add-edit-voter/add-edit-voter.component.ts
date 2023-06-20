@@ -56,6 +56,8 @@ export class AddEditVoterComponent implements OnInit {
       FIRST_NAME: [(data ? (this._currLanguage == 'en' ? data?.first_name_en : data?.first_name_hi) : ''), [Validators.required]],
       LAST_NAME: [(data ? (this._currLanguage == 'en' ? data?.last_name_en : data?.last_name_hi) : ''), [Validators.required]],
       FULL_NAME: [(data ? (this._currLanguage == 'en' ? data?.full_name_en : data?.full_name_hi) : ''), [Validators.required]],
+      mobile: [(data ? (this._currLanguage == 'en' ? data?.mobile : data?.mobile) : ''), [Validators.required]],
+      caste: [(data ? (this._currLanguage == 'en' ? data?.caste : data?.caste) : ''), [Validators.required]],
 
       RLN_TYPE: [(data ? (this._currLanguage == 'en' ? data?.rln_type : data?.rln_type) : ''), [Validators.required]], //Check
 
@@ -65,7 +67,8 @@ export class AddEditVoterComponent implements OnInit {
       // FULL_NAME_WITH_RLN: [(data ? (this._currLanguage == 'en' ? data?.full_name_en_with_rln : data?.full_name_hi_with_rln) : ''), [Validators.required]],
       GENDER: [(data ? (this._currLanguage == 'en' ? data?.gender : data?.gender) : ''), [Validators.required]],
       AGE: [(data ? (this._currLanguage == 'en' ? data?.age : data?.age) : ''), [Validators.required]],
-      EPIC_NO: [(data ? (this._currLanguage == 'en' ? data?.epic_no : data?.epic_no) : ''), [Validators.required]],
+      EPIC_NO: [(data ? (this._currLanguage == 'en' ? data?.EPIC_NO : data?.EPIC_NO) : ''), [Validators.required]],
+      
       PSBUILDING_NAME: [(data ? (this._currLanguage == 'en' ? data?.psbuilding_name_en : data?.psbuilding_name_hi) : ''), [Validators.required]],
       SECTION_NAME: [(data ? (this._currLanguage == 'en' ? data?.section_name_en : data?.section_name_hi) : ''), [Validators.required]],
       PART_NAME: [(data ? (this._currLanguage == 'en' ? data?.part_name_en : data?.part_name_hi) : ''), [Validators.required]],
@@ -95,6 +98,8 @@ export class AddEditVoterComponent implements OnInit {
     form_data.append('FULL_NAME',this.voterForm.get('FULL_NAME').value);
     form_data.append('RLN_TYPE',this.voterForm.get('RLN_TYPE').value);
 
+    form_data.append('mobile',this.voterForm.get('mobile').value);
+    form_data.append('caste',this.voterForm.get('caste').value);
     form_data.append('RLN_FIRST_NAME',this.voterForm.get('RLN_FIRST_NAME').value);
     form_data.append('RLN_LAST_NAME',this.voterForm.get('RLN_LAST_NAME').value);
     form_data.append('RLN_FULL_NAME',this.voterForm.get('RLN_FULL_NAME').value);
@@ -151,4 +156,5 @@ export class AddEditVoterComponent implements OnInit {
     
     // this.router.navigate([this.router.url.split('?')[0]], { queryParams: { tabSection: this.curr_voterId } });
   }
+
 }

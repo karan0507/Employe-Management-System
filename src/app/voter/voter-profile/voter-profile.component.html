@@ -6,8 +6,8 @@
                     <img nzIcon="user" width="80" height="80" class="mr-3 rounded-circle"
                         [src]="'../.././../assets/images/avatars/thumb-10.jpg'">
                     <div class="d-flex flex-column">
-                        <h6 class="text-dark font-size-16">{{_currLanguage == 'en' ? voterDetails?.first_name_en :
-                            voterDetails?.first_name_hi}}
+                        <h6 class="text-dark font-size-16">{{_currLanguage == 'en' ? voterDetails?.full_name_en :
+                            voterDetails?.full_name_hi}}
                             <!-- {{_currLanguage == 'en' ? item?.full_name_en : item?.full_name_hi}} -->
                         </h6>
                         <label class="text-primary mb-2">Voter ID : {{_currLanguage == 'en' ? voterDetails?.id :

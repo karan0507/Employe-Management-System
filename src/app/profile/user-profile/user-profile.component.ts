@@ -20,7 +20,11 @@ export class UserProfileComponent implements OnInit {
   constructor(private modal:NzModalService, private http:HttpService, private message: NzMessageService,
     private router:Router) { }
 
+  _globalAccData:any;
   ngOnInit(): void {
+    this._globalAccData = JSON.parse(localStorage.getItem('iyc_user_data')).data
+    // this._globalAccData = this._globalAccData.data
+    console.log(this._globalAccData)
   }
 
   showLogoutModalConfirm(): void {

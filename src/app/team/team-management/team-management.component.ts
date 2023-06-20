@@ -62,8 +62,7 @@ export class TeamManagementComponent implements OnInit {
     }
 
     if (this._currSearchValue) {
-      let temp = this._currLanguage == 'en' ? 'full_name_en' : 'full_name_hi'
-      data[temp] = this._currSearchValue;
+      data['search_param'] = this._currSearchValue;
     }
     this.http.getTeamList(data).subscribe((res: any) => {
       if (res.success) {

@@ -1,4 +1,4 @@
-<section>
+<section class="my-5">
     <main>
         <div class="row">
             <div class="col-md-12">
@@ -23,7 +23,7 @@
         </div>
         <div class="d-flex justify-content-center my-3">
             <button nz-button nzType="primary" class="font-weight-semibold px-5"
-            routerLink="/profile/edit-profile" [queryParams]="{id:'2'}">Edit Profile</button>
+            routerLink="/profile/edit-profile" [queryParams]="{id:this._currGlobalData.id}">Edit Profile</button>
         </div>
     </main>
 </section>

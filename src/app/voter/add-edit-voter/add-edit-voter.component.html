@@ -98,9 +98,9 @@
                         <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
                             ' Epic No' : 'Epic No'}}
                         </nz-form-label>
-                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                        <nz-form-control [nzSm]="16" [nzXs]="24" 
                             [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your Epic No' : 'Please enter your Epic No'">
-                            <input type="text"  nz-input formControlName="EPIC_NO"
+                            <input type="text" [readOnly]="isEdit ? true : false" nz-input formControlName="EPIC_NO"
                                 [placeholder]="_currLanguage == 'en' ? 'Epic No' : ' Epic No'" />
                         </nz-form-control>
                     </nz-form-item>

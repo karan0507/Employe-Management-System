@@ -70,6 +70,7 @@ export class VoterProfileComponent implements OnInit {
   constructor(private router: Router, private acRoute: ActivatedRoute, private message: NzMessageService,
     private global: GlobalService, private http: HttpService, private fb: FormBuilder) { }
 
+  _currEpicNo : any;
   ngOnInit(): void {
     this._currLanguage = localStorage.getItem("appLanguage") || 'en';
     this.acRoute.queryParams.subscribe((param: any) => {

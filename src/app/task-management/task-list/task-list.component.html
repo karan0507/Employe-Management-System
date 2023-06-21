@@ -3,7 +3,7 @@
         <div class="col-12 col-lg-4 mb-2">
             <div class="d-flex">
                 <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-                    <input type="text" nz-input placeholder="Search By Table fields"
+                    <input type="text" nz-input placeholder="Search By Name"
                         [(ngModel)]="_currSearchValue" (keyup.enter)="getTaskList()" />
                 </nz-input-group>
                 <ng-template #suffixIconButton>

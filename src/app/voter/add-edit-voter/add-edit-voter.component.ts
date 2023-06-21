@@ -67,7 +67,7 @@ export class AddEditVoterComponent implements OnInit {
       // FULL_NAME_WITH_RLN: [(data ? (this._currLanguage == 'en' ? data?.full_name_en_with_rln : data?.full_name_hi_with_rln) : ''), [Validators.required]],
       GENDER: [(data ? (this._currLanguage == 'en' ? data?.gender : data?.gender) : ''), [Validators.required]],
       AGE: [(data ? (this._currLanguage == 'en' ? data?.age : data?.age) : ''), [Validators.required]],
-      EPIC_NO: [(data ? (this._currLanguage == 'en' ? data?.EPIC_NO : data?.EPIC_NO) : ''), [Validators.required]],
+      EPIC_NO: [(data ? (this._currLanguage == 'en' ? data?.epic_no : data?.epic_no) : ''), [Validators.required]],
       
       PSBUILDING_NAME: [(data ? (this._currLanguage == 'en' ? data?.psbuilding_name_en : data?.psbuilding_name_hi) : ''), [Validators.required]],
       SECTION_NAME: [(data ? (this._currLanguage == 'en' ? data?.section_name_en : data?.section_name_hi) : ''), [Validators.required]],

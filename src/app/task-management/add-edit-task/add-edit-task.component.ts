@@ -31,6 +31,11 @@ export class AddEditTaskComponent implements OnInit {
         if (this._currTaskId) {
           this.getInternalUser();
           this.getVoters();
+          this.searchMasterData('Sector');
+          this.searchMasterData('Booth');
+          this.searchMasterData('Ward');
+          this.searchMasterData('Street');
+          this.searchMasterData('Places');
           this.gettaskLists();
           this.getTaskDetails();
         }
@@ -48,9 +53,51 @@ export class AddEditTaskComponent implements OnInit {
     this.http.getTaskList(data).subscribe((res: any) => {
       if (res.success) {
         this.taskDetails = res.data[0];
-        console.log('Task Details',this.taskDetails);
+       
+        if(this.taskDetails['sector']?.length > 0){
+          let sector = [];
+        this.taskDetails['sector'].forEach(element => {
+          sector.push(element.id)
+        });
+        this.taskDetails['sector'] = sector;
+        }
 
-        this.createTask(res.data[0])
+        if( this.taskDetails['street']?.length > 0){
+          let street = [];
+        this.taskDetails['street'].forEach(element => {
+          street.push(element.id)
+        });
+        this.taskDetails['street'] = street;
+        }
+
+
+        if(this.taskDetails['places']?.length > 0){
+          let places = [];
+        this.taskDetails['places'].forEach(element => {
+          places.push(element.id)
+        });
+        this.taskDetails['places'] = places;
+        }
+
+       if( this.taskDetails['ward']?.length > 0){
+         let ward = [];
+        this.taskDetails['ward'].forEach(element => {
+          ward.push(element.id)
+        });
+        this.taskDetails['ward'] = ward;
+       }
+
+       if(this.taskDetails['booth']?.length > 0){
+         let booth = [];
+        this.taskDetails['booth'].forEach(element => {
+          booth.push(element.id)
+        });
+        this.taskDetails['booth'] = booth;
+       }
+
+
+
+        this.createTask(this.taskDetails)
         this.api_loading['card'] = false;
       } else {
         this.api_loading['card'] = false;
@@ -60,30 +107,37 @@ export class AddEditTaskComponent implements OnInit {
 
 
   createTask(data?) {
-    console.log(data?.voters)
     this.taskForm = this.fb.group({
       task_type: [(data ? data?.task_type?.id : ''), [Validators.required]],
       name: [(data ? (this._currLanguage == 'en' ? data?.name?.en : data?.name?.hi) : ''), [Validators.required]],
       discription: [(data ? (this._currLanguage == 'en' ? data?.discription?.en : data?.discription?.hi) : ''), [Validators.required]],
       internal_user: [data ? [data?.internal_user?.id] : [], [Validators.required]],
-      voters: [data?.voters ? data?.voters : null, [Validators.required]],
+      voters: [[], [Validators.required]],
       booth: [data?.booth ? data?.booth : null, [Validators.required]],
       ward: [data?.ward ? data?.ward : null, [Validators.required]],
       street: [data?.street ? data?.street : null, [Validators.required]],
       places: [data?.places ? data?.places : null, [Validators.required]],
-      sector: [data?.sector ? data?.sector : null, [Validators.required]], 
+      sector: [data?.sector ? data?.sector : null, [Validators.required]],
       task_date: [data?.task_date ? data?.task_date : null, [Validators.required]],
     })
-console.log(this.taskForm.get('voters').value)
+
+    // if (this.taskDetails?.voters?.length > 0) {
+    //   this.taskDetails?.sector.forEach(element => {
+    //     this.taskForm.get('sector').value.push(element.id)
+    //   });
+    // } else {
+    //   this.taskForm.controls['sector'].setValue([]);
+    // }
+    console.log(this.taskForm.get('sector').value)
   }
 
   submitForm() {
-    if (this.taskForm.invalid) { 
+    if (this.taskForm.invalid) {
       this.message.warning("Please check the required fields")
       console.log(this.taskForm)
-      return }
+      return
+    }
     this.api_loading['button'] = true;
-    console.log(this.taskForm.value);
     var form_data = new FormData();
     form_data.append('task_type', this.taskForm.get('task_type').value);
     form_data.append('name', this.taskForm.get('name').value);
@@ -96,7 +150,7 @@ console.log(this.taskForm.get('voters').value)
     form_data.append('sector', JSON.stringify(this.taskForm.get('sector').value));
     form_data.append('task_date', this.taskForm.get('task_date').value ? moment(this.taskForm.get('task_date').value).format("YYYY-MM-DD") : '');
     form_data.append('place', this.taskForm.get('places').value ? this.taskForm.get('places').value : '');
-    
+
     let url = this.isEdit == false ? this.http.addTasks(form_data) : this.http.editTasks(this._currTaskId, form_data);
     url.subscribe((res: any) => {
       if (res.success) {
@@ -137,7 +191,7 @@ console.log(this.taskForm.get('voters').value)
   internal_user_list: any = [];
   in_user_debounce: any;
   getInternalUser(key?) {
-    
+
     if (key) {
       clearTimeout(this.in_user_debounce);
       this.in_user_debounce = setTimeout(() => {
@@ -154,7 +208,6 @@ console.log(this.taskForm.get('voters').value)
       this.http.getTeamList(data).subscribe((res: any) => {
         if (res.success) {
           this.internal_user_list = res.data;
-          console.log(this.internal_user_list)
         }
       })
     }
@@ -167,7 +220,7 @@ console.log(this.taskForm.get('voters').value)
       clearTimeout(this.voter_debounce);
       this.voter_debounce = setTimeout(() => {
         let data = { 'end_point': 'FETCH_VOTER_LIST_API_URL' }
-        if(key){
+        if (key) {
           data['search_param'] = key.target.value
         }
         this.http.getVoterList(data).subscribe((res: any) => {
@@ -188,32 +241,32 @@ console.log(this.taskForm.get('voters').value)
 
 
   changeTaskStatus(event): void {
-      // this.quickViewVisible = !this.quickViewVisible;
-      this.modal.confirm({
-          nzTitle: 'Confirm',  /*+ this.party_name + '?'*/
-          nzContent: 'Before changing status',
-          nzOkText: 'Confirm',
-          nzOkType: 'primary',
-          nzOkDanger: true,
-          nzOnOk: () => this.onCLickStatusChange(event),
-          nzCancelText: 'No',
-          nzOnCancel: () => this.modal.closeAll()
-      });
-    }
-    
-    onCLickStatusChange(status){
-      let data = {'status':status}
-      this.http.editTasks(this._currTaskId,data).subscribe((res:any)=>{
-        if(res.success){
-          this.message.success(res.message);
-          this.getTaskDetails();
-        }else{
-          this.message.error(res.message);
-        }
-      },error=>{
-          this.message.error(error);
-      })
-    }
+    // this.quickViewVisible = !this.quickViewVisible;
+    this.modal.confirm({
+      nzTitle: 'Confirm',  /*+ this.party_name + '?'*/
+      nzContent: 'Before changing status',
+      nzOkText: 'Confirm',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => this.onCLickStatusChange(event),
+      nzCancelText: 'No',
+      nzOnCancel: () => this.modal.closeAll()
+    });
+  }
+
+  onCLickStatusChange(status) {
+    let data = { 'status': status }
+    this.http.editTasks(this._currTaskId, data).subscribe((res: any) => {
+      if (res.success) {
+        this.message.success(res.message);
+        this.getTaskDetails();
+      } else {
+        this.message.error(res.message);
+      }
+    }, error => {
+      this.message.error(error);
+    })
+  }
 
 
 
@@ -221,23 +274,50 @@ console.log(this.taskForm.get('voters').value)
   boothList: any = [];
   wardList: any = [];
   sectorList: any = [];
-  _crrAssembly:any;
-  assemblyList : any = [];
-  _currStreet : any;
-  streetList:any = [];
+  _crrAssembly: any;
+  assemblyList: any = [];
+  _currStreet: any;
+  streetList: any = [];
   _currLane: any;
-  laneList : any = [];
-  placeList : any = []
+  laneList: any = [];
+  placeList: any = []
   searchMasterData(event, data?) {
-    clearTimeout(this.debounce);
     let param = {}
-    this.debounce = setTimeout(() => {
-    //  if(event == 'Places'){
-    //    param = { master_model: event }
-    //  }else{
-    //    param = { model_name: event }
-    //  }
-    param = { model_name: event }
+    if (data) {
+      clearTimeout(this.debounce);
+      
+      this.debounce = setTimeout(() => {
+        //  if(event == 'Places'){
+        //    param = { master_model: event }
+        //  }else{
+        //    param = { model_name: event }
+        //  }
+        param = { model_name: event }
+        this.http.getMasterData(param).subscribe((res: any) => {
+          if (res.success) {
+            if (event == 'Booth') {
+              this.boothList = res.data;
+            } else if (event == 'Ward') {
+              this.wardList = res.data;
+            } else if (event == 'Sector') {
+              this.sectorList = res.data;
+            } else if (event == 'Street') {
+              this.streetList = res.data;
+            }
+            else if (event == 'Lane') {
+              this.laneList = res.data;
+            }
+            else if (event == 'Assembly') {
+              this.assemblyList = res.data;
+            } else if (event == 'Places') {
+              this.placeList = res.data;
+            }
+
+          }
+        })
+      }, 500);
+    } else {
+      param = { model_name: event }
       this.http.getMasterData(param).subscribe((res: any) => {
         if (res.success) {
           if (event == 'Booth') {
@@ -246,7 +326,7 @@ console.log(this.taskForm.get('voters').value)
             this.wardList = res.data;
           } else if (event == 'Sector') {
             this.sectorList = res.data;
-          }  else if (event == 'Street') {
+          } else if (event == 'Street') {
             this.streetList = res.data;
           }
           else if (event == 'Lane') {
@@ -254,13 +334,12 @@ console.log(this.taskForm.get('voters').value)
           }
           else if (event == 'Assembly') {
             this.assemblyList = res.data;
-          }else if (event == 'Places') {
+          } else if (event == 'Places') {
             this.placeList = res.data;
           }
-          
+
         }
       })
-    }, 500);
+    }
   }
-
-  }
+}

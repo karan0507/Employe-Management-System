@@ -37,15 +37,15 @@ export class AccountListComponent implements OnInit {
     this.accountList = []
     // 'end_point': 'FETCH_VOTER_LIST_API_URL'
     let data = {  }
-    // if (tableFilter) {
-    //   this.pageIndex = tableFilter?.pageIndex;
-    //   this.globalPageSize = tableFilter?.pageSize;
-    //   data['page'] = this.pageIndex
-    //   data['limit'] = this.globalPageSize
-    // } else {
-    //   data['page'] = this.pageIndex
-    //   data['limit'] = this.globalPageSize
-    // }
+    if (tableFilter) {
+      this.pageIndex = tableFilter?.pageIndex;
+      this.globalPageSize = tableFilter?.pageSize;
+      data['page'] = this.pageIndex
+      data['limit'] = this.globalPageSize
+    } else {
+      data['page'] = this.pageIndex
+      data['limit'] = this.globalPageSize
+    }
     // if (this._currBooth) {
     //   data['booth'] = this._currBooth;
     // }

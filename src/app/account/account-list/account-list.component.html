@@ -5,7 +5,12 @@
     <div class="row">
         <div class="col-md-12">
             <nz-card [nzLoading]="api_loader['list']">
-                <nz-table #likesDataTableSet [nzData]="accountList" [nzScroll]="{ x: '1500px', y: '50vh' }">
+
+                <div class="totalCount">
+                    <nz-table #rowSelectionTable [nzData]="accountList" [nzTotal]="total_count" [nzFrontPagination]="false"
+                    [nzShowSizeChanger]="true" [nzPageIndex]="pageIndex" [nzPageSize]="globalPageSize"
+                    (nzQueryParams)="accountList[0] ? getaccountList($event) : null" [nzShowTotal]="botTotalCount"
+                    [nzLoading]="api_loader['list']" [nzScroll]="{ x: '1500px', y: '50vh' }">
                     <thead>
                         <tr>
                             <th nzWidth="5rem">Sr. No</th>
@@ -23,11 +28,18 @@
                             <td>{{ data.social_handle }}</td>
                             <td>
                                 <button nz-button nzType="link" class="border" nzSize="small"
-                                 routerLink="/media-account/edit-account" [queryParams]="{id:data?.id}">Edit</button>
+                                    routerLink="/media-account/edit-account" [queryParams]="{id:data?.id}">Edit</button>
                             </td>
                         </tr>
                     </tbody>
                 </nz-table>
+                    <ng-template #botTotalCount>
+                        <div class="font-weight-semibold">
+                            <b>{{total_count}} Results Found </b>
+                        </div>
+                    </ng-template>
+                </div>
+                
 
             </nz-card>
         </div>

@@ -25,6 +25,7 @@ export class HeaderComponent{
     
     globalAccData : any;
     ngOnInit(): void {
+        // this._currToggleValue ? localStorage.setItem('globalToggleValue','1') : localStorage.setItem('globalToggleValue','2')
         this._currToggleValue = localStorage.getItem('globalToggleValue') == '2' ? true : false;
         this.globalAccData = localStorage.getItem('global_account_data')
         this._currLang = localStorage.getItem('appLanguage') || 'en';
@@ -113,7 +114,6 @@ export class HeaderComponent{
     switchToggle(){
         this._currToggleValue = !this._currToggleValue;
         if(this._currToggleValue == true){
-            console.log('dashboard')
             this.router.navigateByUrl("/dashboard/home");
         }else{
             this.router.navigateByUrl("/voter");
@@ -122,6 +122,7 @@ export class HeaderComponent{
         
        setTimeout(() => {
         window.location.reload();
-       }, 300);
+       }, 300);      console.log('dashboard')
+      
     }
 }

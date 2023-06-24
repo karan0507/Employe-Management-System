@@ -152,6 +152,10 @@ export class HttpService {
     return this.http.get(this.url + 'votes/get-assembly-candidate', { params: data })
   }
 
+  public getDashboardMetrics4(){
+    return this.http.get(this.url+'/social_media/v1/post-detail/get-data-from-background');
+  }
+
   public getDistrictWiseData() {
     return this.http.get(this.url + 'votes/get-district-candidate')
   }
@@ -245,6 +249,11 @@ export class HttpService {
   public getGlobalAdminData(data) {
     return this.http.get(this.url + `/users/v1/user/add-global-account`,{params:data})
   }
+
+  public addGlobalAdminData(data) {
+    return this.http.post(this.url + `/users/v1/user/add-global-account`,data)
+  }
+
 
   public getVoterList(data){
     return this.http.get(this.url + `/social_media/v1/post-detail/get-data-from-background`,{params:data})

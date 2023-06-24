@@ -27,7 +27,7 @@
 
                 <div class="col-lg-6 col-12">
                     <nz-form-item>
-                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left">{{_currLanguage == 'en' ?
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
                             'Last Name' : 'अंतिम नाम'}}
                         </nz-form-label>
                         <nz-form-control [nzSm]="16" [nzXs]="24"
@@ -199,7 +199,7 @@
         </form>
         <div class="d-flex justify-content-center">
             <button nz-button nzType="primary" class="px-5" (click)="submitForm()"
-                [nzLoading]="api_loader['button']">Save</button>
+            [disabled]="teamForm.invalid ? true : false"  [nzLoading]="api_loader['button']">Save</button>
             <button nz-button nzType="link" class="ml-3 px-5 border" routerLink="/team-management">Cancel</button>
         </div>
     </nz-card>

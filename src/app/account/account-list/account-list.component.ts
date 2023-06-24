@@ -46,15 +46,15 @@ export class AccountListComponent implements OnInit {
       data['page'] = this.pageIndex
       data['limit'] = this.globalPageSize
     }
-    // if (this._currBooth) {
-    //   data['booth'] = this._currBooth;
-    // }
-    // if (this._currWard) {
-    //   data['ward'] = this._currWard;
-    // }
-    // if (this._currSector) {
-    //   data['sector'] = this._currSector;
-    // }
+    if (this.currLinkTpye) {
+      data['link_type'] = this.currLinkTpye;
+    }
+    if (this.currSocialMedia) {
+      data['social_handle'] = this.currSocialMedia;
+    }
+    if (this._currSearchValue) {
+      data['search_param'] = this._currSearchValue;
+    }
 
     // if (this._currLane) {
     //   data['lane'] = this._currLane;
@@ -83,6 +83,18 @@ export class AccountListComponent implements OnInit {
         this.api_loader['list'] = false
       }
     })
+  }
+
+  currLinkTpye : any;
+  currSocialMedia : any;
+  resetFilter(){
+    this.pageIndex = 1;
+    this.globalPageSize = 30;
+    this._currSearchValue =null;
+    this.currLinkTpye = null;
+    this.currSocialMedia = null;
+    this.getaccountList()
+
   }
 
 }

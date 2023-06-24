@@ -59,15 +59,15 @@ export class AdEditTeamComponent implements OnInit {
     this.teamForm = this.fb.group({
       first_name: [(data ? (this._currLanguage == 'en' ? data?.first_name : data?.first_name) : ''), [Validators.required]],
       last_name: [(data ? (this._currLanguage == 'en' ? data?.last_name : data?.last_name) : ''), [Validators.required]],
-      user_type: [(data ? data?.user_type?.id : '')],
-      designation: [(data ? (this._currLanguage == 'en' ? data?.designation : data?.designation) : ''), [Validators.required]],
+      user_type: [(data ? data?.user_type?.id : ''),[Validators.required]],
+      designation: [(data ? (this._currLanguage == 'en' ? data?.designation : data?.designation) : '')],
       date_of_birth : [data?.date_of_birth ? data?.date_of_birth : ''],
       mobile: [(data ? (this._currLanguage == 'en' ? data?.mobile : data?.mobile) : ''), [Validators.required]],
       email: [(data ? (this._currLanguage == 'en' ? data?.email : data?.email) : '')],
       whatsapp_number: [data?.whatsapp_number ? data?.whatsapp_number : ''],
       landline_number: [data?.landline_number ? data?.landline_number : '',],
       studies: [data?.studies ? data?.studies : ''],
-      EPIC_NO: [data?.speed ? data?.speed : '',[Validators.required]],
+      EPIC_NO: [data?.speed ? data?.speed : ''],
       residential: [data?.residential ? data?.residential : ''],
     })
   }

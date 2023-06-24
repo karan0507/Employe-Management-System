@@ -29,7 +29,6 @@
                         </nz-breadcrumb>
                 </div>
             </div>
-
             <div *ngIf="router.url.includes('dashboard')">
                 <h4 class="font-weight-semibold" *ngIf="breadcrumbs$ | async; let breadcrumbs">
                     {{(breadcrumbs[breadcrumbs.length - 1].label)}}</h4>
@@ -37,7 +36,7 @@
             <h4 class="font-weight-semibold d-none" [ngClass]="showBreadCrumb ? 'mt-4' : ''"
                 *ngIf="breadcrumbs$ | async; let breadcrumbs">{{(breadcrumbs[breadcrumbs.length - 1]?.label)}}</h4>
         </div>
-        <div class="main-content p-3 pb-5" [ngClass]="contentHeaderDisplay !== 'none' ? 'pt-5' : ''">
+        <div class="main-content p-3 py-5" [ngClass]="contentHeaderDisplay !== 'none' ? 'pt-5' : ''">
             <router-outlet></router-outlet>
         </div>
         <app-footer class="d-md-none d-flex"></app-footer>

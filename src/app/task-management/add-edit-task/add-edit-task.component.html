@@ -229,7 +229,7 @@
             </div>
         </form>
         <div class="d-flex justify-content-center">
-            <button nz-button nzType="primary" class="px-5" (click)="submitForm()"
+            <button nz-button nzType="primary" [disabled]="taskForm.invalid ? true : false" class="px-5" (click)="submitForm()"
                 [nzLoading]="api_loading['button']" >Save</button>
                 <!-- [disabled]="taskForm.invalid ? true : false" -->
             <button nz-button nzType="link" class="ml-3 px-5 border" routerLink="/task-management">Cancel</button>

@@ -24,6 +24,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { CandidateDashboardComponent } from './candidate-dashboard/candidate-dashboard.component';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzListModule } from 'ng-zorro-antd/list';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 /** Assign all ng-zorro modules to this array*/
 const antdModule = [
     NzButtonModule,
@@ -53,6 +54,7 @@ const antdModule = [
         DashboardRoutingModule,
         NzDividerModule,
         NzDatePickerModule,
+        NzPaginationModule,
         NgxPermissionsModule.forChild(),
         ...antdModule
     ],

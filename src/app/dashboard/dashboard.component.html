@@ -1,12 +1,34 @@
 <main>
 	<section>
 		<div class="row">
+			
 			<div class="col-md-6">
-				<nz-card nzTitle="Latest Posts" [nzExtra]="extraTemplate" style="height: 25rem; overflow: scroll;">
+				<div class="row">
+					<div class="col-md-6" *ngFor="let a_data of listMatricsData; index as i">
+						<!-- <nz-card >
+							<div class="d-flex justify-content-center align-items-center">
+								<span nz-icon nzType="logout" nzTheme="outline" style="font-size: 3rem"></span> 
+								<h4 class="pl-3">Something</h4>
+							</div>
+					    </nz-card> -->
+					    <nz-card class="-flex align-items-center pointer" >
+					      <div class="media align-items-center">
+					        <nz-avatar [nzSize]="60" [nzIcon]="api_calling_loader ? 'loading' : a_data.icon" [ngClass]="a_data.class"></nz-avatar>
+					        <div class="m-l-15">
+					          <h4 class="m-b-0">{{a_data.count}}</h4>
+					          <p class="m-b-0 text-dark">{{a_data.name}}</p>
+					        </div>
+					      </div>
+					    </nz-card>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<nz-card nzTitle="Latest Posts" [nzLoading]="api_loader['postList']" [nzExtra]="extraTemplate" style="height: 25rem; overflow: scroll;">
 					<nz-list nzItemLayout="vertical">
 						<nz-list-item *ngFor="let item of LatestPostDataSet">
 							<nz-list-item-meta>
-								<nz-list-item-meta-avatar [nzSrc]="'assets/images/avatars/dy_profile_image.jpg'"></nz-list-item-meta-avatar>
+								<nz-list-item-meta-avatar [nzSrc]="item?.image ? item?.image : 'assets/images/avatars/default.png'" alt></nz-list-item-meta-avatar>
 								<nz-list-item-meta-title>
 									<a [routerLink]="['/posts/post-detail/',item?.id]" class="text-secondary">{{ item.post_id }}</a>
 								</nz-list-item-meta-title>
@@ -43,30 +65,10 @@
 			    <ng-template #extraTemplate>
 					<a>View All</a>
 			    </ng-template>
+				<nz-pagination [nzPageIndex]="postPage" [nzTotal]="postPageSize" (nzPageIndexChange)="getPostList($event,'pageIndex')" (nzPageSizeChange)="getPostList($event,'')"></nz-pagination>
 			</div>
 			<div class="col-md-6">
-				<div class="row">
-					<div class="col-md-8" *ngFor="let a_data of listMatricsData; index as i">
-						<!-- <nz-card >
-							<div class="d-flex justify-content-center align-items-center">
-								<span nz-icon nzType="logout" nzTheme="outline" style="font-size: 3rem"></span> 
-								<h4 class="pl-3">Something</h4>
-							</div>
-					    </nz-card> -->
-					    <nz-card class="-flex align-items-center pointer" >
-					      <div class="media align-items-center">
-					        <nz-avatar [nzSize]="60" [nzIcon]="api_calling_loader ? 'loading' : a_data.icon" [ngClass]="a_data.class"></nz-avatar>
-					        <div class="m-l-15">
-					          <h4 class="m-b-0">{{a_data.count}}</h4>
-					          <p class="m-b-0 text-dark">{{a_data.name}}</p>
-					        </div>
-					      </div>
-					    </nz-card>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<nz-card nzTitle="Strong Followers" [nzExtra]="extraTemplate" style="height: 25rem; overflow: scroll;">
+				<nz-card nzTitle="Strong Followers" [nzLoading]="api_loader['followerList']" [nzExtra]="extraTemplate" style="height: 25rem; overflow: scroll;">
 					<nz-list nzItemLayout="vertical">
 						<nz-list-item *ngFor="let item of StrongFollowersList">
 							<nz-list-item-meta>
@@ -94,12 +96,18 @@
 									<span nz-icon nzType="share-alt" style="margin-right: 8px;"></span>
 									{{item.total_shares}}
 								</nz-list-item-action>
+								<nz-list-item-action>
+									<span nz-icon nzType="share-alt" style="margin-right: 8px;"></span>
+									{{item.total_shares}}
+								</nz-list-item-action>
 							</ul>
 							<nz-list-item-extra>
 							</nz-list-item-extra>
 						</nz-list-item>
 					</nz-list>
+					
 			    </nz-card>
+				<nz-pagination [nzPageIndex]="followerPage" [nzTotal]="followerPageSize" (nzPageIndexChange)="getFollowerList($event,'pageIndex')" (nzPageSizeChange)="getFollowerList($event,'')"></nz-pagination>
 			    <ng-template #extraTemplate>
 					<a>View All</a>
 			    </ng-template>

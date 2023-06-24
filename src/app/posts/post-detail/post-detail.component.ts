@@ -54,6 +54,7 @@ export class PostDetailComponent implements OnInit {
 
   }
 
+  
   getBackgroundDataAPIFunction(params_data, section, type=""){
     this.http.getDataFromBackgroundFunction(params_data).subscribe(
       (res) => {

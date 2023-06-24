@@ -109,15 +109,15 @@ export class AddEditTaskComponent implements OnInit {
   createTask(data?) {
     this.taskForm = this.fb.group({
       task_type: [(data ? data?.task_type?.id : ''), [Validators.required]],
-      name: [(data ? (this._currLanguage == 'en' ? data?.name?.en : data?.name?.hi) : ''), [Validators.required]],
+      name: [(data ? (this._currLanguage == 'en' ? data?.name?.en : data?.name?.hi) : '')],
       discription: [(data ? (this._currLanguage == 'en' ? data?.discription?.en : data?.discription?.hi) : ''), [Validators.required]],
       internal_user: [data ? [data?.internal_user?.id] : [], [Validators.required]],
-      voters: [[], [Validators.required]],
+      voters: [[]],
       booth: [data?.booth ? data?.booth : null, [Validators.required]],
-      ward: [data?.ward ? data?.ward : null, [Validators.required]],
-      street: [data?.street ? data?.street : null, [Validators.required]],
-      places: [data?.places ? data?.places : null, [Validators.required]],
-      sector: [data?.sector ? data?.sector : null, [Validators.required]],
+      ward: [data?.ward ? data?.ward : null,],
+      street: [data?.street ? data?.street : null,],
+      places: [data?.places ? data?.places : null,],
+      sector: [data?.sector ? data?.sector : null,],
       task_date: [data?.task_date ? data?.task_date : null, [Validators.required]],
     })
 

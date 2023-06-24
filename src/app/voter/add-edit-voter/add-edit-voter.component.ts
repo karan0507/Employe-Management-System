@@ -55,28 +55,28 @@ export class AddEditVoterComponent implements OnInit {
     this.voterForm = this.fb.group({
       FIRST_NAME: [(data ? (this._currLanguage == 'en' ? data?.first_name_en : data?.first_name_hi) : ''), [Validators.required]],
       LAST_NAME: [(data ? (this._currLanguage == 'en' ? data?.last_name_en : data?.last_name_hi) : ''), [Validators.required]],
-      FULL_NAME: [(data ? (this._currLanguage == 'en' ? data?.full_name_en : data?.full_name_hi) : ''), [Validators.required]],
+      FULL_NAME: [(data ? (this._currLanguage == 'en' ? data?.full_name_en : data?.full_name_hi) : '')],
       mobile: [(data ? (this._currLanguage == 'en' ? data?.mobile : data?.mobile) : ''), [Validators.required]],
       caste: [(data ? (this._currLanguage == 'en' ? data?.caste : data?.caste) : ''), [Validators.required]],
 
-      RLN_TYPE: [(data ? (this._currLanguage == 'en' ? data?.rln_type : data?.rln_type) : ''), [Validators.required]], //Check
+      RLN_TYPE: [(data ? (this._currLanguage == 'en' ? data?.rln_type : data?.rln_type) : '')], //Check
 
-      RLN_FIRST_NAME: [(data ? (this._currLanguage == 'en' ? data?.rln_first_name_en : data?.rln_first_name_hi) : ''), [Validators.required]],
-      RLN_LAST_NAME: [(data ? (this._currLanguage == 'en' ? data?.rln_last_name_en : data?.rln_last_name_hi) : ''), [Validators.required]],
-      RLN_FULL_NAME: [(data ? (this._currLanguage == 'en' ? data?.rln_full_name_en : data?.rln_full_name_hi) : ''), [Validators.required]],
+      RLN_FIRST_NAME: [(data ? (this._currLanguage == 'en' ? data?.rln_first_name_en : data?.rln_first_name_hi) : '')],
+      RLN_LAST_NAME: [(data ? (this._currLanguage == 'en' ? data?.rln_last_name_en : data?.rln_last_name_hi) : '')],
+      RLN_FULL_NAME: [(data ? (this._currLanguage == 'en' ? data?.rln_full_name_en : data?.rln_full_name_hi) : '')],
       // FULL_NAME_WITH_RLN: [(data ? (this._currLanguage == 'en' ? data?.full_name_en_with_rln : data?.full_name_hi_with_rln) : ''), [Validators.required]],
-      GENDER: [(data ? (this._currLanguage == 'en' ? data?.gender : data?.gender) : ''), [Validators.required]],
+      GENDER: [(data ? (this._currLanguage == 'en' ? data?.gender : data?.gender) : '')],
       AGE: [(data ? (this._currLanguage == 'en' ? data?.age : data?.age) : ''), [Validators.required]],
       EPIC_NO: [(data ? (this._currLanguage == 'en' ? data?.epic_no : data?.epic_no) : ''), [Validators.required]],
       
-      PSBUILDING_NAME: [(data ? (this._currLanguage == 'en' ? data?.psbuilding_name_en : data?.psbuilding_name_hi) : ''), [Validators.required]],
-      SECTION_NAME: [(data ? (this._currLanguage == 'en' ? data?.section_name_en : data?.section_name_hi) : ''), [Validators.required]],
-      PART_NAME: [(data ? (this._currLanguage == 'en' ? data?.part_name_en : data?.part_name_hi) : ''), [Validators.required]],
-      SLNOINPART: [(data ? (this._currLanguage == 'en' ? data?.slnoinpart : data?.slnoinpart) : ''), [Validators.required]],
-      PART_NO: [(data ? (this._currLanguage == 'en' ? data?.part_no : data?.part_no) : ''), [Validators.required]],
-      booth: [(data ? (this._currLanguage == 'en' ? data?.booth : data?.booth) : ''), [Validators.required]],
-      SECTION_NO: [(data ? (this._currLanguage == 'en' ? data?.section_no : data?.section_no) : ''), [Validators.required]],
-      HOUSE_NO: [(data ? (this._currLanguage == 'en' ? data?.house_no : data?.house_no) : ''), [Validators.required]],
+      PSBUILDING_NAME: [(data ? (this._currLanguage == 'en' ? data?.psbuilding_name_en : data?.psbuilding_name_hi) : ''), ],
+      SECTION_NAME: [(data ? (this._currLanguage == 'en' ? data?.section_name_en : data?.section_name_hi) : ''), ],
+      PART_NAME: [(data ? (this._currLanguage == 'en' ? data?.part_name_en : data?.part_name_hi) : ''), ],
+      SLNOINPART: [(data ? (this._currLanguage == 'en' ? data?.slnoinpart : data?.slnoinpart) : ''), ],
+      PART_NO: [(data ? (this._currLanguage == 'en' ? data?.part_no : data?.part_no) : ''), ],
+      booth: [(data ? (this._currLanguage == 'en' ? data?.booth : data?.booth) : ''),[Validators.required] ],
+      SECTION_NO: [(data ? (this._currLanguage == 'en' ? data?.section_no : data?.section_no) : ''), ],
+      HOUSE_NO: [(data ? (this._currLanguage == 'en' ? data?.house_no : data?.house_no) : ''), ],
 
     })
   }

@@ -72,6 +72,12 @@ export class DashboardComponent implements OnInit {
         );
     }
 
+    openFacebook(url){
+        console.log(url);
+        window.open(url)
+
+    }
+
 }
 
 

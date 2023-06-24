@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '@angular/router';
+import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { GlobalService } from 'src/app/service/global.service';
 import { HttpService } from 'src/app/service/http.service';
@@ -9,6 +11,7 @@ import { HttpService } from 'src/app/service/http.service';
   templateUrl: './voter-list.component.html',
   styleUrls: ['./voter-list.component.css']
 })
+
 export class VoterListComponent implements OnInit {
   quickViewVisible: boolean = false;
   _currSearchValue: any;
@@ -17,8 +20,10 @@ export class VoterListComponent implements OnInit {
   _currWard: any;
   _currSector: any;
   _currBenificary: any;
+  activityList : any = [];
+followUpList : any= []
 
-  api_loader = { 'list': false, 'accordian':false }
+  api_loader = { 'list': false, 'accordian':false, 'button_markActivity':false }
   votersist: any = [
     { user_name: 'Amit Jain', epic_no: '1685419', url: '../.././../assets/images/avatars/dy_post_image.jpg', tags: [{ value: 'Booth no 5' }, { value: 'Ward No 8' }] },
     { user_name: 'Ayesha', epic_no: '1685419', url: '../.././../assets/images/avatars/thumb-9.jpg', tags: [{ value: 'Booth no 5' }, { value: 'Ward No 8' }] },
@@ -29,7 +34,20 @@ export class VoterListComponent implements OnInit {
   isBannerVisible: boolean = true;
   _currLanguage: any;
   globalData: any
-  constructor(public global: GlobalService, private http: HttpService, private message: NzMessageService) { }
+
+
+
+  // Multiple Voter activity and followup add
+  isActivityModal : boolean = false;
+  isFollowUpModal : boolean = false;
+  isEdit:boolean = false;
+  followUpForm: FormGroup;
+
+  currFormType : any;
+  votersList_Array: any = [];
+
+  dateFormat = "YYYY-MM-dd";
+  constructor(public global: GlobalService, private fb:FormBuilder, private http: HttpService, private message: NzMessageService) { }
 
   ngOnInit(): void {
     this._currLanguage = localStorage.getItem("appLanguage") || 'en';
@@ -129,7 +147,10 @@ export class VoterListComponent implements OnInit {
     })
   }
 
+  // current Buttons:
+  _currToggleActions : any;
   quickViewToggle(): void {
+    this.isActivityModal = false
     this.quickViewVisible = !this.quickViewVisible;
   }
 
@@ -229,10 +250,13 @@ export class VoterListComponent implements OnInit {
 
   updateCheckedSet(id: number, checked: boolean): void {
     if (checked) {
+      
+      
       this.setOfCheckedId.add(id);
     } else {
       this.setOfCheckedId.delete(id);
     }
+    console.log(this.setOfCheckedId);
   }
 
   onCurrentPageDataChange(listOfCurrentPageData: Data[]): void {
@@ -275,4 +299,91 @@ export class VoterListComponent implements OnInit {
     },error=>{
     })
   }
+
+  // Var for activit and followup
+  fileList : any = []
+  // Activity and FollowUp:
+  createNewFollow(type){
+    this.currFormType = type;
+    this.quickViewVisible = true;
+    this.fileList = []
+    if (type == 'activity') {
+      
+      // console.log( moment(JSON.stringify(data?.followup_datetime)).format("HH:mm:ss"))
+      this.followUpForm = this.fb.group({
+        followup_datetime: [ '',   [Validators.required]],
+        activity_type: ['', [Validators.required]],
+        comments: ['', [Validators.required]]
+      })
+    } else {
+      this.followUpForm = this.fb.group({
+        followup_datetime: ['', [Validators.required]],
+        followup_time : ['',[Validators.required]],
+        followup_type: ['', [Validators.required]],
+        comments: ['', [Validators.required]]
+      })
+    }
+  }
+
+  getActivityList() {
+    let data = {'model_name':'Activity'}
+    this.http.getMasterData(data).subscribe((res:any)=>{
+      if(res.success) {
+        this.activityList = res.data
+      }
+    })
+  }
+
+
+  getFolloupList(){
+    let data = {'model_name':'FollowUp'}
+    this.http.getMasterData(data).subscribe((res:any)=>{
+      if(res.success) {
+        this.followUpList = res.data
+      }
+    })
+  }
+
+  submitForm(form?) {
+    this.votersList_Array = this.setOfCheckedId;
+    let formDatta =new FormData();
+    formDatta.append('voters',this.votersList_Array);
+    console.log(JSON.stringify(Array.from(this.votersList_Array)), formDatta)
+    // return 
+    if (this.followUpForm.invalid) { return }
+    this.api_loader['button_markActivity'] = true
+    let data = new FormData();
+    // data.append('voter_id',    JSON.parse(Array.from(this.votersList_Array)))
+    data.append('voter_id' , JSON.parse(this.votersList_Array) )
+    this.votersList_Array
+
+    this.currFormType == 'activity' ?   data.append('activity_type', this.followUpForm.get('activity_type').value) : data.append('followup_type', this.followUpForm.get('followup_type').value) ;
+    data.append('comments', this.followUpForm.get('comments').value)
+
+    this.currFormType == 'activity' ? 
+    data.append('activity_date', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD")) :
+    data.append('followup_datetime', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD") + ' ' +moment(this.followUpForm.get('followup_datetime').value).format("HH:mm:ss"));
+    this.fileList.forEach((file: any, index: number) => {
+      data.append(`file_set`, file); // Assuming file is a File object
+    });
+    // data.append('file_set', JSON.stringify(Array.from(this.fileList)))
+    // this.currFormType == 'followUp' ? data.append('followup_time',moment(this.followUpForm.get('followup_datetime').value).format("HH:mm:ss")):'';
+    // if(this.currFormType == 'activity'){console.log('Activity')}else{console.log('FollowUp')}
+    let url = (this.currFormType == 'activity' ? this.http.addVoterActivity(data) : this.http.addVoterFollowup(data))
+    url.subscribe((res:any)=>{
+      if(res.success){
+        this.message.success(res.message);
+        this.isActivityModal = false
+        this.quickViewToggle();
+        this.followUpForm.reset();
+        this.api_loader['button_markActivity'] = false;
+      }else{
+        this.message.error(res.message)
+        this.api_loader['button_markActivity'] = false
+      }
+    },error=>{
+      this.api_loader['button_markActivity'] = false
+    })
+  }
+
 }

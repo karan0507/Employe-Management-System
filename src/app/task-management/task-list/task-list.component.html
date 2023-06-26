@@ -116,7 +116,7 @@
                         <td nzWidth="8rem">{{(data?.created_at ? (data?.created_at | date:'medium') : '-')}}</td>
                         <td nzWidth="8rem">{{(data?.updated_at ? (data?.updated_at | date:'medium') : '-')}}</td>
 
-                        <td nzWidth="8rem">{{(data?.created_by?.first_name ? data?.created_by?.first_name : '-')}}</td>
+                        <td nzWidth="8rem">{{(data?.created_by ? data?.created_by?.first_name + " " + data?.created_by?.username  : '-')}}</td>
 
                         <td nzWidth="8rem" nzRight>
                             <button nz-button nzType="link" routerLink="/task-management/edit-task" class="border"

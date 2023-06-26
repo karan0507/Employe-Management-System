@@ -49,18 +49,18 @@
                         <tr>
                             <th nzWidth="5rem">Sr. No</th>
                             <th>Link</th>
-                            <th>Link Type</th>
-                            <th>Social Media</th>
-                            <th>Action</th>
+                            <th nzWidth="10rem">Link Type</th>
+                            <th nzWidth="10rem">Social Media</th>
+                            <th nzWidth="10rem">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of accountList; let i = index">
                             <td nzWidth="5rem"> {{i+1}}</td>
                             <td> <a [href]="data.link">{{ data.link }}</a> </td>
-                            <td>{{ data.link_type}}</td>
-                            <td>{{ data.social_handle }}</td>
-                            <td>
+                            <td nzWidth="10rem">{{ data.link_type}}</td>
+                            <td nzWidth="10rem">{{ data.social_handle }}</td>
+                            <td nzWidth="10rem">
                                 <button nz-button nzType="link" class="border" nzSize="small"
                                     routerLink="/media-account/edit-account" [queryParams]="{id:data?.id}">Edit</button>
                             </td>

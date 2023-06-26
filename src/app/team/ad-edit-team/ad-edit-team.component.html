@@ -164,26 +164,7 @@
                         <nz-form-control [nzSm]="16" [nzXs]="24"
                             [nzErrorTip]="_currLanguage == 'en' ? 'Please enter Speed' : 'कृपया रफ़्तार जांचें'">
                             <input type="text" nz-input formControlName="speed"
-                                [placeholder]="_currLanguage == 'en' ? 'Enter sresidentialpeed' : 'कृपया रफ़्तार जांचें'" />
-                        </nz-form-control>
-                    </nz-form-item>
-                </div> -->
-
-                <div class="col-lg-6 col-12">
-                    <nz-form-item>
-                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left">{{_currLanguage == 'en' ?
-                            'Residential' : 'आवासीय'}}
-                        </nz-form-label>
-                        <nz-form-control [nzSm]="16" [nzXs]="24"
-                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter residential' : 'कृपया आवासीय जांचें'">
-                            <input type="text" nz-input formControlName="residential"
-                                [placeholder]="_currLanguage == 'en' ? 'Enter residential' : 'कृपया आवासीय जांचें'" />
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
-
-                <!-- <div class="col-lg-6 col-12">
-                    <nz-form-item>
+                   data.append('speed', this.teamForm.get('speed').value)<nz-form-item>
                         <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
                             'Email' : 'ईमेल'}}
                         </nz-form-label>

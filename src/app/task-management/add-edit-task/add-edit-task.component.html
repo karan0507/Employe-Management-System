@@ -72,16 +72,6 @@
                         </nz-form-label>
                         <nz-form-control [nzSm]="16" [nzXs]="24"
                             [nzErrorTip]="_currLanguage == 'en' ? 'Please select internal user' : 'कृपया आंतरिक उपयोगकर्ता का चयन करें'">
-
-                            <!-- <nz-select [nzMode]="'multiple'"  class="selectFilter mb-2 mr-3" formControlName="internal_user"
-                                (nzFocus)="getInternalUser()" (keyup)="getInternalUser($event)" 
-                                [nzMaxTagCount]="2" nzAllowClear nzShowSearch
-                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Internal User' : 'आंतरिक उपयोगकर्ता का चयन करें'" (ngModelChange)="getInternalUser($event)">
-                              <nz-option nzLabel="owe" nzValue="1"></nz-option>
-                                <nz-option *ngFor="let item of internal_user_list" [nzValue]="item.id"
-                                    [nzLabel]="(item?.first_name ? item?.first_name : '') + (item?.last_name ? ' ' + item?.last_name : '') "> 
-                                </nz-option>
-                            </nz-select> -->
                             <nz-select class="selectFilter mb-2 mr-3" formControlName="internal_user"
                                 (nzFocus)="getInternalUser()" (keyup)="getInternalUser($event)" nzAllowClear
                                 [nzMode]="'multiple'" [nzMaxTagCount]="2"
@@ -195,7 +185,7 @@
                         </nz-form-label>
                         <nz-form-control [nzSm]="16" [nzXs]="24"
                             [nzErrorTip]="_currLanguage == 'en' ? 'Please select Places' : 'कृपया स्थानों का चयन करें'">
-                            <nz-select [nzMode]="'multiple'" class="selectFilter mb-2 mr-3" formControlName="places"
+                            <nz-select class="selectFilter mb-2 mr-3" formControlName="places"
                                 (nzFocus)="searchMasterData('Places')" (keyup)="searchMasterData('Places',$event)"
                                 nzAllowClear [nzMaxTagCount]="2"
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Places' : 'स्थानों का चयन करें'">

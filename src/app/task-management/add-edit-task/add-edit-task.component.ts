@@ -43,6 +43,7 @@ export class AddEditTaskComponent implements OnInit {
       this.createTask();
 
     })
+    // debugger;
   }
 
   getTaskDetails() {
@@ -53,47 +54,47 @@ export class AddEditTaskComponent implements OnInit {
     this.http.getTaskList(data).subscribe((res: any) => {
       if (res.success) {
         this.taskDetails = res.data[0];
-       
-        if(this.taskDetails['sector']?.length > 0){
+
+        if (this.taskDetails['sector']?.length > 0) {
           let sector = [];
-        this.taskDetails['sector'].forEach(element => {
-          sector.push(element.id)
-        });
-        this.taskDetails['sector'] = sector;
+          this.taskDetails['sector'].forEach(element => {
+            sector.push(element.id)
+          });
+          this.taskDetails['sector'] = sector;
         }
 
-        if( this.taskDetails['street']?.length > 0){
+        if (this.taskDetails['street']?.length > 0) {
           let street = [];
-        this.taskDetails['street'].forEach(element => {
-          street.push(element.id)
-        });
-        this.taskDetails['street'] = street;
+          this.taskDetails['street'].forEach(element => {
+            street.push(element.id)
+          });
+          this.taskDetails['street'] = street;
         }
 
 
-        if(this.taskDetails['places']?.length > 0){
+        if (this.taskDetails['places']?.length > 0) {
           let places = [];
-        this.taskDetails['places'].forEach(element => {
-          places.push(element.id)
-        });
-        this.taskDetails['places'] = places;
+          this.taskDetails['places'].forEach(element => {
+            places.push(element.id)
+          });
+          this.taskDetails['places'] = places;
         }
 
-       if( this.taskDetails['ward']?.length > 0){
-         let ward = [];
-        this.taskDetails['ward'].forEach(element => {
-          ward.push(element.id)
-        });
-        this.taskDetails['ward'] = ward;
-       }
+        if (this.taskDetails['ward']?.length > 0) {
+          let ward = [];
+          this.taskDetails['ward'].forEach(element => {
+            ward.push(element.id)
+          });
+          this.taskDetails['ward'] = ward;
+        }
 
-       if(this.taskDetails['booth']?.length > 0){
-         let booth = [];
-        this.taskDetails['booth'].forEach(element => {
-          booth.push(element.id)
-        });
-        this.taskDetails['booth'] = booth;
-       }
+        if (this.taskDetails['booth']?.length > 0) {
+          let booth = [];
+          this.taskDetails['booth'].forEach(element => {
+            booth.push(element.id)
+          });
+          this.taskDetails['booth'] = booth;
+        }
 
 
 
@@ -112,29 +113,27 @@ export class AddEditTaskComponent implements OnInit {
       name: [(data ? (this._currLanguage == 'en' ? data?.name?.en : data?.name?.hi) : '')],
       discription: [(data ? (this._currLanguage == 'en' ? data?.discription?.en : data?.discription?.hi) : ''), [Validators.required]],
       internal_user: [data ? [data?.internal_user?.id] : [], [Validators.required]],
-      voters: [[]],
-      booth: [data?.booth ? data?.booth : null, [Validators.required]],
-      ward: [data?.ward ? data?.ward : null,],
-      street: [data?.street ? data?.street : null,],
-      places: [data?.places ? data?.places : null,],
-      sector: [data?.sector ? data?.sector : null,],
-      task_date: [data?.task_date ? data?.task_date : null, [Validators.required]],
+      voters: [data?.voters ? data?.voters : []],
+      booth: [data ? data?.booth : [], [Validators.required]],
+      ward: [data?.ward ? data?.ward : [],],
+      street: [data?.street ? data?.street : []],
+      places: [data?.place ? data?.place?.id : []],
+      sector: [data?.sector ? data?.sector : [],],
+      task_date: [data?.task_date ? data?.task_date : '', [Validators.required]],
     })
 
-    // if (this.taskDetails?.voters?.length > 0) {
-    //   this.taskDetails?.sector.forEach(element => {
-    //     this.taskForm.get('sector').value.push(element.id)
-    //   });
-    // } else {
-    //   this.taskForm.controls['sector'].setValue([]);
-    // }
-    console.log(this.taskForm.get('sector').value)
+    if (this.taskDetails?.voters?.length > 0) {
+      this.taskDetails?.sector.forEach(element => {
+        this.taskForm.get('sector').value.push(element.id)
+      });
+    } else {
+      this.taskForm.controls['sector'].setValue([]);
+    }
   }
 
   submitForm() {
     if (this.taskForm.invalid) {
       this.message.warning("Please check the required fields")
-      console.log(this.taskForm)
       return
     }
     this.api_loading['button'] = true;
@@ -143,13 +142,31 @@ export class AddEditTaskComponent implements OnInit {
     form_data.append('name', this.taskForm.get('name').value);
     form_data.append('discription', this.taskForm.get('discription').value);
     form_data.append('internal_user', JSON.stringify(this.taskForm.get('internal_user').value));
-    form_data.append('voters', JSON.stringify(this.taskForm.get('voters').value));
-    form_data.append('booth', JSON.stringify(this.taskForm.get('booth').value));
-    form_data.append('ward', JSON.stringify(this.taskForm.get('ward').value));
-    form_data.append('street', JSON.stringify(this.taskForm.get('street').value));
-    form_data.append('sector', JSON.stringify(this.taskForm.get('sector').value));
     form_data.append('task_date', this.taskForm.get('task_date').value ? moment(this.taskForm.get('task_date').value).format("YYYY-MM-DD") : '');
-    form_data.append('place', this.taskForm.get('places').value ? this.taskForm.get('places').value : '');
+
+    if (this.taskForm.get('voters').value[0]) {
+      form_data.append('voters', JSON.stringify(this.taskForm.get('voters').value));
+    }
+    if (this.taskForm.get('booth').value[0]) {
+      form_data.append('booth', JSON.stringify(this.taskForm.get('booth').value));
+    }
+    if (this.taskForm.get('ward').value[0]) {
+      form_data.append('ward', JSON.stringify(this.taskForm.get('ward').value));
+    }
+    if (this.taskForm.get('street').value[0]) {
+      form_data.append('street', JSON.stringify(this.taskForm.get('street').value));
+    }
+    if (this.taskForm.get('sector').value[0]) {
+      form_data.append('sector', JSON.stringify(this.taskForm.get('sector').value));
+    }
+    if (this.taskForm.get('places').value?.length > 0) {
+      form_data.append('place', this.taskForm.get('places').value ? this.taskForm.get('places').value : '');
+    }
+
+
+
+
+
 
     let url = this.isEdit == false ? this.http.addTasks(form_data) : this.http.editTasks(this._currTaskId, form_data);
     url.subscribe((res: any) => {
@@ -199,7 +216,6 @@ export class AddEditTaskComponent implements OnInit {
         this.http.getTeamList(data).subscribe((res: any) => {
           if (res.success) {
             this.internal_user_list = res.data;
-            console.log(this.internal_user_list)
           }
         })
       }, 500);
@@ -285,7 +301,7 @@ export class AddEditTaskComponent implements OnInit {
     let param = {}
     if (data) {
       clearTimeout(this.debounce);
-      
+
       this.debounce = setTimeout(() => {
         //  if(event == 'Places'){
         //    param = { master_model: event }
@@ -319,9 +335,14 @@ export class AddEditTaskComponent implements OnInit {
     } else {
       param = { model_name: event }
       this.http.getMasterData(param).subscribe((res: any) => {
+        console.log(event);
+
         if (res.success) {
           if (event == 'Booth') {
+
             this.boothList = res.data;
+            console.log(res.data, this.boothList);
+
           } else if (event == 'Ward') {
             this.wardList = res.data;
           } else if (event == 'Sector') {

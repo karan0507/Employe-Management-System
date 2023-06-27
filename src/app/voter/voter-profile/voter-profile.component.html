@@ -64,29 +64,23 @@
                         <h6>{{tab?.name}}</h6>
                     </ng-template>
                     <section *ngIf="_currTabName == 0">
-                        <section>
-                            <div class="row">
-                                <div class="col-md-12 my-3" *ngFor="let item of profileLogs">
-                                    <div class="d-flex justify-content-between align-items-center w-100">
-                                        <div class="d-flex flex-column">
-                                            <label>{{item?.title}}</label>
-                                            <h6 class="mb-0">{{item?.value}}</h6>
-                                        </div>
-                                        <div>
-                                            <img [src]="item?.icon" alt="">
-                                        </div>
+                        <div class="row">
+                            <div class="col-md-12 my-3" *ngFor="let item of profileLogs">
+                                <div class="d-flex justify-content-between align-items-center w-100">
+                                    <div class="d-flex flex-column">
+                                        <label>{{item?.title}}</label>
+                                        <h6 class="mb-0">{{item?.value}}</h6>
                                     </div>
-                                    <nz-divider class="my-2"></nz-divider>
+                                    <div>
+                                        <img [src]="item?.icon" alt="">
+                                    </div>
                                 </div>
+                                <nz-divider class="my-2"></nz-divider>
                             </div>
-                        </section>
-
+                        </div>
                     </section>
 
-
-
                     <section *ngIf="_currTabName == 1">
-
                         <div class="row">
                             <div class="col-md-12 my-3" *ngFor="let item of politicalList">
                                 <div class="d-flex justify-content-between align-items-center w-100">
@@ -136,10 +130,8 @@
                     </section>
 
 
-
                     <!-- Activity -->
                     <section *ngIf="_currTabName == 2">
-
                         <div class="row">
                             <div class="col-md-12">
                                 <nz-card>
@@ -400,6 +392,19 @@
                                 </nz-card>
                             </div>
                         </div>
+
+                    </section>
+
+
+                    <!-- Primary Attribute -->
+                    <section *ngIf="_currTabName == 3">
+                        <nz-card nzTitle="Add Primary Atributes">
+
+                        </nz-card>
+                    </section>
+
+                    <!-- Relationship -->
+                    <section *ngIf="_currTabName == 4">
 
                     </section>
 

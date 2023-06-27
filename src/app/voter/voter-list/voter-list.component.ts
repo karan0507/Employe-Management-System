@@ -318,8 +318,8 @@ followUpList : any= []
     } else {
       this.followUpForm = this.fb.group({
         followup_datetime: ['', [Validators.required]],
-        followup_time : ['',[Validators.required]],
-        followup_type: ['', [Validators.required]],
+        followup_time : [null,[Validators.required]],
+        followup_type: [null, [Validators.required]],
         comments: ['', [Validators.required]]
       })
     }
@@ -348,15 +348,12 @@ followUpList : any= []
     this.votersList_Array = this.setOfCheckedId;
     let formDatta =new FormData();
     formDatta.append('voters',this.votersList_Array);
-    console.log(JSON.stringify(Array.from(this.votersList_Array)), formDatta)
     // return 
     if (this.followUpForm.invalid) { return }
     this.api_loader['button_markActivity'] = true
     let data = new FormData();
-    // data.append('voter_id',    JSON.parse(Array.from(this.votersList_Array)))
     data.append('voter_id' , JSON.stringify(Array.from(this.votersList_Array)))
-    this.votersList_Array
-
+   
     this.currFormType == 'activity' ?   data.append('activity_type', this.followUpForm.get('activity_type').value) : data.append('followup_type', this.followUpForm.get('followup_type').value) ;
     data.append('comments', this.followUpForm.get('comments').value)
 

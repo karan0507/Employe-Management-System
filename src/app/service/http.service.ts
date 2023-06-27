@@ -367,5 +367,13 @@ export class HttpService {
   public changeLanguage(data) {
     return this.http.post(this.url + `/users/v1/user/change-user-language`, data)
   }
+
+  public addVoterTasg(data) {
+    return this.http.post(this.url + `/voters/v1/voter-tag/add-voter-tag`, data)
+  }
+  
+  public getVotersTagList(data){
+    return this.http.get(this.url + `/voters/v1/voter-tag/get-voter-tag`,{params:data})
+  }
   
 }

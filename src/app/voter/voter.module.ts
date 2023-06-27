@@ -28,12 +28,14 @@ import { VoterListComponent } from './voter-list/voter-list.component';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { PrimaryAttributesComponent } from './voter-profile/primary-attributes/primary-attributes.component';
 
 @NgModule({
   declarations: [
     VoterProfileComponent,
     AddEditVoterComponent,
-    VoterListComponent
+    VoterListComponent,
+    PrimaryAttributesComponent
   ],
   imports: [
     CommonModule,

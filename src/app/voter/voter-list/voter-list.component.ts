@@ -354,7 +354,7 @@ followUpList : any= []
     this.api_loader['button_markActivity'] = true
     let data = new FormData();
     // data.append('voter_id',    JSON.parse(Array.from(this.votersList_Array)))
-    data.append('voter_id' , JSON.parse(this.votersList_Array) )
+    data.append('voter_id' , JSON.stringify(Array.from(this.votersList_Array)))
     this.votersList_Array
 
     this.currFormType == 'activity' ?   data.append('activity_type', this.followUpForm.get('activity_type').value) : data.append('followup_type', this.followUpForm.get('followup_type').value) ;

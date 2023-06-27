@@ -172,7 +172,7 @@ export class AdEditTeamComponent implements OnInit {
     data.append('studies', this.teamForm.get('studies').value)
     data.append('date_of_birth', moment(this.teamForm.get('date_of_birth').value).format("YYYY-MM-DD"))
     
-    data.append('speed', this.teamForm.get('speed').value)
+    // data.append('speed', this.teamForm.get('speed').value)
     data.append('residential', this.teamForm.get('residential').value)
     this.api_loader['button'] = true;
     let url = this.isEdit ? this.http.editTeamMember(this._currTeamId, data) : this.http.addTeamMember(data);

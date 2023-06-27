@@ -244,7 +244,8 @@
                                                         </div>
                                                         <div class="d-flex flex-column mr-3">
                                                             <h6>Activity Date</h6>
-                                                            <label class="font-size-14 mr-3">{{item?.activity_date }}</label>
+                                                            <label class="font-size-14 mr-3">{{item?.activity_date
+                                                                }}</label>
                                                         </div>
                                                         <button nz-button nzType="link" class="border" nzSize="small"
                                                             (click)="createNewFollow('activity',item)">
@@ -366,7 +367,8 @@
                                                                 <div class="d-flex flex-column mr-3">
                                                                     <h6>Followup Date</h6>
                                                                     <label
-                                                                        class="font-size-14 mr-3">{{item?.followup_datetime | date:'medium'
+                                                                        class="font-size-14 mr-3">{{item?.followup_datetime
+                                                                        | date:'medium'
                                                                         }}</label>
                                                                 </div>
                                                                 <button nz-button nzType="link" class="border"
@@ -398,9 +400,7 @@
 
                     <!-- Primary Attribute -->
                     <section *ngIf="_currTabName == 3">
-                        <nz-card nzTitle="Add Primary Atributes">
-
-                        </nz-card>
+                        <!-- <app-primary-attributes [voterId]="_currVoterId"></app-primary-attributes> -->
                     </section>
 
                     <!-- Relationship -->

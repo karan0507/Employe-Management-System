@@ -31,7 +31,10 @@ export class VoterProfileComponent implements OnInit {
   partyTabs: any = [
     { id: 1, name: 'General' },
     { id: 2, name: 'Political' },
-    { id: 3, name: 'Activity' },]
+    { id: 3, name: 'Activity' },
+    { id: 4, name: 'Primary Attribute' },
+    { id: 5, name: 'Relationship' },
+  ]
 
   profileLogs: any = [
     { title: 'Name', icon: '../../../assets/images/icons/Framevoter_profile.svg', value: 'Amit Jain' },

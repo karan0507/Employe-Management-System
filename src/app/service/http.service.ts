@@ -372,8 +372,19 @@ export class HttpService {
     return this.http.post(this.url + `/voters/v1/voter-tag/add-voter-tag`, data)
   }
   
+  
   public getVotersTagList(data){
     return this.http.get(this.url + `/voters/v1/voter-tag/get-voter-tag`,{params:data})
   }
+
+  public addRelationship(data) {
+    return this.http.post(this.url + `/voters/v1/voter-tag/add-voter-relationship`, data)
+  }
+  
+  
+  public getRelationshipTags(data){
+    return this.http.get(this.url + `/voters/v1/voter-tag/get-voter-relationship`,{params:data})
+  }
+  
   
 }

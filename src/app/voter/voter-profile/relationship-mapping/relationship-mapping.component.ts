@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { HttpService } from 'src/app/service/http.service';
 
 @Component({
-  selector: 'app-primary-attributes',
-  templateUrl: './primary-attributes.component.html',
-  styleUrls: ['./primary-attributes.component.css']
+  selector: 'app-relationship-mapping',
+  templateUrl: './relationship-mapping.component.html',
+  styleUrls: ['./relationship-mapping.component.css']
 })
-export class PrimaryAttributesComponent implements OnInit {
+export class RelationshipMappingComponent implements OnInit {
   @Input() voterId;
   attributeList:any = [];
   tagList : any = [];
@@ -23,7 +23,7 @@ export class PrimaryAttributesComponent implements OnInit {
   _currLanguage : any;
   getAttributeList(keyword?){
     let data = {  "voter_id":this.voterId }
-    this.http.getVotersTagList(data).subscribe((res:any)=>{
+    this.http.getRelationshipTags(data).subscribe((res:any)=>{
       if(res.success){
         this.attributeList = res.data
       }
@@ -36,5 +36,4 @@ export class PrimaryAttributesComponent implements OnInit {
     data.append("voter_id",this.voterId);
     data.append("primary_attribute",this._currPrimaryAttributeID)
   }
-
 }

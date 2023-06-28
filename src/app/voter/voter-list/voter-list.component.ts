@@ -205,7 +205,12 @@ followUpList : any= []
   }
 
   getPipeValue(data) {
-    let temp = data.split(' ');
+    let temp;
+    if(data){
+      temp = data.split(' ');
+    }else{
+      return;
+    }
     let value;
     if (temp.length > 0) {
       for (let i = 0; i < temp.length; i++) {

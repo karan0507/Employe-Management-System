@@ -29,13 +29,15 @@ import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { PrimaryAttributesComponent } from './voter-profile/primary-attributes/primary-attributes.component';
+import { RelationshipMappingComponent } from './voter-profile/relationship-mapping/relationship-mapping.component';
 
 @NgModule({
   declarations: [
     VoterProfileComponent,
     AddEditVoterComponent,
     VoterListComponent,
-    PrimaryAttributesComponent
+    PrimaryAttributesComponent,
+    RelationshipMappingComponent
   ],
   imports: [
     CommonModule,

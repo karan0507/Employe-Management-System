@@ -400,12 +400,12 @@
 
                     <!-- Primary Attribute -->
                     <section *ngIf="_currTabName == 3">
-                        <!-- <app-primary-attributes [voterId]="_currVoterId"></app-primary-attributes> -->
+                        <app-primary-attributes [voterId]="_currVoterId"></app-primary-attributes>
                     </section>
 
                     <!-- Relationship -->
                     <section *ngIf="_currTabName == 4">
-
+                        <app-relationship-mapping [voterId]="_currVoterId"></app-relationship-mapping>
                     </section>
 
                 </nz-tab>

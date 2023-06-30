@@ -100,7 +100,6 @@ export class DashboardComponent implements OnInit {
             (res) => {
                 if (res['data']) {
                     this.LatestPostDataSet = res['data'];
-                    console.log("latest Post",this.LatestPostDataSet)
                     this.api_loader['postList'] = false
                 } else {
                     this.api_loader['postList'] = false
@@ -115,7 +114,6 @@ export class DashboardComponent implements OnInit {
         params_data['link'] = "https://www.facebook.com/dyadav.bhilai.official",
             params_data['end_point'] = "STRONG_FOLLOWERS_API_URL"
         if (tableFilter) {
-            console.log(tableFilter);
             if (type == 'pageIndex') {
                 this.followerPage = tableFilter;
             } else {
@@ -132,7 +130,6 @@ export class DashboardComponent implements OnInit {
                 if (res['data']) {
                     
                     this.StrongFollowersList = res['data'];
-                    console.log("StrongFollowersList", this.StrongFollowersList);
                     this.api_loader['followerList'] = false
                 }else{
                     this.api_loader['followerList'] = false
@@ -161,7 +158,6 @@ export class DashboardComponent implements OnInit {
     }
 
     openFacebook(url) {
-        console.log(url);
         window.open(url)
 
     }

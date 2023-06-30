@@ -74,7 +74,7 @@
                     <th nzWidth="8rem">Description</th>
 
                     <th nzWidth="8rem">Internal User</th>
-                    <th nzWidth="8rem">User Type</th>
+                    <!-- <th nzWidth="8rem">User Type</th> -->
                     <th nzWidth="8rem">Status</th>
                     <th nzWidth="8rem">Created At</th>
                     <th nzWidth="8rem">Updated At</th>
@@ -109,9 +109,9 @@
                             (data?.internal_user?.first_name + data?.internal_user?.last_name) :
                             (data?.internal_user?.first_name + data?.internal_user?.last_name)}} </td>
 
-                        <td nzWidth="8rem">{{ _currLanguage == 'en' ?
+                        <!-- <td nzWidth="8rem">{{ _currLanguage == 'en' ?
                             data?.internal_user?.user_type?.name :
-                            data?.internal_user?.user_type?.name }} </td>
+                            data?.internal_user?.user_type?.name }} </td> -->
                         <td nzWidth="8rem">{{data?.status ? data?.status : ''}}</td>
                         <td nzWidth="8rem">{{(data?.created_at ? (data?.created_at | date:'medium') : '-')}}</td>
                         <td nzWidth="8rem">{{(data?.updated_at ? (data?.updated_at | date:'medium') : '-')}}</td>

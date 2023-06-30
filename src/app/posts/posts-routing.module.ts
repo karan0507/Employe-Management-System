@@ -4,13 +4,25 @@ import { PostDetailComponent } from './post-detail/post-detail.component';
 
 const routes: Routes = [
     {
-        path: 'post-detail/:post-id',
+        path: 'post-detail',
         // canActivate: [NgxPermissionsGuard],
         component: PostDetailComponent,
         data: {
-            title: 'Post Detail',
+            parent: 'Dashboard',
+            title:'Post Detail',
+            home:{isVisible:true, url:'/dashboard/home'}
         }
-    }
+    },
+    // {
+    //     path: 'commounication-history',
+    //     // canActivate: [NgxPermissionsGuard],
+    //     component: CommunicationHistoryComponent,
+    //     data: {
+    //         parent: 'Commounication History ',
+    //         isButton:true,
+    //         url:'/profile',
+    //     }
+    // },
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { HttpService } from '../../service/http.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-post-detail',
@@ -45,14 +46,23 @@ export class PostDetailComponent implements OnInit {
     'liked': false,
     'comments': false,
   }
-  constructor(private http: HttpService, public message: NzMessageService) { }
+  constructor(private http: HttpService, public message: NzMessageService,private acRoute:ActivatedRoute) { }
 
+  _currPostId : any
   ngOnInit(): void {
-    var params_data = { "post_id": "799486741541605", "end_point": "POST_DETAIL_API_URL", "type": "" }
-    this.getBackgroundDataAPIFunction(params_data, "POST_DETAIL_API_URL")
-    this.getSharedList();
-    this.getlikedList();
-    this.getCommentList();
+    this.acRoute.queryParams.subscribe((param)=>{
+      if(param["post_id"]){
+        this._currPostId = param["post_id"];
+      }
+      if(this._currPostId){
+        var params_data = { "post_id": this._currPostId, "end_point": "POST_DETAIL_API_URL", "type": "" }
+        this.getBackgroundDataAPIFunction(params_data, "POST_DETAIL_API_URL")
+        this.getSharedList();
+        this.getlikedList();
+        this.getCommentList();
+      }
+    })
+   
     // this.getBackgroundDataAPIFunction(params_data, "POST_DETAIL_TABLE_DATA_API_URL", "Share")
 
     // this.getBackgroundDataAPIFunction(params_data, "POST_DETAIL_TABLE_DATA_API_URL", "Reaction")
@@ -105,14 +115,14 @@ export class PostDetailComponent implements OnInit {
   sharedList: any = [];
   sharePageInd = 1;
   shareTotalCount = null;
-  sharePageSize = 5;
+  sharePageSize = 10;
   shareTableLoading = false;
 
   getSharedList(tableFilter?) {
     this.api_loader['shared'] = true
     let params_data = {}
 
-    params_data = { "post_id": "799486741541605", "end_point": "POST_DETAIL_TABLE_DATA_API_URL", "type": "Share" }
+    params_data = { "post_id": this._currPostId, "end_point": "POST_DETAIL_TABLE_DATA_API_URL", "type": "Share" }
     if (tableFilter) {
       this.sharePageInd = tableFilter?.pageIndex;
       this.sharePageSize = tableFilter?.pageSize;
@@ -143,12 +153,12 @@ export class PostDetailComponent implements OnInit {
   likedList: any = [];
   likePageInd = 1;
   likeTotalCount = null;
-  likePageSize = 5;
+  likePageSize = 10;
   likeTableLoading = false;
   getlikedList(tableFilter?) {
     this.api_loader['liked'] = true
     let params_data = {}
-    params_data = { "post_id": "799486741541605", "end_point": "POST_DETAIL_TABLE_DATA_API_URL", "type": "Reaction" }
+    params_data = { "post_id": this._currPostId, "end_point": "POST_DETAIL_TABLE_DATA_API_URL", "type": "Reaction" }
     if (tableFilter) {
       this.likePageInd = tableFilter?.pageIndex;
       this.likePageSize = tableFilter?.pageSize;
@@ -178,14 +188,14 @@ export class PostDetailComponent implements OnInit {
   commentList: any = [];
   commentPageInd = 1;
   commentTotalCount = null;
-  commentPageSize = 5;
+  commentPageSize = 10;
   commentTableLoading = false;
   getCommentList(tableFilter?) {
 
     this.api_loader['comments'] = true
     let params_data = {}
-    params_data = { "post_id": "799486741541605", "end_point": "POST_DETAIL_TABLE_DATA_API_URL", "type": "Comments" }
-    // params_data = { "post_id": "799486741541605", "end_point": "POST_DETAIL_TABLE_DATA_API_URL", "type": "Reaction" }
+    params_data = { "post_id": this._currPostId, "end_point": "POST_DETAIL_TABLE_DATA_API_URL", "type": "Comments" }
+    // params_data = { "post_id": this._currPostId, "end_point": "POST_DETAIL_TABLE_DATA_API_URL", "type": "Reaction" }
     if (tableFilter) {
       this.commentPageInd = tableFilter?.pageIndex;
       this.commentPageSize = tableFilter?.pageSize;

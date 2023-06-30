@@ -90,7 +90,7 @@
                 <div class="col-lg-6 col-12">
                     <nz-form-item>
                         <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
-                            'Task End Date' : 'कार्य तिथि'}}
+                            'Task Date' : 'कार्य तिथि'}}
                         </nz-form-label>
                         <nz-form-control [nzSm]="16" [nzXs]="24"
                             [nzErrorTip]="_currLanguage == 'en' ? 'Please select  end date' : 'कृपया कार्य तिथि'">
@@ -100,6 +100,19 @@
                     </nz-form-item>
                 </div>
 
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'End Date' : 'कार्य तिथि'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select  end date' : 'कृपया कार्य तिथि'">
+                            <nz-date-picker nzInputReadOnly="true" formControlName="task_end_date"
+                                class="w-100"></nz-date-picker>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                
                 <!-- Voters -->
                 <div class="col-lg-6 col-12">
                     <nz-form-item>

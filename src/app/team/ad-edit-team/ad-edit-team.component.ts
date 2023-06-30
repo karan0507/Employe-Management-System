@@ -57,13 +57,13 @@ export class AdEditTeamComponent implements OnInit {
 
   createTeam(data?) {
     this.teamForm = this.fb.group({
-      first_name: [(data ? (this._currLanguage == 'en' ? data?.first_name : data?.first_name) : ''), [Validators.required]],
-      last_name: [(data ? (this._currLanguage == 'en' ? data?.last_name : data?.last_name) : ''), [Validators.required]],
+      first_name: [(data?.first_name ? (this._currLanguage == 'en' ? data?.first_name : data?.first_name) : ''), [Validators.required]],
+      last_name: [(data?.last_name ? (this._currLanguage == 'en' ? data?.last_name : data?.last_name) : ''), [Validators.required]],
       user_type: [(data ? data?.user_type?.id : ''),[Validators.required]],
       designation: [(data ? (this._currLanguage == 'en' ? data?.designation : data?.designation) : ''),[Validators.required]],
       date_of_birth : [data?.date_of_birth ? data?.date_of_birth : ''],
-      mobile: [(data ? (this._currLanguage == 'en' ? data?.mobile : data?.mobile) : ''), [Validators.required]],
-      email: [(data ? (this._currLanguage == 'en' ? data?.email : data?.email) : '')],
+      mobile: [(data.mobile ? (this._currLanguage == 'en' ? data?.mobile : data?.mobile) : ''), [Validators.required]],
+      email: [(data.email ? (this._currLanguage == 'en' ? data?.email : data?.email) : '')],
       whatsapp_number: [data?.whatsapp_number ? data?.whatsapp_number : ''],
       landline_number: [data?.landline_number ? data?.landline_number : '',],
       studies: [data?.studies ? data?.studies : ''],

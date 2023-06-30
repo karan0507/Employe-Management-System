@@ -386,5 +386,9 @@ export class HttpService {
     return this.http.get(this.url + `/voters/v1/voter-tag/get-voter-primary-attributes`,{params:data})
   }
   
+  public getRelationList(data){
+    return this.http.get(this.url + `/voters/v1/voter-tag/get-voter-relationship`, {params:data})
+  }
+  
   
 }

@@ -18,7 +18,10 @@
                     <!-- <span *ngIf="_currHeaderData?.isButton && !(_currHeaderData?.isHome)"
                         [routerLink]="_currHeaderData?.url" class="font-size-18 mr-3 text-dark" nz-icon
                         nzType="arrow-left" nzTheme="outline"></span> -->
-                        <h5 class="page-title mr-2 mb-0" *ngIf="breadcrumbs$ | async; let breadcrumbs">{{showBreadCrumb}}</h5>
+                        <!-- <img src="../../../assets/images/Ext_Images/Ellipse 1201cng_log.svg" routerLink="/dashboard/home" alt="" height="50px"
+                            class="h-auto mr-3"> -->
+                            <span *ngIf="_currHeaderData?.home?.isVisible" class="font-size-16 font-weight-semibold mx-3" routerLink="/dashboard/home" nz-icon nzType="home" nzTheme="fill"></span>
+                            <h5 class="page-title mr-2 mb-0" *ngIf="breadcrumbs$ | async; let breadcrumbs">{{showBreadCrumb}}</h5>
                         <nz-breadcrumb>
                             <span *ngIf="isSlash">/</span>
                             <nz-breadcrumb-item class="pl-2" *ngFor="let breadcrumb of breadcrumbs$ | async">

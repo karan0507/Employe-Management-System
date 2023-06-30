@@ -1,14 +1,14 @@
-<div class="d-flex mb-3">
+<!-- <div class="d-flex mb-3">
 	<h4><a routerLink="/dashboard/home" class="text-dark">
 			<span class="font-size-16 font-weight-semibold mx-3" nz-icon nzType="home" nzTheme="fill"></span>Dashboard
 		</a></h4>
 
-</div>
+</div> -->
 <main>
 	<section style="height: 20rem; overflow: hidden;">
 		<div class="row">
-			<div class="col-md-3">
-				<!-- <img src="{{postDetailData?.image_url}}" class="w-100" /> -->
+			<div class="col-md-3 mb-3">
+				<img [src]="postDetailData?.image" class="w-100" />
 			</div>
 			<div class="col-md-9">
 				<h3>Post ID - {{postDetailData?.post_id}}</h3>

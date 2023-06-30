@@ -170,7 +170,7 @@ export class AdEditTeamComponent implements OnInit {
     data.append('whatsapp_number', this.teamForm.get('whatsapp_number').value)
     data.append('landline_number', this.teamForm.get('landline_number').value)
     data.append('studies', this.teamForm.get('studies').value)
-    data.append('date_of_birth', moment(this.teamForm.get('date_of_birth').value).format("YYYY-MM-DD"))
+    data.append('date_of_birth', this.teamForm.get('date_of_birth').value ? moment(this.teamForm.get('date_of_birth').value).format("YYYY-MM-DD")  : "")
     
     // data.append('speed', this.teamForm.get('speed').value)
     data.append('residential', this.teamForm.get('residential').value)

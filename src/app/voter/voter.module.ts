@@ -30,6 +30,7 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { PrimaryAttributesComponent } from './voter-profile/primary-attributes/primary-attributes.component';
 import { RelationshipMappingComponent } from './voter-profile/relationship-mapping/relationship-mapping.component';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { RelationshipMappingComponent } from './voter-profile/relationship-mappi
     NzUploadModule,
     NzPageHeaderModule,
     NzCollapseModule,
-    NzToolTipModule
+    NzToolTipModule,
+    NzSpinModule
   ]
 })
 export class VoterModule { }

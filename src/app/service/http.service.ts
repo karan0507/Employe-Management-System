@@ -383,7 +383,7 @@ export class HttpService {
   
   
   public getRelationshipTags(data){
-    return this.http.get(this.url + `/voters/v1/voter-tag/get-voter-relationship`,{params:data})
+    return this.http.get(this.url + `/voters/v1/voter-tag/get-voter-primary-attributes`,{params:data})
   }
   
   

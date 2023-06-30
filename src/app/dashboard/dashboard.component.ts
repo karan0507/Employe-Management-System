@@ -99,7 +99,8 @@ export class DashboardComponent implements OnInit {
         this.http.getDataFromBackgroundFunction(params_data).subscribe(
             (res) => {
                 if (res['data']) {
-                    this.LatestPostDataSet = res['data']
+                    this.LatestPostDataSet = res['data'];
+                    console.log("latest Post",this.LatestPostDataSet)
                     this.api_loader['postList'] = false
                 } else {
                     this.api_loader['postList'] = false
@@ -129,7 +130,9 @@ export class DashboardComponent implements OnInit {
         this.http.getDataFromBackgroundFunction(params_data).subscribe(
             (res) => {
                 if (res['data']) {
+                    
                     this.StrongFollowersList = res['data'];
+                    console.log("StrongFollowersList", this.StrongFollowersList);
                     this.api_loader['followerList'] = false
                 }else{
                     this.api_loader['followerList'] = false

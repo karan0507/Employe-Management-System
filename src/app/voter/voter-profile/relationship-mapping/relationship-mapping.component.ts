@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { HttpService } from 'src/app/service/http.service';
 
 @Component({
@@ -9,11 +10,9 @@ import { HttpService } from 'src/app/service/http.service';
 export class RelationshipMappingComponent implements OnInit {
   @Input() voterId;
   attributeList:any = [];
-  tagList : any = [];
-  constructor(private http:HttpService) { }
+  constructor(private http:HttpService, private message : NzMessageService) { }
 
   ngOnInit(): void {
-    console.log(this.voterId);
     this._currLanguage = localStorage.getItem("appLanguage") || 'en';
     if(this.voterId){
       this.getAttributeList();
@@ -23,17 +22,63 @@ export class RelationshipMappingComponent implements OnInit {
   _currLanguage : any;
   getAttributeList(keyword?){
     let data = {  "voter_id":this.voterId }
+    data['for_relationship'] = "YES";
     this.http.getRelationshipTags(data).subscribe((res:any)=>{
       if(res.success){
-        this.attributeList = res.data
+        this.attributeList = res.data;
+    
+        this.attributeList.forEach(element=>{
+          element['_currTagValue'] = "";
+          element['_isVisible'] = false;
+        });
       }
     })
   }
 
+  debounce: any;
+  tagsList : any;
   _currPrimaryAttributeID : any;
-  getTagLIst(){
-    let data = new FormData();
-    data.append("voter_id",this.voterId);
-    data.append("primary_attribute",this._currPrimaryAttributeID)
+  getTagLIst(isSearch?, key?){
+    let data = {  "model_name":"TagMaster" }
+    clearTimeout(this.debounce);
+    this.debounce = setTimeout(() => {
+      this.http.getMasterData(data).subscribe((res:any)=>{
+        if(res.success){
+          this.tagsList = res.data
+        }
+      })
+    }, 500);
+   
   }
+
+  addTagForAttribute(data){
+   
+    for (let i = 0; i < this.tagsList.length; i++) {
+      const element = this.tagsList[i];
+      if(element?.name?.en == data._currTagValue){
+        this.message.warning("The tag is already mapped");
+        return ;
+      }
+    }
+    let param = {"voter_id":[this.voterId],"primary_attribute":data?.id, "tag":data?._currTagValue};
+    this.http.addVoterTasg(param).subscribe((res:any)=>{
+      if(res.success){
+        console.log("Shoe",res);
+        this.message.success(res.message);
+        this.getAttributeList();
+      }else{
+        this.message.error(res.message)
+      }
+    })
+  }
+
+  test(data,id){
+    this.attributeList[id]._currTagValue = data.target.value;
+    if(this.tagsList?.lengt == 0 || this.tagsList == undefined || this.tagsList == null){
+      return
+     }
+
+    let temp  = this.tagsList.find(item=>{  item?.name?.en == this.attributeList[id]._currTagValue }) ;
+  }
+
 }

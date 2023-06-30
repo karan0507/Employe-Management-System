@@ -154,8 +154,6 @@ export class CommonLayoutComponent  {
                 this._currLang = localStorage.getItem('appLanguage')
                 this.globalAccData = res.data;
                 this.globaldata.sendGlobalAccountData(res.data);
-                console.log(res.data);
-                
                 localStorage.setItem('global_account_data',JSON.stringify(res.data))
             }
         })

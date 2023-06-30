@@ -60,7 +60,7 @@ export class AdEditTeamComponent implements OnInit {
       first_name: [(data ? (this._currLanguage == 'en' ? data?.first_name : data?.first_name) : ''), [Validators.required]],
       last_name: [(data ? (this._currLanguage == 'en' ? data?.last_name : data?.last_name) : ''), [Validators.required]],
       user_type: [(data ? data?.user_type?.id : ''),[Validators.required]],
-      designation: [(data ? (this._currLanguage == 'en' ? data?.designation : data?.designation) : '')],
+      designation: [(data ? (this._currLanguage == 'en' ? data?.designation : data?.designation) : ''),[Validators.required]],
       date_of_birth : [data?.date_of_birth ? data?.date_of_birth : ''],
       mobile: [(data ? (this._currLanguage == 'en' ? data?.mobile : data?.mobile) : ''), [Validators.required]],
       email: [(data ? (this._currLanguage == 'en' ? data?.email : data?.email) : '')],

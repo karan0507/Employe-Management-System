@@ -23,6 +23,8 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- Latest Posts -->
 			<div class="col-md-6">
 				<nz-card nzTitle="Latest Posts" [nzLoading]="api_loader['postList']" [nzExtra]="extraTemplate" style="height: 25rem; overflow: scroll;">
 					<nz-list nzItemLayout="vertical">
@@ -67,6 +69,8 @@
 			    </ng-template>
 				<nz-pagination [nzPageIndex]="postPage" [nzTotal]="postPageSize" (nzPageIndexChange)="getPostList($event,'pageIndex')" (nzPageSizeChange)="getPostList($event,'')"></nz-pagination>
 			</div>
+
+			<!-- Strong Followers -->
 			<div class="col-md-6">
 				<nz-card nzTitle="Strong Followers" [nzLoading]="api_loader['followerList']" [nzExtra]="extraTemplate" style="height: 25rem; overflow: scroll;">
 					<nz-list nzItemLayout="vertical">

@@ -1,28 +1,26 @@
 <section>
-    <nz-card [nzTitle]="adAttribute" *ngFor="let item of attributeList">
+    <nz-card [nzTitle]="adAttribute" *ngFor="let item of attributeList; let i = index">
         <ng-template #adAttribute>
             <div class="d-flex align-items-center flex-wrap w-100">
-                <h6 class="mr-5">{{_currLanguage == 'en' ? item?.primary_attribute?.name?.en :
-                    item?.primary_attribute?.name?.hi}}</h6>
-                <nz-select nzPlaceHolder="Select Actvity" class="selectFilter mr-2" nzShowSearch nzAllowClear
-                    (nzFocus)="getAttributeList(item?.id)">
-                    <nz-option *ngFor="let item of activityList" [nzValue]="item?.id"
+                <h6 class="mr-5">{{_currLanguage == 'en' ? item?.name?.en :
+                    item?.name?.hi}}</h6>
+                <nz-select [(ngModel)]="item._currTagValue" nzPlaceHolder="Select Actvity" class="selectFilter mr-2" nzShowSearch nzAllowClear
+                    (nzFocus)="getTagLIst(item?.id)" (keyup)="test($event,i)">
+                    <nz-option *ngFor="let item of tagsList" [nzValue]="item?.name?.en ? item?.name?.en : item?.name?.hi"
                         [nzLabel]="_currLanguage == 'en' ? item?.name?.en : item?.name?.hi">
                     </nz-option>
                 </nz-select>
-                <span nz-icon nzType="plus-circle" nzTheme="outline"></span>
-
+                <span nz-icon nzType="plus-circle" nzTheme="outline" (click)="addTagForAttribute(item)"></span>
             </div>
         </ng-template>
         <div class="d-flex flex-wrap align-items-center">
-            <!-- <nz-tag *ngFor="let tag of tags; let i = index" [nzMode]="i === 0 ? 'default' : 'closeable'"
-                (nzOnClose)="handleClose(tag)">
-                {{ sliceTagName(tag) }}
-            </nz-tag> -->
-            <nz-tag [nzColor]="'purple'">
+            <nz-tag *ngFor="let tag of item?.tags; let i = index">
+                {{  tag ? (_currLanguage == "en" ?  tag?.name?.en : tag?.name?.hi): "" }}
+            </nz-tag>
+            <!-- <nz-tag [nzColor]="'purple'" nf>
                 {{_currLanguage == 'en' ? item?.tag?.name?.en :
                     item?.tag?.name?.hi}}
-            </nz-tag>
+            </nz-tag> -->
         </div>
     </nz-card>
 </section>

@@ -51,14 +51,7 @@ export class PrimaryAttributesComponent implements OnInit {
   }
 
   addTagForAttribute(data){
-   
-    for (let i = 0; i < this.tagsList.length; i++) {
-      const element = this.tagsList[i];
-      if(element?.name?.en == data._currTagValue){
-        this.message.warning("The tag is already mapped");
-        return ;
-      }
-    }
+  
     let param = {"voter_id":[this.voterId],"primary_attribute":data?.id, "tag":data?._currTagValue};
     this.http.addVoterTasg(param).subscribe((res:any)=>{
       if(res.success){

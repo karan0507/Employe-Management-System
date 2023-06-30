@@ -120,6 +120,8 @@ export class AddEditTaskComponent implements OnInit {
       places: [data?.place ? data?.place?.id : []],
       sector: [data?.sector ? data?.sector : [],],
       task_date: [data?.task_date ? data?.task_date : '', [Validators.required]],
+      task_end_date: [data?.task_end_date ? data?.task_end_date : '', [Validators.required]],
+      
     })
 
     if (this.taskDetails?.voters?.length > 0) {
@@ -143,6 +145,7 @@ export class AddEditTaskComponent implements OnInit {
     form_data.append('discription', this.taskForm.get('discription').value);
     form_data.append('internal_user', JSON.stringify(this.taskForm.get('internal_user').value));
     form_data.append('task_date', this.taskForm.get('task_date').value ? moment(this.taskForm.get('task_date').value).format("YYYY-MM-DD") : '');
+    form_data.append('task_end_date', this.taskForm.get('task_end_date').value ? moment(this.taskForm.get('task_end_date').value).format("YYYY-MM-DD") : '');
 
     if (this.taskForm.get('voters').value[0]) {
       form_data.append('voters', JSON.stringify(this.taskForm.get('voters').value));

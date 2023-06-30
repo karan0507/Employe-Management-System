@@ -121,13 +121,13 @@
                                         </td>
                                         <td class="text-left" [nzWidth]="'14rem'">
                                             <a [routerLink]="['/voter/view-profile']" [queryParams]="{id:data.id}">
-                                                {{_currLanguage == 'en' ? data?.full_name_en : full_name_hi}}
+                                                {{_currLanguage == "en" ? data?.first_name_en + " " + data?.last_name_en : data?.first_name_hi + " " + data?.last_name_hi}}
                                             </a>
                                         </td>
                                         <td>{{data?.mobile ? data?.mobile : '-'}}</td>
                                         <td>{{data?.caste ? data?.caste : '-'}}</td>
                                         <td>{{data?.epic_no}}</td>
-                                        <td>{{data?.age + " / " + data?.gender}} </td>
+                                        <td>{{data?.age + (data?.gender ? " / " + data?.gender : "")}} </td>
                                         <td>
                                             <span nz-icon *ngIf="data?.is_benificary" nzType="check-circle"
                                                 class="text-success" nzTheme="outline"></span>

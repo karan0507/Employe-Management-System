@@ -142,7 +142,18 @@
                         </nz-form-control>
                     </nz-form-item>
                 </div>
-
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left">{{_currLanguage == 'en' ?
+                            'Whatsapp Number' : 'लैंडलाइन नंबर'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter Landline Number' : 'कृपया लैंडलाइन नंबर जांचें'">
+                            <input type="text" nz-input formControlName="whatsapp_number"
+                                [placeholder]="_currLanguage == 'en' ? 'Enter Whatsapp Number' : 'कृपया लैंडलाइन नंबर जांचें'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
                 <div class="col-lg-6 col-12">
                     <nz-form-item>
                         <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left">{{_currLanguage == 'en' ?

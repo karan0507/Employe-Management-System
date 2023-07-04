@@ -21,6 +21,7 @@ export class GlobalService {
 
   // Current App Nav;
   public globalNavValue = new BehaviorSubject<any>('');
+  public global_error_link = new BehaviorSubject<any>('');
 
   constructor(public message: NzMessageService, public http: HttpService) { }
 
@@ -30,6 +31,11 @@ export class GlobalService {
   sendUserData(data: any) {
     this.globalUserData.next(data);
   }
+
+  public setErrorLink(url){
+    this.global_error_link.next(url)
+  }
+
 
   sendGlobalAccountData(data: any) {
     this.globalAccountData.next(data);

@@ -4,7 +4,7 @@
         'is-expand' : isExpand
     }">
     <app-header ></app-header>
-    <app-sidenav class="d-md-block d-none"></app-sidenav>
+    <app-sidenav class="d-block"></app-sidenav>
     <div class="page-container pt-3 pt-5">
         <div class="bg-white main-content h-unset pt-5 pb-3"
             [ngClass]="!showBreadCrumb ? 'd-flex align-items-center' : ''" *ngIf="contentHeaderDisplay !== 'none'">
@@ -39,10 +39,10 @@
             <h4 class="font-weight-semibold d-none" [ngClass]="showBreadCrumb ? 'mt-4' : ''"
                 *ngIf="breadcrumbs$ | async; let breadcrumbs">{{(breadcrumbs[breadcrumbs.length - 1]?.label)}}</h4>
         </div>
-        <div class="main-content p-3 py-5" [ngClass]="contentHeaderDisplay !== 'none' ? 'pt-5' : ''">
+        <div class="main-content p-3 mb-5 py-3" [ngClass]="contentHeaderDisplay !== 'none' ? '' : ''">
             <router-outlet></router-outlet>
         </div>
-        <app-footer class="d-md-none d-flex"></app-footer>
+        <app-footer class="d-none"></app-footer>
     </div>
 </div>
 

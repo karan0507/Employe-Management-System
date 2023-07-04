@@ -5,19 +5,20 @@
 
 </div> -->
 <main>
-	<section style="height: 20rem; overflow: hidden;">
-		<div class="row">
-			<div class="col-md-3 mb-3">
-				<img [src]="postDetailData?.image" class="w-100" />
+	<section>
+		<div class="row mb-3 h-100">
+			<div class="col-md-3 pb-3 h-100">
+				<img [src]="postDetailData?.image" class="w-100" style="height: 18rem;"/>
 			</div>
 			<div class="col-md-9">
 				<h3>Post ID - {{postDetailData?.post_id}}</h3>
-				<h3>{{postDetailData?.title}}</h3>
+				<h5 class="text-muted">Post Date - {{postDetailData?.post_on ? (postDetailData?.post_on | date:'medium') : ''}}</h5>
+				<p>{{postDetailData?.title}}</p>
 
-				<h3>Post Date - {{postDetailData?.post_on ? (postDetailData?.post_on | date:'medium') : ''}}</h3>
+				
 
 				<div class="row">
-					<div class="col-md-4" *ngFor="let a_data of listMatricsData; index as i">
+					<div class="col-md-4 mb-3" *ngFor="let a_data of listMatricsData; index as i">
 						<nz-card class="h-100 d-flex align-items-center pointer">
 							<div class="media align-items-center">
 								<nz-avatar [nzSize]="60" [nzIcon]="a_data.icon" [ngClass]="a_data.class"></nz-avatar>
@@ -42,7 +43,7 @@
 
 	<section>
 		<div class="row">
-			<div class="col-md-4">
+			<div class="col-md-4 col-12">
 				<nz-card [nzTitle]="titleShared">
 					<ng-template #titleShared>
 						<div class="d-flex">
@@ -58,7 +59,7 @@
 						<nz-table #rowSelectionTable [nzData]="sharedList" [nzTotal]="shareTotalCount"
 							[nzFrontPagination]="false" [nzShowSizeChanger]="true" [nzPageIndex]="sharePageInd"
 							[nzPageSize]="sharePageSize" (nzQueryParams)="sharedList[0] ? getSharedList($event) : null"
-							[nzShowTotal]="botTotalCount" [nzLoading]="api_loader['shared']">
+							[nzShowTotal]="botTotalCount" [nzLoading]="api_loader['shared']" [nzScroll]="{ x: '1500px', y: '50vh' }">
 							<thead>
 								<tr>
 									<th nzWidth="3rem">#</th>
@@ -143,7 +144,7 @@
 						<nz-table #rowSelectionTable [nzData]="likedList" [nzTotal]="likeTotalCount"
 							[nzFrontPagination]="false" [nzShowSizeChanger]="true" [nzPageIndex]="likePageInd"
 							[nzPageSize]="likePageSize" (nzQueryParams)="likedList[0] ? getlikedList($event) : null"
-							[nzShowTotal]="likedFooter" [nzLoading]="api_loader['liked']">
+							[nzShowTotal]="likedFooter" [nzLoading]="api_loader['liked']" [nzScroll]="{ x: '1500px', y: '50vh' }">
 
 							<thead>
 								<tr>
@@ -190,7 +191,7 @@
 							[nzFrontPagination]="false" [nzShowSizeChanger]="true" [nzPageIndex]="commentPageInd"
 							[nzPageSize]="commentPageSize"
 							(nzQueryParams)="commentList[0] ? getCommentList($event) : null"
-							[nzShowTotal]="comentFooter" [nzLoading]="api_loader['comments']">
+							[nzShowTotal]="comentFooter" [nzLoading]="api_loader['comments']" [nzScroll]="{ x: '1500px', y: '50vh' }">
 							<thead>
 								<tr>
 									<th nzWidth="3rem">Sr No.</th>

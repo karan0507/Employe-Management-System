@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { GlobalService } from 'src/app/service/global.service';
 import { HttpService } from 'src/app/service/http.service';
@@ -20,7 +21,7 @@ export class AccountListComponent implements OnInit {
   _currSearchValue : any;
   _currLanguage : any;
   globalData : any;
-  constructor(private http:HttpService, private message:NzMessageService, private global : GlobalService) { }
+  constructor(private http:HttpService, private message:NzMessageService, private global : GlobalService, private router:Router) { }
 
   ngOnInit(): void {
     this._currLanguage = localStorage.getItem("appLanguage") || 'en';
@@ -97,4 +98,10 @@ export class AccountListComponent implements OnInit {
 
   }
 
+  openURL(url){
+    console.log(url);
+    
+    this.global.setErrorLink(url);
+    this.router.navigateByUrl("/error-1");
+  }
 }

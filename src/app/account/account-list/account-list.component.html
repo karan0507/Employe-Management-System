@@ -1,4 +1,4 @@
-<div class="d-md-block d-none">
+<div class="d-block">
     <div class="d-flex justify-content-end mb-3">
         <button nz-button nzType="primary" routerLink="/media-account/add-account">+ Add New Account </button>
     </div>
@@ -57,7 +57,7 @@
                     <tbody>
                         <tr *ngFor="let data of accountList; let i = index">
                             <td nzWidth="5rem"> {{i+1}}</td>
-                            <td> <a [href]="data.link">{{ data.link }}</a> </td>
+                            <td> <a (click)="openURL('/media-account')" >{{ data.link }}</a> </td>
                             <td nzWidth="10rem">{{ data.link_type}}</td>
                             <td nzWidth="10rem">{{ data.social_handle }}</td>
                             <td nzWidth="10rem">

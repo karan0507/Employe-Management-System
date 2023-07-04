@@ -4,6 +4,8 @@
         color: $body-color;
         font-weight: $font-weight-semibold;
         height: $input-height;
+        overflow-wrap: break-word;
+        text-wrap: balance;
     }
 }
 

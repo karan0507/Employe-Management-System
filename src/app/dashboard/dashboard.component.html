@@ -1,6 +1,6 @@
 <main>
 	<section>
-		<div class="row">
+		<div class="row my-3">
 
 			<div class="col-md-6">
 				<div class="row">
@@ -83,14 +83,66 @@
 					style="height: 100vh; overflow: scroll;">
 					<nz-list nzItemLayout="vertical">
 						<nz-list-item *ngFor="let item of LatestPostDataSet">
-							<nz-list-item-meta>
+							<div class="d-flex flex-column">
+								<div class="d-flex flex-column justify-content-center align-items-center mx-auto my-2">
+									<img style="width: 100px; height: 80px;" class="post_image_style mx-auto" alt="logo"
+										[src]="item.image" />
+									<!-- <button nz-button nz-button></button> -->
+								</div>
+								<div class="d-flex justify-content-between flex-wrap">
+									
+									<div class="d-flex flex-column">
+										<div class="d-flex">
+											<nz-avatar [nzSrc]="item?.social_user?.profile_picture ? item?.social_user?.profile_picture : 'assets/images/avatars/default.png'">
+										
+											</nz-avatar>
+										<div class="mx-3">
+											<a [routerLink]="['/posts/post-detail/']" [queryParams]="{post_id:item?.post_id}"
+											class="text-secondary ">{{ item.post_id }}</a>
+											<label for="" class="text-muted mx-3 font-size-12">{{ item.post_on | date: 'medium'}}</label>
+											
+										</div>
+										</div>
+										<p class="m-3">
+											{{ item.title }}
+										</p>
+										
+										
+									</div>
+									<!-- <div class="d-lg-flex d-none flex-column">
+										<img style="width: 100px; height: 80px;" class="post_image_style mx-auto" alt="logo"
+											[src]="item.image" />
+										
+									</div> -->
+								</div>
+								<ul nz-list-item-actions>
+									<nz-list-item-action>
+										<span nz-icon nzType="like" style="margin-right: 8px;"></span>
+										{{item.total_likes}}
+									</nz-list-item-action>
+									<nz-list-item-action>
+										<span nz-icon nzType="comment" style="margin-right: 8px;"></span>
+										{{item.total_comments}}
+									</nz-list-item-action>
+									<nz-list-item-action>
+										<span nz-icon nzType="share-alt" style="margin-right: 8px;"></span>
+										{{item.total_shares}}
+									</nz-list-item-action>
+									<nz-list-item-action>
+										<span nz-icon (click)="openFacebook(item.post_url)" nzType="facebook"
+											style="margin-right: 8px;"></span>
+	
+									</nz-list-item-action> 
+								</ul>
+							</div>
+							<!-- <nz-list-item-meta>
 								<nz-list-item-meta-avatar
 									[nzSrc]="item?.social_user?.profile_picture ? item?.social_user?.profile_picture : 'assets/images/avatars/default.png'"
 									alt></nz-list-item-meta-avatar>
 								<nz-list-item-meta-title>
 									<a [routerLink]="['/posts/post-detail/']" [queryParams]="{post_id:item?.post_id}"
 										class="text-secondary">{{ item.post_id }}</a>
-									<!-- [queryParams]="{id:item?.id}" -->
+									[queryParams]="{id:item?.id}"
 								</nz-list-item-meta-title>
 								<nz-list-item-meta-description>
 									{{ item.post_on | date: 'medium'}}
@@ -114,9 +166,9 @@
 									<span nz-icon (click)="openFacebook(item.post_url)" nzType="facebook"
 										style="margin-right: 8px;"></span>
 
-								</nz-list-item-action>
-							</ul>
-							<nz-list-item-extra>
+								</nz-list-item-action> -->
+							<!-- </ul> -->
+							<nz-list-item-extra class="d-none">
 								<div class="d-flex flex-column">
 									<img style="width: 100px; height: 80px;" class="post_image_style" alt="logo"
 										[src]="item.image" />

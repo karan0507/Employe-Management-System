@@ -11,7 +11,7 @@
                         <i nz-icon nzType="search"></i>
                     </button>
                 </ng-template>
-                <button nz-button nzType="default" class="ml-3 mb-2" nzShape="circle" (click)="resetFilter()">
+                <button nz-button nzType="default" class="ml-2 mb-2" nzShape="circle" (click)="resetFilter()">
                     <i nz-icon nzType="undo"></i>
                 </button>
             </div>
@@ -37,13 +37,13 @@
                 </nz-option>
             </nz-select> -->
 
-            <button nz-button nzType="link" class="mb-2 mr-3 border" (click)="isImport = true">Import Task</button>
+            <button nz-button nzType="link" class="mb-2 mr-2 border" (click)="isImport = true">Import Task</button>
 
-            <button nz-button nzType="link" class="mb-2 mr-3 border" (click)="onDownloadSampleFile()">
+            <button nz-button nzType="link" class="mb-2 mr-2 border" (click)="onDownloadSampleFile()">
                 <span nz-icon nzType="download" nzTheme="outline" class="pr-2"></span> Download Sample File
             </button>
-            <button nz-button nzType="link" class="mb-2 mr-3 border" (click)="quickViewVisible = true;">Filters</button>
-            <button nz-button nzType="primary" class="mb-2 mr-3" routerLink="/task-management/add-task">+ Add New
+            <button nz-button nzType="link" class="mb-2 mr-2 border" (click)="quickViewVisible = true;">Filters</button>
+            <button nz-button nzType="primary" class="mb-2 mr-2" routerLink="/task-management/add-task">+ Add New
                 Task</button>
             <!-- <button nz-button nzType="primary" class="mb-2 mr-3" (click)="getTaskList()"
                 [nzLoading]="api_loader['list']">

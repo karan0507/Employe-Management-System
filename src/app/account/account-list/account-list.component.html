@@ -1,5 +1,5 @@
 <div class="d-block">
-    <div class="d-flex justify-content-end mb-3">
+    <div class="d-flex justify-content-end mb-2">
         <button nz-button nzType="primary" routerLink="/media-account/add-account">+ Add New Account </button>
     </div>
     <div class="row">
@@ -24,14 +24,14 @@
                     </div>
                     <div class="col-lg-8 col-12 mb-2 d-flex flex-wrap justify-content-end">
             
-                        <nz-select nzShowSearch class="selectFilter mb-2 mr-3" nzPlaceHolder="Select Social Media" [(ngModel)]="currSocialMedia" (ngModelChange)="getaccountList()" nzAllowClear>
+                        <nz-select nzShowSearch class="selectFilter mb-2 mr-2" nzPlaceHolder="Select Social Media" [(ngModel)]="currSocialMedia" (ngModelChange)="getaccountList()" nzAllowClear>
                             <nz-option [nzValue]="'FACEBOOK'" [nzLabel]="'Facebook'">
                             </nz-option>
                             <nz-option [nzValue]="'TWITTER'" [nzLabel]="'Twitter'"></nz-option>
                             <nz-option [nzValue]="'LINKED-IN'" [nzLabel]="' LinkedIn'">
                             </nz-option>
                         </nz-select>
-                        <nz-select nzShowSearch class="selectFilter mb-2 mr-3" nzPlaceHolder="Select Link Type" [(ngModel)]="currLinkTpye" (ngModelChange)="getaccountList()" nzAllowClear>
+                        <nz-select nzShowSearch class="selectFilter mb-2 mr-2" nzPlaceHolder="Select Link Type" [(ngModel)]="currLinkTpye" (ngModelChange)="getaccountList()" nzAllowClear>
                             <nz-option [nzValue]="'FOR'" [nzLabel]="'For'">
                             </nz-option>
                             <nz-option [nzValue]="'AGAINSST'" [nzLabel]="'Against'">

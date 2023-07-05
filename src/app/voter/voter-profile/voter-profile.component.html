@@ -65,7 +65,7 @@
                     </ng-template>
                     <section *ngIf="_currTabName == 0">
                         <div class="row">
-                            <div class="col-md-12 my-3" *ngFor="let item of profileLogs">
+                            <div class="col-md-12 my-3" *ngFor="let item of profileLogs; let i = index;">
                                 <div class="d-flex justify-content-between align-items-center w-100">
                                     <div class="d-flex flex-column">
                                         <label>{{item?.title}}</label>
@@ -75,63 +75,64 @@
                                         <img [src]="item?.icon" alt="">
                                     </div>
                                 </div>
+                                <h4 *ngIf="i == profileLogs.length -1">Political Details</h4>
                                 <nz-divider class="my-2"></nz-divider>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section *ngIf="_currTabName == 1">
-                        <div class="row">
-                            <div class="col-md-12 my-3" *ngFor="let item of politicalList">
-                                <div class="d-flex justify-content-between align-items-center w-100">
-                                    <div class="d-flex flex-column">
-                                        <label>{{item?.title}}</label>
-                                        <h6 class="mb-0">{{item?.value}}</h6>
+                                 <!-- Political Data -->
+                            <div class="row" *ngIf="item?.isPolitical">
+                                <div class="col-md-12 my-3" *ngFor="let item of item?.politicalList">
+                                    <div class="d-flex justify-content-between align-items-center w-100">
+                                        <div class="d-flex flex-column">
+                                            <label>{{item?.title}}</label>
+                                            <h6 class="mb-0">{{item?.value}}</h6>
+                                        </div>
+                                        <div>
+                                            <img [src]="item?.icon" alt="">
+                                        </div>
                                     </div>
-                                    <div>
-                                        <img [src]="item?.icon" alt="">
-                                    </div>
+                                    <nz-divider class="my-2"></nz-divider>
                                 </div>
-                                <nz-divider class="my-2"></nz-divider>
+                                <div class="col-md-12 my-3">
+                                    <nz-card class="shadow-sm border">
+                                        <div class="d-flex">
+                                            <h5>Comments</h5>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="d-flex flex-column">
+                                                    <h6 class="mb-2 text-primary">Shreya</h6>
+                                                    <label class="py-2 text-left"
+                                                        style="background-color: rgb(238, 238, 238); padding-inline:2rem ;">Hii</label>
+                                                    <label class="font-size-12 text-muted">03/01/2022 : 11:29 am</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6"></div>
+                                            <div class="col-md-6"></div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex flex-column my-3">
+                                                    <label class="py-2 text-right"
+                                                        style="background-color: rgb(238, 238, 238); padding-inline:2rem ;">Lorem
+                                                        ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                                        tempor
+                                                        incididunt ut labore et dolore magna aliqua.
+                                                    </label>
+                                                    <label class="font-size-12 text-muted text-right">03/01/2022 : 11:29
+                                                        am</label>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                    </nz-card>
+                                </div>
                             </div>
-                            <div class="col-md-12 my-3">
-                                <nz-card class="shadow-sm border">
-                                    <div class="d-flex">
-                                        <h5>Comments</h5>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="d-flex flex-column">
-                                                <h6 class="mb-2 text-primary">Shreya</h6>
-                                                <label class="py-2 text-left"
-                                                    style="background-color: rgb(238, 238, 238); padding-inline:2rem ;">Hii</label>
-                                                <label class="font-size-12 text-muted">03/01/2022 : 11:29 am</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6"></div>
-                                        <div class="col-md-6"></div>
-                                        <div class="col-md-6">
-                                            <div class="d-flex flex-column my-3">
-                                                <label class="py-2 text-right"
-                                                    style="background-color: rgb(238, 238, 238); padding-inline:2rem ;">Lorem
-                                                    ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                                    tempor
-                                                    incididunt ut labore et dolore magna aliqua.
-                                                </label>
-                                                <label class="font-size-12 text-muted text-right">03/01/2022 : 11:29
-                                                    am</label>
-                                            </div>
-                                        </div>
-                                    </div>
+                            </div>
 
-                                </nz-card>
-                            </div>
+                           
                         </div>
                     </section>
 
 
                     <!-- Activity -->
-                    <section *ngIf="_currTabName == 2">
+                    <section *ngIf="_currTabName == 1">
                         <div class="row">
                             <div class="col-md-12">
                                 <nz-card>
@@ -145,8 +146,8 @@
                                             </label>
                                         </div>
                                         <div class="">
-                                            <button nz-button nzType="link" class="border"
-                                                (click)="isRatingDrawer = true">Rate Now</button>
+                                            <button nz-button nzType="link" class="border" 
+                                                (click)="rating = voterDetails?.rating;isRatingDrawer = true">Rate Now</button>
                                         </div>
                                     </div>
                                 </nz-card>
@@ -399,12 +400,12 @@
 
 
                     <!-- Primary Attribute -->
-                    <section *ngIf="_currTabName == 3">
+                    <section *ngIf="_currTabName == 2">
                         <app-primary-attributes [voterId]="_currVoterId"></app-primary-attributes>
                     </section>
 
                     <!-- Relationship -->
-                    <section *ngIf="_currTabName == 4">
+                    <section *ngIf="_currTabName == 3">
                         <app-relationship-mapping [voterId]="_currVoterId"></app-relationship-mapping>
                     </section>
 
@@ -558,13 +559,13 @@
                     <h6>Rate Voter</h6>
                 </div>
                 <div class="col-lg-6 col-md-6 col-12 mx-auto">
-                    <div>
+                    <div class="d-flex flex-column">
                         <nz-slider [(ngModel)]="rating" [nzMarks]="marks" [nzMin]="1" [nzMax]="5"
                             [nzTipFormatter]="formatter"></nz-slider>
                         <label for="" class="mb-3"> {{rating+'/5' }} <span class="font-size-12 text-primary">{{( rating
                                 ? ' (' +
                                 formatter(rating) + ')': '')}}</span> </label>
-                        <button clas="mt-3" nz-button nzType="primary" (click)="rateVoter()"
+                        <button class="mx-3 align-self-center" nz-button nzType="primary" style="max-width: 18rem;" (click)="rateVoter()"
                             [nzLoading]="api_loading['btn_Rating']" nzBlock>Submit</button>
                     </div>
                 </div>

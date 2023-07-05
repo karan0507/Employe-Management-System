@@ -15,10 +15,35 @@
                     <span nz-icon nzType="plus-circle" nzTheme="outline" (click)="addTagForAttribute(item)"></span>
                 </div>
             </ng-template>
+            <!-- [nzScroll]="{ x: '1500px', y: '50vh' }" Loading -->
             <div class="d-flex flex-wrap align-items-center">
-                <nz-tag *ngFor="let tag of item?.tags; let i = index">
+                <nz-table #rowSelectionTable [nzData]="item?.tags"
+                [nzFrontPagination]="false" [nzShowSizeChanger]="false" >
+                <thead>
+                    <tr>
+                        <th nzWidth="3rem">Sr No.</th>
+                        <th nzWidth="14rem">Name</th>
+                        <!-- <th>Response Type</th>
+                <th>Action Type</th> -->
+                        <th>Re-Share</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let data of item?.tags; let i = index">
+                        <tr>
+                            <td>{{i+1}}</td>
+                            <td>{{ _currLanguage == "en" ?  data.name.en : data.name.hi }}</td>
+                            <!-- <td{ data.r>{esponse_type }}</td>
+                        <td>{{ data.user_details.user_id }}</td> -->
+                            <td>0</td>
+                        </tr>
+                       
+                    </ng-container>
+                </tbody>
+            </nz-table>
+                <!-- <nz-tag *ngFor="let tag of item?.tags; let i = index">
                     {{  tag ? (_currLanguage == "en" ?  tag?.name?.en : tag?.name?.hi): "" }}
-                </nz-tag>
+                </nz-tag> -->
                 <!-- <nz-tag [nzColor]="'purple'" nf>
                     {{_currLanguage == 'en' ? item?.tag?.name?.en :
                         item?.tag?.name?.hi}}

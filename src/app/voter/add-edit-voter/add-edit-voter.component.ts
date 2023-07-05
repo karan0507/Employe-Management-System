@@ -68,23 +68,24 @@ export class AddEditVoterComponent implements OnInit {
       GENDER: [(data ? (this._currLanguage == 'en' ? data?.gender : data?.gender) : '')],
       AGE: [(data ? (this._currLanguage == 'en' ? data?.age : data?.age) : ''), [Validators.required]],
       EPIC_NO: [(data ? (this._currLanguage == 'en' ? data?.epic_no : data?.epic_no) : ''), [Validators.required]],
-      
-      PSBUILDING_NAME: [(data ? (this._currLanguage == 'en' ? data?.psbuilding_name_en : data?.psbuilding_name_hi) : ''), ],
-      SECTION_NAME: [(data ? (this._currLanguage == 'en' ? data?.section_name_en : data?.section_name_hi) : ''), ],
-      PART_NAME: [(data ? (this._currLanguage == 'en' ? data?.part_name_en : data?.part_name_hi) : ''), ],
-      SLNOINPART: [(data ? (this._currLanguage == 'en' ? data?.slnoinpart : data?.slnoinpart) : ''), ],
-      PART_NO: [(data ? (this._currLanguage == 'en' ? data?.part_no : data?.part_no) : ''), ],
-      booth: [(data ? (this._currLanguage == 'en' ? data?.booth : data?.booth) : ''),[Validators.required] ],
-      SECTION_NO: [(data ? (this._currLanguage == 'en' ? data?.section_no : data?.section_no) : ''), ],
-      HOUSE_NO: [(data ? (this._currLanguage == 'en' ? data?.house_no : data?.house_no) : ''), ],
+
+      PSBUILDING_NAME: [(data ? (this._currLanguage == 'en' ? data?.psbuilding_name_en : data?.psbuilding_name_hi) : ''),],
+      SECTION_NAME: [(data ? (this._currLanguage == 'en' ? data?.section_name_en : data?.section_name_hi) : ''),],
+      PART_NAME: [(data ? (this._currLanguage == 'en' ? data?.part_name_en : data?.part_name_hi) : ''),],
+      SLNOINPART: [(data ? (this._currLanguage == 'en' ? data?.slnoinpart : data?.slnoinpart) : ''),],
+      PART_NO: [(data ? (this._currLanguage == 'en' ? data?.part_no : data?.part_no) : ''),],
+      booth: [(data ? (this._currLanguage == 'en' ? data?.booth : data?.booth) : ''), [Validators.required]],
+      SECTION_NO: [(data ? (this._currLanguage == 'en' ? data?.section_no : data?.section_no) : ''),],
+      HOUSE_NO: [(data ? (this._currLanguage == 'en' ? data?.house_no : data?.house_no) : ''),],
 
     })
   }
 
   submitForm() {
-    if (this.voterForm.invalid) { 
+    if (this.voterForm.invalid) {
       console.log(this.voterForm)
-      return }
+      return
+    }
     this.api_loading['button'] = true;
     console.log(this.voterForm.value);
     var form_data = new FormData();
@@ -92,29 +93,79 @@ export class AddEditVoterComponent implements OnInit {
     // for ( var key in this.voterForm.controls ) {
     //   console.log(form_data)
     // form_data.append(key,this.voterForm[key];value,this.voterForm.controls[key].value);
+    if (this.voterForm.get('FIRST_NAME').value) {
+      form_data.append('FIRST_NAME', this.voterForm.get('FIRST_NAME').value);
+    }
     // }
-    form_data.append('FIRST_NAME',this.voterForm.get('FIRST_NAME').value);
-    form_data.append('LAST_NAME',this.voterForm.get('LAST_NAME').value);
-    form_data.append('FULL_NAME',this.voterForm.get('FULL_NAME').value);
-    form_data.append('RLN_TYPE',this.voterForm.get('RLN_TYPE').value);
 
-    form_data.append('mobile',this.voterForm.get('mobile').value);
-    form_data.append('caste',this.voterForm.get('caste').value);
-    form_data.append('RLN_FIRST_NAME',this.voterForm.get('RLN_FIRST_NAME').value);
-    form_data.append('RLN_LAST_NAME',this.voterForm.get('RLN_LAST_NAME').value);
-    form_data.append('RLN_FULL_NAME',this.voterForm.get('RLN_FULL_NAME').value);
+    if (this.voterForm.get('LAST_NAME').value) {
+      form_data.append('LAST_NAME', this.voterForm.get('LAST_NAME').value);
+    }
+
+    if (this.voterForm.get('FULL_NAME').value) {
+      form_data.append('FULL_NAME', this.voterForm.get('FULL_NAME').value);
+    }
+
+    if (this.voterForm.get('RLN_TYPE').value) {
+      form_data.append('RLN_TYPE', this.voterForm.get('RLN_TYPE').value);
+    }
+
+    if (this.voterForm.get('mobile').value) { form_data.append('mobile', this.voterForm.get('mobile').value); }
+
+
+    if (this.voterForm.get('caste').value) { form_data.append('caste', this.voterForm.get('caste').value); }
+
+    if (this.voterForm.get('RLN_FIRST_NAME').value) { form_data.append('RLN_FIRST_NAME', this.voterForm.get('RLN_FIRST_NAME').value); }
+
+    if (this.voterForm.get('RLN_LAST_NAME').value) { form_data.append('RLN_LAST_NAME', this.voterForm.get('RLN_LAST_NAME').value); }
+
+    if (this.voterForm.get('RLN_FULL_NAME').value) { form_data.append('RLN_FULL_NAME', this.voterForm.get('RLN_FULL_NAME').value); }
+
+    if (this.voterForm.get('GENDER').value) {
+      form_data.append('GENDER', this.voterForm.get('GENDER').value);
+    }
     // form_data.append('FULL_NAME_WITH_RLN',this.voterForm.get('FULL_NAME_WITH_RLN').value);
-    form_data.append('GENDER',this.voterForm.get('GENDER').value);
-    form_data.append('AGE',this.voterForm.get('AGE').value);
-    form_data.append('EPIC_NO',this.voterForm.get('EPIC_NO').value);
-    form_data.append('PSBUILDING_NAME',this.voterForm.get('PSBUILDING_NAME').value);
-    form_data.append('SECTION_NAME',this.voterForm.get('SECTION_NAME').value);
-    form_data.append('PART_NAME',this.voterForm.get('PART_NAME').value);
-    form_data.append('SLNOINPART',this.voterForm.get('SLNOINPART').value);
-    form_data.append('PART_NO',this.voterForm.get('PART_NO').value);
-    form_data.append('booth',this.voterForm.get('booth').value);
-    form_data.append('SECTION_NO',this.voterForm.get('SECTION_NO').value);
-    form_data.append('HOUSE_NO',this.voterForm.get('HOUSE_NO').value);
+
+    if (this.voterForm.get('AGE').value) {
+      form_data.append('AGE', this.voterForm.get('AGE').value);
+    }
+
+    if (this.voterForm.get('EPIC_NO').value) {
+      form_data.append('EPIC_NO', this.voterForm.get('EPIC_NO').value);
+    }
+
+    if (this.voterForm.get('PSBUILDING_NAME').value) {
+      form_data.append('PSBUILDING_NAME', this.voterForm.get('PSBUILDING_NAME').value);
+    }
+
+    if (this.voterForm.get('SECTION_NAME').value) {
+      form_data.append('SECTION_NAME', this.voterForm.get('SECTION_NAME').value);
+    }
+
+    if (this.voterForm.get('PART_NAME').value) {
+      form_data.append('PART_NAME', this.voterForm.get('PART_NAME').value);
+    }
+
+    if (this.voterForm.get('SLNOINPART').value) {
+      form_data.append('SLNOINPART', this.voterForm.get('SLNOINPART').value);
+    }
+
+    if (this.voterForm.get('PART_NO').value) {
+      form_data.append('PART_NO', this.voterForm.get('PART_NO').value);
+    }
+
+    if (this.voterForm.get('booth').value) {
+      form_data.append('booth', this.voterForm.get('booth').value);
+    }
+
+    if (this.voterForm.get('SECTION_NO').value) {
+      form_data.append('SECTION_NO', this.voterForm.get('SECTION_NO').value);
+    }
+
+    if (this.voterForm.get('HOUSE_NO').value) {
+      form_data.append('HOUSE_NO', this.voterForm.get('HOUSE_NO').value);
+    }
+
     let url = this.isEdit == false ? this.http.addVoter(form_data) : this.http.editVoter(this.curr_voterId, form_data);
     url.subscribe((res: any) => {
       if (res.success) {
@@ -132,28 +183,28 @@ export class AddEditVoterComponent implements OnInit {
   debounce: any;
   boothList: any = [];
   wardList: any = [];
-  sectorList:any = []
+  sectorList: any = []
   searchStaticDataGlobalFunction(event, data?) {
     clearTimeout(this.debounce);
     this.debounce = setTimeout(() => {
       let data = { model_name: event }
       this.http.getMasterData(data).subscribe((res: any) => {
         if (res.success) {
-         if(event == 'Booth'){
-          this.boothList = res.data;
-         }else if(event == 'Ward'){
-          this.wardList = res.data;
-         } else if(event == 'Sector'){
-          this.sectorList = res.data;
-         }
+          if (event == 'Booth') {
+            this.boothList = res.data;
+          } else if (event == 'Ward') {
+            this.wardList = res.data;
+          } else if (event == 'Sector') {
+            this.sectorList = res.data;
+          }
         }
       })
     }, 500);
   }
 
-  cancelForm(){
+  cancelForm() {
     console.log(this.router.url.split('voter')[1].includes('/add-'));
-    
+
     // this.router.navigate([this.router.url.split('?')[0]], { queryParams: { tabSection: this.curr_voterId } });
   }
 

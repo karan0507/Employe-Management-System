@@ -44,6 +44,8 @@ export class Error1Component implements OnInit {
       this.router.navigate(["/authentication/login"]);
       return;
     }
+    console.log(this._currUrl);
+    
     if (res.data?.user_type?.name == 'Superuser') {
       this.router.navigate(["/voter"]);
     } else if (res.data?.user_type?.name == 'Data Operator') {

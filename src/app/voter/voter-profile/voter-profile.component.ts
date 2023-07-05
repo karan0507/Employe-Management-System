@@ -30,10 +30,10 @@ export class VoterProfileComponent implements OnInit {
   _currTabName: any;
   partyTabs: any = [
     { id: 1, name: 'General' },
-    { id: 2, name: 'Political' },
-    { id: 3, name: 'Activity' },
-    { id: 4, name: 'Primary Attribute' },
-    { id: 5, name: 'Relationship' },
+    // { id: 2, name: 'Political' },
+    { id: 2, name: 'Activity' },
+    { id: 3, name: 'Primary Attribute' },
+    { id: 4, name: 'Relationship' },
   ]
 
   profileLogs: any = [
@@ -48,20 +48,22 @@ export class VoterProfileComponent implements OnInit {
     { title: 'School', icon: '../../../assets/images/icons/Vectorschool.svg', value: 'ABC School' },
     { title: 'College', icon: '../../../assets/images/icons/Vectorschool.svg', value: 'ABC College' },
     { title: 'Relatives', icon: '../../../assets/images/icons/Vectorrelatives.svg', value: 'prashanthshah@gmail.com' },
+    {  politicalList : [
+      { title: 'Part Name', icon: '../../../assets/images/icons/Framevoter_profile.svg', value: 'Amit Jain' },
+      { title: 'Account Number', icon: '../../../assets/images/icons/Vectoracc.svg', value: '1685419' },
+      { title: 'Part Number :', icon: '../../../assets/images/icons/Vectoracc.svg', value: '0236511' },
+      { title: 'Ward', icon: '../../../assets/images/icons/Vectorward.svg', value: 'Andheri Ward Office' },
+      { title: 'Booth', icon: '../../../assets/images/icons/Vectorward.svg', value: 'Zilha Parishad School Kondhve Dhawade South Facing West Side Room no 2' },
+  
+      { title: 'Societies', icon: '../../../assets/images/icons/Vectorlocation.svg', value: 'DSL' },
+      { title: 'Associations :', icon: '../../../assets/images/icons/Vectorschool.svg', value: 'ABS' },
+      { title: 'Affiliation % :', icon: '../../../assets/images/icons/Vectorschool.svg', value: 'ABC School' },
+      { title: 'Rating :', icon: '../../../assets/images/icons/Vectorrating.svg', value: 'ABC College', isDark: true },
+    ],
+    isPolitical:true
+  }
   ]
 
-  politicalList: any = [
-    { title: 'Part Name', icon: '../../../assets/images/icons/Framevoter_profile.svg', value: 'Amit Jain' },
-    { title: 'Account Number', icon: '../../../assets/images/icons/Vectoracc.svg', value: '1685419' },
-    { title: 'Part Number :', icon: '../../../assets/images/icons/Vectoracc.svg', value: '0236511' },
-    { title: 'Ward', icon: '../../../assets/images/icons/Vectorward.svg', value: 'Andheri Ward Office' },
-    { title: 'Booth', icon: '../../../assets/images/icons/Vectorward.svg', value: 'Zilha Parishad School Kondhve Dhawade South Facing West Side Room no 2' },
-
-    { title: 'Societies', icon: '../../../assets/images/icons/Vectorlocation.svg', value: 'DSL' },
-    { title: 'Associations :', icon: '../../../assets/images/icons/Vectorschool.svg', value: 'ABS' },
-    { title: 'Affiliation % :', icon: '../../../assets/images/icons/Vectorschool.svg', value: 'ABC School' },
-    { title: 'Rating :', icon: '../../../assets/images/icons/Vectorrating.svg', value: 'ABC College', isDark: true },
-  ]
 
   listOfActivity: any = []
 
@@ -88,7 +90,7 @@ export class VoterProfileComponent implements OnInit {
         this._currVoterId = param['id']
         this.getVoterDetals()
       }
-      if (this._currTabName == 2 && param['id']) {
+      if (this._currTabName == 1 && param['id']) {
         this.getActivityDetails()
         this.getFollowUpDetails()
       }
@@ -168,31 +170,35 @@ export class VoterProfileComponent implements OnInit {
             title: 'Relatives', icon: '../../../assets/images/icons/Vectorrelatives.svg',
             value: this._currLanguage == 'en' ? this.voterDetails?.rln_first_name_en : this.voterDetails?.rln_first_name_hi
           },
+          {
+            politicalList : [
+              {
+                title: 'Party Name', icon: '../../../assets/images/icons/Framevoter_profile.svg',
+                value: this._currLanguage == 'en' ? this.voterDetails?.part_name_en : this.voterDetails?.part_name_hi
+              },
+              {
+                title: 'Account Number', icon: '../../../assets/images/icons/Vectoracc.svg',
+                value: this._currLanguage == 'en' ? this.voterDetails?.ac_no : this.voterDetails?.ac_no
+              },
+              {
+                title: 'Part Number :', icon: '../../../assets/images/icons/Vectoracc.svg',
+                value: this._currLanguage == 'en' ? this.voterDetails?.part_no : this.voterDetails?.part_no
+              },
+              {
+                title: 'Ward', icon: '../../../assets/images/icons/Vectorward.svg',
+                value: this._currLanguage == 'en' ? this.voterDetails?.part_no : this.voterDetails?.part_no
+              },
+              { title: 'Booth', icon: '../../../assets/images/icons/Vectorward.svg', value: 'Zilha Parishad School Kondhve Dhawade South Facing West Side Room no 2' },
+    
+              { title: 'Societies', icon: '../../../assets/images/icons/Vectorlocation.svg', value: 'DSL' },
+              { title: 'Associations :', icon: '../../../assets/images/icons/Vectorschool.svg', value: 'ABS' },
+              { title: 'Affiliation % :', icon: '../../../assets/images/icons/Vectorschool.svg', value: 'ABC School' },
+              { title: 'Rating :', icon: '../../../assets/images/icons/Vectorrating.svg', value: 'ABC College', isDark: true },
+            ],
+            isPolitical :true
+          }
         ]
-        this.politicalList = [
-          {
-            title: 'Party Name', icon: '../../../assets/images/icons/Framevoter_profile.svg',
-            value: this._currLanguage == 'en' ? this.voterDetails?.part_name_en : this.voterDetails?.part_name_hi
-          },
-          {
-            title: 'Account Number', icon: '../../../assets/images/icons/Vectoracc.svg',
-            value: this._currLanguage == 'en' ? this.voterDetails?.ac_no : this.voterDetails?.ac_no
-          },
-          {
-            title: 'Part Number :', icon: '../../../assets/images/icons/Vectoracc.svg',
-            value: this._currLanguage == 'en' ? this.voterDetails?.part_no : this.voterDetails?.part_no
-          },
-          {
-            title: 'Ward', icon: '../../../assets/images/icons/Vectorward.svg',
-            value: this._currLanguage == 'en' ? this.voterDetails?.part_no : this.voterDetails?.part_no
-          },
-          { title: 'Booth', icon: '../../../assets/images/icons/Vectorward.svg', value: 'Zilha Parishad School Kondhve Dhawade South Facing West Side Room no 2' },
-
-          { title: 'Societies', icon: '../../../assets/images/icons/Vectorlocation.svg', value: 'DSL' },
-          { title: 'Associations :', icon: '../../../assets/images/icons/Vectorschool.svg', value: 'ABS' },
-          { title: 'Affiliation % :', icon: '../../../assets/images/icons/Vectorschool.svg', value: 'ABC School' },
-          { title: 'Rating :', icon: '../../../assets/images/icons/Vectorrating.svg', value: 'ABC College', isDark: true },
-        ]
+     
         this.api_loading['card'] = false;
 
       } else {

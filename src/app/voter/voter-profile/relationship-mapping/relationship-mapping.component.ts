@@ -23,10 +23,9 @@ export class RelationshipMappingComponent implements OnInit {
   getAttributeList(keyword?){
     let data = {  "voter_id":this.voterId }
     data['for_relationship'] = "YES";
-    this.http.getRelationshipTags(data).subscribe((res:any)=>{
+    this.http.getRelationList(data).subscribe((res:any)=>{
       if(res.success){
         this.attributeList = res.data;
-    
         this.attributeList.forEach(element=>{
           element['_currTagValue'] = "";
           element['_isVisible'] = false;

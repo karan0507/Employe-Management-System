@@ -10,12 +10,15 @@
             <div class="col-md-12 my-3" *ngFor="let item of profileLogs">
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <div class="d-flex flex-column">
-                        <label>{{item?.title}}</label>
-                        <h6 class="mb-0">{{item?.value}}</h6>
+                        <div class="d-flex align-items-center ">
+                            <img [src]="item?.icon" class="=" alt=""> 
+                            <h6 class="mr-3 mb-0 ml-1">{{item?.title}}</h6>
+                            <label>{{item?.value}}</label>
+                        </div>
+                        
+                       
                     </div>
-                    <div>
-                        <img [src]="item?.icon" alt="">
-                    </div>
+                    
                 </div>
                 <nz-divider class="my-2"></nz-divider>
             </div>

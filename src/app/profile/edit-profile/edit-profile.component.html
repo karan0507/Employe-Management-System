@@ -113,7 +113,7 @@
             <button nz-button nzType="link" class="border font-weight-semibold mx-5 px-5"
                 (click)="profileForm.reset()" routerLink="/profile/view-profile">Cancel</button>
 
-            <button nz-button nzType="primary" 
+            <button nz-button nzType="primary" [nzLoading]="api_loader['button']"
              [disabled]="profileForm.invalid ? true : false" class="font-weight-semibold px-5" (click)="submitProfile()">Save</button>
         </div>
     </main>

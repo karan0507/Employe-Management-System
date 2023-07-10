@@ -1,0 +1,170 @@
+
+<div class="d-block">
+    <div class="row">
+        <div class="col-md-12">
+            <nz-card [nzLoading]="api_loader['list']">
+                <div class="totalCount">
+                    <nz-table #rowSelectionTable [nzData]="StrongFollowersList" [nzTotal]="total_count"
+                        [nzFrontPagination]="false" [nzShowSizeChanger]="true" [nzPageIndex]="followerPage"
+                        [nzPageSize]="followerPageSize" (nzQueryParams)="StrongFollowersList[0] ? getFollowerList($event) : null"
+                        [nzShowTotal]="botTotalCount" [nzLoading]="api_loader['card']"
+                        [nzScroll]="{ x: '1500px', y: '50vh' }">
+                        <thead>
+                            <tr>
+                                <th nzWidth="3rem">#</th>
+                                
+                                <th nzWidth="4rem">Sr. No</th>
+                                <th class="text-left" [nzWidth]="'12rem'">Full Name</th>
+                                <th [nzWidth]="'10rem'">Mobile</th>
+                                <th>Caste</th>
+                                <th [nzWidth]="'10rem'">Epic No</th>
+                                <th>Age/ Gender</th>
+                                <th nzWidth="5rem">Benificary</th>
+                                <th>Gali</th>
+                                <th>Booth</th>
+                                <th>Part No</th>
+                                <th nzWidth="14rem">Section Name</th>
+                                <th>Section No</th>
+                                <th nzRight>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let data of StrongFollowersList; index as i">
+                                <tr>
+                                    <td nzWidth="3rem" [nzExpand]="expandSet.has(data.id)"
+                                        (nzExpandChange)="onExpandChange(data.id, $event, i)"></td>
+                                    <td nzWidth="3rem" [nzChecked]="setOfCheckedId.has(data.id)"
+                                        [nzDisabled]="data.disabled"
+                                        (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
+                                    <td nzWidth="4rem" *ngIf="pageIndex == 1">{{i+1}}</td>
+                                    <td nzWidth="4rem" *ngIf="pageIndex > 1">{{( (pageIndex-1) * globalPageSize) +
+                                        (i+1)}}
+                                    </td>
+                                    <td class="text-left" [nzWidth]="'12rem'">
+                                        <a [routerLink]="['/voter/view-profile']" [queryParams]="{id:data.id}">
+                                            {{_currLanguage == "en" ? data?.first_name_en + " " + data?.last_name_en : data?.first_name_hi + " " + data?.last_name_hi}}
+                                        </a>
+                                    </td>
+                                    <td [nzWidth]="'10rem'">{{data?.mobile ? data?.mobile : '-'}}</td>
+                                    <td>{{data?.caste ? data?.caste : '-'}}</td>
+                                    <td [nzWidth]="'10rem'">{{data?.epic_no}}</td>
+                                    <td>{{data?.age + (data?.gender ? " / " + data?.gender : "")}} </td>
+                                    <td>
+                                        <span nz-icon *ngIf="data?.is_benificary" nzType="check-circle"
+                                            class="text-success" nzTheme="outline"></span>
+                                        <span nz-icon *ngIf="!data?.is_benificary else noBenificary;"
+                                            nzType="close-circle" class="text-danger" nzTheme="outline"></span>
+                                        <ng-template #noBenificary>
+                                            Not updated
+                                        </ng-template>
+                                    </td>
+                                    <td>{{data?.gali ? data?.gali : '-'}}</td>
+                                    <td>{{data?.booth ? data?.booth : '-'}}</td>
+                                    <td>{{data?.part_no}}</td>
+                                    <td nzWidth="14rem">
+                                        <!-- <label *ngIf="data.section_name_en?.length > 18 ? data.section_name_hi?.length > 18 : ''" nz-tooltip
+                                            nzTooltipTitle="{{ data.stockist_name}}">{{
+                                            data.stockist_name | slice : 0:18}} <span
+                                                *ngIf="data.stockist_name?.length > 18">...</span></label> -->
+                                      <label nz-tooltip  [nzTooltipTitle]="data.stockist_name">
+                                        {{_currLanguage == 'en' ? (data?.section_name_en  | slice : 0:18) :
+                                        ata?.section_name_hi}}
+                                      </label>
+                                    </td>
+                                    <td>{{_currLanguage == 'en' ? data?.section_no : data?.section_no}}</td>
+                                    <td nzRight>
+                                        <div>
+                                            <a class="text-dark font-size-20" nz-dropdown [nzClickHide]="false"
+                                                [nzTrigger]="'click'" (click)="getSwitchValue(data)"
+                                                [nzPlacement]="'bottomRight'"
+                                                [nzDropdownMenu]="latestUploadDropDown">
+                                                <i nz-icon nzType="ellipsis" nzTheme="outline"></i>
+                                            </a>
+                                            <nz-dropdown-menu #latestUploadDropDown="nzDropdownMenu">
+                                                <ul nz-menu>
+                                                    <!-- *ngxPermissionsOnly="''" -->
+                                                    <li nz-menu-item [routerLink]="['/voter/view-profile']"
+                                                        [queryParams]="{id:data.id}">
+                                                        <span class="m-l-5">View Voter</span>
+                                                    </li>
+                                                    <li nz-menu-item [routerLink]="['/voter/edit-voter']"
+                                                        [queryParams]="{id:data.id}">
+                                                        <span class="m-l-5">Edit</span>
+                                                    </li>
+                                                    <!-- <li nz-menu-item>
+                                                        <span class="m-l-5">View Benificary</span>
+                                                    </li> -->
+
+                                                    <!-- *ngxPermissionsOnly="'" -->
+
+                                                </ul>
+                                            </nz-dropdown-menu>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+
+                                <tr [nzExpand]="expandSet.has(data.id)">
+                                    <div class="justify-content-center">
+                                        <nz-page-header class="site-page-header header_bg_dark"
+                                            [nzTitle]="trailTitle">
+                                        </nz-page-header>
+                                        <nz-card class="mb-md-0 border" *ngFor="let item of data?.auditDataset"
+                                            [nzLoading]="_currentAuditId == data.id ? api_loader['accordian'] : null">
+
+                                            <nz-collapse nzAccordion [nzExpandIconPosition]="right">
+                                                <nz-collapse-panel [nzHeader]="trail_header">
+                                                    <ng-template #trail_header>
+                                                        <h5>Created By: {{item?.created_by}} <span
+                                                                class="text-muted ml-3 font-size-12 font-weight-normal">({{item?.created_at
+                                                                | date:'medium'}})</span></h5>
+                                                    </ng-template>
+                                                    <div class="d-flex flex-column mb-2"
+                                                        *ngFor="let sub_sec_audit of item?.key_changes">
+                                                        <h6>{{ sub_sec_audit.key }} content</h6>
+                                                        <div class="d-flex align-items-center">
+                                                            <label class="">{{ sub_sec_audit.key == 'Updated at' ?
+                                                                (sub_sec_audit.old_value | date:'medium') :
+                                                                sub_sec_audit.old_value}}</label>
+                                                            <span nz-icon nzType="arrow-right"
+                                                                class="text-danger mx-3" nzTheme="outline"></span>
+                                                            <label class="mr-3">
+                                                                {{ sub_sec_audit.key == 'Updated at' ?
+                                                                (sub_sec_audit.new_value | date:'medium') :
+                                                                sub_sec_audit.new_value}}
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </nz-collapse-panel>
+                                            </nz-collapse>
+
+
+                                        </nz-card>
+                                        <ng-template #trailTitle>
+                                            <div class="ml-md-2">
+                                                <h5 class="mb-0">
+                                                    <!-- <i nz-icon class="mr-2" nzType="user" nzTheme="outline"></i> -->
+                                                    Audit Trail
+                                                </h5>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                </tr>
+
+
+
+                            </ng-container>
+                        </tbody>
+                    </nz-table>
+                    <ng-template #botTotalCount>
+                        <div class="font-weight-semibold">
+                            <b>{{total_count}} Results Found </b>
+                        </div>
+                    </ng-template>
+                </div>
+            </nz-card>
+        </div>
+
+    </div>
+</div>

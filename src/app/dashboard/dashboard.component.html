@@ -1,5 +1,13 @@
 <main>
 	<section>
+		<div class="d-flex justify-content-end">
+			<nz-select nzPlaceHolder="Select Social Media" [(ngModel)]="_currUser" (ngModelChange)="multipleAPICall()"
+				nzShowSearch nzAllowClear (nzFocus)="getSocialMedia()">
+				<nz-option *ngFor="let item of userList" [nzValue]="item?.id"
+					[nzLabel]="_currLanguage == 'en' ? item?.name?.en : item?.name?.hi">
+				</nz-option>
+			</nz-select>
+		</div>
 		<div class="row my-3">
 
 			<div class="col-md-6">
@@ -90,24 +98,27 @@
 									<!-- <button nz-button nz-button></button> -->
 								</div>
 								<div class="d-flex justify-content-between flex-wrap">
-									
+
 									<div class="d-flex flex-column">
 										<div class="d-flex">
-											<nz-avatar [nzSrc]="item?.social_user?.profile_picture ? item?.social_user?.profile_picture : 'assets/images/avatars/default.png'">
-										
+											<nz-avatar
+												[nzSrc]="item?.social_user?.profile_picture ? item?.social_user?.profile_picture : 'assets/images/avatars/default.png'">
+
 											</nz-avatar>
-										<div class="mx-3">
-											<a [routerLink]="['/posts/post-detail/']" [queryParams]="{post_id:item?.post_id}"
-											class="text-secondary ">{{ item.post_id }}</a>
-											<label for="" class="text-muted mx-3 font-size-12">{{ item.post_on | date: 'medium'}}</label>
-											
-										</div>
+											<div class="mx-3">
+												<a [routerLink]="['/posts/post-detail/']"
+													[queryParams]="{post_id:item?.post_id}" class="text-secondary ">{{
+													item.post_id }}</a>
+												<label for="" class="text-muted mx-3 font-size-12">{{ item.post_on |
+													date: 'medium'}}</label>
+
+											</div>
 										</div>
 										<p class="m-3">
 											{{ item.title }}
 										</p>
-										
-										
+
+
 									</div>
 									<!-- <div class="d-lg-flex d-none flex-column">
 										<img style="width: 100px; height: 80px;" class="post_image_style mx-auto" alt="logo"
@@ -131,8 +142,8 @@
 									<nz-list-item-action>
 										<span nz-icon (click)="openFacebook(item.post_url)" nzType="facebook"
 											style="margin-right: 8px;"></span>
-	
-									</nz-list-item-action> 
+
+									</nz-list-item-action>
 								</ul>
 							</div>
 							<!-- <nz-list-item-meta>

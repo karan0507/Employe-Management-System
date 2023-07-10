@@ -16,6 +16,14 @@ export class VoterListComponent implements OnInit {
   quickViewVisible: boolean = false;
   _currSearchValue: any;
   total_count: any;
+  isSelectLoader  = {
+    "Booth":false,
+    "Ward":false,
+    "Street":false,
+    "Lane":false,
+    "Sector":false,
+    "Assembly":false,
+  }
   _currBooth: any;
   _currWard: any;
   _currSector: any;
@@ -166,6 +174,10 @@ followUpList : any= []
   laneList : any = [];
 
   searchStaticDataGlobalFunction(event, data?) {
+    this.isSelectLoader[event] = true;
+    if(event == 'Booth'){
+
+    }
     clearTimeout(this.debounce);
     this.debounce = setTimeout(() => {
       let data = { model_name: event }
@@ -186,6 +198,7 @@ followUpList : any= []
           else if (event == 'Assembly') {
             this.assemblyList = res.data;
           }
+          this.isSelectLoader[event] = false;
         }
       })
     }, 500);

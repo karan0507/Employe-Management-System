@@ -25,6 +25,7 @@ import { CandidateDashboardComponent } from './candidate-dashboard/candidate-das
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { ViewAllTableComponent } from './view-all-table/view-all-table.component';
 /** Assign all ng-zorro modules to this array*/
 const antdModule = [
     NzButtonModule,
@@ -61,7 +62,8 @@ const antdModule = [
     exports: [],
     declarations: [
         DashboardComponent,
-        CandidateDashboardComponent
+        CandidateDashboardComponent,
+        ViewAllTableComponent
     ]
 })
 export class DashboardModule { }

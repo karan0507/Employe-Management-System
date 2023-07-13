@@ -36,19 +36,36 @@ export class DashboardComponent implements OnInit {
         { 'name': 'Average likes per post', 'icon': 'field-time', 'count': "0", 'class': 'ant-avatar-purple' },
         { 'name': 'Total negative posts', 'icon': 'field-time', 'count': "0", 'class': 'ant-avatar-purple' },
     ]
-
+    userList : any = [];
     constructor(private http: HttpService, public message: NzMessageService) { }
 
     ngOnInit(): void {
         this.loadData(1);
-        this.getPostList();
-        this.getFollowerList()
+        // this.getPostList();
+        // this.getFollowerList()
         // this.getBackgroundDataAPIFunction(params_data, "LATEST_POST_API_URL")
 
         // this.getBackgroundDataAPIFunction(params_data, "STRONG_FOLLOWERS_API_URL")
-        this.getNegativeCount()
+        this.multipleAPICall()
     }
 
+
+    // MultipleAPI Call
+    multipleAPICall() {
+        this.getPostList();
+        this.getFollowerList();
+        this.getNegativeCount();
+    }
+
+    _currUser : any;
+    getSocialMedia(searchVal?){
+        let data = {"page":1,"limit":30,"search_param":searchVal ? searchVal : ''};
+        this.http.getAccountListt(data).subscribe((res:any)=>{
+            if(res.success){
+                this.userList = res.data
+            }
+        })
+    }
 
     loadData(pi: number): void {
         this.data = new Array(2).fill({}).map((_, index) => ({
@@ -61,7 +78,7 @@ export class DashboardComponent implements OnInit {
     }
 
     api_loader = { 'postList': false, 'followerList': false }
-
+    
     getBackgroundDataAPIFunction(params_data, section) {
         this.http.getDataFromBackgroundFunction(params_data).subscribe(
             (res) => {
@@ -82,7 +99,10 @@ export class DashboardComponent implements OnInit {
     getPostList(tableFilter?, type?) {
         this.api_loader['postList'] = true
         var params_data = { "link": "https://www.facebook.com/dyadav.bhilai.official", "end_point": "LATEST_POST_API_URL" }
-
+        // this._currUser
+        if(this._currUser){
+            params_data[''] = this._currUser;
+        }
         if (tableFilter) {
             console.log(tableFilter);
             if (type == 'pageIndex') {
@@ -112,7 +132,10 @@ export class DashboardComponent implements OnInit {
         this.api_loader['followerList'] = true
         let params_data = {}
         params_data['link'] = "https://www.facebook.com/dyadav.bhilai.official",
-            params_data['end_point'] = "STRONG_FOLLOWERS_API_URL"
+            params_data['end_point'] = "STRONG_FOLLOWERS_API_URL";
+            if(this._currUser){
+                params_data[''] = this._currUser;
+            }
         if (tableFilter) {
             if (type == 'pageIndex') {
                 this.followerPage = tableFilter;
@@ -128,10 +151,10 @@ export class DashboardComponent implements OnInit {
         this.http.getDataFromBackgroundFunction(params_data).subscribe(
             (res) => {
                 if (res['data']) {
-                    
+
                     this.StrongFollowersList = res['data'];
                     this.api_loader['followerList'] = false
-                }else{
+                } else {
                     this.api_loader['followerList'] = false
                 }
             }
@@ -143,7 +166,9 @@ export class DashboardComponent implements OnInit {
         let data = {}
         data["link"] = "https://www.facebook.com/dyadav.bhilai.official";
         data["end_point"] = "FETCH_DASHBOARD_MATRIC_DATA";
-
+        if(this._currUser){
+            data[''] = this._currUser;
+        }
         this.http.getDataFromBackgroundFunction(data).subscribe((res: any) => {
             if (res.success) {
                 this.listMatricsData = [

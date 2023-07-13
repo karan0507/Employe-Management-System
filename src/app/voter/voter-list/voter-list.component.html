@@ -267,11 +267,15 @@
     <div class="d-flex flex-wrap justify-content-start align-items-center">
         <div class="d-flex flex-column">
             <div class="d-flex align-items-start flex-column mb-3">
-                <label>Booth: </label>
+                <label>Booth: </label> 
                 <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currBooth"
                     (nzFocus)="searchStaticDataGlobalFunction('Booth')"
                     (keyup)="searchStaticDataGlobalFunction('Booth',$event)" nzAllowClear
                     nzPlaceHolder="Select Booth/Ward">
+                    <nz-option *ngIf="isSelectLoader['Booth']" nzDisabled nzCustomContent>
+                        <span nz-icon nzType="loading" class="loading-icon"></span>
+                        Loading Data...
+                    </nz-option>
                     <nz-option *ngFor="let item of boothList" [nzValue]="item.id"
                         [nzLabel]="_currLanguage == 'en' ? item?.name?.en + '/' + item?.Ward?.name?.en : item?.name?.hi + '/' + item?.Ward?.name?.hi">
                     </nz-option>
@@ -283,6 +287,10 @@
                     (nzFocus)="searchStaticDataGlobalFunction('Ward')"
                     (keyup)="searchStaticDataGlobalFunction('Ward',$event)" nzAllowClear
                     nzPlaceHolder="Select Ward">
+                    <nz-option *ngIf="isSelectLoader['Ward']" nzDisabled nzCustomContent>
+                        <span nz-icon nzType="loading" class="loading-icon"></span>
+                        Loading Data...
+                    </nz-option>
                     <nz-option *ngFor="let item of wardList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
                     </nz-option>
                 </nz-select>
@@ -294,6 +302,10 @@
                     (nzFocus)="searchStaticDataGlobalFunction('Sector')"
                     (keyup)="searchStaticDataGlobalFunction('Sector',$event)" nzAllowClear
                     nzPlaceHolder="Select Sector">
+                    <nz-option *ngIf="isSelectLoader['Sector']" nzDisabled nzCustomContent>
+                        <span nz-icon nzType="loading" class="loading-icon"></span>
+                        Loading Data...
+                    </nz-option>
                     <nz-option *ngFor="let item of sectorList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
                     </nz-option>
                 </nz-select>
@@ -305,6 +317,10 @@
                     (nzFocus)="searchStaticDataGlobalFunction('Assembly')"
                     (keyup)="searchStaticDataGlobalFunction('Assembly',$event)" nzAllowClear
                     nzPlaceHolder="Select Assembly">
+                    <nz-option *ngIf="isSelectLoader['Assembly']" nzDisabled nzCustomContent>
+                        <span nz-icon nzType="loading" class="loading-icon"></span>
+                        Loading Data...
+                    </nz-option>
                     <nz-option *ngFor="let item of assemblyList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
                     </nz-option>
                 </nz-select>
@@ -316,6 +332,10 @@
                     (nzFocus)="searchStaticDataGlobalFunction('Street')"
                     (keyup)="searchStaticDataGlobalFunction('Street',$event)" nzAllowClear
                     nzPlaceHolder="Select Street">
+                    <nz-option *ngIf="isSelectLoader['Street']" nzDisabled nzCustomContent>
+                        <span nz-icon nzType="loading" class="loading-icon"></span>
+                        Loading Data...
+                    </nz-option>
                     <nz-option *ngFor="let item of streetList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
                     </nz-option>
                 </nz-select>
@@ -327,6 +347,10 @@
                     (nzFocus)="searchStaticDataGlobalFunction('Lane')"
                     (keyup)="searchStaticDataGlobalFunction('Lane',$event)" nzAllowClear
                     nzPlaceHolder="Select Lane">
+                    <nz-option *ngIf="isSelectLoader['Lane']" nzDisabled nzCustomContent>
+                        <span nz-icon nzType="loading" class="loading-icon"></span>
+                        Loading Data...
+                    </nz-option>
                     <nz-option *ngFor="let item of laneList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
                     </nz-option>
                 </nz-select>

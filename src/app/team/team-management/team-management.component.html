@@ -91,7 +91,14 @@
                         <td nzWidth="8rem">{{data?.status ? data?.status?.name : '--'}}</td>
                         <td nzWidth="8rem">{{(data?.created_at ? (data?.created_at | date:'medium') : '-')}}</td>
                         <td nzWidth="8rem">{{(data?.updated_at ? (data?.updated_at | date:'medium') : '-')}}</td>
-                        <td nzWidth="8rem">{{(data?.created_by ? (data?.created_by?.first_name  ? data?.created_by?.first_name : '') + (data?.created_by?.username ? data?.created_by?.username : '') : '--')}}</td>
+                        <td nzWidth="8rem">
+                           <div class="d-flex flex-column">
+                          <label>  {{(data?.created_by ? (data?.created_by?.first_name  ? data?.created_by?.first_name : '') : '--')}}</label>
+                            <label>
+                                {{data?.created_by ? (data?.created_by?.username ? data?.created_by?.username : '') : '--'}}
+                            </label>
+                           </div>
+                        </td>
 
                         <td nzWidth="8rem" nzRight>
                             <button nz-button nzType="link" nzSize="small" class="border" routerLink="/team-management/edit-team" [queryParams]="{id:data?.id}">Edit</button>
@@ -136,6 +143,10 @@
                         (nzFocus)="searchStaticDataGlobalFunction('Booth')"
                         (keyup)="searchStaticDataGlobalFunction('Booth',$event)" nzAllowClear
                         nzPlaceHolder="Select Booth/Ward">
+                        <nz-option *ngIf="isSelectLoader['Booth']" nzDisabled nzCustomContent>
+                            <span nz-icon nzType="loading" class="loading-icon"></span>
+                            Loading Data...
+                        </nz-option>
                         <nz-option *ngFor="let item of boothList" [nzValue]="item.id"
                             [nzLabel]="_currLanguage == 'en' ? item?.name?.en + '/' + item?.Ward?.name?.en : item?.name?.hi + '/' + item?.Ward?.name?.hi">
                         </nz-option>
@@ -147,6 +158,10 @@
                         (nzFocus)="searchStaticDataGlobalFunction('Ward')"
                         (keyup)="searchStaticDataGlobalFunction('Ward',$event)" nzAllowClear
                         nzPlaceHolder="Select Ward">
+                        <nz-option *ngIf="isSelectLoader['Ward']" nzDisabled nzCustomContent>
+                            <span nz-icon nzType="loading" class="loading-icon"></span>
+                            Loading Data...
+                        </nz-option>
                         <nz-option *ngFor="let item of wardList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
                         </nz-option>
                     </nz-select>
@@ -158,6 +173,10 @@
                         (nzFocus)="searchStaticDataGlobalFunction('Sector')"
                         (keyup)="searchStaticDataGlobalFunction('Sector',$event)" nzAllowClear
                         nzPlaceHolder="Select Sector">
+                        <nz-option *ngIf="isSelectLoader['Sector']" nzDisabled nzCustomContent>
+                            <span nz-icon nzType="loading" class="loading-icon"></span>
+                            Loading Data...
+                        </nz-option>
                         <nz-option *ngFor="let item of sectorList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
                         </nz-option>
                     </nz-select>
@@ -169,6 +188,10 @@
                         (nzFocus)="searchStaticDataGlobalFunction('Assembly')"
                         (keyup)="searchStaticDataGlobalFunction('Assembly',$event)" nzAllowClear
                         nzPlaceHolder="Select Assembly">
+                        <nz-option *ngIf="isSelectLoader['Assembly']" nzDisabled nzCustomContent>
+                            <span nz-icon nzType="loading" class="loading-icon"></span>
+                            Loading Data...
+                        </nz-option>
                         <nz-option *ngFor="let item of assemblyList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
                         </nz-option>
                     </nz-select>

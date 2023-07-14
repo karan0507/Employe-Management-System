@@ -8,6 +8,16 @@ import { HttpService } from 'src/app/service/http.service';
   styleUrls: ['./team-management.component.css']
 })
 export class TeamManagementComponent implements OnInit {
+  isSelectLoader  = {
+    "Booth":false,
+    "Ward":false,
+    "Street":false,
+    "Lane":false,
+    "Sector":false,
+    "Assembly":false,
+  }
+
+
   // Table:
   quickViewVisible: boolean = false;
   teamList: any = [];
@@ -102,6 +112,7 @@ export class TeamManagementComponent implements OnInit {
   laneList: any = [];
 
   searchStaticDataGlobalFunction(event, data?) {
+    this.isSelectLoader[event] = true;
     clearTimeout(this.debounce);
     this.debounce = setTimeout(() => {
       let data = { model_name: event }
@@ -122,6 +133,8 @@ export class TeamManagementComponent implements OnInit {
           else if (event == 'Assembly') {
             this.assemblyList = res.data;
           }
+
+          this.isSelectLoader[event] = false;
         }
       })
     }, 500);

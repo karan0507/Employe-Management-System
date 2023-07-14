@@ -76,6 +76,10 @@
                             <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="user_type"
                                 (nzFocus)="getUserType()" nzAllowClear
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Team Type' : 'कृपया टीम का प्रकार चुनें'">
+                                <nz-option *ngIf="isSelectLoader" nzDisabled nzCustomContent>
+                                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                                    Loading Data...
+                                </nz-option>
                                 <nz-option *ngFor="let item of userList" [nzValue]="item.id" [nzLabel]="item?.name">
                                 </nz-option>
                             </nz-select>

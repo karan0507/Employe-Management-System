@@ -139,13 +139,17 @@ export class AdEditTeamComponent implements OnInit {
     }
   }
 
+  isSelectLoader : boolean = false;
   userList: any = []
   getUserType() {
+    this.isSelectLoader = true
     let data = { model_name: 'UserType' };
     this.http.getMasterData(data).subscribe((res: any) => {
       if (res.success) {
         this.userList = res.data;
+        
       }
+      this.isSelectLoader = false;
     })
   }
 

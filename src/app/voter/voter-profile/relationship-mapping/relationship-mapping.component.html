@@ -1,11 +1,11 @@
 <section>
     <div class="d-flex justify-content-end">
-        <button type="submit" style="margin:2px;" nz-button nzType="" (click)="addRelaionModal()">+ Add
+        <button type="submit" style="margin:2px;" class="mb-2" nz-button nzType="" (click)="addRelaionModal()">+ Add
             Relationship</button>
     </div>
     <div class="row">
-        <div class="col-lg-3 col-6" *ngFor="let item of attributeList; let i = index">
-            <nz-card>
+        <div class="col-lg-4 col-12" *ngFor="let item of attributeList; let i = index">
+            <nz-card class="h-100">
                 <!--  [nzTitle]="adAttribute" -->
                 <ng-template #adAttribute>
                     <div class="d-flex align-items-center flex-wrap w-100">
@@ -36,12 +36,21 @@
                     </nz-tag> -->
                     <div class="d-flex justify-content-start">
                         <div class="d-flex flex-column mr-3">
-                            <h6> {{ item?.tag ? (_currLanguage == "en" ? item?.tag?.name?.en + " " : item?.tag?.name?.hi + " "): ""
-                                }}</h6>
-                            <label> {{curr == "en" ? item?.to_voter_id[0]?.FIRST_NAME_EN +
+                           <div class="d-flex flex-wrap">
+                            <h6 class="mr-2">  Voter:</h6>
+                            <label for="">
+                                {{curr == "en" ? item?.to_voter_id[0]?.FIRST_NAME_EN +
                                 item?.to_voter_id[0]?.LAST_NAME_EN : item?.to_voter_id[0]?.FIRST_NAME_HI +
                                 item?.to_voter_id[0]?.LAST_NAME_HI}}
-                                {{" "  + item?.to_voter_id[0]?.EPIC_NO}} </label>
+                                {{" "  + item?.to_voter_id[0]?.EPIC_NO}} 
+
+                            </label>
+                           </div>
+                            <div class="d-flex flex-wrap">
+                               <h6 class="mr-2">Label:</h6>
+                               <label>{{ item?.tag ? (_currLanguage == "en" ? item?.tag?.name?.en + " " : item?.tag?.name?.hi + " "): ""
+                            }} </label>
+                            </div>
                         </div>
                     </div>
                 </div>

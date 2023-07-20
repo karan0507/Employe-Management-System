@@ -1,8 +1,8 @@
 <main>
 	<section>
 		<div class="d-flex justify-content-end mt-3">
-			<nz-select class="selectFilter" nzPlaceHolder="Select Social Media" [(ngModel)]="_currUser" (ngModelChange)="multipleAPICall()"
-				nzShowSearch nzAllowClear (nzFocus)="getSocialMedia()">
+			<nz-select class="selectFilter" nzPlaceHolder="Select Social Media" [(ngModel)]="_currUser" 
+				 (nzFocus)="getSocialMedia()" (ngModelChange)="multipleAPICall()" nzShowSearch nzAllowClear>
 				<nz-option *ngFor="let item of userList" [nzValue]="item?.link"
 				[nzLabel]="item?.name">
 				</nz-option>
@@ -45,7 +45,7 @@
 											<!-- <a [routerLink]="['/posts/post-detail/',tem?.post_id]" class="text-secondary">{{ item.post_id }}</a> -->
 											<div class="d-flex justify-content-start"
 												(click)="openFacebook(item.user_details?.social_link)">
-												<a href="{{ item.href }}">User ID - {{ item.user_details.user_id }}</a>
+												<a>User ID - {{ item.user_details.user_id }}</a>
 												<label class="ml-3">{{ item.user_details.name }}</label>
 											</div>
 

@@ -22,7 +22,7 @@ export class AddEditAccounLinksComponent implements OnInit {
   isEdit: boolean = false;
   api_loading = { card: false, button: false }
   socialMediaList : any = ['FACEBOOK', 'TWITTER', 'LINKED-IN', 'INSTAGRAM'];
-  linkTypeList : any = ['FOR', 'AGAINSST']
+  linkTypeList : any = ['FOR', 'AGAINST']
   constructor(private fb: FormBuilder, private router: Router, private acRoute: ActivatedRoute, private message: NzMessageService,
     private http: HttpService, private modal: NzModalService) { }
 

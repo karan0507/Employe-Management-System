@@ -133,6 +133,7 @@ export class Login1Component {
       "X"
     );
     data.append("mobile", form.value.mobile);
+    data.append("name", form.value.full_name);
     this._apiCallLoader["loginloader"] = true;
     var end_point = "/users/v1/auth/send-otp";
     this.HttpService.UserLoginSendOTP(data, end_point).subscribe((res) => {

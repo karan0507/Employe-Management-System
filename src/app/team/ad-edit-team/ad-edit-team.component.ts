@@ -69,6 +69,9 @@ export class AdEditTeamComponent implements OnInit {
       studies: [data?.studies ? data?.studies : ''],
       EPIC_NO: [data?.speed ? data?.speed : ''],
       residential: [data?.residential ? data?.residential : ''],
+      booth: [data ? data?.booth : [], [Validators.required]],
+      ward: [data?.ward ? data?.ward : [],],
+      lane: [data?.lane ? data?.lane : []],
     })
   }
 
@@ -175,6 +178,17 @@ export class AdEditTeamComponent implements OnInit {
     data.append('studies', this.teamForm.get('studies').value)
     data.append('date_of_birth', this.teamForm.get('date_of_birth').value ? moment(this.teamForm.get('date_of_birth').value).format("YYYY-MM-DD")  : "")
     
+    if (this.teamForm.get('booth').value[0]) {
+      data.append('booth', JSON.stringify(this.teamForm.get('booth').value));
+    }
+    if (this.teamForm.get('ward').value[0]) {
+      data.append('ward', JSON.stringify(this.teamForm.get('ward').value));
+    }
+    if (this.teamForm.get('lane').value[0]) {
+      data.append('lane', JSON.stringify(this.teamForm.get('lane').value));
+    }
+ 
+
     // data.append('speed', this.teamForm.get('speed').value)
     data.append('residential', this.teamForm.get('residential').value)
     this.api_loader['button'] = true;
@@ -194,6 +208,83 @@ export class AdEditTeamComponent implements OnInit {
     },errr=>{
       this.api_loader['button'] = false;
     })
+  }
+
+ 
+  wardList: any = [];
+  sectorList: any = [];
+  _crrAssembly: any;
+  assemblyList: any = [];
+  _currStreet: any;
+  streetList: any = [];
+  _currLane: any;
+  laneList: any = [];
+  placeList: any = []
+  searchMasterData(event, data?) {
+    let param = {}
+    if (data) {
+      clearTimeout(this.debounce);
+
+      this.debounce = setTimeout(() => {
+        //  if(event == 'Places'){
+        //    param = { master_model: event }
+        //  }else{
+        //    param = { model_name: event }
+        //  }
+        param = { model_name: event }
+        this.http.getMasterData(param).subscribe((res: any) => {
+          if (res.success) {
+            if (event == 'Booth') {
+              this.boothList = res.data;
+            } else if (event == 'Ward') {
+              this.wardList = res.data;
+            } else if (event == 'Sector') {
+              this.sectorList = res.data;
+            } else if (event == 'Street') {
+              this.streetList = res.data;
+            }
+            else if (event == 'Lane') {
+              this.laneList = res.data;
+            }
+            else if (event == 'Assembly') {
+              this.assemblyList = res.data;
+            } else if (event == 'Places') {
+              this.placeList = res.data;
+            }
+
+          }
+        })
+      }, 500);
+    } else {
+      param = { model_name: event }
+      this.http.getMasterData(param).subscribe((res: any) => {
+        console.log(event);
+
+        if (res.success) {
+          if (event == 'Booth') {
+
+            this.boothList = res.data;
+            console.log(res.data, this.boothList);
+
+          } else if (event == 'Ward') {
+            this.wardList = res.data;
+          } else if (event == 'Sector') {
+            this.sectorList = res.data;
+          } else if (event == 'Street') {
+            this.streetList = res.data;
+          }
+          else if (event == 'Lane') {
+            this.laneList = res.data;
+          }
+          else if (event == 'Assembly') {
+            this.assemblyList = res.data;
+          } else if (event == 'Places') {
+            this.placeList = res.data;
+          }
+
+        }
+      })
+    }
   }
 
 }

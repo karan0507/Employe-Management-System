@@ -1,7 +1,7 @@
 <div class="d-block">
-    <div class="d-flex justify-content-end mb-2">
+    <!-- <div class="d-flex justify-content-end mb-2">
         <button nz-button nzType="primary" routerLink="/media-account/add-account">+ Add New Account </button>
-    </div>
+    </div> -->
     <div class="row">
         <div class="col-md-12">
             <nz-card [nzLoading]="api_loader['list']">
@@ -34,7 +34,7 @@
                         <nz-select nzShowSearch class="selectFilter mb-2 mr-2" nzPlaceHolder="Select Link Type" [(ngModel)]="currLinkTpye" (ngModelChange)="getaccountList()" nzAllowClear>
                             <nz-option [nzValue]="'FOR'" [nzLabel]="'For'">
                             </nz-option>
-                            <nz-option [nzValue]="'AGAINSST'" [nzLabel]="'Against'">
+                            <nz-option [nzValue]="'AGAINST'" [nzLabel]="'Against'">
                             </nz-option>
                         </nz-select>
                      
@@ -51,7 +51,7 @@
                             <th>Link</th>
                             <th nzWidth="10rem">Link Type</th>
                             <th nzWidth="10rem">Social Media</th>
-                            <th nzWidth="10rem">Action</th>
+                            <!-- <th nzWidth="10rem">Action</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -60,10 +60,10 @@
                             <td> <a (click)="openURL('/media-account')" >{{ data.link }}</a> </td>
                             <td nzWidth="10rem">{{ data.link_type}}</td>
                             <td nzWidth="10rem">{{ data.social_handle }}</td>
-                            <td nzWidth="10rem">
+                            <!-- <td nzWidth="10rem">
                                 <button nz-button nzType="link" class="border" nzSize="small"
                                     routerLink="/media-account/edit-account" [queryParams]="{id:data?.id}">Edit</button>
-                            </td>
+                            </td> -->
                         </tr>
                     </tbody>
                 </nz-table>

@@ -52,12 +52,17 @@ export class DashboardComponent implements OnInit {
 
     // MultipleAPI Call
     multipleAPICall() {
+        console.log(this._currUser);
+        
+        if(!this._currUser){
+            this._currUser = "https://www.facebook.com/dyadav.bhilai.official";
+        }
         this.getPostList();
         this.getFollowerList();
         this.getNegativeCount();
     }
 
-    _currUser : any;
+    _currUser = "https://www.facebook.com/dyadav.bhilai.official";
     getSocialMedia(searchVal?){
         let data = {"page":1,"limit":30,"search_param":searchVal ? searchVal : ''};
         this.http.getAccountListt(data).subscribe((res:any)=>{
@@ -95,10 +100,10 @@ export class DashboardComponent implements OnInit {
             }
         );
     }
-
+    
     getPostList(tableFilter?, type?) {
         this.api_loader['postList'] = true
-        var params_data = { "link": "https://www.facebook.com/dyadav.bhilai.official", "end_point": "LATEST_POST_API_URL" }
+        var params_data = { "link": this._currUser, "end_point": "LATEST_POST_API_URL" }
         // this._currUser
         if(this._currUser){
             params_data[''] = this._currUser;
@@ -131,7 +136,7 @@ export class DashboardComponent implements OnInit {
     getFollowerList(tableFilter?, type?) {
         this.api_loader['followerList'] = true
         let params_data = {}
-        params_data['link'] = "https://www.facebook.com/dyadav.bhilai.official",
+        params_data['link'] = this._currUser,
             params_data['end_point'] = "STRONG_FOLLOWERS_API_URL";
             if(this._currUser){
                 params_data[''] = this._currUser;
@@ -164,7 +169,7 @@ export class DashboardComponent implements OnInit {
     _currUserNegative: any;
     getNegativeCount() {
         let data = {}
-        data["link"] = "https://www.facebook.com/dyadav.bhilai.official";
+        data["link"] = this._currUser;
         data["end_point"] = "FETCH_DASHBOARD_MATRIC_DATA";
         if(this._currUser){
             data[''] = this._currUser;

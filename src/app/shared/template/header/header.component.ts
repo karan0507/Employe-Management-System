@@ -114,7 +114,7 @@ export class HeaderComponent{
     switchToggle(){
         this._currToggleValue = !this._currToggleValue;
         if(this._currToggleValue == true){
-            this.router.navigateByUrl("/dashboard/home");
+            this.router.navigateByUrl("/dashboard/voter");
         }else{
             this.router.navigateByUrl("/voter");
         }

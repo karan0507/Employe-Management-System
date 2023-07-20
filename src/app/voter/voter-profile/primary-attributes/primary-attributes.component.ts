@@ -25,7 +25,6 @@ export class PrimaryAttributesComponent implements OnInit {
     this.http.getRelationshipTags(data).subscribe((res:any)=>{
       if(res.success){
         this.attributeList = res.data;
-    
         this.attributeList.forEach(element=>{
           element['_currTagValue'] = "";
           element['_isVisible'] = false;
@@ -50,15 +49,17 @@ export class PrimaryAttributesComponent implements OnInit {
    
   }
 
-  addTagForAttribute(data){
-  
+  addTagForAttribute(data, i){
+    this.attributeList[i]._isVisible = true;
     let param = {"voter_id":[this.voterId],"primary_attribute":data?.id, "tag":data?._currTagValue};
     this.http.addVoterTasg(param).subscribe((res:any)=>{
       if(res.success){
         this.message.success(res.message);
         this.getAttributeList();
+        this.attributeList[i]._isVisible = false;
       }else{
-        this.message.error(res.message)
+        this.message.error(res.message);
+        this.attributeList[i]._isVisible = false;
       }
     })
   }

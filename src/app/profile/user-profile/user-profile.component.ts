@@ -12,8 +12,8 @@ import { HttpService } from 'src/app/service/http.service';
 export class UserProfileComponent implements OnInit {
   prfileCataloug : any = [
     {id:1,name:'Change Language', url:'', icon:'zhihu'},
-    {id:1,name:'Communication History', url:'/profile/commounication-history', icon:'notification'},
-    {id:1,name:'FAQ’s & Help', url:'', icon:'info-circle'},
+    // {id:1,name:'Communication History', url:'/profile/commounication-history', icon:'notification'},
+    // {id:1,name:'FAQ’s & Help', url:'', icon:'info-circle'},
   ]
 
   isChangeLanguage : boolean = false;
@@ -60,11 +60,15 @@ handleOk(){
     this.message.error('Please select language')
     return
   }
-  let data = {'language':this._currLanguage}
+  console.log(this._currLanguage)
+  let data = new FormData();
+  data.append('language',this._currLanguage)
+  
   this.http.changeLanguage(data).subscribe((res:any)=>{
     if(res.success){
       this.message.success(res.message);
       this.isChangeLanguage = false;
+      this.router.navigateByUrl("/authentication/login")
     }else{
       this.message.error(res.message);
       this.isChangeLanguage = false;

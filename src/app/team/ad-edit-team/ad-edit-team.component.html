@@ -171,25 +171,63 @@
                     </nz-form-item>
                 </div>
 
-                <!-- <div class="col-lg-6 col-12">
+                <div class="col-lg-6 col-12">
                     <nz-form-item>
-                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left">{{_currLanguage == 'en' ?
-                            'Speed' : 'रफ़्तार'}}
-                        </nz-form-label>
-                        <nz-form-control [nzSm]="16" [nzXs]="24"
-                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter Speed' : 'कृपया रफ़्तार जांचें'">
-                            <input type="text" nz-input formControlName="speed"
-                   data.append('speed', this.teamForm.get('speed').value)<nz-form-item>
                         <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
-                            'Email' : 'ईमेल'}}
+                            'Select Booth' : 'बूथ का चयन करें'}}
                         </nz-form-label>
                         <nz-form-control [nzSm]="16" [nzXs]="24"
-                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter email' : 'कृपया ईमेल जांचें'">
-                            <input type="text" nz-input formControlName="email"
-                                [placeholder]="_currLanguage == 'en' ? 'Enter email' : 'कृपया ईमेल जांचें'" />
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select Booth' : 'कृपया बूथ का चयन करें'">
+                            <nz-select [nzMode]="'multiple'" class="selectFilter mb-2 mr-3" formControlName="booth"
+                                (nzFocus)="searchMasterData('Booth')" (keyup)="searchMasterData('Booth',$event)"
+                                nzAllowClear [nzMaxTagCount]="2"
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Booth' : 'बूथ का चयन करें'">
+                                <nz-option *ngFor="let item of boothList" [nzValue]="item.id"
+                                    [nzLabel]=" _currLanguage == 'en' ? item?.name?.en : item?.name?.hi">
+                                </nz-option>
+                            </nz-select>
                         </nz-form-control>
                     </nz-form-item>
-                </div> -->
+                </div>
+
+                <!-- Ward -->
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" >{{_currLanguage == 'en' ?
+                            'Select Ward' : 'वार्ड का चयन करें'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select Ward' : 'कृपया वार्ड का चयन करें'">
+                            <nz-select [nzMode]="'multiple'" class="selectFilter mb-2 mr-3" formControlName="ward"
+                                (nzFocus)="searchMasterData('Ward')" (keyup)="searchMasterData('Ward',$event)"
+                                nzAllowClear [nzMaxTagCount]="2"
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Ward' : 'वार्ड का चयन करें'">
+                                <nz-option *ngFor="let item of wardList" [nzValue]="item.id"
+                                    [nzLabel]=" _currLanguage == 'en' ?  item?.name?.en : item?.name?.hi">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" >{{_currLanguage == 'en' ?
+                            'Select Lane' : 'स्थानों का चयन करें'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please select Lane' : 'कृपया स्थानों का चयन करें'">
+                            <nz-select [nzMode]="'multiple'" class="selectFilter mb-2 mr-3" formControlName="lane"
+                                (nzFocus)="searchMasterData('Lane')" (keyup)="searchMasterData('Lane',$event)"
+                                nzAllowClear [nzMaxTagCount]="2"
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Lane' : 'स्थानों का चयन करें'">
+                                <nz-option *ngFor="let item of streetList" [nzValue]="item.id"
+                                    [nzLabel]=" _currLanguage == 'en' ?  item?.name?.en : item?.name?.hi">
+                                </nz-option>
+                            </nz-select>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
 
             </div>
         </form>

@@ -125,7 +125,7 @@
                                 (nzFocus)="getVoters()" (keyup)="getVoters($event)" nzAllowClear [nzMaxTagCount]="2"
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Voters' : 'मतदाताओं का चयन करें'">
                                 <nz-option *ngFor="let item of voters" [nzValue]="item.id"
-                                    [nzLabel]=" _currLanguage == 'en' ?  item?.full_name_en : full_name_hi">
+                                    [nzLabel]=" _currLanguage == 'en' ?  item?.first_name_en + item?.last_name_en + (item?.epic_no ? ' ' +  item?.epic_no  : '') : item?.last_name_hi + item?.last_name_hi + (item?.epic_no ? ' ' + item?.epic_no  : '')">
                                 </nz-option>
                             </nz-select>
                         </nz-form-control>

@@ -48,33 +48,36 @@
             </button>
         </div> -->
     </div>
-    <nz-card [nzLoading]="api_loader['list']" class="d-none">
-        <div class="row">
-            <div class="col-md-12 p-0" *ngFor="let item of votersList">
-                <div class="d-flex justify-content-between my-3 align-items-center" [routerLink]="'/voter'"
-                    [queryParams]="{id:item?.id}">
-                    <!-- <img nzIcon="user" width="80" height="80" class="mr-4 rounded-circle"
-                        [src]="'../.././../assets/images/avatars/thumb-10.jpg'"> -->
-                    <nz-avatar nzSize="large" style="background-color: #2a4550" class="mr-4 text-center"
-                        [nzText]="getPipeValue(item?.full_name_en)"></nz-avatar>
-
-                    <div class="d-flex flex-column">
-                        <h6 class="text-dark">{{_currLanguage == 'en' ? item?.full_name_en : item?.full_name_hi}}</h6>
-                        <label class="text-primary mb-2">EPIC_NO: {{item?.epic_no}}</label>
-                        <div class="d-flex justify-content-start flex-wrap">
-                            <nz-tag class="mr-2" style="max-width: fit-content;">Booth No {{item?.booth}}</nz-tag>
-                            <nz-tag style="max-width: fit-content;">Ward No J</nz-tag>
+    <!-- <nz-card [nzLoading]="api_loader['list']" class="d-flex d-lg-none"> -->
+        <div class="row d-lg-none d-flex">
+            <div class="col-md-6 col-12 " *ngFor="let item of votersList">
+                <nz-card nzHoverable class="mr-md-2 "  [nzLoading]="api_loader['list']">
+                    <div class="d-flex my-2 align-items-center" [routerLink]="'/voter'"
+                        [queryParams]="{id:item?.id}">
+                        <!-- <img nzIcon="user" width="80" height="80" class="mr-4 rounded-circle"
+                            [src]="'../.././../assets/images/avatars/thumb-10.jpg'"> -->
+                        <nz-avatar nzSize="large" style="background-color: #2a4550" class="mr-4 text-center"
+                            [nzText]="getPipeValue(item?.full_name_en)"></nz-avatar>
+    
+                        <div class="d-flex flex-column">
+                            <h6 class="text-dark">{{item?.full_name_en ? (_currLanguage == 'en' ? item?.full_name_en : item?.full_name_hi) : '--'}}</h6>
+                            <label class="text-primary mb-2">EPIC_NO: {{item?.epic_no}}</label>
+                            <div class="d-flex justify-content-start flex-wrap">
+                                <nz-tag class="mr-2" style="max-width: fit-content;">Booth No {{item?.booth}}</nz-tag>
+                                <nz-tag style="max-width: fit-content;">Ward No J</nz-tag>
+                            </div>
                         </div>
+                        <!-- <span nz-icon nzType="right" nzSize="large" nzTheme="outline"
+                            class="font-size-16 align-self-center"></span> -->
                     </div>
-                    <span nz-icon nzType="right" nzSize="large" nzTheme="outline"
-                        class="font-size-16 align-self-center"></span>
-                </div>
-                <nz-divider class="my-0"></nz-divider>
+                    <!-- <nz-divider class="my-0"></nz-divider> -->
+                </nz-card>
             </div>
+            
         </div>
-    </nz-card>
+    <!-- </nz-card> -->
 
-    <div class="d-block">
+    <div class="d-lg-flex d-none">
         <div class="row">
             <div class="col-md-12">
                 <nz-card [nzLoading]="api_loader['list']">

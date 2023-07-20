@@ -55,7 +55,40 @@
 <div class="d-flex justify-content-end mb-3">
 
 </div>
-<nz-card>
+<div class="row d-lg-none d-flex">
+    <div class="col-md-6 col-12 " *ngFor="let item of taskList">
+        <nz-card nzHoverable class="mr-md-2 "  [nzLoading]="api_loader['list']">
+            <div class="d-flex my-2 align-items-center" [routerLink]="['/task-management/edit-task']" [queryParams]="{id:item.id}">
+                <!-- <img nzIcon="user" width="80" height="80" class="mr-4 rounded-circle"
+                    [src]="'../.././../assets/images/avatars/thumb-10.jpg'"> -->
+                <!-- <nz-avatar nzSize="large" style="background-color: #2a4550" class="mr-4 text-center"
+                    [nzText]="getPipeValue(item?.full_name_en)"></nz-avatar> -->
+
+                <div class="d-flex flex-column">
+                    <h6 class="text-dark">
+                      <span class="mr-2">Task Name</span>  {{ _currLanguage == 'en' ?  item?.name?.en :
+                        item?.name?.en}}
+                    </h6>
+                    <label class="text-primary mb-2"><span class="mr-2 font-size-12">Created By: </span>
+                        {{(item?.created_by ? item?.created_by?.first_name + " " + item?.created_by?.username  : '-')}}
+                    </label>
+                    <label class="text-primary mb-2"><span class="mr-2 font-size-12">Created At: </span>
+                        {{(item?.created_at ? (item?.created_at | date:'medium') : '-')}}
+                    </label>
+                    <!-- <div class="d-flex justify-content-start flex-wrap">
+                        <nz-tag class="mr-2" style="max-width: fit-content;">Booth No {{item?.booth}}</nz-tag>
+                        <nz-tag style="max-width: fit-content;">Ward No J</nz-tag>
+                    </div> -->
+                </div>
+                <!-- <span nz-icon nzType="right" nzSize="large" nzTheme="outline"
+                    class="font-size-16 align-self-center"></span> -->
+            </div>
+            <!-- <nz-divider class="my-0"></nz-divider> -->
+        </nz-card>
+    </div>
+    
+</div>
+<nz-card class="d-none d-lg-flex">
     <div class="totalCount">
         <nz-table #rowSelectionTable [nzData]="taskList" [nzTotal]="total_count" [nzFrontPagination]="false"
             [nzShowSizeChanger]="true" [nzPageIndex]="page" [nzPageSize]="globalPageSize"

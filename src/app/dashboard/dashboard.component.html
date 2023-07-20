@@ -44,7 +44,7 @@
 										<nz-list-item-meta-title>
 											<!-- <a [routerLink]="['/posts/post-detail/',tem?.post_id]" class="text-secondary">{{ item.post_id }}</a> -->
 											<div class="d-flex justify-content-start"
-												(click)="openFacebook(item.post_url)">
+												(click)="openFacebook(item.user_details?.social_link)">
 												<a href="{{ item.href }}">User ID - {{ item.user_details.user_id }}</a>
 												<label class="ml-3">{{ item.user_details.name }}</label>
 											</div>

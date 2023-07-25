@@ -1,10 +1,9 @@
 <main>
 	<section>
 		<div class="d-flex justify-content-end mt-3">
-			<nz-select class="selectFilter" nzPlaceHolder="Select Social Media" [(ngModel)]="_currUser" 
-				 (nzFocus)="getSocialMedia()" (ngModelChange)="multipleAPICall()" nzShowSearch nzAllowClear>
-				<nz-option *ngFor="let item of userList" [nzValue]="item?.link"
-				[nzLabel]="item?.name">
+			<nz-select class="selectFilter" nzPlaceHolder="Select Social Media" [(ngModel)]="_currUser"
+				(nzFocus)="getSocialMedia()" (ngModelChange)="multipleAPICall()" nzShowSearch nzAllowClear>
+				<nz-option *ngFor="let item of userList" [nzValue]="item?.link" [nzLabel]="item?.name">
 				</nz-option>
 			</nz-select>
 		</div>
@@ -76,122 +75,54 @@
 							</nz-list>
 
 						</nz-card>
-						<nz-pagination [nzPageIndex]="followerPage" [nzTotal]="followerPageSize"
+						<!-- <nz-pagination [nzPageIndex]="followerPage" [nzTotal]="followerPageSize"
 							(nzPageIndexChange)="getFollowerList($event,'pageIndex')"
-							(nzPageSizeChange)="getFollowerList($event,'')"></nz-pagination>
+							(nzPageSizeChange)="getFollowerList($event,'')"></nz-pagination> -->
 						<ng-template #extraTemplate>
-							<a href="/">View All</a>
+							<a (click)="_currSection = 'strong_followers'; isVisible = true; getStronFollowersList()">View All</a>
 						</ng-template>
+
+						<ng-template #extraTemplate2>
+							<a (click)="_currSection = 'liked_list'; isVisible = true; getPostList2()">View All</a>
+						</ng-template>
+						
 					</div>
 				</div>
 			</div>
 
 			<!-- Latest Posts -->
 			<div class="col-md-6 h-100 b-5">
-				<nz-card nzTitle="Latest Posts" [nzLoading]="api_loader['postList']" [nzExtra]="extraTemplate"
-				style="height: 100vh; overflow: scroll;">
-				<div class="row">
-					<div class="col-lg-6 col-12" *ngFor="let item of LatestPostDataSet">
-						<nz-card nzHoverable [nzCover]="coverTemplate" [routerLink]="['/posts/post-detail/']" [queryParams]="{post_id:item?.post_id}">
-							<ng-template #coverTemplate>
-								<img class="w-100" style="height: 18rem;" alt="example" [src]="item.image" />
-							</ng-template>
-							<nz-card-meta [nzTitle]="titleCardMeta" [nzDescription]="metaDescription"></nz-card-meta>
-							<ng-template #metaDescription>
-							<p>	{{ item.title }}</p>
-							</ng-template>
-							<ng-template #titleCardMeta>
-								<div class="d-flex my-2">
-									<nz-avatar
-										[nzSrc]="item?.social_user?.profile_picture ? item?.social_user?.profile_picture : 'assets/images/avatars/default.png'">
-		
-									</nz-avatar>
-									<div class="mx-3 d-flex flex-column">
-										<a [routerLink]="['/posts/post-detail/']" [queryParams]="{post_id:item?.post_id}"
-											class="text-secondary ">{{
-											item.post_id }}</a>
-										<label for="" class="text-muted mx-3 font-size-12">{{ item.post_on |
-											date: 'medium'}}</label>
-		
-									</div>
-								</div>
-							</ng-template>
-							<ul nz-list-item-actions class="ml-0">
-								<nz-list-item-action>
-									<span nz-icon nzType="like" style="margin-right: 8px;"></span>
-									{{item.total_likes}}
-								</nz-list-item-action>
-								<nz-list-item-action>
-									<span nz-icon nzType="comment" style="margin-right: 8px;"></span>
-									{{item.total_comments}}
-								</nz-list-item-action>
-								<nz-list-item-action>
-									<span nz-icon nzType="share-alt" style="margin-right: 8px;"></span>
-									{{item.total_shares}}
-								</nz-list-item-action>
-								<nz-list-item-action>
-									<span nz-icon (click)="openFacebook(item.post_url)" nzType="facebook"
-										style="margin-right: 8px;"></span>
-		
-								</nz-list-item-action>
-								</ul>
-						</nz-card>
-					</div>
-				</div>
-			
-				
-			</nz-card>
-				
-				<ng-template #extraTemplate>
-					<a>View All</a>
-				</ng-template>
-				<nz-pagination [nzPageIndex]="postPage" [nzTotal]="postPageSize"
-					(nzPageIndexChange)="getPostList($event,'pageIndex')"
-					(nzPageSizeChange)="getPostList($event,'')"></nz-pagination>
-			</div>
-
-
-		</div>
-	</section>
-</main>
-
-
-<!-- Laest Posts Copy  
-<nz-card nzTitle="Latest Posts" [nzLoading]="api_loader['postList']" [nzExtra]="extraTemplate"
+				<nz-card nzTitle="Latest Posts" [nzLoading]="api_loader['postList']" [nzExtra]="extraTemplate2"
 					style="height: 100vh; overflow: scroll;">
-					<nz-list nzItemLayout="vertical">
-						<nz-list-item *ngFor="let item of LatestPostDataSet">
-							<div class="d-flex flex-column">
-								<div class="d-flex flex-column justify-content-center align-items-center mx-auto my-2">
-									<img style="width: 100px; height: 80px;" class="post_image_style mx-auto" alt="logo"
-										[src]="item.image" />
-								</div>
-								<div class="d-flex justify-content-between flex-wrap">
+					<div class="row">
+						<div class="col-lg-6 col-12 mb-3" *ngFor="let item of LatestPostDataSet">
+							<nz-card nzHoverable class="mb-3" [nzCover]="coverTemplate" [routerLink]="['/posts/post-detail/']"
+								[queryParams]="{post_id:item?.post_id}">
+								<ng-template #coverTemplate>
+									<img  alt="example" style="height: 18rem; width: -webkit-fill-available; margin-inline: auto; object-fit: contain;"   [src]="item.image" />
+								</ng-template>
+								<nz-card-meta [nzTitle]="titleCardMeta"
+									[nzDescription]="metaDescription"></nz-card-meta>
+								<ng-template #metaDescription>
+									<p> {{ item.title }}</p>
+								</ng-template>
+								<ng-template #titleCardMeta>
+									<div class="d-flex my-2">
+										<nz-avatar
+											[nzSrc]="item?.social_user?.profile_picture ? item?.social_user?.profile_picture : 'assets/images/avatars/default.png'">
 
-									<div class="d-flex flex-column">
-										<div class="d-flex">
-											<nz-avatar
-												[nzSrc]="item?.social_user?.profile_picture ? item?.social_user?.profile_picture : 'assets/images/avatars/default.png'">
+										</nz-avatar>
+										<div class="mx-3 d-flex flex-column">
+											<a [routerLink]="['/posts/post-detail/']"
+												[queryParams]="{post_id:item?.post_id}" class="text-secondary ">{{
+												item.post_id }}</a>
+											<label for="" class="text-muted mx-3 font-size-12">{{ item.post_on |
+												date: 'medium'}}</label>
 
-											</nz-avatar>
-											<div class="mx-3">
-												<a [routerLink]="['/posts/post-detail/']"
-													[queryParams]="{post_id:item?.post_id}" class="text-secondary ">{{
-													item.post_id }}</a>
-												<label for="" class="text-muted mx-3 font-size-12">{{ item.post_on |
-													date: 'medium'}}</label>
-
-											</div>
 										</div>
-										<p class="m-3">
-											{{ item.title }}
-										</p>
-
-
 									</div>
-								
-								</div>
-								<ul nz-list-item-actions>
+								</ng-template>
+								<ul nz-list-item-actions class="ml-0">
 									<nz-list-item-action>
 										<span nz-icon nzType="like" style="margin-right: 8px;"></span>
 										{{item.total_likes}}
@@ -210,16 +141,174 @@
 
 									</nz-list-item-action>
 								</ul>
-							</div>
-							
-							<nz-list-item-extra class="d-none">
-								<div class="d-flex flex-column">
-									<img style="width: 100px; height: 80px;" class="post_image_style" alt="logo"
-										[src]="item.image" />
-								</div>
-							</nz-list-item-extra>
-						</nz-list-item>
-					</nz-list>
+							</nz-card>
+						</div>
+					</div>
+
+
 				</nz-card>
 
--->
+				<ng-template #extraTemplate>
+					<a>View All</a>
+				</ng-template>
+				<nz-pagination [nzPageIndex]="postPage" [nzTotal]="postPageSize"
+					(nzPageIndexChange)="getPostList($event,'pageIndex')"
+					(nzPageSizeChange)="getPostList($event,'')"></nz-pagination>
+			</div>
+
+
+		</div>
+	</section>
+</main>
+
+<section *ngIf="isVisible">
+	<nz-modal [(nzVisible)]="isVisible" [nzTitle]="_currSection == 'strong_followers' ? 'Strong Followers': 'Latest Posts'" [nzFooter]="null"
+		(nzOnCancel)="resetFilter(); isVisible = false;" (nzOnOk)="null">
+		<ng-container *nzModalContent>
+
+			<section *ngIf="_currSection == 'strong_followers'">
+				<div class="row mb-3">
+					<div class="col-md-12 d-flex">
+						<nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+							<input type="text" nz-input placeholder="Search By Name" [(ngModel)]="_currSearchValue"
+								(keyup.enter)="getStronFollowersList()" />
+						</nz-input-group>
+						<button nz-button nzType="default" class="ml-3 mb-2" nzShape="circle" (click)="resetFilter()">
+							<i nz-icon nzType="undo"></i>
+						</button>
+						<ng-template #suffixIconButton>
+							<button nz-button nzType="secondary" nzSearch (click)="getStronFollowersList()">
+								<i nz-icon nzType="search"></i>
+							</button>
+						</ng-template>
+					</div>
+				</div>
+				<nz-card [nzLoading]="api_loader['stronFollowers']" style="height: 25rem; overflow: scroll;">
+					<div class="row">
+						<div class="col-md-12">
+							<nz-list nzItemLayout="vertical">
+								<nz-list-item *ngFor="let item of _all_strongFollowers_list">
+									<nz-list-item-meta>
+										<nz-list-item-meta-avatar
+											[nzSrc]="item?.user_details?.profile_picture ? item?.user_details?.profile_picture : 'assets/images/avatars/default.png'"
+											alt></nz-list-item-meta-avatar>
+										<nz-list-item-meta-avatar [nzSrc]="item.avatar"></nz-list-item-meta-avatar>
+										<nz-list-item-meta-title>
+											<!-- <a [routerLink]="['/posts/post-detail/',tem?.post_id]" class="text-secondary">{{ item.post_id }}</a> -->
+											<div class="d-flex justify-content-start"
+												(click)="openFacebook(item.user_details?.social_link)">
+												<a>User ID - {{ item.user_details.user_id }}</a>
+												<label class="ml-3">{{ item.user_details.name }}</label>
+											</div>
+
+										</nz-list-item-meta-title>
+									</nz-list-item-meta>
+
+									<ul nz-list-item-actions>
+										<nz-list-item-action>
+											<span nz-icon nzType="like" style="margin-right: 8px;"></span>
+											{{item.total_likes}}
+										</nz-list-item-action>
+										<nz-list-item-action>
+											<span nz-icon nzType="comment" style="margin-right: 8px;"></span>
+											{{item.total_comments}}
+										</nz-list-item-action>
+										<nz-list-item-action>
+											<span nz-icon nzType="share-alt" style="margin-right: 8px;"></span>
+											{{item.total_shares}}
+										</nz-list-item-action>
+										<!-- <nz-list-item-action>
+										<span nz-icon nzType="share-alt" style="margin-right: 8px;"></span>
+										{{item.total_shares}}
+									</nz-list-item-action> -->
+									</ul>
+									<nz-list-item-extra>
+									</nz-list-item-extra>
+								</nz-list-item>
+							</nz-list>
+						</div>
+					</div>
+					<div *ngIf="totalCount == 0">
+						No data found!
+					</div>
+				</nz-card>
+				<nz-pagination [nzPageIndex]="followerPage" [nzTotal]="totalCount"
+					(nzPageIndexChange)="getStronFollowersList($event,'pageIndex')"
+					(nzPageSizeChange)="getStronFollowersList($event,'')"></nz-pagination>
+			</section>
+
+			<section *ngIf="_currSection == 'liked_list'">
+			<div class="row">
+				<div class="col-md-12 h-100 b-5">
+					<nz-card [nzTitle]="null" [nzLoading]="api_loader['postList']"
+						style="height: 100vh; overflow: scroll;">
+						<div class="row">
+							<div class="col-lg-12 col-12 mb-3" *ngFor="let item of LatestPostDataSet">
+								<nz-card nzHoverable class="mb-3" [nzCover]="coverTemplate" [routerLink]="['/posts/post-detail/']"
+									[queryParams]="{post_id:item?.post_id}">
+									<ng-template #coverTemplate>
+										<img  alt="example" style="height: 18rem; width: -webkit-fill-available; margin-inline: auto; object-fit: contain;"   [src]="item.image" />
+									</ng-template>
+									<nz-card-meta [nzTitle]="titleCardMeta"
+										[nzDescription]="metaDescription"></nz-card-meta>
+									<ng-template #metaDescription>
+										<p> {{ item.title }}</p>
+									</ng-template>
+									<ng-template #titleCardMeta>
+										<div class="d-flex my-2">
+											<nz-avatar
+												[nzSrc]="item?.social_user?.profile_picture ? item?.social_user?.profile_picture : 'assets/images/avatars/default.png'">
+	
+											</nz-avatar>
+											<div class="mx-3 d-flex flex-column">
+												<a [routerLink]="['/posts/post-detail/']"
+													[queryParams]="{post_id:item?.post_id}" class="text-secondary ">{{
+													item.post_id }}</a>
+												<label for="" class="text-muted mx-3 font-size-12">{{ item.post_on |
+													date: 'medium'}}</label>
+	
+											</div>
+										</div>
+									</ng-template>
+									<ul nz-list-item-actions class="ml-0">
+										<nz-list-item-action>
+											<span nz-icon nzType="like" style="margin-right: 8px;"></span>
+											{{item.total_likes}}
+										</nz-list-item-action>
+										<nz-list-item-action>
+											<span nz-icon nzType="comment" style="margin-right: 8px;"></span>
+											{{item.total_comments}}
+										</nz-list-item-action>
+										<nz-list-item-action>
+											<span nz-icon nzType="share-alt" style="margin-right: 8px;"></span>
+											{{item.total_shares}}
+										</nz-list-item-action>
+										<nz-list-item-action>
+											<span nz-icon (click)="openFacebook(item.post_url)" nzType="facebook"
+												style="margin-right: 8px;"></span>
+	
+										</nz-list-item-action>
+									</ul>
+								</nz-card>
+							</div>
+						</div>
+	
+	
+					</nz-card>
+	
+					<ng-template #extraTemplate>
+						<a>View All</a>
+					</ng-template>
+					<nz-pagination [nzPageIndex]="postPage" [nzTotal]="postPageSize"
+						(nzPageIndexChange)="getPostList($event,'pageIndex')"
+						(nzPageSizeChange)="getPostList($event,'')"></nz-pagination>
+				</div>
+			</div>
+			</section>
+
+
+
+		</ng-container>
+	</nz-modal>
+
+</section>

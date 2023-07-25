@@ -26,6 +26,8 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { ViewAllTableComponent } from './view-all-table/view-all-table.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 /** Assign all ng-zorro modules to this array*/
 const antdModule = [
     NzButtonModule,
@@ -44,7 +46,9 @@ const antdModule = [
     Ng2SearchPipeModule,
     FormsModule,
     ReactiveFormsModule,
-    NzListModule
+    NzListModule,
+    NzModalModule,
+    NzToolTipModule
 ]
 
 @NgModule({

@@ -17,10 +17,11 @@ interface ItemData {
 })
 
 export class DashboardComponent implements OnInit {
-
+    _currSection : any;
+    isVisible : boolean = false;
     postPage = 1;
     postPageSize = 30;
-
+    _currSearchValue : any;
     followerPage = 1;
     followerPageSize = 30;
 
@@ -49,6 +50,12 @@ export class DashboardComponent implements OnInit {
         this.multipleAPICall()
     }
 
+    resetFilter(){
+        this._currSearchValue = '';
+        this.followerPage =1;
+        this.followerPageSize = 30;
+        this.getStronFollowersList();
+    }
 
     // MultipleAPI Call
     multipleAPICall() {
@@ -60,6 +67,46 @@ export class DashboardComponent implements OnInit {
         this.getPostList();
         this.getFollowerList();
         this.getNegativeCount();
+    }
+
+    // view_All_Followers:
+    _all_strongFollowers_list : any = [];
+    totalCount : any;
+    getStronFollowersList(tableFilter?, type?){
+        this.api_loader['stronFollowers'] = true
+        let params_data = {}
+        params_data['link'] = this._currUser,
+            params_data['end_point'] = "STRONG_FOLLOWERS_API_URL";
+            if(this._currUser){
+                params_data[''] = this._currUser;
+            }
+        if (tableFilter) {
+            if (type == 'pageIndex') {
+                this.followerPage = tableFilter;
+            } else {
+                this.followerPageSize = tableFilter;
+            }
+            params_data['page'] = this.followerPage
+            params_data['imit'] = this.followerPageSize
+        } else {
+            params_data['page'] = this.followerPage
+            params_data['imit'] = this.followerPageSize
+        }
+        if(this._currSearchValue){
+            params_data['search_param'] = this._currSearchValue;
+        }
+        this.http.getDataFromBackgroundFunction(params_data).subscribe(
+            (res : any) => {
+                if (res['data']) {
+
+                    this._all_strongFollowers_list = res['data'];
+                    this.totalCount = res.total_count
+                    this.api_loader['stronFollowers'] = false
+                } else {
+                    this.api_loader['stronFollowers'] = false
+                }
+            }
+        );
     }
 
     _currUser = "https://www.facebook.com/dyadav.bhilai.official";
@@ -82,7 +129,7 @@ export class DashboardComponent implements OnInit {
         }));
     }
 
-    api_loader = { 'postList': false, 'followerList': false }
+    api_loader = { 'postList': false, 'followerList': false, 'stronFollowers':false }
     
     getBackgroundDataAPIFunction(params_data, section) {
         this.http.getDataFromBackgroundFunction(params_data).subscribe(
@@ -120,6 +167,43 @@ export class DashboardComponent implements OnInit {
         } else {
             params_data['page'] = this.postPage
             params_data['imit'] = this.postPageSize
+        }
+        this.http.getDataFromBackgroundFunction(params_data).subscribe(
+            (res) => {
+                if (res['data']) {
+                    this.LatestPostDataSet = res['data'];
+                    this.api_loader['postList'] = false
+                } else {
+                    this.api_loader['postList'] = false
+                }
+            }
+        );
+    }
+
+
+    _currSearch : any;
+    getPostList2(tableFilter?, type?) {
+        this.api_loader['postList'] = true
+        var params_data = { "link": this._currUser, "end_point": "LATEST_POST_API_URL" }
+        // this._currUser
+        if(this._currUser){
+            params_data[''] = this._currUser;
+        }
+        if (tableFilter) {
+            console.log(tableFilter);
+            if (type == 'pageIndex') {
+                this.postPage = tableFilter;
+            } else {
+                this.postPageSize = tableFilter;
+            }
+            params_data['page'] = this.postPage
+            params_data['imit'] = this.postPageSize
+        } else {
+            params_data['page'] = this.postPage
+            params_data['imit'] = this.postPageSize
+        }
+        if(this._currSearch){
+            params_data['search_param'] = this._currSearch;
         }
         this.http.getDataFromBackgroundFunction(params_data).subscribe(
             (res) => {

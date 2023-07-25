@@ -39,7 +39,7 @@
                            <div class="d-flex flex-wrap">
                             <h6 class="mr-2">  Voter:</h6>
                             <label for="">
-                                {{curr == "en" ? item?.to_voter_id[0]?.FIRST_NAME_EN +
+                                {{_currLanguage == "en" ? item?.to_voter_id[0]?.FIRST_NAME_EN +
                                 item?.to_voter_id[0]?.LAST_NAME_EN : item?.to_voter_id[0]?.FIRST_NAME_HI +
                                 item?.to_voter_id[0]?.LAST_NAME_HI}}
                                 {{" "  + item?.to_voter_id[0]?.EPIC_NO}} 

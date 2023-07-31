@@ -66,7 +66,7 @@
                         <td nzWidth="8rem">{{(data?.created_by ? data?.created_by?.first_name + " " + data?.created_by?.username  : '-')}}</td>
 
                         <td nzWidth="8rem" nzRight>
-                            <button nz-button nzType="link" routerLink="/task-management/edit-task" class="border"
+                            <button nz-button nzType="link"  [routerLink]="'/leader-schedule/add-leader-task'" class="border"
                                 [queryParams]="{id:data?.id}">Edit</button>
 
                         </td>

@@ -390,5 +390,15 @@ export class HttpService {
     return this.http.get(this.url + `/voters/v1/voter-tag/get-voter-relationship`, {params:data})
   }
   
+  public getSubDomainData(data){
+    return this.http.get(this.url + `/users/v1/user/fetch-global-account-from-code`, {params:data})
+  }
+
+  getLeaderTaskList(data){
+    return this.http.get(this.url + '/users/v1/leader-schedule/get-leader-schedule', {params:data})
+  }
   
+  public addLeaderTasks(data) {
+    return this.http.post(this.url + `/users/v1/leader-schedule/create-leader-schedule`, data)
+  }
 }

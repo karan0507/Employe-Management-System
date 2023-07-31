@@ -23,6 +23,8 @@ export class GlobalService {
   public globalNavValue = new BehaviorSubject<any>('');
   public global_error_link = new BehaviorSubject<any>('');
 
+
+  globalUserPermissionsData = new ReplaySubject<any>();
   constructor(public message: NzMessageService, public http: HttpService) { }
 
   public globalUserData = new ReplaySubject<any>();
@@ -36,6 +38,9 @@ export class GlobalService {
     this.global_error_link.next(url)
   }
 
+  public setPermissionValue(data): any {
+    this.globalUserPermissionsData.next(data);
+  }
 
   sendGlobalAccountData(data: any) {
     this.globalAccountData.next(data);

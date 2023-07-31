@@ -1,0 +1,91 @@
+import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { HttpService } from 'src/app/service/http.service';
+
+@Component({
+  selector: 'app-leader-task-list',
+  templateUrl: './leader-task-list.component.html',
+  styleUrls: ['./leader-task-list.component.css']
+})
+export class LeaderTaskListComponent implements OnInit {
+
+  leaderList: any = [];
+  total_count = 0;
+  page = 1;
+  globalPageSize = 30;
+  api_loader  = {'list':false}
+
+  date :any;
+  _currBooth : any;
+  _currWard : any;
+  _currSector : any;
+  _currLane : any;
+  _crrAssembly : any;
+  _currStreet : any;
+  _currUser : any;
+  _currSearchValue : any;
+  constructor(private http:HttpService,private message:NzMessageService) { }
+
+  ngOnInit(): void {
+    this.getLeaderTaskList();
+  }
+
+  getLeaderTaskList(tableFilter?){
+    this.api_loader['list'] = true
+    let data = { 'end_point': 'FETCH_VOTER_LIST_API_URL' }
+    if (tableFilter) {
+      this.page = tableFilter?.pageIndex;
+      this.globalPageSize = tableFilter?.pageSize;
+      data['page'] = this.page
+      data['limit'] = this.globalPageSize
+    } else {
+      data['page'] = this.page
+      data['limit'] = this.globalPageSize
+    }
+    if (this._currBooth) {
+
+      data['booth'] = this._currBooth;
+    }
+    if (this._currWard) {
+      data['ward'] = this._currWard;
+    }
+    if (this._currSector) {
+      data['sector'] = this._currSector;
+    }
+    if (this._currLane) {
+      data['lane'] = this._currLane;
+    }
+    if (this._crrAssembly) {
+      data['assembly'] = this._crrAssembly;
+    }
+    if (this._currStreet) {
+      data['street'] = this._currStreet;
+    }
+
+    if (this._currUser) {
+      data['internal_user'] = this._currUser;
+    }
+    if (this.date?.length > 0) {
+      this.page = 1;
+      data['start_date'] = moment(this.date[0]).format("YYYY-MM-DD")
+      data['end_date'] = moment(this.date[1]).format("YYYY-MM-DD")
+    }
+
+    if (this._currSearchValue) {
+      data['search_param'] = this._currSearchValue;
+    }
+    this.http.getLeaderTaskList(data).subscribe((res: any) => {
+      if (res.success) {
+        this.leaderList = res.data;
+        this.total_count = res.total_count
+        this.api_loader['list'] = false
+      } else {
+        this.api_loader['list'] = false
+      }
+    })
+  }
+
+  
+
+}

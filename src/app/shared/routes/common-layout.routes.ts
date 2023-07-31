@@ -33,4 +33,8 @@ export const CommonLayout_ROUTES: Routes = [
         path: 'media-account',
         loadChildren: () => import('../../account/account.module').then(m => m.AccountModule),
     },
+    {
+        path: 'leader-schedule',
+        loadChildren: () => import('../../leader-schedule/leader-schedule.module').then(m => m.LeaderScheduleModule),
+    },
 ];

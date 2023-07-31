@@ -38,6 +38,15 @@ export const ROUTES: SideNavInterface[] = [
     submenu: [],
   },
   {
+    path: "/leader-schedule",
+    title: "Leader Schedule",
+    iconType: "nzIcon",
+    iconTheme: "outline",
+    icon: "team",
+    permission: '',
+    submenu: [],
+  },
+  {
     path: "/task-management",
     title: "Task Management",
     iconType: "nzIcon",

@@ -24,6 +24,7 @@ export class Login1Component {
     verifyOTP: false,
   };
 
+  
   count_value = 60;
   realCountertimer: any;
   firebaseFCMTokenValue = "";
@@ -50,7 +51,14 @@ export class Login1Component {
     successScreen: ''
   }
 
+  subDomainName : any;
   ngOnInit(): void {
+    // let url = window.location.href;
+    let url = "admin.chatiyc.com"
+    this.subDomainName = url.split('.');
+    console.log(this.subDomainName[0]);
+    this.getSubDomain(this.subDomainName[0]);
+    // console.log(this.active_route.snapshot.firstChild.url[0].path);
     if (localStorage.getItem('appLanguage')) {
       this._currentLanguage = localStorage.getItem('appLanguage');
     } else {
@@ -114,6 +122,17 @@ export class Login1Component {
     if (localStorage.getItem('iyc_user_data')) {
       this.VerifyUserFunction()
     }
+  }
+
+  getSubDomain(sub){
+    // let data = {'account_code' : sub}; 
+    let data = {'account_code' : 'shksufiyan'}; 
+    this.HttpService.getSubDomainData(data).subscribe((res:any)=>{
+      if(res.success){
+        
+    }else{
+      this.router.navigateByUrl('error')
+    }})
   }
 
   submitForm(form): void {

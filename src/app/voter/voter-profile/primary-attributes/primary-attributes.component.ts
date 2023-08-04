@@ -9,13 +9,16 @@ import { HttpService } from 'src/app/service/http.service';
 })
 export class PrimaryAttributesComponent implements OnInit {
   @Input() voterId;
-  attributeList:any = [];
+
+  @Input() attributeList:any = [];
   constructor(private http:HttpService, private message : NzMessageService) { }
 
   ngOnInit(): void {
     this._currLanguage = localStorage.getItem("appLanguage") || 'en';
-    if(this.voterId){
+    if(this.voterId && !this.attributeList){
+      let count = 1;
       this.getAttributeList();
+      count++;
     }
   }
 

@@ -104,4 +104,7 @@ export class AccountListComponent implements OnInit {
     this.global.setErrorLink(url);
     this.router.navigateByUrl("/error-1");
   }
+
+  isFilters: boolean = false;
+   
 }

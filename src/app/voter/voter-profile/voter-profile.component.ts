@@ -94,6 +94,12 @@ export class VoterProfileComponent implements OnInit {
         this.getActivityDetails()
         this.getFollowUpDetails()
       }
+      if (this._currTabName == 2 && param['id']) {
+        this.getAttributeList();
+      }
+      if (this._currTabName == 3 && param['id']) {
+        this.getRelationshipList();
+      }
     })
   }
 
@@ -399,5 +405,35 @@ export class VoterProfileComponent implements OnInit {
 deleteEmployee(i)
 {
   this.fileList.splice(i,1);  
+}
+
+attributeList : any  = [];
+getAttributeList(keyword?){
+  let data = {  "voter_id":this._currVoterId }
+  this.http.getRelationshipTags(data).subscribe((res:any)=>{
+    if(res.success){
+      this.attributeList = res.data;
+      this.attributeList.forEach(element=>{
+        element['_currTagValue'] = "";
+        element['_isVisible'] = false;
+      });
+    }
+  })
+}
+
+relationshipList : any = []
+getRelationshipList(keyword?) {
+  let data = { "voter_id": this._currVoterId }
+  data['for_relationship'] = "YES";
+  this.http.getRelationList(data).subscribe((res: any) => {
+    if (res.success) {
+      this.relationshipList = res.data;
+      console.log(this.relationshipList);
+      this.relationshipList.forEach(element => {
+        element['_currTagValue'] = "";
+        element['_isVisible'] = false;
+      });
+    }
+  })
 }
 }

@@ -22,6 +22,8 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
     ReactiveFormsModule,
     NzListModule,
     NzPageHeaderModule,
-    NzDropDownModule
+    NzDropDownModule,
+    NzModalModule,
+    NzDrawerModule
   ]
 })
 export class AccountModule { }

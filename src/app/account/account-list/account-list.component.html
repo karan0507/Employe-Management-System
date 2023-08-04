@@ -23,20 +23,8 @@
                         </div>
                     </div>
                     <div class="col-lg-8 col-12 mb-2 d-flex flex-wrap justify-content-end">
-            
-                        <nz-select nzShowSearch class="selectFilter mb-2 mr-2" nzPlaceHolder="Select Social Media" [(ngModel)]="currSocialMedia" (ngModelChange)="getaccountList()" nzAllowClear>
-                            <nz-option [nzValue]="'FACEBOOK'" [nzLabel]="'Facebook'">
-                            </nz-option>
-                            <nz-option [nzValue]="'TWITTER'" [nzLabel]="'Twitter'"></nz-option>
-                            <nz-option [nzValue]="'LINKED-IN'" [nzLabel]="' LinkedIn'">
-                            </nz-option>
-                        </nz-select>
-                        <nz-select nzShowSearch class="selectFilter mb-2 mr-2" nzPlaceHolder="Select Link Type" [(ngModel)]="currLinkTpye" (ngModelChange)="getaccountList()" nzAllowClear>
-                            <nz-option [nzValue]="'FOR'" [nzLabel]="'For'">
-                            </nz-option>
-                            <nz-option [nzValue]="'AGAINST'" [nzLabel]="'Against'">
-                            </nz-option>
-                        </nz-select>
+                        <button nz-button nzType="primary" nzSize="small">Filters</button>
+                       
                      
                     </div>
                 </div>
@@ -80,3 +68,23 @@
 
     </div>
 </div>
+
+<section>
+
+    <nz-drawer [nzWidth]="280" nzTitle="Quick View" [nzClosable]="false" [nzVisible]="isFilters" nzPlacement="right" (nzOnClose)="isFilters = false">
+        <nz-select nzShowSearch class="selectFilter mb-2 mr-2" nzPlaceHolder="Select Social Media" [(ngModel)]="currSocialMedia" (ngModelChange)="getaccountList()" nzAllowClear>
+            <nz-option [nzValue]="'FACEBOOK'" [nzLabel]="'Facebook'">
+            </nz-option>
+            <nz-option [nzValue]="'TWITTER'" [nzLabel]="'Twitter'"></nz-option>
+            <nz-option [nzValue]="'LINKED-IN'" [nzLabel]="' LinkedIn'">
+            </nz-option>
+        </nz-select>
+        <nz-select nzShowSearch class="selectFilter mb-2 mr-2" nzPlaceHolder="Select Link Type" [(ngModel)]="currLinkTpye" (ngModelChange)="getaccountList()" nzAllowClear>
+            <nz-option [nzValue]="'FOR'" [nzLabel]="'For'">
+            </nz-option>
+            <nz-option [nzValue]="'AGAINST'" [nzLabel]="'Against'">
+            </nz-option>
+        </nz-select>
+    </nz-drawer>
+   
+</section>

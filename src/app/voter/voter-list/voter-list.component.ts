@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Data } from '@angular/router';
+import * as FileSaver from 'file-saver';
 import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { GlobalService } from 'src/app/service/global.service';
 import { HttpService } from 'src/app/service/http.service';
-
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-voter-list',
   templateUrl: './voter-list.component.html',
@@ -55,6 +56,7 @@ followUpList : any= []
   votersList_Array: any = [];
 
   dateFormat = "YYYY-MM-dd";
+  
   constructor(public global: GlobalService, private fb:FormBuilder, private http: HttpService, private message: NzMessageService) { }
 
   ngOnInit(): void {
@@ -67,6 +69,18 @@ followUpList : any= []
     })
   }
 
+  public exportExcel(): void {
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.votersList);
+    const wb: XLSX.WorkBook = { Sheets: { 'data': ws }, SheetNames: ['data'] };
+    const excelBuffer: any = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    this.saveExcelFile(excelBuffer, '.xlsx');
+  }
+
+  private saveExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], {type: '.xlsx'});
+    FileSaver.saveAs(data, fileName + '.xlsx');
+  } 
 
   tempTrail = [   {
     "key_changes": [

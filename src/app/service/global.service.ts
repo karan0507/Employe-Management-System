@@ -125,7 +125,7 @@ export class GlobalService {
   //   })
   // }
 
-  downloadFile(type, data) {
+  public downloadFile(type, data) {
     saveAs(data, `${type}.xlsx`);
   }
 

@@ -168,7 +168,14 @@
     </div>
 </nz-card>
 
-<nz-modal [(nzVisible)]="isImport" nzTitle="Import Tasks" (nzOnCancel)="isImport = false;" (nzOnOk)="handleOk()">
+<nz-modal [(nzVisible)]="isImport" nzTitle="Import Tasks" (nzOnCancel)="isImport = false;" (nzOnOk)="handleOk()"
+[nzFooter]="footerTemplate">
+<ng-template #footerTemplate>
+    <div class="d-flex justify-content-end">
+        <button nz-button nzType="link">Cancel</button>
+        <button nz-button nzType="primary" [nzLoading]="api_loader['button']">Confirm</button>
+    </div>
+</ng-template>
     <ng-container *nzModalContent>
 
         <nz-upload nzListType="picture" nzType="drag" [nzBeforeUpload]="beforeUploadName" [nzMultiple]="false"

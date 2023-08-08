@@ -143,8 +143,8 @@ export class AddLeaderTaskComponent implements OnInit {
     form_data.append('name', this.taskForm.get('name').value);
     form_data.append('discription', this.taskForm.get('discription').value);
     form_data.append('internal_user', JSON.stringify(this.taskForm.get('internal_user').value));
-    form_data.append('start_date', this.taskForm.get('start_date').value ? this.taskForm.get('start_date').value : '');
-    // form_data.append('start_date', this.taskForm.get('start_date').value ? moment(this.taskForm.get('start_date').value).format("YYYY-MM-DD") : '');
+    // form_data.append('start_date', this.taskForm.get('start_date').value ? this.taskForm.get('start_date').value : '');
+    form_data.append('start_date', this.taskForm.get('start_date').value ? moment(this.taskForm.get('start_date').value).format("YYYY-MM-DD HH:mm:ss") : '');
     // form_data.append('task_end_date', this.taskForm.get('task_end_date').value ? moment(this.taskForm.get('task_end_date').value).format("YYYY-MM-DD") : '');
 
     if (this.taskForm.get('voters').value[0]) {

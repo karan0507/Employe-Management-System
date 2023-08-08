@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-12 col-lg-4 mb-2">
             <div class="d-flex">
-                
+
                 <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
                     <input type="text" nz-input placeholder="Search By Full Name & Table details"
                         [(ngModel)]="_currSearchValue" (keyup.enter)="getVotersList()" />
@@ -19,8 +19,12 @@
         </div>
         <div class="col-lg-8 col-12 mb-2 d-flex flex-wrap justify-content-end">
             <button nz-button (click)="exportExcel()" class="mr-2">Export</button>
-            <button nz-button [nzType]="'link'" [nz-tooltip]="'Choose Activity / Follow Up'" [disabled]="setOfCheckedId.size == 0 ? true : false" (click)="quickViewToggle(); _currToggleActions = 'multipleAction'; " class="border px-3 mb-2">Multiple Actions</button>
-            <button nz-button [nzType]="'link'" (click)="quickViewToggle(); _currToggleActions = ''" class="border px-3 mx-2 mb-2">Filters</button>
+            <button nz-button [nzType]="'link'" [nz-tooltip]="'Choose Activity / Follow Up'"
+                [disabled]="setOfCheckedId.size == 0 ? true : false"
+                (click)="quickViewToggle(); _currToggleActions = 'multipleAction'; " class="border px-3 mb-2">Multiple
+                Actions</button>
+            <button nz-button [nzType]="'link'" (click)="quickViewToggle(); _currToggleActions = ''"
+                class="border px-3 mx-2 mb-2">Filters</button>
 
             <button nz-button nzType="primary" class="mb-2" routerLink="/voter/add-voter">+ Add Voter</button>
         </div>
@@ -50,36 +54,65 @@
         </div> -->
     </div>
     <!-- <nz-card [nzLoading]="api_loader['list']" class="d-flex d-lg-none"> -->
-        <div class="row d-lg-none d-flex">
-            <div class="col-md-6 col-12 " *ngFor="let item of votersList">
-                <nz-card nzHoverable class="mr-md-2 "  [nzLoading]="api_loader['list']">
-                    <div class="d-flex my-2 align-items-center" [routerLink]="'/voter'"
-                        [queryParams]="{id:item?.id}">
-                        <!-- <img nzIcon="user" width="80" height="80" class="mr-4 rounded-circle"
-                            [src]="'../.././../assets/images/avatars/thumb-10.jpg'"> -->
-                        <nz-avatar nzSize="large" style="background-color: #2a4550" class="mr-4 text-center"
-                            [nzText]="getPipeValue(item?.full_name_en)"></nz-avatar>
-    
-                        <div class="d-flex flex-column">
-                            <h6 class="text-dark">{{item?.full_name_en ? (_currLanguage == 'en' ? item?.full_name_en : item?.full_name_hi) : '--'}}</h6>
-                            <label class="text-primary mb-2">EPIC_NO: {{item?.epic_no}}</label>
-                            <div class="d-flex justify-content-start flex-wrap">
-                                <nz-tag class="mr-2" style="max-width: fit-content;">Booth No {{item?.booth}}</nz-tag>
-                                <nz-tag style="max-width: fit-content;">Ward No J</nz-tag>
-                            </div>
-                        </div>
-                        <!-- <span nz-icon nzType="right" nzSize="large" nzTheme="outline"
-                            class="font-size-16 align-self-center"></span> -->
-                    </div>
-                    <!-- <nz-divider class="my-0"></nz-divider> -->
-                </nz-card>
-            </div>
-            
+    <div class="row d-lg-none d-flex">
+        <div class="col-md-12">
+            <nz-list [nzDataSource]="votersList" [nzRenderItem]="products" [nzItemLayout]="'horizontal'">
+                <ng-template #products let-item>
+                    <nz-list-item [nzContent]="productGrowth">
+                        <nz-list-item-meta [nzTitle]="productName"
+                            nzAvatar="../.././../assets/images/avatars/dy_post_image.jpg"
+                            [nzDescription]="productCategory">
+                            <ng-template #productName>
+                                <a class="font-size-15" [routerLink]="'/voter'" [queryParams]="{id:item?.id}">
+                                    {{item?.full_name_en ? (_currLanguage == 'en' ? item?.full_name_en :
+                                    item?.full_name_hi) : '--'}}
+                                </a>
+                            </ng-template>
+                            <ng-template #productCategory>
+                                <span class="m-b-0 text-muted">{{item.epic_no}}</span>
+                            </ng-template>
+                            <ng-template #productGrowth>
+                                <nz-tag class="m-r-0 m-b-0" [nzColor]="'cyan'">
+                                    +{{item.growth}}%
+                                </nz-tag>
+                            </ng-template>
+                        </nz-list-item-meta>
+                    </nz-list-item>
+                </ng-template>
+            </nz-list>
         </div>
+
+        <div class="col-md-6 col-12 " *ngFor="let item of votersList">
+            <nz-card nzHoverable class="mr-md-2 " [nzLoading]="api_loader['list']">
+                <div class="d-flex my-2 align-items-center" [routerLink]="'/voter'" [queryParams]="{id:item?.id}">
+                    <!-- <img nzIcon="user" width="80" height="80" class="mr-4 rounded-circle"
+                            [src]="'../.././../assets/images/avatars/thumb-10.jpg'"> -->
+                    <nz-avatar nzSize="large" style="background-color: #2a4550" class="mr-4 text-center"
+                        [nzText]="getPipeValue(item?.full_name_en)"></nz-avatar>
+
+                    <div class="d-flex flex-column">
+                        <h6 class="text-dark">{{item?.full_name_en ? (_currLanguage == 'en' ? item?.full_name_en :
+                            item?.full_name_hi) : '--'}}</h6>
+                        <label class="text-primary mb-2">EPIC_NO: {{item?.epic_no}}</label>
+                        <div class="d-flex justify-content-start flex-wrap">
+                            <nz-tag class="mr-2" style="max-width: fit-content;">Booth No {{item?.booth}}</nz-tag>
+                            <nz-tag style="max-width: fit-content;">Ward No J</nz-tag>
+                        </div>
+                    </div>
+                    <!-- <span nz-icon nzType="right" nzSize="large" nzTheme="outline"
+                            class="font-size-16 align-self-center"></span> -->
+                </div>
+                <!-- <nz-divider class="my-0"></nz-divider> -->
+            </nz-card>
+        </div>
+
+    </div>
     <!-- </nz-card> -->
 
     <div class="d-lg-flex d-none">
+        <!-- <div class="d-flex jus"></div> -->
         <div class="row">
+
             <div class="col-md-12">
                 <nz-card [nzLoading]="api_loader['list']">
                     <div class="totalCount">
@@ -125,7 +158,8 @@
                                         </td>
                                         <td class="text-left" [nzWidth]="'12rem'">
                                             <a [routerLink]="['/voter/view-profile']" [queryParams]="{id:data.id}">
-                                                {{_currLanguage == "en" ? data?.first_name_en + " " + data?.last_name_en : data?.first_name_hi + " " + data?.last_name_hi}}
+                                                {{_currLanguage == "en" ? data?.first_name_en + " " + data?.last_name_en
+                                                : data?.first_name_hi + " " + data?.last_name_hi}}
                                             </a>
                                         </td>
                                         <td [nzWidth]="'10rem'">{{data?.mobile ? data?.mobile : '-'}}</td>
@@ -149,10 +183,10 @@
                                                 nzTooltipTitle="{{ data.stockist_name}}">{{
                                                 data.stockist_name | slice : 0:18}} <span
                                                     *ngIf="data.stockist_name?.length > 18">...</span></label> -->
-                                          <label nz-tooltip  [nzTooltipTitle]="data.stockist_name">
-                                            {{_currLanguage == 'en' ? (data?.section_name_en  | slice : 0:18) :
-                                            ata?.section_name_hi}}
-                                          </label>
+                                            <label nz-tooltip [nzTooltipTitle]="data.stockist_name">
+                                                {{_currLanguage == 'en' ? (data?.section_name_en | slice : 0:18) :
+                                                ata?.section_name_hi}}
+                                            </label>
                                         </td>
                                         <td>{{_currLanguage == 'en' ? data?.section_no : data?.section_no}}</td>
                                         <td nzRight>
@@ -258,126 +292,128 @@
     <nz-drawer [nzWidth]="'350px'" [nzTitle]="filtersTemplate" [nzClosable]="false" [nzVisible]="quickViewVisible"
         nzPlacement="right" (nzOnClose)="quickViewToggle()">
 
-    
-<section *ngIf="_currToggleActions =='multipleAction' else filters;">
-    <div class="d-flex flex-column">
-        <button nz-button [nzType]="'link'" (click)="createNewFollow('activity'); isActivityModal = true;" class="border px-3 mx-3 mb-3">Add Activity</button>
-        <button nz-button [nzType]="'link'" (click)="createNewFollow('followUp'); isActivityModal = true;" class="border px-3 mx-3 mb-3">Add FollowUp</button>
 
-    </div>
-</section>
+        <section *ngIf="_currToggleActions =='multipleAction' else filters;">
+            <div class="d-flex flex-column">
+                <button nz-button [nzType]="'link'" (click)="createNewFollow('activity'); isActivityModal = true;"
+                    class="border px-3 mx-3 mb-3">Add Activity</button>
+                <button nz-button [nzType]="'link'" (click)="createNewFollow('followUp'); isActivityModal = true;"
+                    class="border px-3 mx-3 mb-3">Add FollowUp</button>
 
-<ng-template #filters>
-    <div class="d-flex flex-wrap justify-content-start align-items-center">
-        <div class="d-flex flex-column">
-            <div class="d-flex align-items-start flex-column mb-3">
-                <label>Booth: </label> 
-                <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currBooth"
-                    (nzFocus)="searchStaticDataGlobalFunction('Booth')"
-                    (keyup)="searchStaticDataGlobalFunction('Booth',$event)" nzAllowClear
-                    nzPlaceHolder="Select Booth/Ward">
-                    <nz-option *ngIf="isSelectLoader['Booth']" nzDisabled nzCustomContent>
-                        <span nz-icon nzType="loading" class="loading-icon"></span>
-                        Loading Data...
-                    </nz-option>
-                    <nz-option *ngFor="let item of boothList" [nzValue]="item.id"
-                        [nzLabel]="_currLanguage == 'en' ? item?.name?.en + (item?.Ward ? '/' + item?.Ward?.name?.en : '-') : item?.name?.hi + (item?.Ward ? '/' + item?.Ward?.name?.hi : '-')">
-                    </nz-option>
-                </nz-select>
             </div>
-            <div class="d-flex align-items-start flex-column mb-3">
-                <label>Ward: </label>
-                <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currWard"
-                    (nzFocus)="searchStaticDataGlobalFunction('Ward')"
-                    (keyup)="searchStaticDataGlobalFunction('Ward',$event)" nzAllowClear
-                    nzPlaceHolder="Select Ward">
-                    <nz-option *ngIf="isSelectLoader['Ward']" nzDisabled nzCustomContent>
-                        <span nz-icon nzType="loading" class="loading-icon"></span>
-                        Loading Data...
-                    </nz-option>
-                    <nz-option *ngFor="let item of wardList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
-                    </nz-option>
-                </nz-select>
-            </div>
+        </section>
 
-            <div class="d-flex align-items-start flex-column mb-3">
-                <label>Sector: </label>
-                <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currSector"
-                    (nzFocus)="searchStaticDataGlobalFunction('Sector')"
-                    (keyup)="searchStaticDataGlobalFunction('Sector',$event)" nzAllowClear
-                    nzPlaceHolder="Select Sector">
-                    <nz-option *ngIf="isSelectLoader['Sector']" nzDisabled nzCustomContent>
-                        <span nz-icon nzType="loading" class="loading-icon"></span>
-                        Loading Data...
-                    </nz-option>
-                    <nz-option *ngFor="let item of sectorList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
-                    </nz-option>
-                </nz-select>
-            </div>
+        <ng-template #filters>
+            <div class="d-flex flex-wrap justify-content-start align-items-center">
+                <div class="d-flex flex-column">
+                    <div class="d-flex align-items-start flex-column mb-3">
+                        <label>Booth: </label>
+                        <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currBooth"
+                            (nzFocus)="searchStaticDataGlobalFunction('Booth')"
+                            (keyup)="searchStaticDataGlobalFunction('Booth',$event)" nzAllowClear
+                            nzPlaceHolder="Select Booth/Ward">
+                            <nz-option *ngIf="isSelectLoader['Booth']" nzDisabled nzCustomContent>
+                                <span nz-icon nzType="loading" class="loading-icon"></span>
+                                Loading Data...
+                            </nz-option>
+                            <nz-option *ngFor="let item of boothList" [nzValue]="item.id"
+                                [nzLabel]="_currLanguage == 'en' ? (item?.name?.en + (item?.Ward ? '/' + item?.Ward?.name?.en : 'NA')) : item?.name?.hi + (item?.Ward ? '/' + item?.Ward?.name?.hi : 'NA')">
+                            </nz-option>
+                        </nz-select>
+                    </div>
+                    <div class="d-flex align-items-start flex-column mb-3">
+                        <label>Ward: </label>
+                        <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currWard"
+                            (nzFocus)="searchStaticDataGlobalFunction('Ward')"
+                            (keyup)="searchStaticDataGlobalFunction('Ward',$event)" nzAllowClear
+                            nzPlaceHolder="Select Ward">
+                            <nz-option *ngIf="isSelectLoader['Ward']" nzDisabled nzCustomContent>
+                                <span nz-icon nzType="loading" class="loading-icon"></span>
+                                Loading Data...
+                            </nz-option>
+                            <nz-option *ngFor="let item of wardList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                            </nz-option>
+                        </nz-select>
+                    </div>
 
-            <div class="d-flex align-items-start flex-column mb-3">
-                <label>Assembly: </label>
-                <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_crrAssembly"
-                    (nzFocus)="searchStaticDataGlobalFunction('Assembly')"
-                    (keyup)="searchStaticDataGlobalFunction('Assembly',$event)" nzAllowClear
-                    nzPlaceHolder="Select Assembly">
-                    <nz-option *ngIf="isSelectLoader['Assembly']" nzDisabled nzCustomContent>
-                        <span nz-icon nzType="loading" class="loading-icon"></span>
-                        Loading Data...
-                    </nz-option>
-                    <nz-option *ngFor="let item of assemblyList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
-                    </nz-option>
-                </nz-select>
-            </div>
+                    <div class="d-flex align-items-start flex-column mb-3">
+                        <label>Sector: </label>
+                        <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currSector"
+                            (nzFocus)="searchStaticDataGlobalFunction('Sector')"
+                            (keyup)="searchStaticDataGlobalFunction('Sector',$event)" nzAllowClear
+                            nzPlaceHolder="Select Sector">
+                            <nz-option *ngIf="isSelectLoader['Sector']" nzDisabled nzCustomContent>
+                                <span nz-icon nzType="loading" class="loading-icon"></span>
+                                Loading Data...
+                            </nz-option>
+                            <nz-option *ngFor="let item of sectorList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                            </nz-option>
+                        </nz-select>
+                    </div>
 
-            <div class="d-flex align-items-start flex-column mb-3">
-                <label>Street: </label>
-                <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currStreet"
-                    (nzFocus)="searchStaticDataGlobalFunction('Street')"
-                    (keyup)="searchStaticDataGlobalFunction('Street',$event)" nzAllowClear
-                    nzPlaceHolder="Select Street">
-                    <nz-option *ngIf="isSelectLoader['Street']" nzDisabled nzCustomContent>
-                        <span nz-icon nzType="loading" class="loading-icon"></span>
-                        Loading Data...
-                    </nz-option>
-                    <nz-option *ngFor="let item of streetList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
-                    </nz-option>
-                </nz-select>
-            </div>
+                    <div class="d-flex align-items-start flex-column mb-3">
+                        <label>Assembly: </label>
+                        <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_crrAssembly"
+                            (nzFocus)="searchStaticDataGlobalFunction('Assembly')"
+                            (keyup)="searchStaticDataGlobalFunction('Assembly',$event)" nzAllowClear
+                            nzPlaceHolder="Select Assembly">
+                            <nz-option *ngIf="isSelectLoader['Assembly']" nzDisabled nzCustomContent>
+                                <span nz-icon nzType="loading" class="loading-icon"></span>
+                                Loading Data...
+                            </nz-option>
+                            <nz-option *ngFor="let item of assemblyList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                            </nz-option>
+                        </nz-select>
+                    </div>
 
-            <div class="d-flex align-items-start flex-column mb-3">
-                <label>Lane: </label>
-                <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currLane"
-                    (nzFocus)="searchStaticDataGlobalFunction('Lane')"
-                    (keyup)="searchStaticDataGlobalFunction('Lane',$event)" nzAllowClear
-                    nzPlaceHolder="Select Lane">
-                    <nz-option *ngIf="isSelectLoader['Lane']" nzDisabled nzCustomContent>
-                        <span nz-icon nzType="loading" class="loading-icon"></span>
-                        Loading Data...
-                    </nz-option>
-                    <nz-option *ngFor="let item of laneList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
-                    </nz-option>
-                </nz-select>
-            </div>
+                    <div class="d-flex align-items-start flex-column mb-3">
+                        <label>Street: </label>
+                        <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currStreet"
+                            (nzFocus)="searchStaticDataGlobalFunction('Street')"
+                            (keyup)="searchStaticDataGlobalFunction('Street',$event)" nzAllowClear
+                            nzPlaceHolder="Select Street">
+                            <nz-option *ngIf="isSelectLoader['Street']" nzDisabled nzCustomContent>
+                                <span nz-icon nzType="loading" class="loading-icon"></span>
+                                Loading Data...
+                            </nz-option>
+                            <nz-option *ngFor="let item of streetList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                            </nz-option>
+                        </nz-select>
+                    </div>
 
-            <div class="d-flex align-items-start flex-column mb-3">
-                <label>Is Benificary: </label>
-                <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currBenificary" nzAllowClear
-                    nzPlaceHolder="Select Is Benificary">
-                    <nz-option [nzValue]="true" [nzLabel]="'True'"> </nz-option>
-                    <nz-option [nzValue]="false" [nzLabel]="'False'"></nz-option>
-                </nz-select>
-            </div>
+                    <div class="d-flex align-items-start flex-column mb-3">
+                        <label>Lane: </label>
+                        <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currLane"
+                            (nzFocus)="searchStaticDataGlobalFunction('Lane')"
+                            (keyup)="searchStaticDataGlobalFunction('Lane',$event)" nzAllowClear
+                            nzPlaceHolder="Select Lane">
+                            <nz-option *ngIf="isSelectLoader['Lane']" nzDisabled nzCustomContent>
+                                <span nz-icon nzType="loading" class="loading-icon"></span>
+                                Loading Data...
+                            </nz-option>
+                            <nz-option *ngFor="let item of laneList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                            </nz-option>
+                        </nz-select>
+                    </div>
 
-            <div class="d-flex justify-content-center mt-5 align-items-center">
-                <button nz-button nzType="primary" class="mr-3"
-                    (click)="quickViewToggle(); getVotersList()">Apply</button>
-                <button nz-button nzType="link" (click)="resetFilter()">Reset</button>
+                    <div class="d-flex align-items-start flex-column mb-3">
+                        <label>Is Benificary: </label>
+                        <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currBenificary"
+                            nzAllowClear nzPlaceHolder="Select Is Benificary">
+                            <nz-option [nzValue]="true" [nzLabel]="'True'"> </nz-option>
+                            <nz-option [nzValue]="false" [nzLabel]="'False'"></nz-option>
+                        </nz-select>
+                    </div>
+
+                    <div class="d-flex justify-content-center mt-5 align-items-center">
+                        <button nz-button nzType="primary" class="mr-3"
+                            (click)="quickViewToggle(); getVotersList()">Apply</button>
+                        <button nz-button nzType="link" (click)="resetFilter()">Reset</button>
+                    </div>
+                </div>
+                <!-- <button nz-button nzType="link" class="text-primary font-weight-semibold">Clear All</button> -->
             </div>
-        </div>
-        <!-- <button nz-button nzType="link" class="text-primary font-weight-semibold">Clear All</button> -->
-    </div>
-</ng-template>  
+        </ng-template>
         <!-- <app-quick-view></app-quick-view> -->
         <ng-template #filtersTemplate>
             <div class="d-flex justify-content-between align-items-center">
@@ -392,8 +428,7 @@
 
 <section *ngIf="isActivityModal">
     <nz-drawer [nzWidth]="280" height="500" [nzBodyStyle]="{height:'85vh'}" [nzTitle]="null" [nzClosable]="false"
-        [nzVisible]="quickViewVisible" nzPlacement="bottom" (nzOnClose)="quickViewToggle()"
-        [nzHeight]="600">
+        [nzVisible]="quickViewVisible" nzPlacement="bottom" (nzOnClose)="quickViewToggle()" [nzHeight]="600">
         <!-- <app-quick-view></app-quick-view> -->
         <div class="row mx-3">
             <div class="col-md-12">
@@ -415,8 +450,7 @@
                                 </nz-form-label>
                                 <nz-form-control [nzSm]="16" [nzXs]="24" [nzErrorTip]="'Please select Date'">
                                     <nz-input-group>
-                                        <nz-time-picker 
-                                            formControlName="followup_time"></nz-time-picker>
+                                        <nz-time-picker formControlName="followup_time"></nz-time-picker>
                                     </nz-input-group>
                                 </nz-form-control>
                             </nz-form-item>
@@ -457,8 +491,7 @@
                                 </nz-form-label>
                                 <nz-form-control [nzSm]="16" [nzXs]="24" nzErrorTip="Please select your activity!">
                                     <nz-select nzPlaceHolder="Select Actvity" formControlName="activity_type"
-                                        nzShowSearch nzAllowClear (nzFocus)="getActivityList()"
-                                        (click)="isDirty= true">
+                                        nzShowSearch nzAllowClear (nzFocus)="getActivityList()" (click)="isDirty= true">
                                         <nz-option *ngFor="let item of activityList" [nzValue]="item?.id"
                                             [nzLabel]="_currLanguage == 'en' ? item?.name?.en : item?.name?.hi">
                                         </nz-option>
@@ -471,11 +504,9 @@
                             <nz-form-item>
                                 <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Mark Followup
                                 </nz-form-label>
-                                <nz-form-control [nzSm]="16" [nzXs]="24"
-                                    nzErrorTip="Please select your followup type!">
+                                <nz-form-control [nzSm]="16" [nzXs]="24" nzErrorTip="Please select your followup type!">
                                     <nz-select nzPlaceHolder="Select Follow up" formControlName="followup_type"
-                                        nzShowSearch nzAllowClear (nzFocus)="getFolloupList()"
-                                        (click)="isDirty= true">
+                                        nzShowSearch nzAllowClear (nzFocus)="getFolloupList()" (click)="isDirty= true">
                                         <nz-option *ngFor="let item of followUpList" [nzValue]="item?.id"
                                             [nzLabel]="_currLanguage == 'en' ? item?.name?.en : item?.name?.hi">
                                         </nz-option>

@@ -1,8 +1,18 @@
 <div class="d-flex justify-content-end">
+    <button nz-button (click)="exportExcel()" class="mr-2">Export</button>
     <button nz-button nzType="primary" [routerLink]="'/leader-schedule/add-leader-task'" class="mb-2">+ Add Leader Task</button>
 </div>
 <nz-card class="d-none d-lg-flex">
     
+    <nz-tabset [nzTabPosition]="'top'" [(nzSelectedIndex)]="_currTabName"
+    (nzSelectChange)="onTabChange($event)">
+    <nz-tab class="text-gray" *ngFor="let tab of partyTabs" [nzDisabled]="isEdit ? true : false"
+        [nzTitle]="tabName" [nzForceRender]="'true'">
+        <ng-template #tabName>
+            <h6>{{tab?.name}}</h6>
+        </ng-template>
+        <section *ngIf="_currTabName == 0"></section></nz-tab></nz-tabset>
+
     <div class="totalCount">
         <nz-table #rowSelectionTable [nzData]="leaderList" [nzTotal]="total_count" [nzFrontPagination]="false"
             [nzShowSizeChanger]="true" [nzPageIndex]="page" [nzPageSize]="globalPageSize"

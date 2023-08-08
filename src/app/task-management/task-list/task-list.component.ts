@@ -184,17 +184,20 @@ export class TaskListComponent implements OnInit {
   isOkBtn: boolean = false;
   handleOk() {
     this.isOkBtn = true;
+    this.api_loader['button'] = true;
     let formData = new FormData();
     formData.append('file', this._currentFileName);
     this.http.importTask(formData).subscribe((res: any) => {
       if (res.success) {
         this.message.success('File uploaded successfully');
+        this.api_loader['button'] = false;
         this.isOkBtn = false;
         this.isImport = false;
         this.fileList = []
         this.getTaskList();
       } else {
         this.isOkBtn = false;
+        this.api_loader['button'] = false;
         this.isImport = false;
         this.fileList = []
         this.message.error(res.message);

@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddLeaderTaskComponent } from './add-leader-task/add-leader-task.component';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     FormsModule,
     ReactiveFormsModule,
     NzSelectModule,
-    NzDatePickerModule
+    NzDatePickerModule,
+    NzTabsModule
   ]
 })
 export class LeaderScheduleModule { }

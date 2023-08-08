@@ -1,16 +1,7 @@
 <nz-card [nzLoading]="api_loading['card']">
     <section>
         <main>
-            <div class="d-flex flex-wrap justify-content-between p-3 mt-2">
-                <div class="d-flex justify-content-between mb-2">
-                    <button nz-button nzType="link" class="border mr-3" 
-                    (click)="rating = voterDetails?.rating;isRatingDrawer = true" nzSize="small">Rate Now</button>
-                    <button nz-button nzType="link" class="d-flex align-items-center" style="border: 1px solid #3C0480;"
-                        (click)="createVoterProfileForm()" routerLink="/voter/edit-voter"
-                        [queryParams]="{id:_currVoterId}" nzSize="small">
-                        <span nz-icon nzType="form" nzTheme="outline" class="mr-2"></span> Edit</button>
-
-                </div>
+            <div class="d-flex justify-content-between p-3 mt-2">
                 <div class="d-flex">
                     <img nzIcon="user" width="80" height="80" class="mr-3 rounded-circle"
                         [src]="'../.././../assets/images/avatars/default.png'">
@@ -35,6 +26,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <button nz-button nzType="link" class="border mr-3" 
+                    (click)="rating = voterDetails?.rating;isRatingDrawer = true" nzSize="small">Rate Now</button>
+                    <button nz-button nzType="link" class="d-flex align-items-center" style="border: 1px solid #3C0480;"
+                        (click)="createVoterProfileForm()" routerLink="/voter/edit-voter"
+                        [queryParams]="{id:_currVoterId}" nzSize="small">
+                        <span nz-icon nzType="form" nzTheme="outline" class="mr-2"></span> Edit</button>
+
+                </div>
+                
                
 
             </div>

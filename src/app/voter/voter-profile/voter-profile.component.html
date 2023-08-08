@@ -25,18 +25,36 @@
                                 ' ('+ formatter(voterDetails?.rating) + ') '}}</label>
                         </div>
                     </div>
+                    <div class="d-lg-none d-flex">
+                        <a nz-dropdown [nzDropdownMenu]="menu">
+                            Actions
+                            <span nz-icon nzType="down"></span>
+                        </a>
+                        <nz-dropdown-menu #menu="nzDropdownMenu">
+                            <ul nz-menu nzSelectable>
+                                <li nz-menu-item><button nz-button nzType="link" class="border mr-3"
+                                        (click)="rating = voterDetails?.rating;isRatingDrawer = true"
+                                        nzSize="small">Rate Now</button></li>
+                                <li nz-menu-item><button nz-button nzType="link" class="d-flex align-items-center"
+                                        style="border: 1px solid #3C0480;" (click)="createVoterProfileForm()"
+                                        routerLink="/voter/edit-voter" [queryParams]="{id:_currVoterId}" nzSize="small">
+                                        <span nz-icon nzType="form" nzTheme="outline" class="mr-2"></span> Edit</button>
+                                </li>
+                            </ul>
+                        </nz-dropdown-menu>
+                    </div>
                 </div>
-                <div class="d-flex justify-content-between mb-2">
-                    <button nz-button nzType="link" class="border mr-3" 
-                    (click)="rating = voterDetails?.rating;isRatingDrawer = true" nzSize="small">Rate Now</button>
+                <div class="d-lg-flex d-none justify-content-between mb-2">
+                    <button nz-button nzType="link" class="border mr-3"
+                        (click)="rating = voterDetails?.rating;isRatingDrawer = true" nzSize="small">Rate Now</button>
                     <button nz-button nzType="link" class="d-flex align-items-center" style="border: 1px solid #3C0480;"
                         (click)="createVoterProfileForm()" routerLink="/voter/edit-voter"
                         [queryParams]="{id:_currVoterId}" nzSize="small">
                         <span nz-icon nzType="form" nzTheme="outline" class="mr-2"></span> Edit</button>
 
                 </div>
-                
-               
+
+
 
             </div>
             <div class="d-lg-none d-flex">
@@ -77,14 +95,14 @@
                                             <label>{{item?.title}}</label>
                                             <h6 class="mb-0">{{item?.value}}</h6>
                                         </div>
-                                        
+
                                     </div>
                                     <h4 *ngIf="i == profileLogs.length -1">Political Details</h4>
                                     <nz-divider class="my-2"></nz-divider>
-                                </div> 
+                                </div>
                             </div>
-                              <!-- Political Data -->
-                              <div class="row">
+                            <!-- Political Data -->
+                            <div class="row">
                                 <div class="col-lg-6 col-12 my-3" *ngFor="let item of item?.politicalList">
                                     <div class="d-flex align-items-center w-100">
                                         <img [src]="item?.icon" alt="" class="mr-3">
@@ -92,7 +110,7 @@
                                             <label>{{item?.title ? item?.title: '--'}}</label>
                                             <h6 class="mb-0">{{item?.value ? item?.value : '--'}}</h6>
                                         </div>
-                                        
+
                                     </div>
                                     <nz-divider class="my-2"></nz-divider>
                                 </div>
@@ -130,7 +148,7 @@
                                 </div> -->
                             </div>
                         </ng-container>
-                       
+
                     </section>
 
 
@@ -404,7 +422,8 @@
 
                     <!-- Primary Attribute -->
                     <section *ngIf="_currTabName == 2">
-                        <app-primary-attributes [voterId]="_currVoterId" [attributeList]="attributeList"></app-primary-attributes>
+                        <app-primary-attributes [voterId]="_currVoterId"
+                            [attributeList]="attributeList"></app-primary-attributes>
                     </section>
 
                     <!-- Relationship -->
@@ -568,8 +587,8 @@
                         <label for="" class="mb-3"> {{rating+'/5' }} <span class="font-size-12 text-primary">{{( rating
                                 ? ' (' +
                                 formatter(rating) + ')': '')}}</span> </label>
-                        <button class="mx-3 align-self-center" nz-button nzType="primary" style="max-width: 18rem;" (click)="rateVoter()"
-                            [nzLoading]="api_loading['btn_Rating']" nzBlock>Submit</button>
+                        <button class="mx-3 align-self-center" nz-button nzType="primary" style="max-width: 18rem;"
+                            (click)="rateVoter()" [nzLoading]="api_loading['btn_Rating']" nzBlock>Submit</button>
                     </div>
                 </div>
                 <!-- <div class=" col-lg-4">

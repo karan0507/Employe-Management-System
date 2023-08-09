@@ -41,6 +41,8 @@ export class PostDetailComponent implements OnInit {
   likesTableData = []
   commentTableData = []
 
+  emptySharedList = []
+
   api_loader = {
     'shared': false,
     'liked': false,
@@ -136,7 +138,11 @@ export class PostDetailComponent implements OnInit {
     this.http.getDataFromBackgroundFunction(params_data).subscribe(
       (res: any) => {
         if (res['data']) {
+          this.emptySharedList = []
           this.sharedList = res['data'];
+          for(let i = 0; i < (this.sharePageSize - this.sharedList?.length); i++) {
+            this.emptySharedList?.push('-')
+          }
           this.shareTotalCount = res.total_count;
           this.api_loader['shared'] = false
         } else {
@@ -151,6 +157,7 @@ export class PostDetailComponent implements OnInit {
 
   // Get Shared List 
   likedList: any = [];
+  emptyLikedList = []
   likePageInd = 1;
   likeTotalCount = null;
   likePageSize = 10;
@@ -172,7 +179,11 @@ export class PostDetailComponent implements OnInit {
     this.http.getDataFromBackgroundFunction(params_data).subscribe(
       (res: any) => {
         if (res['data']) {
+          this.emptyLikedList = []
           this.likedList = res['data'];
+          for(let i = 0; i < (this.likePageSize - this.likedList?.length); i++) {
+            this.emptyLikedList?.push('-')
+          }
           this.likeTotalCount = res.total_count;
           this.api_loader['liked'] = false
         } else {
@@ -186,6 +197,7 @@ export class PostDetailComponent implements OnInit {
 
   // Get Shared List 
   commentList: any = [];
+  emptyCommentList = []
   commentPageInd = 1;
   commentTotalCount = null;
   commentPageSize = 10;
@@ -209,7 +221,11 @@ export class PostDetailComponent implements OnInit {
     this.http.getDataFromBackgroundFunction(params_data).subscribe(
       (res: any) => {
         if (res['data']) {
+          this.emptyCommentList = []
           this.commentList = res['data'];
+          for(let i = 0; i < (this.commentPageSize - this.commentList?.length); i++) {
+            this.emptyCommentList?.push('-')
+          }
           this.commentTotalCount = res.total_count;
           
           this.api_loader['comments'] = false

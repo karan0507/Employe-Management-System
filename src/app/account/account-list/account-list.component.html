@@ -39,6 +39,7 @@
                             <th>Link</th>
                             <th nzWidth="10rem">Link Type</th>
                             <th nzWidth="10rem">Social Media</th>
+                            <th nzWidth="50px"></th>
                             <!-- <th nzWidth="10rem">Action</th> -->
                         </tr>
                     </thead>
@@ -48,6 +49,28 @@
                             <td> <a (click)="openURL('/media-account')" >{{ data.link }}</a> </td>
                             <td nzWidth="10rem">{{ data.link_type}}</td>
                             <td nzWidth="10rem">{{ data.social_handle }}</td>
+                            <td>
+                                <a class="text-dark font-size-20" nz-dropdown 
+                                    [nzClickHide]="true"
+                                    [nzTrigger]="'click'"
+                                    [nzPlacement]="'bottomRight'"
+                                    [nzDropdownMenu]="latestUploadDropDown">
+                                    <i nz-icon nzType="ellipsis" nzTheme="outline"></i>
+                                </a>
+                                <nz-dropdown-menu #latestUploadDropDown="nzDropdownMenu">
+                                    <ul nz-menu>
+                                        <li nz-menu-item>
+                                            <span class="m-l-5">View Audit</span>
+                                        </li>
+                                        <li nz-menu-item>
+                                            <span class="m-l-5">Edit</span>
+                                        </li>
+                                        <li nz-menu-item>
+                                            <span class="m-l-5">Delete</span>
+                                        </li>
+                                    </ul>
+                                </nz-dropdown-menu>
+                            </td>
                             <!-- <td nzWidth="10rem">
                                 <button nz-button nzType="link" class="border" nzSize="small"
                                     routerLink="/media-account/edit-account" [queryParams]="{id:data?.id}">Edit</button>

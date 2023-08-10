@@ -7,8 +7,15 @@
 <main>
 	<section>
 		<div class="row mb-3 h-100">
-			<div class="col-md-3 pb-3 h-100">
-				<img [src]="postDetailData?.image" class="w-100" style="height: 18rem;"/>
+			<div class="col-md-3 pb-3 h-100 min-200px">
+				<nz-spin [nzSpinning]="!postDetailData?.image" [nzIndicator]="indicatorTemplate" nzSimple>
+					<ng-template #indicatorTemplate>
+						<div>
+							<span nz-icon nzType="loading" class="img-spinner font-50px m-auto"></span>
+						</div>
+					</ng-template>
+				</nz-spin>
+				<img *ngIf="postDetailData?.image" [src]="postDetailData?.image" nz-image class="w-100"/>
 			</div>
 			<div class="col-md-9">
 				<h3>Post ID - {{postDetailData?.post_id}}</h3>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as FileSaver from 'file-saver';
 import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -26,7 +27,8 @@ export class LeaderTaskListComponent implements OnInit {
   _currStreet : any;
   _currUser : any;
   _currSearchValue : any;
-  constructor(private http:HttpService,private message:NzMessageService) { }
+  filter_type = "ALL";
+  constructor(private http:HttpService,private message:NzMessageService,private router: Router) { }
 
   ngOnInit(): void {
     this.getLeaderTaskList();
@@ -67,6 +69,9 @@ export class LeaderTaskListComponent implements OnInit {
     if (this._currUser) {
       data['internal_user'] = this._currUser;
     }
+    if(this.filter_type){
+      data['filter_type'] = this.filter_type;
+    }
     if (this.date?.length > 0) {
       this.page = 1;
       data['start_date'] = moment(this.date[0]).format("YYYY-MM-DD")
@@ -103,7 +108,12 @@ export class LeaderTaskListComponent implements OnInit {
 
   partyTabs: any = [];
   _currTabName:any;
-  onTabChange(data){}
+  onTabChange(data) {
+    console.log(data,'data');
+    this._currTabName = data?.index;
+    this.getLeaderTaskList();
+    this.router.navigate([this.router.url.split('?')[0]], { queryParams: { id: data?.id, tabSection: this._currTabName } });
+  }
 
 
 }

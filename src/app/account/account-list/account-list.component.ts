@@ -99,10 +99,8 @@ export class AccountListComponent implements OnInit {
   }
 
   openURL(url){
-    console.log(url);
-    
     this.global.setErrorLink(url);
-    this.router.navigateByUrl("/error-1");
+    this.router.navigateByUrl(url);
   }
 
   isFilters: boolean = false;

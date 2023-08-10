@@ -32,22 +32,51 @@
                     <nz-table #rowSelectionTable [nzData]="accountList" [nzTotal]="total_count" [nzFrontPagination]="false"
                     [nzShowSizeChanger]="true" [nzPageIndex]="pageIndex" [nzPageSize]="globalPageSize"
                     (nzQueryParams)="accountList[0] ? getaccountList($event) : null" [nzShowTotal]="botTotalCount"
-                    [nzLoading]="api_loader['list']" [nzScroll]="{ x: '1500px', y: '50vh' }">
+                    [nzLoading]="api_loader['list']" [nzScroll]="{ x: '900px', y: '50vh' }">
                     <thead>
                         <tr>
-                            <th nzWidth="5rem">Sr. No</th>
-                            <th>Link</th>
-                            <th nzWidth="10rem">Link Type</th>
-                            <th nzWidth="10rem">Social Media</th>
+                            <th nzWidth="50px">Sr. No</th>
+                            <th nzWidth="200px">Link</th>
+                            <th nzWidth="80px">Link Type</th>
+                            <th nzWidth="80px">Social Media</th>
+                            <th nzWidth="50px"></th>
                             <!-- <th nzWidth="10rem">Action</th> -->
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of accountList; let i = index">
-                            <td nzWidth="5rem"> {{i+1}}</td>
-                            <td> <a (click)="openURL('/media-account')" >{{ data.link }}</a> </td>
-                            <td nzWidth="10rem">{{ data.link_type}}</td>
-                            <td nzWidth="10rem">{{ data.social_handle }}</td>
+                            <td> {{i+1}}</td>
+                            <td nzWidth="200px"> 
+                                <a [href]="data.link" target="_blank" class="p-0">{{ data.link }}</a> 
+                            </td>
+                            <td nzWidth="80px">
+                                <span>
+                                    {{ data.link_type}}
+                                </span>
+                            </td>
+                            <td nzWidth="80px">{{ data.social_handle }}</td>
+                            <td>
+                                <a class="text-dark font-size-20" nz-dropdown 
+                                    [nzClickHide]="true"
+                                    [nzTrigger]="'click'"
+                                    [nzPlacement]="'bottomRight'"
+                                    [nzDropdownMenu]="latestUploadDropDown">
+                                    <i nz-icon nzType="ellipsis" nzTheme="outline"></i>
+                                </a>
+                                <nz-dropdown-menu #latestUploadDropDown="nzDropdownMenu">
+                                    <ul nz-menu>
+                                        <li nz-menu-item>
+                                            <span class="m-l-5">View Audit</span>
+                                        </li>
+                                        <li nz-menu-item>
+                                            <span class="m-l-5">Edit</span>
+                                        </li>
+                                        <li nz-menu-item>
+                                            <span class="m-l-5">Delete</span>
+                                        </li>
+                                    </ul>
+                                </nz-dropdown-menu>
+                            </td>
                             <!-- <td nzWidth="10rem">
                                 <button nz-button nzType="link" class="border" nzSize="small"
                                     routerLink="/media-account/edit-account" [queryParams]="{id:data?.id}">Edit</button>

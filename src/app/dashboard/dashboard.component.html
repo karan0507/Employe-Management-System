@@ -38,14 +38,17 @@
 									<nz-list-item-meta>
 										<nz-list-item-meta-avatar
 											[nzSrc]="item?.user_details?.profile_picture ? item?.user_details?.profile_picture : 'assets/images/avatars/default.png'"
-											alt></nz-list-item-meta-avatar>
-										<nz-list-item-meta-avatar [nzSrc]="item.avatar"></nz-list-item-meta-avatar>
+											class="mt-2"
+										></nz-list-item-meta-avatar>
+										<nz-list-item-meta-avatar [nzSrc]="item?.avatar"></nz-list-item-meta-avatar>
 										<nz-list-item-meta-title>
 											<!-- <a [routerLink]="['/posts/post-detail/',tem?.post_id]" class="text-secondary">{{ item.post_id }}</a> -->
-											<div class="d-flex justify-content-start"
-												(click)="openFacebook(item.user_details?.social_link)">
-												<a>User ID - {{ item.user_details.user_id }}</a>
-												<label class="ml-3">{{ item.user_details.name }}</label>
+											<div class=""
+												(click)="openFacebook(item?.user_details?.social_link)">
+												<a>User ID - {{ item?.user_details?.user_id || '-'}}</a>
+											</div>
+											<div class="mt-2">
+												<label>{{ item?.user_details?.name || '-'}}</label>
 											</div>
 
 										</nz-list-item-meta-title>
@@ -191,14 +194,17 @@
 									<nz-list-item-meta>
 										<nz-list-item-meta-avatar
 											[nzSrc]="item?.user_details?.profile_picture ? item?.user_details?.profile_picture : 'assets/images/avatars/default.png'"
-											alt></nz-list-item-meta-avatar>
+											class="mt-2"	
+										></nz-list-item-meta-avatar>
 										<nz-list-item-meta-avatar [nzSrc]="item.avatar"></nz-list-item-meta-avatar>
 										<nz-list-item-meta-title>
 											<!-- <a [routerLink]="['/posts/post-detail/',tem?.post_id]" class="text-secondary">{{ item.post_id }}</a> -->
-											<div class="d-flex justify-content-start"
+											<div class=""
 												(click)="openFacebook(item.user_details?.social_link)">
 												<a>User ID - {{ item.user_details.user_id }}</a>
-												<label class="ml-3">{{ item.user_details.name }}</label>
+											</div>
+											<div class="mt-2">
+												<label>{{ item.user_details.name }}</label>
 											</div>
 
 										</nz-list-item-meta-title>

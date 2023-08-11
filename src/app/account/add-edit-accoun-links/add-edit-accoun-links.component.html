@@ -9,9 +9,21 @@
                             'Link Name' : 'लिंक नाम'}}
                         </nz-form-label>
                         <nz-form-control [nzSm]="16" [nzXs]="24"
-                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter Link Name' : 'कृपया लिंक नाम'">
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter Link Name' : 'कृपया लिंक नाम दर्ज करें'">
+                            <input type="text" nz-input formControlName="name"
+                                [placeholder]="_currLanguage == 'en' ? 'Enter Link Name' : 'लिंक नाम दर्ज करें'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
+                            'Link' : 'लिंक'}}
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter Link Url' : 'कृपया लिंक यूआरएल दर्ज करें'">
                             <input type="text" nz-input formControlName="link"
-                                [placeholder]="_currLanguage == 'en' ? 'Enter Link Name' : 'लिंक नाम'" />
+                                [placeholder]="_currLanguage == 'en' ? 'Enter Link Url' : 'लिंक यूआरएल दर्ज करें'" />
                         </nz-form-control>
                     </nz-form-item>
                 </div>
@@ -22,7 +34,9 @@
                         </nz-form-label>
                         <nz-form-control [nzSm]="16" [nzXs]="24"
                             [nzErrorTip]="_currLanguage == 'en' ? 'Please select link type' : 'लिंक प्रकार'">
-                            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="link_type">
+                            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="link_type"
+                                [nzPlaceHolder]="_currLanguage == 'en' ? 'Please select link type' : 'कृपया लिंक प्रकार चुनें'"
+                            >
                                 <nz-option [nzValue]="'FOR'" [nzLabel]="'For'">
                                 </nz-option>
                                 <nz-option [nzValue]="'AGAINST'" [nzLabel]="'Against'">
@@ -38,7 +52,9 @@
                         </nz-form-label>
                         <nz-form-control [nzSm]="16" [nzXs]="24"
                             [nzErrorTip]="_currLanguage == 'en' ? 'Please select task type' : 'कृपया कार्य चुनें'">
-                            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="social_handle">
+                            <nz-select nzShowSearch class="selectFilter mb-2 mr-3" formControlName="social_handle"
+                            [nzPlaceHolder]="_currLanguage == 'en' ? 'Please select social media platform' : 'कृपया सोशल मीडिया प्लेटफ़ॉर्म चुनें'"
+                            >
                                 <nz-option [nzValue]="'FACEBOOK'" [nzLabel]="'Facebook'">
                                 </nz-option>
                                 <nz-option [nzValue]="'TWITTER'" [nzLabel]="'Twitter'"></nz-option>

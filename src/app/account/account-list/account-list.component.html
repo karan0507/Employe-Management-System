@@ -23,10 +23,12 @@
                         </div>
                     </div>
                     <div class="col-lg-8 col-12 mb-2 d-flex flex-wrap justify-content-end">
-                        <button [routerLink]="['add-account']" nz-button nzType="primary" nzSize="small">
+                        <button [routerLink]="['add-account']" nz-button nzType="primary" nzSize="small" class="mr-3">
                             Add +
                         </button>
-                        <!-- <button nz-button nzType="primary" nzSize="small">Filters</button> -->
+                        <button nz-button nzType="primary" nzSize="small">
+                            Filters
+                        </button>
                     </div>
                 </div>
                 <div class="totalCount">
@@ -74,12 +76,12 @@
                                         <li nz-menu-item>
                                             <span class="m-l-5">View Audit</span>
                                         </li>
-                                        <li nz-menu-item>
+                                        <li [routerLink]="['edit-account']" [queryParams]="{id: data?.id}" nz-menu-item>
                                             <span class="m-l-5">Edit</span>
                                         </li>
-                                        <li nz-menu-item>
+                                        <!-- <li nz-menu-item>
                                             <span class="m-l-5">Delete</span>
-                                        </li>
+                                        </li> -->
                                     </ul>
                                 </nz-dropdown-menu>
                             </td>

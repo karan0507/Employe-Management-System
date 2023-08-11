@@ -26,7 +26,9 @@
                         <button [routerLink]="['add-account']" nz-button nzType="primary" nzSize="small" class="mr-3">
                             Add +
                         </button>
-                        <button nz-button nzType="primary" nzSize="small">
+                        <button nz-button [nzType]="'link'" (click)="isFilters = true" nzSize="small"
+                            class="border"
+                        >
                             Filters
                         </button>
                     </div>
@@ -107,21 +109,24 @@
 </div>
 
 <section>
-
-    <nz-drawer [nzWidth]="280" nzTitle="Quick View" [nzClosable]="false" [nzVisible]="isFilters" nzPlacement="right" (nzOnClose)="isFilters = false">
-        <nz-select nzShowSearch class="selectFilter mb-2 mr-2" nzPlaceHolder="Select Social Media" [(ngModel)]="currSocialMedia" (ngModelChange)="getaccountList()" nzAllowClear>
+    <nz-drawer [nzWidth]="'350px'" [nzTitle]="'Quick View'" [nzClosable]="false" [nzVisible]="isFilters"
+        nzPlacement="right" (nzOnClose)="isFilters = false"
+    >
+        <label>Social Media</label>
+        <nz-select nzShowSearch class="selectFilter mt-2 mb-3 mr-2 w-100" nzPlaceHolder="Select Social Media" [(ngModel)]="currSocialMedia" (ngModelChange)="getaccountList()" nzAllowClear>
             <nz-option [nzValue]="'FACEBOOK'" [nzLabel]="'Facebook'">
             </nz-option>
             <nz-option [nzValue]="'TWITTER'" [nzLabel]="'Twitter'"></nz-option>
             <nz-option [nzValue]="'LINKED-IN'" [nzLabel]="' LinkedIn'">
             </nz-option>
         </nz-select>
-        <nz-select nzShowSearch class="selectFilter mb-2 mr-2" nzPlaceHolder="Select Link Type" [(ngModel)]="currLinkTpye" (ngModelChange)="getaccountList()" nzAllowClear>
+        <label>Link Type</label>
+        <nz-select nzShowSearch class="selectFilter mt-2 mb-3 mr-2 w-100" nzPlaceHolder="Select Link Type" [(ngModel)]="currLinkTpye" (ngModelChange)="getaccountList()" nzAllowClear>
             <nz-option [nzValue]="'FOR'" [nzLabel]="'For'">
             </nz-option>
             <nz-option [nzValue]="'AGAINST'" [nzLabel]="'Against'">
             </nz-option>
         </nz-select>
+
     </nz-drawer>
-   
 </section>

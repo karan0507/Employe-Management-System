@@ -112,6 +112,9 @@
     <nz-drawer [nzWidth]="'350px'" [nzTitle]="'Quick View'" [nzClosable]="false" [nzVisible]="isFilters"
         nzPlacement="right" (nzOnClose)="isFilters = false"
     >
+        <div class="drawer-close-icon">
+            <span nz-icon nzType="close-circle" nzTheme="twotone" (click)="isFilters=false" class="cursor-pointer"></span>
+        </div>
         <label>Social Media</label>
         <nz-select nzShowSearch class="selectFilter mt-2 mb-3 mr-2 w-100" nzPlaceHolder="Select Social Media" [(ngModel)]="currSocialMedia" (ngModelChange)="getaccountList()" nzAllowClear>
             <nz-option [nzValue]="'FACEBOOK'" [nzLabel]="'Facebook'">

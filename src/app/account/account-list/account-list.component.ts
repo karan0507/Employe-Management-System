@@ -86,6 +86,16 @@ export class AccountListComponent implements OnInit {
     })
   }
 
+  // Table Dropdowns functions
+  expandSet = new Set<number>();
+  onExpandChange(id: number, checked: boolean): void {
+    if (checked) {
+      this.expandSet.add(id);
+    } else {
+      this.expandSet.delete(id);
+    }
+  }
+
   currLinkTpye : any;
   currSocialMedia : any;
   resetFilter(){

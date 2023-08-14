@@ -2,6 +2,17 @@
     height: 593px;
 }
 
+.min-200px {
+    min-height: 250px;
+}
+
+.img-spinner {
+    display: flex;
+    position: absolute;
+    top: 20%;
+    right: 40%;
+}
+
 @media(max-width: 425px) {
     .card {
         height: 500px;

@@ -23,9 +23,10 @@
                         </div>
                     </div>
                     <div class="col-lg-8 col-12 mb-2 d-flex flex-wrap justify-content-end">
-                        <button nz-button nzType="primary" nzSize="small">Filters</button>
-                       
-                     
+                        <button [routerLink]="['add-account']" nz-button nzType="primary" nzSize="small">
+                            Add +
+                        </button>
+                        <!-- <button nz-button nzType="primary" nzSize="small">Filters</button> -->
                     </div>
                 </div>
                 <div class="totalCount">
@@ -37,24 +38,29 @@
                         <tr>
                             <th nzWidth="50px">Sr. No</th>
                             <th nzWidth="200px">Link</th>
+                            <th nzWidth="80px">Name</th>
                             <th nzWidth="80px">Link Type</th>
                             <th nzWidth="80px">Social Media</th>
-                            <th nzWidth="50px"></th>
-                            <!-- <th nzWidth="10rem">Action</th> -->
+                            <th nzWidth="50px">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of accountList; let i = index">
                             <td> {{i+1}}</td>
                             <td nzWidth="200px"> 
-                                <a [href]="data.link" target="_blank" class="p-0">{{ data.link }}</a> 
+                                <a [href]="data.link" target="_blank" class="p-0">{{ data?.link || '-'}}</a> 
                             </td>
                             <td nzWidth="80px">
                                 <span>
-                                    {{ data.link_type}}
+                                    {{ data?.name || '-'}}
                                 </span>
                             </td>
-                            <td nzWidth="80px">{{ data.social_handle }}</td>
+                            <td nzWidth="80px">
+                                <span>
+                                    {{ data?.link_type || '-'}}
+                                </span>
+                            </td>
+                            <td nzWidth="80px">{{ data?.social_handle || '-'}}</td>
                             <td>
                                 <a class="text-dark font-size-20" nz-dropdown 
                                     [nzClickHide]="true"

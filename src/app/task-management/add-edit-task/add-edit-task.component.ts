@@ -19,6 +19,16 @@ export class AddEditTaskComponent implements OnInit {
   _currLanguage: any;
   isEdit: boolean = false;
   api_loading = { card: false, button: false }
+
+  isSelectLoader  = {'task':false,'Booth':false,
+  'Ward':false,
+  'Sector':false,
+  'Street':false,
+  'Lane':false,
+  'Assembly':false,
+  'Places':false,
+  'internal_user':false,
+  'voter':false       }
   constructor(private fb: FormBuilder, private router: Router, private acRoute: ActivatedRoute, private message: NzMessageService,
     private http: HttpService, private modal: NzModalService) { }
 
@@ -140,7 +150,7 @@ export class AddEditTaskComponent implements OnInit {
     }
     this.api_loading['button'] = true;
     var form_data = new FormData();
-    form_data.append('task_type', this.taskForm.get('task_type').value);
+    form_data.append('model_name', this.taskForm.get('task_type').value);
     form_data.append('name', this.taskForm.get('name').value);
     form_data.append('discription', this.taskForm.get('discription').value);
     form_data.append('internal_user', JSON.stringify(this.taskForm.get('internal_user').value));
@@ -188,6 +198,7 @@ export class AddEditTaskComponent implements OnInit {
   taskList: any = [];
   task_debounce: any;
   gettaskLists(key?) {
+    this.isSelectLoader['task'] = true;
     if (key) {
       clearTimeout(this.task_debounce);
       this.task_debounce = setTimeout(() => {
@@ -195,6 +206,7 @@ export class AddEditTaskComponent implements OnInit {
         this.http.getMasterData(data).subscribe((res: any) => {
           if (res.success) {
             this.taskList = res.data;
+            this.isSelectLoader['task'] = false;
           }
         })
       }, 500);
@@ -203,6 +215,7 @@ export class AddEditTaskComponent implements OnInit {
       this.http.getMasterData(data).subscribe((res: any) => {
         if (res.success) {
           this.taskList = res.data;
+          this.isSelectLoader['task'] = false;
         }
       })
     }
@@ -211,7 +224,7 @@ export class AddEditTaskComponent implements OnInit {
   internal_user_list: any = [];
   in_user_debounce: any;
   getInternalUser(key?) {
-
+    this.isSelectLoader['internal_user'] = true
     if (key) {
       clearTimeout(this.in_user_debounce);
       this.in_user_debounce = setTimeout(() => {
@@ -219,6 +232,7 @@ export class AddEditTaskComponent implements OnInit {
         this.http.getTeamList(data).subscribe((res: any) => {
           if (res.success) {
             this.internal_user_list = res.data;
+            this.isSelectLoader['internal_user'] = false;
           }
         })
       }, 500);
@@ -227,6 +241,7 @@ export class AddEditTaskComponent implements OnInit {
       this.http.getTeamList(data).subscribe((res: any) => {
         if (res.success) {
           this.internal_user_list = res.data;
+          this.isSelectLoader['internal_user'] = false;
         }
       })
     }
@@ -235,16 +250,19 @@ export class AddEditTaskComponent implements OnInit {
   voters: any = [];
   voter_debounce: any;
   getVoters(key?) {
+    this.isSelectLoader['voter'] = true;
     if (key) {
       clearTimeout(this.voter_debounce);
       this.voter_debounce = setTimeout(() => {
         let data = { 'end_point': 'FETCH_VOTER_LIST_API_URL' }
         if (key) {
-          data['search_param'] = key.target.value
+          data['search_param'] = key.target.value;
+           this.isSelectLoader['voter'] = false;
         }
         this.http.getVoterList(data).subscribe((res: any) => {
           if (res.success) {
             this.voters = res.data;
+             this.isSelectLoader['voter'] = false;
           }
         })
       }, 500);
@@ -301,6 +319,7 @@ export class AddEditTaskComponent implements OnInit {
   laneList: any = [];
   placeList: any = []
   searchMasterData(event, data?) {
+    this.isSelectLoader[event] = true;
     let param = {}
     if (data) {
       clearTimeout(this.debounce);
@@ -331,6 +350,7 @@ export class AddEditTaskComponent implements OnInit {
             } else if (event == 'Places') {
               this.placeList = res.data;
             }
+            this.isSelectLoader[event] = false;
 
           }
         })

@@ -30,6 +30,10 @@
                                 (nzFocus)="gettaskLists()" (keyup)="gettaskLists($event)" nzAllowClear
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Task Type' : 'कृपया कार्य चुनें'"
                                 (ngModelChange)="gettaskLists($event)">
+                                <nz-option *ngIf="isSelectLoader['task']" nzDisabled nzCustomContent>
+                                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                                    Loading Data...
+                                </nz-option>
                                 <nz-option *ngFor="let item of taskList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
                                 </nz-option>
                             </nz-select>
@@ -77,6 +81,10 @@
                                 [nzMode]="'multiple'" [nzMaxTagCount]="2"
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Internal User' : 'मतदाताओं का चयन करें'"
                                 (ngModelChange)="getInternalUser($event)">
+                                <nz-option *ngIf="isSelectLoader['internal_user']" nzDisabled nzCustomContent>
+                                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                                    Loading Data...
+                                </nz-option>
                                 <nz-option *ngFor="let item of internal_user_list"
                                     [nzLabel]=" _currLanguage == 'en' ?  (item?.first_name ? (item?.first_name + (item?.last_name ? ' '+item?.last_name : '')) : '') : first_name"
                                     [nzValue]="item.id">
@@ -124,6 +132,10 @@
                             <nz-select [nzMode]="'multiple'" class="selectFilter mb-2 mr-3" formControlName="voters"
                                 (nzFocus)="getVoters()" (keyup)="getVoters($event)" nzAllowClear [nzMaxTagCount]="2"
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Voters' : 'मतदाताओं का चयन करें'">
+                                <nz-option *ngIf="isSelectLoader['voter']" nzDisabled nzCustomContent>
+                                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                                    Loading Data...
+                                </nz-option>
                                 <nz-option *ngFor="let item of voters" [nzValue]="item.id"
                                     [nzLabel]=" _currLanguage == 'en' ?  item?.first_name_en + item?.last_name_en + (item?.epic_no ? ' ' +  item?.epic_no  : '') : item?.last_name_hi + item?.last_name_hi + (item?.epic_no ? ' ' + item?.epic_no  : '')">
                                 </nz-option>
@@ -144,6 +156,10 @@
                                 (nzFocus)="searchMasterData('Booth')" (keyup)="searchMasterData('Booth',$event)"
                                 nzAllowClear [nzMaxTagCount]="2"
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Booth' : 'बूथ का चयन करें'">
+                                <nz-option *ngIf="isSelectLoader['Booth']" nzDisabled nzCustomContent>
+                                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                                    Loading Data...
+                                </nz-option>
                                 <nz-option *ngFor="let item of boothList" [nzValue]="item.id"
                                     [nzLabel]=" _currLanguage == 'en' ? item?.name?.en : item?.name?.hi">
                                 </nz-option>
@@ -164,6 +180,10 @@
                                 (nzFocus)="searchMasterData('Ward')" (keyup)="searchMasterData('Ward',$event)"
                                 nzAllowClear [nzMaxTagCount]="2"
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Ward' : 'वार्ड का चयन करें'">
+                                <nz-option *ngIf="isSelectLoader['Ward']" nzDisabled nzCustomContent>
+                                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                                    Loading Data...
+                                </nz-option>
                                 <nz-option *ngFor="let item of wardList" [nzValue]="item.id"
                                     [nzLabel]=" _currLanguage == 'en' ?  item?.name?.en : item?.name?.hi">
                                 </nz-option>
@@ -183,6 +203,10 @@
                                 (nzFocus)="searchMasterData('Sector')" (keyup)="searchMasterData('Sector',$event)"
                                 nzAllowClear [nzMaxTagCount]="2"
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Sector' : 'सेक्टर का चयन करें'">
+                                <nz-option *ngIf="isSelectLoader['Sector']" nzDisabled nzCustomContent>
+                                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                                    Loading Data...
+                                </nz-option>
                                 <nz-option *ngFor="let item of sectorList" [nzValue]="item.id"
                                     [nzLabel]=" _currLanguage == 'en' ?  item?.name?.en : item?.name?.hi">
                                 </nz-option>
@@ -202,6 +226,10 @@
                                 (nzFocus)="searchMasterData('Places')" (keyup)="searchMasterData('Places',$event)"
                                 nzAllowClear [nzMaxTagCount]="2"
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Places' : 'स्थानों का चयन करें'">
+                                <nz-option *ngIf="isSelectLoader['Places']" nzDisabled nzCustomContent>
+                                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                                    Loading Data...
+                                </nz-option>
                                 <nz-option *ngFor="let item of placeList" [nzValue]="item.id"
                                     [nzLabel]=" _currLanguage == 'en' ?  item?.name?.en : item?.name?.hi">
                                 </nz-option>
@@ -221,6 +249,10 @@
                                 (nzFocus)="searchMasterData('Street')" (keyup)="searchMasterData('Street',$event)"
                                 nzAllowClear [nzMaxTagCount]="2"
                                 [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Street' : 'स्थानों का चयन करें'">
+                                <nz-option *ngIf="isSelectLoader['Street']" nzDisabled nzCustomContent>
+                                    <span nz-icon nzType="loading" class="loading-icon"></span>
+                                    Loading Data...
+                                </nz-option>
                                 <nz-option *ngFor="let item of streetList" [nzValue]="item.id"
                                     [nzLabel]=" _currLanguage == 'en' ?  item?.name?.en : item?.name?.hi">
                                 </nz-option>

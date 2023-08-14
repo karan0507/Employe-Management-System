@@ -77,6 +77,7 @@ export class AddEditVoterComponent implements OnInit {
       booth: [(data ? (this._currLanguage == 'en' ? data?.booth : data?.booth) : ''), [Validators.required]],
       SECTION_NO: [(data ? (this._currLanguage == 'en' ? data?.section_no : data?.section_no) : ''),],
       HOUSE_NO: [(data ? (this._currLanguage == 'en' ? data?.house_no : data?.house_no) : ''),],
+      facebook_link: [(data ? (this._currLanguage == 'en' ? data?.facebook_link : data?.facebook_link) : ''),],
 
     })
   }
@@ -164,6 +165,9 @@ export class AddEditVoterComponent implements OnInit {
 
     if (this.voterForm.get('HOUSE_NO').value) {
       form_data.append('HOUSE_NO', this.voterForm.get('HOUSE_NO').value);
+    }
+    if (this.voterForm.get('facebook_link').value) {
+      form_data.append('facebook_link', this.voterForm.get('facebook_link').value);
     }
 
     let url = this.isEdit == false ? this.http.addVoter(form_data) : this.http.editVoter(this.curr_voterId, form_data);

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as FileSaver from 'file-saver';
 import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -28,9 +28,19 @@ export class LeaderTaskListComponent implements OnInit {
   _currUser : any;
   _currSearchValue : any;
   filter_type = "ALL";
-  constructor(private http:HttpService,private message:NzMessageService,private router: Router) { }
+  constructor(private http:HttpService,private message:NzMessageService,private router: Router, private acroute:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.acroute.queryParams.subscribe((res:any)=>{
+      if(res['tabSection']){
+        this.filter_type = res['tabSection'] == 1 ? "TODAT" : "ALL";
+        this._currTabName = res['tabSection'];
+
+      }else{
+        this.filter_type = "ALL"
+        this._currTabName = 0;
+      }
+    })
     this.getLeaderTaskList();
   }
 
@@ -70,6 +80,7 @@ export class LeaderTaskListComponent implements OnInit {
       data['internal_user'] = this._currUser;
     }
     if(this.filter_type){
+      this.filter_type = this._currTabName == 1 ? 'TODAY' : 'ALL';
       data['filter_type'] = this.filter_type;
     }
     if (this.date?.length > 0) {
@@ -115,5 +126,16 @@ export class LeaderTaskListComponent implements OnInit {
     this.router.navigate([this.router.url.split('?')[0]], { queryParams: { id: data?.id, tabSection: this._currTabName } });
   }
 
-
+  downloadPDF(){
+    const blob = new Blob([this.leaderList], {type: 'application/pdf'});
+    let filename = 'myPdfFile';
+    let url= URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
 }

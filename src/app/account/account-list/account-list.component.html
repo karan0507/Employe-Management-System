@@ -40,7 +40,7 @@
                         [nzLoading]="api_loader['list']" [nzScroll]="{ x: '900px', y: '50vh' }">
                     <thead>
                         <tr>
-                            <th nzWidth="50px">#</th>
+                            <!-- <th nzWidth="50px">#</th> -->
                             <th nzWidth="50px">Sr. No</th>
                             <th nzWidth="200px">Link</th>
                             <th nzWidth="80px">Name</th>
@@ -52,10 +52,10 @@
                     <tbody>
                         <ng-container *ngFor="let data of accountList; let i = index">
                             <tr>
-                                <td 
+                                <!-- <td 
                                     [nzExpand]="expandSet.has(data.id)" 
                                     (nzExpandChange)="onExpandChange(data.id, $event)"
-                                ></td>
+                                ></td> -->
                                 <td> {{i+1}}</td>
                                 <td nzWidth="200px"> 
                                     <a [href]="data.link" target="_blank" class="p-0">{{ data?.link || '-'}}</a> 
@@ -98,9 +98,9 @@
                                         routerLink="/media-account/edit-account" [queryParams]="{id:data?.id}">Edit</button>
                                 </td> -->
                             </tr>
-                            <tr [nzExpand]="expandSet.has(data.id)">
+                            <!-- <tr [nzExpand]="expandSet.has(data.id)">
                                 <span>{{ 'Audit Trail' }}</span>
-                            </tr>
+                            </tr> -->
                         </ng-container>
                     </tbody>
                     </nz-table>

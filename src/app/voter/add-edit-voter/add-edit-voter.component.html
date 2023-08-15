@@ -216,6 +216,18 @@
                         </nz-form-control>
                     </nz-form-item>
                 </div>
+                <div class="col-lg-6 col-12">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left">{{_currLanguage == 'en' ?
+                            'Facebook Link' : 'फेसबुक लिंक'}}   
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="_currLanguage == 'en' ? 'Please enter facebook link' : 'कृपया फेसबुक लिंक दर्ज करें'">
+                            <input type="text"  nz-input formControlName="facebook_link"
+                                [placeholder]="_currLanguage == 'en' ? 'Facebook Link' : 'फेसबुक लिंक'" />
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
                 <!-- Relation Data -->
                 <div class="col-lg-6 col-12">
                     <nz-form-item>

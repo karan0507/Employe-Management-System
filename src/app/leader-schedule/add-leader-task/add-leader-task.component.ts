@@ -109,7 +109,7 @@ export class AddLeaderTaskComponent implements OnInit {
 
   createTask(data?) {
     this.taskForm = this.fb.group({
-      task_type: [(data ? data?.task_type?.id : ''), [Validators.required]],
+      task_type: [(data ? data?.model_name?.id : ''), [Validators.required]],
       name: [(data ? (this._currLanguage == 'en' ? data?.name?.en : data?.name?.hi) : '')],
       discription: [(data ? (this._currLanguage == 'en' ? data?.discription?.en : data?.discription?.hi) : ''), [Validators.required]],
       internal_user: [data ? [data?.internal_user?.id] : [], [Validators.required]],
@@ -139,7 +139,7 @@ export class AddLeaderTaskComponent implements OnInit {
     }
     this.api_loading['button'] = true;
     var form_data = new FormData();
-    form_data.append('task_type', this.taskForm.get('task_type').value);
+    form_data.append('model_name', this.taskForm.get('task_type').value);
     form_data.append('name', this.taskForm.get('name').value);
     form_data.append('discription', this.taskForm.get('discription').value);
     form_data.append('internal_user', JSON.stringify(this.taskForm.get('internal_user').value));

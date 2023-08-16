@@ -132,6 +132,7 @@
                                     <th nzWidth="4rem">Sr. No</th>
                                     <th class="text-left" [nzWidth]="'12rem'">Full Name</th>
                                     <th [nzWidth]="'10rem'">Mobile</th>
+                                    <th>Facebook Links</th>
                                     <th>Caste</th>
                                     <th [nzWidth]="'10rem'">Epic No</th>
                                     <th>Age/ Gender</th>
@@ -163,6 +164,7 @@
                                             </a>
                                         </td>
                                         <td [nzWidth]="'10rem'">{{data?.mobile ? data?.mobile : '-'}}</td>
+                                        <td>{{data?.facebook_link || '-'}}</td>
                                         <td>{{data?.caste ? data?.caste : '-'}}</td>
                                         <td [nzWidth]="'10rem'">{{data?.epic_no}}</td>
                                         <td>{{data?.age + (data?.gender ? " / " + data?.gender : "")}} </td>

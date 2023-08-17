@@ -34,6 +34,10 @@ export const CommonLayout_ROUTES: Routes = [
         loadChildren: () => import('../../account/account.module').then(m => m.AccountModule),
     },
     {
+        path: 'booth',
+        loadChildren: () => import('../../booth/booth.module').then(m => m.BoothModule),
+    },
+    {
         path: 'leader-schedule',
         loadChildren: () => import('../../leader-schedule/leader-schedule.module').then(m => m.LeaderScheduleModule),
     },

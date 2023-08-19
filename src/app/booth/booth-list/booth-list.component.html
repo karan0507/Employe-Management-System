@@ -1,1 +1,50 @@
-<p>booth-list works!</p>
+<nz-card>
+    <div class="totalCount">
+        <nz-table 
+            #rowSelectionTable [nzData]="boothList" [nzTotal]="total_count" [nzFrontPagination]="false"
+            [nzShowSizeChanger]="true" [nzPageIndex]="page" [nzPageSize]="limit"
+            (nzQueryParams)="boothList[0] ? getBoothList($event) : null" [nzShowTotal]="botTotalCount"
+            [nzLoading]="boothList?.length === 0" [nzScroll]="{ x: 'auto'}"
+        >
+            <thead>
+                <tr>
+                    <th>Sr. No</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>File</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of boothList; index as i">
+                    <td>{{i+1}}</td>
+                    <td>
+                        <span>
+                            {{data?.created_by?.first_name || '-'}}
+                        </span>
+                    </td>
+                    <td>
+                        <span>
+                            {{data?.source_type || '-'}}
+                        </span>
+                    </td>
+                    <td>
+                        <span>
+                            {{data?.process_status || '-'}}
+                        </span>
+                    </td>
+                    <td>
+                        <a [href]="data?.source_file" target="_blank" class="text-primary">
+                            File
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+        <ng-template #botTotalCount>
+            <div class="font-weight-semibold">
+                <b>{{total_count}} Results Found </b>
+            </div>
+        </ng-template>
+    </div>
+</nz-card>

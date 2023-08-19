@@ -401,4 +401,9 @@ export class HttpService {
   public addLeaderTasks(data) {
     return this.http.post(this.url + `/users/v1/leader-schedule/create-leader-schedule`, data)
   }
+
+  getBoothList(data?: any) {
+    return this.http.get(`${this.url}/booth-profile/v1/import/get-source-file`, {params: data})
+  }
+
 }

@@ -406,4 +406,8 @@ export class HttpService {
     return this.http.get(`${this.url}/booth-profile/v1/import/get-source-file`, {params: data})
   }
 
+  postBooth(formData: FormData) {
+    return this.http.post(`${this.url}/booth-profile/v1/import/import-source-file`, formData)
+  }
+
 }

@@ -31,7 +31,7 @@ export class BoothListComponent implements OnInit {
   ngOnInit(): void {
     this._currLanguage = localStorage.getItem("appLanguage") || 'en';
     this.exportFileForm = this.formBuilder.group({
-      source_file: [null, [Validators.required]],
+      // source_file: [null, [Validators.required]],
       source_type: ['', [Validators.required]]
     })
 
@@ -75,12 +75,20 @@ export class BoothListComponent implements OnInit {
     }
   }
 
+  mergeFile(event: any) {
+    console.log(event.target.files[0])
+    this.fileList = event.target.files[0]
+  }
+
   onSubmit() {
-    let formData = new FormData
-    Object.keys(this.exportFileForm.controls)?.forEach(controlName => {
-      formData.append(controlName, this.exportFileForm?.get(controlName)?.value)
-    })
-    this.postBooth(formData)
+    if(this.fileList) {
+      let formData = new FormData
+      formData.append('source_file', this.fileList)
+      formData.append('source_type', this.exportFileForm?.get('source_type')?.value)
+      this.postBooth(formData)
+    } else {
+      this.message.info('Please add file')
+    }
   }
 
   postBooth(formData: FormData) {

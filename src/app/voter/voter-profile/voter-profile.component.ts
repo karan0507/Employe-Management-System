@@ -143,6 +143,11 @@ export class VoterProfileComponent implements OnInit {
 
   }
 
+  // facebook link
+  facebook: string
+  facebookeLink() {
+
+  }
 
   getVoterDetals() {
     let data = { id: this._currVoterId, 'end_point': 'FETCH_VOTER_LIST_API_URL' }
@@ -436,4 +441,17 @@ getRelationshipList(keyword?) {
     }
   })
 }
+
+  isVisible: boolean = false
+  modalTitle: string
+  showModal(str?) {
+    this.modalTitle = str
+    this.isVisible = true
+  }
+
+  handleCancel() {
+    this.isVisible = false
+    this.facebook = ''
+  }
+
 }

@@ -285,7 +285,7 @@
         </form>
         <div class="d-flex justify-content-center">
             <button nz-button nzType="primary" class="px-5" [disabled]="voterForm.invalid"  [nzLoading]="api_loading['button']" (click)="submitForm()">Save</button>
-            <button nz-button nzType="link" class="ml-3 px-5 border" routerLink="/voter">Cancel</button>
+            <button (click)="cancelForm()" nz-button nzType="link" class="ml-3 px-5 border">Cancel</button>
         </div>
     </nz-card>
 </section>

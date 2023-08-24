@@ -66,13 +66,13 @@
 						<nz-table #rowSelectionTable [nzData]="sharedList" [nzTotal]="shareTotalCount"
 							[nzFrontPagination]="false" [nzShowSizeChanger]="true" [nzPageIndex]="sharePageInd"
 							[nzPageSize]="sharePageSize" (nzQueryParams)="sharedList[0] ? getSharedList($event) : null"
-							[nzShowTotal]="botTotalCount" [nzLoading]="api_loader['shared']" [nzScroll]="{ x: 'auto', y: '50vh' }"
+							[nzShowTotal]="botTotalCount" [nzLoading]="api_loader['shared']" [nzScroll]="{ y: '50vh' }"
 						>
 							<thead>
 								<tr>
-									<th nzWidth="3rem">#</th>
+									<!-- <th nzWidth="3rem">#</th> -->
 									<th nzWidth="70px">Sr No.</th>
-									<th nzWidth="14rem">Name</th>
+									<th>Name</th>
 									<!-- <th>Response Type</th>
 							<th>Action Type</th> -->
 									<th nzWidth="100px">Re-Share</th>
@@ -81,8 +81,8 @@
 							<tbody>
 								<ng-container *ngFor="let data of sharedList; let i = index">
 									<tr>
-										<td [nzExpand]="expandSet.has(data.id)"
-											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td>
+										<!-- <td [nzExpand]="expandSet.has(data.id)"
+											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td> -->
 										<td>{{i+1}}</td>
 										<td>{{ data.user_details.name }}</td>
 										<!-- <td{ data.r>{esponse_type }}</td>
@@ -130,7 +130,7 @@
 								</ng-container>
 								<ng-container *ngFor="let data of emptySharedList; let i = index">
 									<tr>
-										<td>{{data || '-'}}</td>
+										<!-- <td>{{data || '-'}}</td> -->
 										<td>{{sharedList?.length + i + 1}}</td>
 										<td>{{data || '-'}}</td>
 										<td>{{data || '-'}}</td>
@@ -158,13 +158,13 @@
 						<nz-table #rowSelectionTable [nzData]="likedList" [nzTotal]="likeTotalCount"
 							[nzFrontPagination]="false" [nzShowSizeChanger]="true" [nzPageIndex]="likePageInd"
 							[nzPageSize]="likePageSize" (nzQueryParams)="likedList[0] ? getlikedList($event) : null"
-							[nzShowTotal]="likedFooter" [nzLoading]="api_loader['liked']" [nzScroll]="{ x: 'auto', y: '50vh' }">
+							[nzShowTotal]="likedFooter" [nzLoading]="api_loader['liked']" [nzScroll]="{y: '50vh' }">
 
 							<thead>
 								<tr>
-									<th nzWidth="3rem">#</th>
+									<!-- <th nzWidth="3rem">#</th> -->
 									<th nzWidth="70px">Sr No.</th>
-									<th nzWidth="14rem">Name</th>
+									<th>Name</th>
 									<!-- <th>Response Type</th>
 							<th>Action Type</th> -->
 									<th nzWidth="120px">Reaction Type</th>
@@ -172,8 +172,8 @@
 							</thead>
 							<tbody>
 								<tr *ngFor="let data of likedList; let i = index">
-									<td [nzExpand]="expandSet.has(data.id)"
-											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td>
+									<!-- <td [nzExpand]="expandSet.has(data.id)"
+											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td> -->
 									<td *ngIf="likePageInd == 1">{{i+1}}</td>
 									<td *ngIf="likePageInd > 1">{{( (likePageInd-1) * likePageSize) +
 										(i+1)}}
@@ -184,7 +184,7 @@
 									<td>{{ data.reaction_type }}</td>
 								</tr>
 								<tr *ngFor="let data of emptyLikedList; index as i">
-									<td>{{data || '-'}}</td>
+									<!-- <td>{{data || '-'}}</td> -->
 									<td>{{likedList?.length + i + 1}}</td>
 									<td>{{data || '-'}}</td>
 									<td>{{data || '-'}}</td>
@@ -214,21 +214,21 @@
 							[nzFrontPagination]="false" [nzShowSizeChanger]="true" [nzPageIndex]="commentPageInd"
 							[nzPageSize]="commentPageSize"
 							(nzQueryParams)="commentList[0] ? getCommentList($event) : null"
-							[nzShowTotal]="comentFooter" [nzLoading]="api_loader['comments']" [nzScroll]="{ x: 'auto', y: '50vh' }">
+							[nzShowTotal]="comentFooter" [nzLoading]="api_loader['comments']" [nzScroll]="{ y: '50vh' }">
 							<thead>
 								<tr>
-									<th nzWidth="3rem">#</th>
+									<!-- <th nzWidth="3rem">#</th> -->
 									<th nzWidth="70px">Sr No.</th>
-									<th nzWidth="14rem">Name</th>
+									<th>Name</th>
 									<!-- <th>Response Type</th>
 							<th>Action Type</th> -->
-									<th nzWidth="200px">Comment</th>
+									<th>Comment</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr *ngFor="let data of commentList; let i = index">
-									<td [nzExpand]="expandSet.has(data.id)"
-											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td>
+									<!-- <td [nzExpand]="expandSet.has(data.id)"
+											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td> -->
 									<td *ngIf="commentPageInd == 1">{{i+1}}</td>
 									<td *ngIf="commentPageInd > 1">{{( (commentPageInd-1) * commentPageSize) +
 										(i+1)}}
@@ -242,7 +242,7 @@
 									</td>
 								</tr>
 								<tr *ngFor="let data of emptyCommentList; index as i">
-									<td>{{data || '-'}}</td>
+									<!-- <td>{{data || '-'}}</td> -->
 									<td>{{commentList?.length + i + 1}}</td>
 									<td>{{data || '-'}}</td>
 									<td>{{data || '-'}}</td>

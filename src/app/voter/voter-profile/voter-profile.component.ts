@@ -18,6 +18,7 @@ export class VoterProfileComponent implements OnInit {
 
   followUpForm: FormGroup;
   voterProfileForm : FormGroup;
+  facebookForm: FormGroup
 
   api_loading = {
     'card': false,
@@ -78,6 +79,9 @@ export class VoterProfileComponent implements OnInit {
   _currEpicNo : any;
   ngOnInit(): void {
     this._currLanguage = localStorage.getItem("appLanguage") || 'en';
+    this.facebookForm = this.fb.group({
+      facebook_link: [null, [Validators.required, Validators.pattern(/^(https?:\/\/)?(www\.)?facebook\.com\/.+/i)]]
+    })
     this.acRoute.queryParams.subscribe((param: any) => {
       if (param['tabSection']) {
         this._currTabName = param['tabSection']
@@ -140,12 +144,6 @@ export class VoterProfileComponent implements OnInit {
       this.api_loading['cardFollowup'] = false;
 
     })
-
-  }
-
-  // facebook link
-  facebook: string
-  facebookeLink() {
 
   }
 
@@ -442,6 +440,44 @@ getRelationshipList(keyword?) {
   })
 }
 
+
+  isFacebook: boolean = false
+  putVoterFacebookLink() {
+    if(this.facebookForm?.valid) {
+      this.isFacebook = true
+      let formData = new FormData()
+      formData.append('facebook_link', this.facebookForm?.get('facebook_link')?.value)
+      this.http
+      .putVoterFacebookLink(this.voterDetails?.epic_no, formData)
+      .subscribe(
+        (res: any) => {
+          if(res?.success) {
+            this.message.success('Facebook link saved successfully')
+          }else {
+            this.message.error(res?.message)
+          }
+          this.isFacebook = false
+          this.isVisible = false
+          this.getVoterDetals()
+        }, (error: any) => {
+          this.message.error(error?.message)
+          this.isFacebook = false
+          this.isVisible = false
+        }
+      )
+    }else {
+      this.message.error('Please fill in all the required fields')
+      Object.keys(this.facebookForm.controls).forEach((controlName) => {
+        const control = this.facebookForm.get(controlName);
+        if (control.invalid) {
+          // console.log(controlName)
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      })
+    }
+  }
+
   isVisible: boolean = false
   modalTitle: string
   showModal(str?) {
@@ -451,7 +487,6 @@ getRelationshipList(keyword?) {
 
   handleCancel() {
     this.isVisible = false
-    this.facebook = ''
   }
 
 }

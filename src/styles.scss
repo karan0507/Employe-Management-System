@@ -137,7 +137,19 @@ body{
   right: 20px
 }
 
+// background
+.bg-primary {
+  background-color: #3C0480;
+}
+
 // border
 .border-primary {
   border: 1px solid #3C0480;
+}
+
+.post-image-height {
+  height: 18rem;
+  width: -webkit-fill-available; 
+  margin-inline: auto; 
+  object-fit: contain;
 }

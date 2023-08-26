@@ -102,7 +102,10 @@
 							<nz-card nzHoverable class="mb-3" [nzCover]="coverTemplate" [routerLink]="['/posts/post-detail/']"
 								[queryParams]="{post_id:item?.post_id}">
 								<ng-template #coverTemplate>
-									<img  alt="example" style="height: 18rem; width: -webkit-fill-available; margin-inline: auto; object-fit: contain;"   [src]="item.image" />
+									<div *ngIf="!item.image" class="d-flex post-image-height">
+										<span class="m-auto">No Image</span>
+									</div>
+									<img *ngIf="item.image" alt="example" [src]="item.image" class="post-image-height"/>
 								</ng-template>
 								<nz-card-meta [nzTitle]="titleCardMeta"
 									[nzDescription]="metaDescription"></nz-card-meta>

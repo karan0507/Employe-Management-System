@@ -8,7 +8,7 @@
 	<section>
 		<div class="row mb-3 h-100">
 			<div class="col-md-3 pb-3 h-100 min-200px">
-				<nz-spin [nzSpinning]="!postDetailData?.image" [nzIndicator]="indicatorTemplate" nzSimple>
+				<nz-spin [nzSpinning]="!postDetailData" [nzIndicator]="indicatorTemplate" nzSimple>
 					<ng-template #indicatorTemplate>
 						<div>
 							<span nz-icon nzType="loading" class="img-spinner font-50px m-auto"></span>
@@ -16,6 +16,9 @@
 					</ng-template>
 				</nz-spin>
 				<img *ngIf="postDetailData?.image" [src]="postDetailData?.image" nz-image class="w-100"/>
+				<div *ngIf="postDetailData && !postDetailData?.image" class="d-flex post-image-height">
+					<span class="m-auto">No Image</span>
+				</div>
 			</div>
 			<div class="col-md-9">
 				<h3>Post ID - {{postDetailData?.post_id}}</h3>
@@ -53,8 +56,22 @@
 			<div class="col-md-4 col-12">
 				<nz-card [nzTitle]="titleShared" class="card">
 					<ng-template #titleShared>
-						<div class="d-flex">
-							<h6><span nz-icon nzType="notification" class="mr-3" nzTheme="fill"></span> Shared List</h6>
+						<div class="row">
+							<h6 class="col-md-5">
+								<span nz-icon nzType="notification" class="mr-3" nzTheme="fill"></span> 
+								Shared List
+							</h6>
+							<span class="col-md-7">
+								<nz-select
+                                    [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Type' : 'प्रकार चुनें'"
+									class="w-100"
+                                >
+                                    <nz-option
+                                        [nzValue]="'Reaction'"
+                                        [nzLabel]="'Reaction'"
+                                    ></nz-option>
+                                </nz-select>
+							</span>
 						</div>
 					</ng-template>
 					<div class="totalCount">

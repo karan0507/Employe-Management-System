@@ -11,6 +11,7 @@ import { HttpService } from 'src/app/service/http.service';
 })
 export class BoothListComponent implements OnInit {
 
+  bootTabs = ['Development Works', 'Requests/Aadvedan']
   boothList = []
   total_count: number
   page: number = 1
@@ -38,7 +39,7 @@ export class BoothListComponent implements OnInit {
     this.getBoothList()
   }
 
-  getBoothList(event?: any) {
+  getBoothList(event?: any, tab?: any) {
     let data = {}
     if (event) {
       this.page = event?.pageIndex;
@@ -49,6 +50,7 @@ export class BoothListComponent implements OnInit {
       data['page'] = this.page
       data['limit'] = this.limit
     }
+    data['source_type'] = tab ? this.bootTabs[tab.index] : this.bootTabs[0]
     this.http
     .getBoothList(data)
     .subscribe(

@@ -164,7 +164,23 @@
 
 				<div class="totalCount">
 					<ng-template #likedTitle>
-						<h6><span nz-icon nzType="like" nzTheme="fill" class="mr-3"></span> Liked List</h6>
+						<div class="row">
+							<h6 class="col-md-5">
+								<span nz-icon nzType="like" nzTheme="fill" class="mr-3"></span> 
+								Liked List
+							</h6>
+							<span class="col-md-7">
+								<nz-select
+									[nzPlaceHolder]="_currLanguage == 'en' ? 'Select Type' : 'प्रकार चुनें'"
+									class="w-100"
+								>
+									<nz-option
+										[nzValue]="'Reaction'"
+										[nzLabel]="'Reaction'"
+									></nz-option>
+								</nz-select>
+							</span>
+						</div>
 					</ng-template>
 					<ng-template #likedFooter>
 						<div class="font-weight-semibold">
@@ -217,7 +233,23 @@
 
 				<div class="totalCount">
 					<ng-template #commentTitle>
-						<h6><span nz-icon nzType="message" nzTheme="fill" class="mr-3"></span> Comments List</h6>
+						<div class="row">
+							<h6 class="col-md-5">
+								<span nz-icon nzType="message" nzTheme="fill" class="mr-3"></span> 
+								Comments List
+							</h6>
+							<span class="col-md-7">
+								<nz-select
+									[nzPlaceHolder]="_currLanguage == 'en' ? 'Select Type' : 'प्रकार चुनें'"
+									class="w-100"
+								>
+									<nz-option
+										[nzValue]="'Reaction'"
+										[nzLabel]="'Reaction'"
+									></nz-option>
+								</nz-select>
+							</span>
+						</div>
 					</ng-template>
 					<ng-template #comentFooter>
 						<div class="font-weight-semibold">

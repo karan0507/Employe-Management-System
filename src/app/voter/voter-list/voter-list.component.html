@@ -500,6 +500,21 @@
                             </nz-form-item>
                         </div>
 
+                        <div class="col-md-12">
+                            <nz-form-item>
+                                <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Task Type
+                                </nz-form-label>
+                                <nz-form-control [nzSm]="16" [nzXs]="24" nzErrorTip="Please select your activity!">
+                                    <nz-select nzPlaceHolder="Select Task" formControlName="task_type"
+                                        nzShowSearch nzAllowClear (nzFocus)="getTaskList()" (click)="isDirty= true">
+                                        <nz-option *ngFor="let item of taskList" [nzValue]="item?.id"
+                                            [nzLabel]="_currLanguage == 'en' ? item?.name?.en : item?.name?.hi">
+                                        </nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+
                         <div class="col-md-12 mt-5" *ngIf="currFormType == 'followUp'">
                             <nz-form-item>
                                 <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Mark Followup

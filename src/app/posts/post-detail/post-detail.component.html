@@ -92,7 +92,7 @@
 						>
 							<thead>
 								<tr>
-									<!-- <th nzWidth="3rem">#</th> -->
+									<th nzWidth="3rem">#</th>
 									<th nzWidth="70px">Sr No.</th>
 									<th>Name</th>
 									<!-- <th>Response Type</th>
@@ -103,8 +103,8 @@
 							<tbody>
 								<ng-container *ngFor="let data of sharedList; let i = index">
 									<tr>
-										<!-- <td [nzExpand]="expandSet.has(data.id)"
-											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td> -->
+										<td [nzExpand]="expandSet.has(data.id)"
+											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td>
 										<td>{{i+1}}</td>
 										<td>{{ data.user_details.name }}</td>
 										<!-- <td{ data.r>{esponse_type }}</td>
@@ -152,7 +152,7 @@
 								</ng-container>
 								<ng-container *ngFor="let data of emptySharedList; let i = index">
 									<tr>
-										<!-- <td>{{data || '-'}}</td> -->
+										<td>{{data || '-'}}</td>
 										<td>{{sharedList?.length + i + 1}}</td>
 										<td>{{data || '-'}}</td>
 										<td>{{data || '-'}}</td>

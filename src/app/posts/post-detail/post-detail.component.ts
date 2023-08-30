@@ -208,6 +208,7 @@ export class PostDetailComponent implements OnInit {
   commentTotalCount = null;
   commentPageSize = 10;
   commentTableLoading = false;
+  commentType: string
   getCommentList(tableFilter?) {
 
     this.api_loader['comments'] = true
@@ -223,6 +224,8 @@ export class PostDetailComponent implements OnInit {
       params_data['page'] = this.commentPageInd
       params_data['limit'] = this.commentPageSize
     }
+
+    this.commentType ? params_data['type'] = this.commentType : null
 
     this.http.getDataFromBackgroundFunction(params_data).subscribe(
       (res: any) => {

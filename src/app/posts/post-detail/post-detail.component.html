@@ -252,6 +252,8 @@
 							</h6>
 							<span class="col-md-6">
 								<nz-select
+									[(ngModel)]="commentType"
+									(ngModelChange)="getCommentList()"
 									[nzPlaceHolder]="_currLanguage == 'en' ? 'Select Type' : 'प्रकार चुनें'"
 									class="w-100"
 								>

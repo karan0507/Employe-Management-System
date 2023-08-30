@@ -57,20 +57,25 @@
 				<nz-card [nzTitle]="titleShared" class="card">
 					<ng-template #titleShared>
 						<div class="row">
-							<h6 class="col-md-5">
-								<span nz-icon nzType="notification" class="mr-3" nzTheme="fill"></span> 
-								Shared List
+							<h6 class="col-md-6 d-flex">
+								<span class="mt-auto mb-auto">
+									<span nz-icon nzType="message" nzTheme="fill" class="mr-3"></span> 
+									Shared List
+								</span>
 							</h6>
-							<span class="col-md-7">
+							<span class="col-md-6">
 								<nz-select
-                                    [nzPlaceHolder]="_currLanguage == 'en' ? 'Select Type' : 'प्रकार चुनें'"
+									[(ngModel)]="sharedType"
+									(ngModelChange)="getSharedList()"
+									[nzPlaceHolder]="_currLanguage == 'en' ? 'Select Type' : 'प्रकार चुनें'"
 									class="w-100"
-                                >
-                                    <nz-option
-                                        [nzValue]="'Reaction'"
-                                        [nzLabel]="'Reaction'"
-                                    ></nz-option>
-                                </nz-select>
+									nzAllowClear
+								>
+									<nz-option
+										[nzValue]="'Reaction'"
+										[nzLabel]="'Reaction'"
+									></nz-option>
+								</nz-select>
 							</span>
 						</div>
 					</ng-template>
@@ -165,14 +170,19 @@
 				<div class="totalCount">
 					<ng-template #likedTitle>
 						<div class="row">
-							<h6 class="col-md-5">
-								<span nz-icon nzType="like" nzTheme="fill" class="mr-3"></span> 
-								Liked List
+							<h6 class="col-md-6 d-flex">
+								<span class="mt-auto mb-auto">
+									<span nz-icon nzType="message" nzTheme="fill" class="mr-3"></span> 
+									Liked List
+								</span>
 							</h6>
-							<span class="col-md-7">
+							<span class="col-md-6">
 								<nz-select
+									[(ngModel)]="likedType"
+									(ngModelChange)="getlikedList()"
 									[nzPlaceHolder]="_currLanguage == 'en' ? 'Select Type' : 'प्रकार चुनें'"
 									class="w-100"
+									nzAllowClear
 								>
 									<nz-option
 										[nzValue]="'Reaction'"
@@ -234,11 +244,13 @@
 				<div class="totalCount">
 					<ng-template #commentTitle>
 						<div class="row">
-							<h6 class="col-md-5">
-								<span nz-icon nzType="message" nzTheme="fill" class="mr-3"></span> 
-								Comments List
+							<h6 class="col-md-6 d-flex">
+								<span class="mt-auto mb-auto">
+									<span nz-icon nzType="message" nzTheme="fill" class="mr-3"></span> 
+									Comments List
+								</span>
 							</h6>
-							<span class="col-md-7">
+							<span class="col-md-6">
 								<nz-select
 									[nzPlaceHolder]="_currLanguage == 'en' ? 'Select Type' : 'प्रकार चुनें'"
 									class="w-100"

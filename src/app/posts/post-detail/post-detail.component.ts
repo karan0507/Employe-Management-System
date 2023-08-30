@@ -119,6 +119,7 @@ export class PostDetailComponent implements OnInit {
   shareTotalCount = null;
   sharePageSize = 10;
   shareTableLoading = false;
+  sharedType: string
 
   getSharedList(tableFilter?) {
     this.api_loader['shared'] = true
@@ -134,6 +135,8 @@ export class PostDetailComponent implements OnInit {
       params_data['page'] = this.sharePageInd
       params_data['limit'] = this.sharePageSize
     }
+
+    this.sharedType ? params_data['type'] = this.sharedType : null
 
     this.http.getDataFromBackgroundFunction(params_data).subscribe(
       (res: any) => {
@@ -162,6 +165,7 @@ export class PostDetailComponent implements OnInit {
   likeTotalCount = null;
   likePageSize = 10;
   likeTableLoading = false;
+  likedType: string
   getlikedList(tableFilter?) {
     this.api_loader['liked'] = true
     let params_data = {}
@@ -175,6 +179,8 @@ export class PostDetailComponent implements OnInit {
       params_data['page'] = this.likePageInd
       params_data['limit'] = this.likePageSize
     }
+
+    this.likedType ? params_data['type'] = this.likedType : null
 
     this.http.getDataFromBackgroundFunction(params_data).subscribe(
       (res: any) => {

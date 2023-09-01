@@ -20,7 +20,7 @@ export class Error1Component implements OnInit {
     this.global.global_error_link.subscribe((res:any)=>{
       if(res){
         this._currUrl = res;
-        console.log("==>>>",res)
+        // console.log("==>>>",res)
       }
     })
   }

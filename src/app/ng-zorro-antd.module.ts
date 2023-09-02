@@ -125,7 +125,7 @@ import { NzPipesModule } from 'ng-zorro-antd/pipes';
     // NzStepsModule,
     NzSwitchModule,
     NzTableModule,
-    // NzTabsModule,
+    NzTabsModule,
     NzTagModule,
     NzTimePickerModule,
     // NzTimelineModule,

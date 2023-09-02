@@ -18,6 +18,7 @@ export class VoterProfileComponent implements OnInit {
 
   followUpForm: FormGroup;
   voterProfileForm : FormGroup;
+  facebookForm: FormGroup
 
   api_loading = {
     'card': false,
@@ -78,6 +79,9 @@ export class VoterProfileComponent implements OnInit {
   _currEpicNo : any;
   ngOnInit(): void {
     this._currLanguage = localStorage.getItem("appLanguage") || 'en';
+    this.facebookForm = this.fb.group({
+      facebook_link: [null, [Validators.required, Validators.pattern(/^(https?:\/\/)?(www\.)?facebook\.com\/.+/i)]]
+    })
     this.acRoute.queryParams.subscribe((param: any) => {
       if (param['tabSection']) {
         this._currTabName = param['tabSection']
@@ -142,7 +146,6 @@ export class VoterProfileComponent implements OnInit {
     })
 
   }
-
 
   getVoterDetals() {
     let data = { id: this._currVoterId, 'end_point': 'FETCH_VOTER_LIST_API_URL' }
@@ -436,4 +439,54 @@ getRelationshipList(keyword?) {
     }
   })
 }
+
+
+  isFacebook: boolean = false
+  putVoterFacebookLink() {
+    if(this.facebookForm?.valid) {
+      this.isFacebook = true
+      let formData = new FormData()
+      formData.append('facebook_link', this.facebookForm?.get('facebook_link')?.value)
+      this.http
+      .putVoterFacebookLink(this.voterDetails?.epic_no, formData)
+      .subscribe(
+        (res: any) => {
+          if(res?.success) {
+            this.message.success('Facebook link saved successfully')
+          }else {
+            this.message.error(res?.message)
+          }
+          this.isFacebook = false
+          this.isVisible = false
+          this.getVoterDetals()
+        }, (error: any) => {
+          this.message.error(error?.message)
+          this.isFacebook = false
+          this.isVisible = false
+        }
+      )
+    }else {
+      this.message.error('Please fill in all the required fields')
+      Object.keys(this.facebookForm.controls).forEach((controlName) => {
+        const control = this.facebookForm.get(controlName);
+        if (control.invalid) {
+          // console.log(controlName)
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      })
+    }
+  }
+
+  isVisible: boolean = false
+  modalTitle: string
+  showModal(str?) {
+    this.modalTitle = str
+    this.isVisible = true
+  }
+
+  handleCancel() {
+    this.isVisible = false
+  }
+
 }

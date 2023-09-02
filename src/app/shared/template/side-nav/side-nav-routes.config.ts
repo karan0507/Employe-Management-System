@@ -56,6 +56,15 @@ export const ROUTES: SideNavInterface[] = [
     submenu: [],
   },
   {
+    path: "/booth",
+    title: "Booth",
+    iconType: "nzIcon",
+    iconTheme: "outline",
+    icon: "phone",
+    permission: '',
+    submenu: [],
+  },
+  {
     path: "/profile",
     title: "More",
     iconType: "nzIcon",

@@ -132,6 +132,7 @@
                                     <th nzWidth="4rem">Sr. No</th>
                                     <th class="text-left" [nzWidth]="'12rem'">Full Name</th>
                                     <th [nzWidth]="'10rem'">Mobile</th>
+                                    <th>Facebook Links</th>
                                     <th>Caste</th>
                                     <th [nzWidth]="'10rem'">Epic No</th>
                                     <th>Age/ Gender</th>
@@ -163,6 +164,7 @@
                                             </a>
                                         </td>
                                         <td [nzWidth]="'10rem'">{{data?.mobile ? data?.mobile : '-'}}</td>
+                                        <td>{{data?.facebook_link || '-'}}</td>
                                         <td>{{data?.caste ? data?.caste : '-'}}</td>
                                         <td [nzWidth]="'10rem'">{{data?.epic_no}}</td>
                                         <td>{{data?.age + (data?.gender ? " / " + data?.gender : "")}} </td>
@@ -483,8 +485,6 @@
 
                         </div>
 
-
-
                         <div class="col-md-12" *ngIf="currFormType == 'activity'">
                             <nz-form-item>
                                 <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Mark Activity
@@ -493,6 +493,21 @@
                                     <nz-select nzPlaceHolder="Select Actvity" formControlName="activity_type"
                                         nzShowSearch nzAllowClear (nzFocus)="getActivityList()" (click)="isDirty= true">
                                         <nz-option *ngFor="let item of activityList" [nzValue]="item?.id"
+                                            [nzLabel]="_currLanguage == 'en' ? item?.name?.en : item?.name?.hi">
+                                        </nz-option>
+                                    </nz-select>
+                                </nz-form-control>
+                            </nz-form-item>
+                        </div>
+
+                        <div class="col-md-12">
+                            <nz-form-item>
+                                <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Task Type
+                                </nz-form-label>
+                                <nz-form-control [nzSm]="16" [nzXs]="24" nzErrorTip="Please select your activity!">
+                                    <nz-select nzPlaceHolder="Select Task" formControlName="task_type"
+                                        nzShowSearch nzAllowClear (nzFocus)="getTaskList()" (click)="isDirty= true">
+                                        <nz-option *ngFor="let item of taskList" [nzValue]="item?.id"
                                             [nzLabel]="_currLanguage == 'en' ? item?.name?.en : item?.name?.hi">
                                         </nz-option>
                                     </nz-select>

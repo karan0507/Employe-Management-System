@@ -57,8 +57,12 @@ export class CommonLayoutComponent  {
             this.VerifyUserFunction()
         } 
         else {
-            this.message.error('Authentication Data not Found, kindly login again')
-            this.router.navigate(['/authentication/login']);
+            if(localStorage.getItem('domain_user')){
+                this.message.error('Authentication Data not Found, kindly login again')
+                this.router.navigate(['/authentication/login']);
+            }else {
+                this.router.navigate(['/error-1'])
+            }
         }
         // alert('Common Layout working');
         this.breadcrumbs$ = this.router.events.pipe(

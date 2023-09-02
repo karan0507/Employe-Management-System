@@ -23,19 +23,24 @@
                         </div>
                     </div>
                     <div class="col-lg-8 col-12 mb-2 d-flex flex-wrap justify-content-end">
-                        <button [routerLink]="['add-account']" nz-button nzType="primary" nzSize="small">
+                        <button [routerLink]="['add-account']" nz-button nzType="primary" nzSize="small" class="mr-3">
                             Add +
                         </button>
-                        <!-- <button nz-button nzType="primary" nzSize="small">Filters</button> -->
+                        <button nz-button [nzType]="'link'" (click)="isFilters = true" nzSize="small"
+                            class="border"
+                        >
+                            Filters
+                        </button>
                     </div>
                 </div>
                 <div class="totalCount">
                     <nz-table #rowSelectionTable [nzData]="accountList" [nzTotal]="total_count" [nzFrontPagination]="false"
-                    [nzShowSizeChanger]="true" [nzPageIndex]="pageIndex" [nzPageSize]="globalPageSize"
-                    (nzQueryParams)="accountList[0] ? getaccountList($event) : null" [nzShowTotal]="botTotalCount"
-                    [nzLoading]="api_loader['list']" [nzScroll]="{ x: '900px', y: '50vh' }">
+                        [nzShowSizeChanger]="true" [nzPageIndex]="pageIndex" [nzPageSize]="globalPageSize"
+                        (nzQueryParams)="accountList[0] ? getaccountList($event) : null" [nzShowTotal]="botTotalCount"
+                        [nzLoading]="api_loader['list']" [nzScroll]="{ x: '900px', y: '50vh' }">
                     <thead>
                         <tr>
+                            <!-- <th nzWidth="50px">#</th> -->
                             <th nzWidth="50px">Sr. No</th>
                             <th nzWidth="200px">Link</th>
                             <th nzWidth="80px">Name</th>
@@ -45,51 +50,60 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let data of accountList; let i = index">
-                            <td> {{i+1}}</td>
-                            <td nzWidth="200px"> 
-                                <a [href]="data.link" target="_blank" class="p-0">{{ data?.link || '-'}}</a> 
-                            </td>
-                            <td nzWidth="80px">
-                                <span>
-                                    {{ data?.name || '-'}}
-                                </span>
-                            </td>
-                            <td nzWidth="80px">
-                                <span>
-                                    {{ data?.link_type || '-'}}
-                                </span>
-                            </td>
-                            <td nzWidth="80px">{{ data?.social_handle || '-'}}</td>
-                            <td>
-                                <a class="text-dark font-size-20" nz-dropdown 
-                                    [nzClickHide]="true"
-                                    [nzTrigger]="'click'"
-                                    [nzPlacement]="'bottomRight'"
-                                    [nzDropdownMenu]="latestUploadDropDown">
-                                    <i nz-icon nzType="ellipsis" nzTheme="outline"></i>
-                                </a>
-                                <nz-dropdown-menu #latestUploadDropDown="nzDropdownMenu">
-                                    <ul nz-menu>
-                                        <li nz-menu-item>
-                                            <span class="m-l-5">View Audit</span>
-                                        </li>
-                                        <li nz-menu-item>
-                                            <span class="m-l-5">Edit</span>
-                                        </li>
-                                        <li nz-menu-item>
-                                            <span class="m-l-5">Delete</span>
-                                        </li>
-                                    </ul>
-                                </nz-dropdown-menu>
-                            </td>
-                            <!-- <td nzWidth="10rem">
-                                <button nz-button nzType="link" class="border" nzSize="small"
-                                    routerLink="/media-account/edit-account" [queryParams]="{id:data?.id}">Edit</button>
-                            </td> -->
-                        </tr>
+                        <ng-container *ngFor="let data of accountList; let i = index">
+                            <tr>
+                                <!-- <td 
+                                    [nzExpand]="expandSet.has(data.id)" 
+                                    (nzExpandChange)="onExpandChange(data.id, $event)"
+                                ></td> -->
+                                <td> {{i+1}}</td>
+                                <td nzWidth="200px"> 
+                                    <a [href]="data.link" target="_blank" class="p-0">{{ data?.link || '-'}}</a> 
+                                </td>
+                                <td nzWidth="80px">
+                                    <span>
+                                        {{ data?.name || '-'}}
+                                    </span>
+                                </td>
+                                <td nzWidth="80px">
+                                    <span>
+                                        {{ data?.link_type || '-'}}
+                                    </span>
+                                </td>
+                                <td nzWidth="80px">{{ data?.social_handle || '-'}}</td>
+                                <td>
+                                    <a class="text-dark font-size-20" nz-dropdown 
+                                        [nzClickHide]="true"
+                                        [nzTrigger]="'click'"
+                                        [nzPlacement]="'bottomRight'"
+                                        [nzDropdownMenu]="latestUploadDropDown">
+                                        <i nz-icon nzType="ellipsis" nzTheme="outline"></i>
+                                    </a>
+                                    <nz-dropdown-menu #latestUploadDropDown="nzDropdownMenu">
+                                        <ul nz-menu>
+                                            <!-- <li nz-menu-item>
+                                                <span class="m-l-5">View Audit</span>
+                                            </li> -->
+                                            <li [routerLink]="['edit-account']" [queryParams]="{id: data?.id}" nz-menu-item>
+                                                <span class="m-l-5">Edit</span>
+                                            </li>
+                                            <!-- <li nz-menu-item>
+                                                <span class="m-l-5">Delete</span>
+                                            </li> -->
+                                        </ul>
+                                    </nz-dropdown-menu>
+                                </td>
+                                <!-- <td nzWidth="10rem">
+                                    <button nz-button nzType="link" class="border" nzSize="small"
+                                        routerLink="/media-account/edit-account" [queryParams]="{id:data?.id}">Edit</button>
+                                </td> -->
+                            </tr>
+                            <!-- <tr [nzExpand]="expandSet.has(data.id)">
+                                <span>{{ 'Audit Trail' }}</span>
+                            </tr> -->
+                        </ng-container>
                     </tbody>
-                </nz-table>
+                    </nz-table>
                     <ng-template #botTotalCount>
                         <div class="font-weight-semibold">
                             <b>{{total_count}} Results Found </b>
@@ -105,21 +119,27 @@
 </div>
 
 <section>
-
-    <nz-drawer [nzWidth]="280" nzTitle="Quick View" [nzClosable]="false" [nzVisible]="isFilters" nzPlacement="right" (nzOnClose)="isFilters = false">
-        <nz-select nzShowSearch class="selectFilter mb-2 mr-2" nzPlaceHolder="Select Social Media" [(ngModel)]="currSocialMedia" (ngModelChange)="getaccountList()" nzAllowClear>
+    <nz-drawer [nzWidth]="'350px'" [nzTitle]="'Quick View'" [nzClosable]="false" [nzVisible]="isFilters"
+        nzPlacement="right" (nzOnClose)="isFilters = false"
+    >
+        <div class="drawer-close-icon">
+            <span nz-icon nzType="close-circle" nzTheme="twotone" (click)="isFilters=false" class="cursor-pointer"></span>
+        </div>
+        <label>Social Media</label>
+        <nz-select nzShowSearch class="selectFilter mt-2 mb-3 mr-2 w-100" nzPlaceHolder="Select Social Media" [(ngModel)]="currSocialMedia" (ngModelChange)="getaccountList()" nzAllowClear>
             <nz-option [nzValue]="'FACEBOOK'" [nzLabel]="'Facebook'">
             </nz-option>
             <nz-option [nzValue]="'TWITTER'" [nzLabel]="'Twitter'"></nz-option>
             <nz-option [nzValue]="'LINKED-IN'" [nzLabel]="' LinkedIn'">
             </nz-option>
         </nz-select>
-        <nz-select nzShowSearch class="selectFilter mb-2 mr-2" nzPlaceHolder="Select Link Type" [(ngModel)]="currLinkTpye" (ngModelChange)="getaccountList()" nzAllowClear>
+        <label>Link Type</label>
+        <nz-select nzShowSearch class="selectFilter mt-2 mb-3 mr-2 w-100" nzPlaceHolder="Select Link Type" [(ngModel)]="currLinkTpye" (ngModelChange)="getaccountList()" nzAllowClear>
             <nz-option [nzValue]="'FOR'" [nzLabel]="'For'">
             </nz-option>
             <nz-option [nzValue]="'AGAINST'" [nzLabel]="'Against'">
             </nz-option>
         </nz-select>
+
     </nz-drawer>
-   
 </section>

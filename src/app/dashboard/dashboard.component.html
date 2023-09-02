@@ -3,7 +3,7 @@
 		<div class="d-flex justify-content-end mt-3">
 			<nz-select class="selectFilter" nzPlaceHolder="Select Social Media" [(ngModel)]="_currUser"
 				(nzFocus)="getSocialMedia()" (ngModelChange)="multipleAPICall()" nzShowSearch nzAllowClear>
-				<nz-option *ngFor="let item of userList" [nzValue]="item?.link" [nzLabel]="item?.name">
+				<nz-option *ngFor="let item of userList" [nzValue]="item?.link" [nzLabel]="item?.link">
 				</nz-option>
 			</nz-select>
 		</div>
@@ -57,15 +57,15 @@
 									<ul nz-list-item-actions>
 										<nz-list-item-action>
 											<span nz-icon nzType="like" style="margin-right: 8px;"></span>
-											{{item.total_likes}}
+											{{item?.total_likes || '-'}}
 										</nz-list-item-action>
 										<nz-list-item-action>
 											<span nz-icon nzType="comment" style="margin-right: 8px;"></span>
-											{{item.total_comments}}
+											{{item?.total_comments || '-'}}
 										</nz-list-item-action>
 										<nz-list-item-action>
 											<span nz-icon nzType="share-alt" style="margin-right: 8px;"></span>
-											{{item.total_shares}}
+											{{item?.total_shares || '-'}}
 										</nz-list-item-action>
 										<!-- <nz-list-item-action>
 											<span nz-icon nzType="share-alt" style="margin-right: 8px;"></span>
@@ -102,7 +102,10 @@
 							<nz-card nzHoverable class="mb-3" [nzCover]="coverTemplate" [routerLink]="['/posts/post-detail/']"
 								[queryParams]="{post_id:item?.post_id}">
 								<ng-template #coverTemplate>
-									<img  alt="example" style="height: 18rem; width: -webkit-fill-available; margin-inline: auto; object-fit: contain;"   [src]="item.image" />
+									<div *ngIf="!item.image" class="d-flex post-image-height">
+										<span class="m-auto">No Image</span>
+									</div>
+									<img *ngIf="item.image" alt="example" [src]="item.image" class="post-image-height"/>
 								</ng-template>
 								<nz-card-meta [nzTitle]="titleCardMeta"
 									[nzDescription]="metaDescription"></nz-card-meta>

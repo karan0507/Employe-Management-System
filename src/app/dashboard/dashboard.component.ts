@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
     _currSearchValue : any;
     followerPage = 1;
     followerPageSize = 30;
+    _currUser = "https://www.facebook.com/dyadav.bhilai.official";
 
     data: ItemData[] = [];
 
@@ -41,6 +42,7 @@ export class DashboardComponent implements OnInit {
     constructor(private http: HttpService, public message: NzMessageService) { }
 
     ngOnInit(): void {
+        this._currUser = 'https://www.facebook.com/dyadav.bhilai.official'
         this.loadData(1);
         // this.getPostList();
         // this.getFollowerList()
@@ -59,7 +61,7 @@ export class DashboardComponent implements OnInit {
 
     // MultipleAPI Call
     multipleAPICall() {
-        console.log(this._currUser);
+        // console.log(this._currUser);
         
         if(!this._currUser){
             this._currUser = "https://www.facebook.com/dyadav.bhilai.official";
@@ -109,7 +111,6 @@ export class DashboardComponent implements OnInit {
         );
     }
 
-    _currUser = "https://www.facebook.com/dyadav.bhilai.official";
     getSocialMedia(searchVal?){
         let data = {"page":1,"limit":30,"search_param":searchVal ? searchVal : ''};
         this.http.getAccountListt(data).subscribe((res:any)=>{

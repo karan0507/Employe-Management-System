@@ -135,8 +135,11 @@ export class Login1Component {
           // console.log('user')
         }else{
           localStorage.setItem('domain_user', 'false')
-          this.router.navigate(['/error-1'])
+          // this.router.navigate(['/error-1'])
         }
+      }, (error: any) => {
+        localStorage.setItem('domain_user', 'false')
+        this.router.navigate(['/authentication/error-1'])
       }
     )
   }
@@ -190,7 +193,7 @@ export class Login1Component {
         }
       },
       (err) => {
-        this.router.navigate(["/authentication/login"]);
+        localStorage.getItem('domain_user') !== 'false' ? this.router.navigate(["/authentication/login"]) : null;
         localStorage.removeItem("iyc_user_data");
         localStorage.removeItem("iyc_user_token");
         localStorage.removeItem('appLanguage')

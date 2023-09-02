@@ -54,10 +54,9 @@ export class Login1Component {
   subDomainName : any;
   ngOnInit(): void {
     let url = window.location.href;
-    // let url = "shksufiyan.CY.com"
+    // let url = "https://shksufiyan.CY.com"
     this.subDomainName = url.split('.');
-    // console.log(this.subDomainName[1]);
-    this.getSubDomain(this.subDomainName[0]);
+    this.getSubDomain(this.subDomainName[0].replace(/^https:\/\//, ''));
     // console.log(this.active_route.snapshot.firstChild.url[0].path);
     if (localStorage.getItem('appLanguage')) {
       this._currentLanguage = localStorage.getItem('appLanguage');

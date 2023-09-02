@@ -61,7 +61,7 @@ export class CommonLayoutComponent  {
                 this.message.error('Authentication Data not Found, kindly login again')
                 this.router.navigate(['/authentication/login']);
             }else {
-                this.router.navigate(['/error-1'])
+                this.router.navigate(['/authentication/error-1'])
             }
         }
         // alert('Common Layout working');

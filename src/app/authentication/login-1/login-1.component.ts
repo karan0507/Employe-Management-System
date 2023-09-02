@@ -53,11 +53,11 @@ export class Login1Component {
 
   subDomainName : any;
   ngOnInit(): void {
-    // let url = window.location.href;
-    let url = "admin.shksufiyan.com"
+    let url = window.location.href;
+    // let url = "shksufiyan.CY.com"
     this.subDomainName = url.split('.');
     // console.log(this.subDomainName[1]);
-    this.getSubDomain(this.subDomainName[1]);
+    this.getSubDomain(this.subDomainName[0]);
     // console.log(this.active_route.snapshot.firstChild.url[0].path);
     if (localStorage.getItem('appLanguage')) {
       this._currentLanguage = localStorage.getItem('appLanguage');
@@ -132,9 +132,11 @@ export class Login1Component {
       (res:any)=>{
         if(res.success){
           this.domain_user = res?.data
+          localStorage.setItem('domain_user', JSON.stringify(this.domain_user))
           // console.log('user')
         }else{
-          this.router.navigateByUrl('error')
+          localStorage.setItem('domain_user', 'false')
+          this.router.navigate(['/error-1'])
         }
       }
     )

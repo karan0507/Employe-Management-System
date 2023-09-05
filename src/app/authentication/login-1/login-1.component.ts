@@ -189,6 +189,8 @@ export class Login1Component {
           console.log('In checkusr log');
 
           localStorage.setItem("iyc_user_data", JSON.stringify(res.data));
+          this.globalFunction.userData = JSON.parse(localStorage.getItem('iyc_user_data'))
+          localStorage.setItem('appLanguage', this.globalFunction?.userData?.data?.language?.key)
           this.checkUserLoggedInOrNot(res);
         }
       },

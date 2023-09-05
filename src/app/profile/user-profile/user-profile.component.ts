@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { GlobalService } from 'src/app/service/global.service';
 import { HttpService } from 'src/app/service/http.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class UserProfileComponent implements OnInit {
 
   isChangeLanguage : boolean = false;
   constructor(private modal:NzModalService, private http:HttpService, private message: NzMessageService,
-    private router:Router) { }
+    private router:Router, private global: GlobalService) { }
 
   _globalAccData:any;
   ngOnInit(): void {
@@ -67,6 +68,7 @@ handleOk(){
   this.http.changeLanguage(data).subscribe((res:any)=>{
     if(res.success){
       this.message.success(res.message);
+      localStorage.setItem('appLanguage', this.global?.userData?.data?.language?.key === 'en' ? 'hi' : 'en')
       this.isChangeLanguage = false;
       this.router.navigateByUrl("/authentication/login")
     }else{

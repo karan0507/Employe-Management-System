@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { GlobalService } from '../service/global.service';
 import { HttpService } from '../service/http.service';
 
 
@@ -24,7 +25,7 @@ export class DashboardComponent implements OnInit {
     _currSearchValue : any;
     followerPage = 1;
     followerPageSize = 30;
-    _currUser = "https://www.facebook.com/dyadav.bhilai.official";
+    _currUser: any;
 
     data: ItemData[] = [];
 
@@ -39,7 +40,11 @@ export class DashboardComponent implements OnInit {
         { 'name': 'Total negative posts', 'icon': 'field-time', 'count': "0", 'class': 'ant-avatar-purple' },
     ]
     userList : any = [];
-    constructor(private http: HttpService, public message: NzMessageService) { }
+    constructor(
+        private http: HttpService, 
+        private globalService: GlobalService,
+        public message: NzMessageService,
+    ) { }
 
     ngOnInit(): void {
         this._currUser = 'https://www.facebook.com/dyadav.bhilai.official'
@@ -116,6 +121,7 @@ export class DashboardComponent implements OnInit {
         this.http.getAccountListt(data).subscribe((res:any)=>{
             if(res.success){
                 this.userList = res.data
+                this._currUser = this.globalService?.userData?.id
             }
         })
     }

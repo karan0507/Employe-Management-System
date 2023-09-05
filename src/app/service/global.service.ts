@@ -19,6 +19,8 @@ export class GlobalService {
   debounce: any
   api_call_loader: any = { 'selectLoader': false }
 
+  userData: any = localStorage.getItem('iyc_user_data')
+
   // Current App Nav;
   public globalNavValue = new BehaviorSubject<any>('');
   public global_error_link = new BehaviorSubject<any>('');

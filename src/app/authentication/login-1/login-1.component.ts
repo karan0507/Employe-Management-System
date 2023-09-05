@@ -53,8 +53,8 @@ export class Login1Component {
 
   subDomainName : any;
   ngOnInit(): void {
-    let url = window.location.href;
-    // let url = "https://shksufiyan.CY.com"
+    // let url = window.location.href;
+    let url = "https://shksufiyan.CY.com"
     this.subDomainName = url.split('.');
     this.getSubDomain(this.subDomainName[0].replace(/^https:\/\//, ''));
     // console.log(this.active_route.snapshot.firstChild.url[0].path);

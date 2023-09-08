@@ -28,6 +28,7 @@ export class AddEditAccounLinksComponent implements OnInit {
 
   ngOnInit(): void {
     this._currLanguage = localStorage.getItem("appLanguage") || 'en';
+    this.createAccountForm()
     this.acRoute.queryParams.subscribe((params: any) => {
       if (params['id']) {
         this._currAccountId = params.id;
@@ -36,7 +37,6 @@ export class AddEditAccounLinksComponent implements OnInit {
           this.getaccountDetails();
         }
       }
-      this.createAccountForm();
 
     })
   }
@@ -49,7 +49,7 @@ export class AddEditAccounLinksComponent implements OnInit {
         this.accountDetails = res.data[0];
         console.log('Task Details');
 
-        this.createAccountForm(res.data[0])
+        this.patchValue()
         this.api_loading['card'] = false;
       } else {
         this.api_loading['card'] = false;
@@ -58,19 +58,27 @@ export class AddEditAccounLinksComponent implements OnInit {
   }
 
 
-  createAccountForm(data?) {
+  createAccountForm() {
     this.accountForm = this.fb.group({
-       link: [data ? data?.link : '', [Validators.required]],
-      link_type: [data ? data?.link_type : '', [Validators.required]],
-      social_handle: [data ? data?.social_handle :'', [Validators.required]],
+      name: [null, [Validators.required]],
+      link: [null, [Validators.required]],
+      link_type: [null, [Validators.required]],
+      social_handle: [null, [Validators.required]],
     })
+    
+  }
 
+  patchValue() {
+    Object?.keys(this.accountForm.controls)?.forEach(controlName => {
+      this.accountForm?.get(controlName)?.patchValue(this.accountDetails[controlName] || '')
+    })
   }
 
   submitForm() {
     if (this.accountForm.invalid) { return }
     this.api_loading['button'] = true;
     var form_data = new FormData();
+    form_data.append('name', this.accountForm?.get('name')?.value)
     form_data.append('link', this.accountForm.get('link').value);
     form_data.append('link_type', this.accountForm.get('link_type').value);
     form_data.append('social_handle', this.accountForm.get('social_handle').value);

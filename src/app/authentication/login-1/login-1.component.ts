@@ -53,11 +53,10 @@ export class Login1Component {
 
   subDomainName : any;
   ngOnInit(): void {
-    // let url = window.location.href;
-    let url = "admin.chatiyc.com"
+    let url = window.location.href;
+    // let url = "https://shksufiyan.CY.com"
     this.subDomainName = url.split('.');
-    console.log(this.subDomainName[0]);
-    this.getSubDomain(this.subDomainName[0]);
+    this.getSubDomain(this.subDomainName[0].replace(/^https:\/\//, ''));
     // console.log(this.active_route.snapshot.firstChild.url[0].path);
     if (localStorage.getItem('appLanguage')) {
       this._currentLanguage = localStorage.getItem('appLanguage');
@@ -124,15 +123,25 @@ export class Login1Component {
     }
   }
 
+  domain_user: any
   getSubDomain(sub){
     // let data = {'account_code' : sub}; 
-    let data = {'account_code' : 'shksufiyan'}; 
-    this.HttpService.getSubDomainData(data).subscribe((res:any)=>{
-      if(res.success){
-        
-    }else{
-      this.router.navigateByUrl('error')
-    }})
+    let data = {'account_code' : sub}; 
+    this.HttpService.getSubDomainData(data).subscribe(
+      (res:any)=>{
+        if(res.success){
+          this.domain_user = res?.data
+          localStorage.setItem('domain_user', JSON.stringify(this.domain_user))
+          // console.log('user')
+        }else{
+          localStorage.setItem('domain_user', 'false')
+          // this.router.navigate(['/error-1'])
+        }
+      }, (error: any) => {
+        localStorage.setItem('domain_user', 'false')
+        this.router.navigate(['/authentication/error-1'])
+      }
+    )
   }
 
   submitForm(form): void {
@@ -184,7 +193,7 @@ export class Login1Component {
         }
       },
       (err) => {
-        this.router.navigate(["/authentication/login"]);
+        localStorage.getItem('domain_user') !== 'false' ? this.router.navigate(["/authentication/login"]) : null;
         localStorage.removeItem("iyc_user_data");
         localStorage.removeItem("iyc_user_token");
         localStorage.removeItem('appLanguage')

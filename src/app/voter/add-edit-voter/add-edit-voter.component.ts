@@ -174,7 +174,7 @@ export class AddEditVoterComponent implements OnInit {
     url.subscribe((res: any) => {
       if (res.success) {
         this.message.success(res.message);
-        this.router.navigateByUrl('/voter');
+        !this.isEdit ? this.router.navigate(['/voter']) : this.router.navigate(['/voter/view-profile'], {queryParams: {id: this.curr_voterId}})
         this.api_loading['button'] = false;
       } else {
         this.api_loading['button'] = false;
@@ -207,8 +207,8 @@ export class AddEditVoterComponent implements OnInit {
   }
 
   cancelForm() {
-    console.log(this.router.url.split('voter')[1].includes('/add-'));
-
+    // console.log(this.router.url.split('voter')[1].includes('/add-'));
+    !this.isEdit ? this.router.navigate(['/voter']) : this.router.navigate(['/voter/view-profile'], {queryParams: {id: this.curr_voterId}})
     // this.router.navigate([this.router.url.split('?')[0]], { queryParams: { tabSection: this.curr_voterId } });
   }
 

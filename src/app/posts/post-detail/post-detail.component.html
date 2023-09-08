@@ -8,7 +8,7 @@
 	<section>
 		<div class="row mb-3 h-100">
 			<div class="col-md-3 pb-3 h-100 min-200px">
-				<nz-spin [nzSpinning]="!postDetailData?.image" [nzIndicator]="indicatorTemplate" nzSimple>
+				<nz-spin [nzSpinning]="!postDetailData" [nzIndicator]="indicatorTemplate" nzSimple>
 					<ng-template #indicatorTemplate>
 						<div>
 							<span nz-icon nzType="loading" class="img-spinner font-50px m-auto"></span>
@@ -16,6 +16,9 @@
 					</ng-template>
 				</nz-spin>
 				<img *ngIf="postDetailData?.image" [src]="postDetailData?.image" nz-image class="w-100"/>
+				<div *ngIf="postDetailData && !postDetailData?.image" class="d-flex post-image-height">
+					<span class="m-auto">No Image</span>
+				</div>
 			</div>
 			<div class="col-md-9">
 				<h3>Post ID - {{postDetailData?.post_id}}</h3>
@@ -53,8 +56,27 @@
 			<div class="col-md-4 col-12">
 				<nz-card [nzTitle]="titleShared" class="card">
 					<ng-template #titleShared>
-						<div class="d-flex">
-							<h6><span nz-icon nzType="notification" class="mr-3" nzTheme="fill"></span> Shared List</h6>
+						<div class="row">
+							<h6 class="col-md-6 d-flex">
+								<span class="mt-auto mb-auto">
+									<span nz-icon nzType="message" nzTheme="fill" class="mr-3"></span> 
+									Shared List
+								</span>
+							</h6>
+							<span class="col-md-6">
+								<nz-select
+									[(ngModel)]="sharedType"
+									(ngModelChange)="getSharedList()"
+									[nzPlaceHolder]="_currLanguage == 'en' ? 'Select Type' : 'प्रकार चुनें'"
+									class="w-100"
+									nzAllowClear
+								>
+									<nz-option
+										[nzValue]="'Reaction'"
+										[nzLabel]="'Reaction'"
+									></nz-option>
+								</nz-select>
+							</span>
 						</div>
 					</ng-template>
 					<div class="totalCount">
@@ -66,13 +88,13 @@
 						<nz-table #rowSelectionTable [nzData]="sharedList" [nzTotal]="shareTotalCount"
 							[nzFrontPagination]="false" [nzShowSizeChanger]="true" [nzPageIndex]="sharePageInd"
 							[nzPageSize]="sharePageSize" (nzQueryParams)="sharedList[0] ? getSharedList($event) : null"
-							[nzShowTotal]="botTotalCount" [nzLoading]="api_loader['shared']" [nzScroll]="{ x: 'auto', y: '50vh' }"
+							[nzShowTotal]="botTotalCount" [nzLoading]="api_loader['shared']" [nzScroll]="{ y: '50vh' }"
 						>
 							<thead>
 								<tr>
 									<th nzWidth="3rem">#</th>
 									<th nzWidth="70px">Sr No.</th>
-									<th nzWidth="14rem">Name</th>
+									<th>Name</th>
 									<!-- <th>Response Type</th>
 							<th>Action Type</th> -->
 									<th nzWidth="100px">Re-Share</th>
@@ -147,7 +169,28 @@
 
 				<div class="totalCount">
 					<ng-template #likedTitle>
-						<h6><span nz-icon nzType="like" nzTheme="fill" class="mr-3"></span> Liked List</h6>
+						<div class="row">
+							<h6 class="col-md-6 d-flex">
+								<span class="mt-auto mb-auto">
+									<span nz-icon nzType="message" nzTheme="fill" class="mr-3"></span> 
+									Liked List
+								</span>
+							</h6>
+							<span class="col-md-6">
+								<nz-select
+									[(ngModel)]="likedType"
+									(ngModelChange)="getlikedList()"
+									[nzPlaceHolder]="_currLanguage == 'en' ? 'Select Type' : 'प्रकार चुनें'"
+									class="w-100"
+									nzAllowClear
+								>
+									<nz-option
+										[nzValue]="'Reaction'"
+										[nzLabel]="'Reaction'"
+									></nz-option>
+								</nz-select>
+							</span>
+						</div>
 					</ng-template>
 					<ng-template #likedFooter>
 						<div class="font-weight-semibold">
@@ -158,13 +201,13 @@
 						<nz-table #rowSelectionTable [nzData]="likedList" [nzTotal]="likeTotalCount"
 							[nzFrontPagination]="false" [nzShowSizeChanger]="true" [nzPageIndex]="likePageInd"
 							[nzPageSize]="likePageSize" (nzQueryParams)="likedList[0] ? getlikedList($event) : null"
-							[nzShowTotal]="likedFooter" [nzLoading]="api_loader['liked']" [nzScroll]="{ x: 'auto', y: '50vh' }">
+							[nzShowTotal]="likedFooter" [nzLoading]="api_loader['liked']" [nzScroll]="{y: '50vh' }">
 
 							<thead>
 								<tr>
-									<th nzWidth="3rem">#</th>
+									<!-- <th nzWidth="3rem">#</th> -->
 									<th nzWidth="70px">Sr No.</th>
-									<th nzWidth="14rem">Name</th>
+									<th>Name</th>
 									<!-- <th>Response Type</th>
 							<th>Action Type</th> -->
 									<th nzWidth="120px">Reaction Type</th>
@@ -172,8 +215,8 @@
 							</thead>
 							<tbody>
 								<tr *ngFor="let data of likedList; let i = index">
-									<td [nzExpand]="expandSet.has(data.id)"
-											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td>
+									<!-- <td [nzExpand]="expandSet.has(data.id)"
+											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td> -->
 									<td *ngIf="likePageInd == 1">{{i+1}}</td>
 									<td *ngIf="likePageInd > 1">{{( (likePageInd-1) * likePageSize) +
 										(i+1)}}
@@ -184,7 +227,7 @@
 									<td>{{ data.reaction_type }}</td>
 								</tr>
 								<tr *ngFor="let data of emptyLikedList; index as i">
-									<td>{{data || '-'}}</td>
+									<!-- <td>{{data || '-'}}</td> -->
 									<td>{{likedList?.length + i + 1}}</td>
 									<td>{{data || '-'}}</td>
 									<td>{{data || '-'}}</td>
@@ -200,7 +243,27 @@
 
 				<div class="totalCount">
 					<ng-template #commentTitle>
-						<h6><span nz-icon nzType="message" nzTheme="fill" class="mr-3"></span> Comments List</h6>
+						<div class="row">
+							<h6 class="col-md-6 d-flex">
+								<span class="mt-auto mb-auto">
+									<span nz-icon nzType="message" nzTheme="fill" class="mr-3"></span> 
+									Comments List
+								</span>
+							</h6>
+							<span class="col-md-6">
+								<nz-select
+									[(ngModel)]="commentType"
+									(ngModelChange)="getCommentList()"
+									[nzPlaceHolder]="_currLanguage == 'en' ? 'Select Type' : 'प्रकार चुनें'"
+									class="w-100"
+								>
+									<nz-option
+										[nzValue]="'Reaction'"
+										[nzLabel]="'Reaction'"
+									></nz-option>
+								</nz-select>
+							</span>
+						</div>
 					</ng-template>
 					<ng-template #comentFooter>
 						<div class="font-weight-semibold">
@@ -214,21 +277,21 @@
 							[nzFrontPagination]="false" [nzShowSizeChanger]="true" [nzPageIndex]="commentPageInd"
 							[nzPageSize]="commentPageSize"
 							(nzQueryParams)="commentList[0] ? getCommentList($event) : null"
-							[nzShowTotal]="comentFooter" [nzLoading]="api_loader['comments']" [nzScroll]="{ x: 'auto', y: '50vh' }">
+							[nzShowTotal]="comentFooter" [nzLoading]="api_loader['comments']" [nzScroll]="{ y: '50vh' }">
 							<thead>
 								<tr>
-									<th nzWidth="3rem">#</th>
+									<!-- <th nzWidth="3rem">#</th> -->
 									<th nzWidth="70px">Sr No.</th>
-									<th nzWidth="14rem">Name</th>
+									<th>Name</th>
 									<!-- <th>Response Type</th>
 							<th>Action Type</th> -->
-									<th nzWidth="200px">Comment</th>
+									<th>Comment</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr *ngFor="let data of commentList; let i = index">
-									<td [nzExpand]="expandSet.has(data.id)"
-											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td>
+									<!-- <td [nzExpand]="expandSet.has(data.id)"
+											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td> -->
 									<td *ngIf="commentPageInd == 1">{{i+1}}</td>
 									<td *ngIf="commentPageInd > 1">{{( (commentPageInd-1) * commentPageSize) +
 										(i+1)}}
@@ -242,7 +305,7 @@
 									</td>
 								</tr>
 								<tr *ngFor="let data of emptyCommentList; index as i">
-									<td>{{data || '-'}}</td>
+									<!-- <td>{{data || '-'}}</td> -->
 									<td>{{commentList?.length + i + 1}}</td>
 									<td>{{data || '-'}}</td>
 									<td>{{data || '-'}}</td>

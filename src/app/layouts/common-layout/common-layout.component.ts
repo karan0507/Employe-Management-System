@@ -57,8 +57,10 @@ export class CommonLayoutComponent  {
             this.VerifyUserFunction()
         } 
         else {
-            this.message.error('Authentication Data not Found, kindly login again')
-            this.router.navigate(['/authentication/login']);
+            if(localStorage.getItem('domain_user')){
+                this.message.error('Authentication Data not Found, kindly login again')
+                this.router.navigate(['/authentication/login']);
+            }
         }
         // alert('Common Layout working');
         this.breadcrumbs$ = this.router.events.pipe(
@@ -131,13 +133,13 @@ export class CommonLayoutComponent  {
                   });
             }
             else {
-                this.router.navigate(['/authentication/employee-login']);
+                // this.router.navigate(['/authentication/employee-login']);
                 localStorage.removeItem('iyc_user_token')
                 localStorage.removeItem('iyc_user_data')
                 localStorage.removeItem('appLanguage') 
             }
         }, (err) => {
-            this.router.navigate(['/authentication/login']);
+            // this.router.navigate(['/authentication/login']);
             localStorage.removeItem('iyc_user_token')
             localStorage.removeItem('iyc_user_data')
             localStorage.removeItem('menuItem') 

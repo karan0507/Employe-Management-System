@@ -10,7 +10,7 @@ export class Error1Component implements OnInit {
   _currUrl: any;
 
   constructor(private router: Router, private global: GlobalService) {
-    if (!JSON.parse(localStorage.getItem('iyc_user_data'))) {
+    if (!JSON.parse(localStorage.getItem('iyc_user_data')) && localStorage.getItem('domain_user') !== 'false') {
       this.router.navigate(["/authentication/login"]);
     }
   }
@@ -20,7 +20,7 @@ export class Error1Component implements OnInit {
     this.global.global_error_link.subscribe((res:any)=>{
       if(res){
         this._currUrl = res;
-        console.log("==>>>",res)
+        // console.log("==>>>",res)
       }
     })
   }
@@ -40,7 +40,7 @@ export class Error1Component implements OnInit {
       // this.router.navigate(["/authentication/login"]);
       // return;
     }
-    if (!res) {
+    if (!res && localStorage.getItem('domain_user') !== 'false') {
       this.router.navigate(["/authentication/login"]);
       return;
     }
@@ -53,7 +53,7 @@ export class Error1Component implements OnInit {
     } else if (res.data?.user_type?.name == 'Account Manager') {
       this.router.navigate(["/accounts/vouchers"]);
     } else {
-      this.router.navigate(["/authentication/login"]);
+      localStorage.getItem('domain_user') !== 'false' ? this.router.navigate(["/authentication/login"]) : null;
     }
   }
 }    

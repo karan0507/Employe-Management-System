@@ -53,9 +53,6 @@
                         <span nz-icon nzType="form" nzTheme="outline" class="mr-2"></span> Edit</button>
 
                 </div>
-
-
-
             </div>
             <div class="d-lg-none d-flex">
                 <button nz-button nzType="primary" nzSize="small" class="mb-3 mr-3"
@@ -63,8 +60,15 @@
                 <!-- <button nz-button nzType="primary" nzSize="small" class="mb-3 mr-3">Communicate</button> -->
                 <button nz-button nzType="primary" nzSize="small" class="mb-3 mr-3"
                     (click)=" createNewFollow('followUp')">Follow
-                    Up</button>
+                    Up man</button>
+                <button 
+                    (click)="showModal('facebook')"
+                    nz-button nzType="primary" nzSize="small" class="mb-3 mr-3"
+                >
+                    Facebook <span nz-icon nzType="facebook" nzTheme="outline"></span>
+                </button>
             </div>
+            
             <div class="d-lg-flex d-none justify-content-start">
                 <button nz-button nzType="primary" nzSize="small" class="mr-3"
                     (click)=" createNewFollow('activity')">Mark Activity</button>
@@ -72,6 +76,12 @@
                 <button nz-button nzType="primary" nzSize="small" class="mr-3"
                     (click)=" createNewFollow('followUp')">Follow
                     Up</button>
+                <button 
+                    (click)="showModal('facebook')"
+                    nz-button nzType="primary" nzSize="small" class="mb-3 mr-3"
+                >
+                    Facebook <span nz-icon nzType="facebook" nzTheme="outline"></span>
+                </button>
             </div>
         </main>
     </section>
@@ -607,3 +617,54 @@
         </nz-drawer>
     </section>
 </nz-card>
+
+<section *ngIf="modalTitle === 'facebook'">
+    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="'Facebook link'" [nzFooter]="null"
+		(nzOnCancel)="handleCancel()"
+    >
+		<ng-container *nzModalContent>
+            <form [formGroup]="facebookForm" class="row">
+                <div class="col-12 mb-3">
+                    <nz-form-item>
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left">{{_currLanguage == 'en' ?
+                            'House No' : 'मकान नंबर'}}   
+                        </nz-form-label>
+                        <nz-form-control [nzSm]="16" [nzXs]="24"
+                            [nzErrorTip]="facebookError">
+                            <input type="text"  nz-input formControlName="facebook_link"
+                                [placeholder]="_currLanguage == 'en' ? 'Add facebook link' : 'फेसबुक लिंक डालो'" />
+                            <ng-template #facebookError let-control>
+                                <ng-container *ngIf="control.hasError('required')">
+                                    {{_currLanguage == 'en' ? 'Please enter facebook link' : 'कृपया फेसबुक लिंक दर्ज करें'}}
+                                </ng-container>
+                                <ng-container *ngIf="control.hasError('pattern')">
+                                    {{_currLanguage == 'en' ? 'Please enter a valid facebook link' : 'कृपया एक वैध फेसबुक लिंक दर्ज करें'}}
+                                </ng-container>
+                            </ng-template>
+                        </nz-form-control>
+                    </nz-form-item>
+                </div>
+                <div class="col-12 d-flex justify-content-center">
+                    <button
+                        (click)="handleCancel()"
+                        nzType="link"
+                        nz-button
+                        class="text-primary border-primary mr-3"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        [disabled]="facebookForm?.invalid"
+                        (click)="putVoterFacebookLink()"
+                        [nzLoading]="isFacebook"
+                        nzType="primary"
+                        nz-button
+                        class="text-white bg-primary"
+                    >
+                        Save
+                    </button>
+                </div>
+            </form>
+        </ng-container>
+    </nz-modal>
+</section>

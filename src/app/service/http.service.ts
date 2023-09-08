@@ -263,6 +263,10 @@ export class HttpService {
     return this.http.get(this.url + `/social_media/v1/post-detail/get-data-from-background`,{params:data})
   }
 
+  public putVoterFacebookLink(id: any, formData: any) {
+    return this.http.put(`${this.url}/voters/v1/voter-data/edit-voter-data/${id}/`, formData)
+  }
+
   public addEditVoterActivityList(data){
     return this.http.get(this.url + `/voters/v1/voter-activity/get-voter-activity`,{params:data})
   }
@@ -401,4 +405,13 @@ export class HttpService {
   public addLeaderTasks(data) {
     return this.http.post(this.url + `/users/v1/leader-schedule/create-leader-schedule`, data)
   }
+
+  getBoothList(data?: any) {
+    return this.http.get(`${this.url}/booth-profile/v1/import/get-source-file`, {params: data})
+  }
+
+  postBooth(formData: FormData) {
+    return this.http.post(`${this.url}/booth-profile/v1/import/import-source-file`, formData)
+  }
+
 }

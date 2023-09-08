@@ -345,6 +345,7 @@ followUpList : any= []
       this.followUpForm = this.fb.group({
         followup_datetime: [ '',   [Validators.required]],
         activity_type: ['', [Validators.required]],
+        task_type: ['', [Validators.required]],
         comments: ['', [Validators.required]]
       })
     } else {
@@ -352,6 +353,7 @@ followUpList : any= []
         followup_datetime: ['', [Validators.required]],
         followup_time : [null,[Validators.required]],
         followup_type: [null, [Validators.required]],
+        task_type: ['', [Validators.required]],
         comments: ['', [Validators.required]]
       })
     }
@@ -376,6 +378,22 @@ followUpList : any= []
     })
   }
 
+  // Task list
+  taskList = []
+  getTaskList() {
+    let data = {}
+    data['model_name'] = 'Tasks'
+    this.http
+    .getMasterData(data)
+    .subscribe(
+      (res: any) => {
+        if(res?.success) {
+          this.taskList = res?.data
+        }
+      }
+    )
+  }
+
   submitForm(form?) {
     this.votersList_Array = this.setOfCheckedId;
     let formDatta =new FormData();
@@ -388,7 +406,7 @@ followUpList : any= []
    
     this.currFormType == 'activity' ?   data.append('activity_type', this.followUpForm.get('activity_type').value) : data.append('followup_type', this.followUpForm.get('followup_type').value) ;
     data.append('comments', this.followUpForm.get('comments').value)
-
+    data.append('task_type', this.followUpForm?.get('task_type')?.value)
     this.currFormType == 'activity' ? 
     data.append('activity_date', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD")) :
     data.append('followup_datetime', moment(this.followUpForm.get('followup_datetime').value).format("YYYY-MM-DD") + ' ' +moment(this.followUpForm.get('followup_datetime').value).format("HH:mm:ss"));

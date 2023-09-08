@@ -121,52 +121,54 @@
                             [nzPageSize]="globalPageSize" (nzQueryParams)="votersList[0] ? getVotersList($event) : null"
                             [nzShowTotal]="botTotalCount" [nzLoading]="api_loader['card']"
                             (nzCurrentPageDataChange)="onCurrentPageDataChange($event)"
-                            [nzScroll]="{ x: '1500px', y: '50vh' }">
+                            [nzScroll]="{ x: 'auto'}">
                             <thead>
                                 <tr>
-                                    <th nzWidth="3rem">#</th>
-                                    <th nzWidth="3rem" [nzChecked]=" votersList[0] ? checked : false"
+                                    <th nzWidth="70px" class="bg-primary text-white">#</th>
+                                    <th nzWidth="70px" [nzChecked]=" votersList[0] ? checked : false"
                                         [nzIndeterminate]=" votersList[0] ? indeterminate : false"
-                                        (nzCheckedChange)="votersList[0] ? onAllChecked($event) : false">
+                                        (nzCheckedChange)="votersList[0] ? onAllChecked($event) : false"
+                                        class="bg-primary text-white bd-white"
+                                    >
                                     </th>
-                                    <th nzWidth="4rem">Sr. No</th>
-                                    <th class="text-left" [nzWidth]="'12rem'">Full Name</th>
-                                    <th [nzWidth]="'10rem'">Mobile</th>
-                                    <th>Facebook Links</th>
-                                    <th>Caste</th>
-                                    <th [nzWidth]="'10rem'">Epic No</th>
-                                    <th>Age/ Gender</th>
-                                    <th nzWidth="5rem">Benificary</th>
-                                    <th>Gali</th>
-                                    <th>Booth</th>
-                                    <th>Part No</th>
-                                    <th nzWidth="14rem">Section Name</th>
-                                    <th>Section No</th>
-                                    <th nzRight>Action</th>
+                                    <th nzWidth="70px" class="bg-primary text-white">Sr. No</th>
+                                    <th [nzWidth]="'150px'" class="text-left bg-primary text-white">Full Name</th>
+                                    <th [nzWidth]="'100px'" class="bg-primary text-white">Mobile</th>
+                                    <th [nzWidth]="'150px'" class="bg-primary text-white">Facebook Links</th>
+                                    <th [nzWidth]="'100px'" class="bg-primary text-white">Caste</th>
+                                    <th [nzWidth]="'100px'" class="bg-primary text-white">Epic No</th>
+                                    <th [nzWidth]="'130px'" class="bg-primary text-white">Age/ Gender</th>
+                                    <th [nzWidth]="'100px'" class="bg-primary text-white">Benificary</th>
+                                    <th [nzWidth]="'100px'" class="bg-primary text-white">Gali</th>
+                                    <th [nzWidth]="'100px'" class="bg-primary text-white">Booth</th>
+                                    <th [nzWidth]="'100px'" class="bg-primary text-white">Part No</th>
+                                    <th [nzWidth]="'130px'" class="bg-primary text-white">Section Name</th>
+                                    <th [nzWidth]="'130px'" class="bg-primary text-white">Section No</th>
+                                    <th [nzWidth]="'70px'" class="bg-primary text-white" nzRight>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <ng-container *ngFor="let data of votersList; index as i">
                                     <tr>
-                                        <td nzWidth="3rem" [nzExpand]="expandSet.has(data.id)"
+                                        <td [nzExpand]="expandSet.has(data.id)"
                                             (nzExpandChange)="onExpandChange(data.id, $event, i)"></td>
-                                        <td nzWidth="3rem" [nzChecked]="setOfCheckedId.has(data.id)"
+                                        <td [nzChecked]="setOfCheckedId.has(data.id)"
                                             [nzDisabled]="data.disabled"
                                             (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
-                                        <td nzWidth="4rem" *ngIf="pageIndex == 1">{{i+1}}</td>
-                                        <td nzWidth="4rem" *ngIf="pageIndex > 1">{{( (pageIndex-1) * globalPageSize) +
+                                        <td *ngIf="pageIndex == 1">{{i+1}}</td>
+                                        <td *ngIf="pageIndex > 1">{{( (pageIndex-1) * globalPageSize) +
                                             (i+1)}}
                                         </td>
-                                        <td class="text-left" [nzWidth]="'12rem'">
+                                        <td class="text-left">
                                             <a [routerLink]="['/voter/view-profile']" [queryParams]="{id:data.id}">
                                                 {{_currLanguage == "en" ? data?.first_name_en + " " + data?.last_name_en
                                                 : data?.first_name_hi + " " + data?.last_name_hi}}
                                             </a>
                                         </td>
-                                        <td [nzWidth]="'10rem'">{{data?.mobile ? data?.mobile : '-'}}</td>
+                                        <td>{{data?.mobile ? data?.mobile : '-'}}</td>
                                         <td>{{data?.facebook_link || '-'}}</td>
                                         <td>{{data?.caste ? data?.caste : '-'}}</td>
-                                        <td [nzWidth]="'10rem'">{{data?.epic_no}}</td>
+                                        <td>{{data?.epic_no}}</td>
                                         <td>{{data?.age + (data?.gender ? " / " + data?.gender : "")}} </td>
                                         <td>
                                             <span nz-icon *ngIf="data?.is_benificary" nzType="check-circle"
@@ -180,7 +182,7 @@
                                         <td>{{data?.gali ? data?.gali : '-'}}</td>
                                         <td>{{data?.booth ? data?.booth : '-'}}</td>
                                         <td>{{data?.part_no}}</td>
-                                        <td nzWidth="14rem">
+                                        <td >
                                             <!-- <label *ngIf="data.section_name_en?.length > 18 ? data.section_name_hi?.length > 18 : ''" nz-tooltip
                                                 nzTooltipTitle="{{ data.stockist_name}}">{{
                                                 data.stockist_name | slice : 0:18}} <span

@@ -53,8 +53,8 @@ export class Login1Component {
 
   subDomainName : any;
   ngOnInit(): void {
-    let url = window.location.href;
-    // let url = "https://shksufiyan.CY.com"
+    // let url = window.location.href;
+    let url = "https://shksufiyan.CY.com"
     this.subDomainName = url.split('.');
     this.getSubDomain(this.subDomainName[0].replace(/^https:\/\//, ''));
     // console.log(this.active_route.snapshot.firstChild.url[0].path);
@@ -189,6 +189,8 @@ export class Login1Component {
           console.log('In checkusr log');
 
           localStorage.setItem("iyc_user_data", JSON.stringify(res.data));
+          this.globalFunction.userData = JSON.parse(localStorage.getItem('iyc_user_data'))
+          localStorage.setItem('appLanguage', this.globalFunction?.userData?.data?.language?.key)
           this.checkUserLoggedInOrNot(res);
         }
       },

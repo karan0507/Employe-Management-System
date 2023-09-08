@@ -130,7 +130,9 @@ export class CommonLayoutComponent  {
                   }
                   this.UserPermissionDataSubscription = this.http.globalUserPermissionsData.subscribe((value) => {
                     this.permissionsService.loadPermissions(value);
-                  });
+                });
+                this.globaldata.userData = JSON.parse(localStorage.getItem('iyc_user_data'))
+                localStorage.setItem('appLanguage', this.globaldata?.userData?.data?.language?.key)
             }
             else {
                 // this.router.navigate(['/authentication/employee-login']);

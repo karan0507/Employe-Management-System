@@ -28,9 +28,11 @@ export class LeaderTaskListComponent implements OnInit {
   _currUser : any;
   _currSearchValue : any;
   filter_type = "ALL";
+  _currLanguage : any;
   constructor(private http:HttpService,private message:NzMessageService,private router: Router, private acroute:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this._currLanguage = localStorage.getItem("appLanguage") || 'en';
     this.acroute.queryParams.subscribe((res:any)=>{
       if(res['tabSection']){
         this.filter_type = res['tabSection'] == 1 ? "TODAT" : "ALL";

@@ -1,6 +1,7 @@
 ::ng-deep.ant-checkbox {
+    margin-top: 8px !important;
     border: 1px solid #3C0480 !important;
-    border-radius: 6px;
+    border-radius: 6px !important;
 }
 
 ::ng-deep.ant-checkbox-wrapper {

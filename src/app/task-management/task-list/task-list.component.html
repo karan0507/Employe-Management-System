@@ -88,7 +88,7 @@
     </div>
     
 </div>
-<nz-card class="d-none d-lg-flex">
+<nz-card>
     <div class="totalCount">
         <nz-table #rowSelectionTable [nzData]="taskList" [nzTotal]="total_count" [nzFrontPagination]="false"
             [nzShowSizeChanger]="true" [nzPageIndex]="page" [nzPageSize]="globalPageSize"
@@ -127,25 +127,25 @@
                         <td nzWidth="8rem" class="text-left">
                             <a [routerLink]="['/task-management/edit-task']" [queryParams]="{id:data.id}"> {{
                                 _currLanguage == 'en' ?
-                                data?.name?.en : data?.name?.hi}}</a>
+                                (data?.name?.en || '-') : (data?.name?.hi || '-')}}</a>
                         </td>
-                        <td nzWidth="8rem">{{ _currLanguage == 'en' ? data?.task_type?.name?.en :
-                            data?.task_type?.name?.hi}} </td>
+                        <td nzWidth="8rem">{{ _currLanguage == 'en' ? (data?.task_type?.name?.en || '-') :
+                            (data?.task_type?.name?.hi || '-')}} </td>
 
                         <td nzWidth="8rem" class="text-left">
                             {{ _currLanguage == 'en' ?
-                            data?.discription?.en : data?.discription?.hi}}
+                            (data?.discription?.en || '-') : (data?.discription?.hi || '-')}}
                         </td>
 
 
                         <td nzWidth="8rem">{{ _currLanguage == 'en' ?
-                            (data?.internal_user?.first_name + data?.internal_user?.last_name) :
-                            (data?.internal_user?.first_name + data?.internal_user?.last_name)}} </td>
+                            ((data?.internal_user?.first_name + data?.internal_user?.last_name) || '-') :
+                            ((data?.internal_user?.first_name + data?.internal_user?.last_name) || '-')}} </td>
 
                         <!-- <td nzWidth="8rem">{{ _currLanguage == 'en' ?
                             data?.internal_user?.user_type?.name :
                             data?.internal_user?.user_type?.name }} </td> -->
-                        <td nzWidth="8rem">{{data?.status ? data?.status : ''}}</td>
+                        <td nzWidth="8rem">{{data?.status ? data?.status : '-'}}</td>
                         <td nzWidth="8rem">{{(data?.created_at ? (data?.created_at | date:'medium') : '-')}}</td>
                         <td nzWidth="8rem">{{(data?.updated_at ? (data?.updated_at | date:'medium') : '-')}}</td>
 

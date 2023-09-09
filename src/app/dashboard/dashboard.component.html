@@ -3,7 +3,7 @@
 		<div class="d-flex justify-content-end mt-3">
 			<nz-select class="selectFilter" nzPlaceHolder="Select Social Media" [(ngModel)]="_currUser"
 				(nzFocus)="getSocialMedia()" (ngModelChange)="multipleAPICall()" nzShowSearch nzAllowClear>
-				<nz-option *ngFor="let item of userList" [nzValue]="item?.id" [nzLabel]="item?.name">
+				<nz-option *ngFor="let item of userList" [nzValue]="item?.link" [nzLabel]="item?.name">
 				</nz-option>
 			</nz-select>
 		</div>

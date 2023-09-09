@@ -122,7 +122,7 @@ export class DashboardComponent implements OnInit {
         this.http.getAccountListt(data).subscribe((res:any)=>{
             if(res.success){
                 this.userList = res.data
-                this._currUser = this.globalService?.userData?.id
+                // this._currUser = this.globalService?.userData?.id
             }
         })
     }

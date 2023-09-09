@@ -151,7 +151,9 @@
                                 <ng-container *ngFor="let data of votersList; index as i">
                                     <tr>
                                         <td [nzExpand]="expandSet.has(data.id)"
-                                            (nzExpandChange)="onExpandChange(data.id, $event, i)"></td>
+                                            (nzExpandChange)="onExpandChange(data.id, $event, i)"
+                                            class="mt-2"    
+                                        ></td>
                                         <td [nzChecked]="setOfCheckedId.has(data.id)"
                                             [nzDisabled]="data.disabled"
                                             (nzCheckedChange)="onItemChecked(data.id, $event)"></td>

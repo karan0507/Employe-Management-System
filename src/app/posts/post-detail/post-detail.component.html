@@ -102,7 +102,7 @@
 							</thead>
 							<tbody>
 								<ng-container *ngFor="let data of sharedList; let i = index">
-									<tr>
+									<tr *ngIf="sharedList?.length !== 0">
 										<td [nzExpand]="expandSet.has(data.id)"
 											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td>
 										<td>{{i+1}}</td>
@@ -151,7 +151,7 @@
 									</tr>
 								</ng-container>
 								<ng-container *ngFor="let data of emptySharedList; let i = index">
-									<tr>
+									<tr *ngIf="sharedList?.length !== 0">
 										<td>{{data || '-'}}</td>
 										<td>{{sharedList?.length + i + 1}}</td>
 										<td>{{data || '-'}}</td>
@@ -214,24 +214,28 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr *ngFor="let data of likedList; let i = index">
-									<!-- <td [nzExpand]="expandSet.has(data.id)"
-											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td> -->
-									<td *ngIf="likePageInd == 1">{{i+1}}</td>
-									<td *ngIf="likePageInd > 1">{{( (likePageInd-1) * likePageSize) +
-										(i+1)}}
-									</td>
-									<td>{{ data.user_details.name }}</td>
-									<!-- <td>{{ data.response_type }}</td>
-						<td>{{ data.user_details.user_id }}</td> -->
-									<td>{{ data.reaction_type }}</td>
-								</tr>
-								<tr *ngFor="let data of emptyLikedList; index as i">
-									<!-- <td>{{data || '-'}}</td> -->
-									<td>{{likedList?.length + i + 1}}</td>
-									<td>{{data || '-'}}</td>
-									<td>{{data || '-'}}</td>
-								</tr>
+								<ng-container *ngIf="likedList?.length !== 0">
+									<tr *ngFor="let data of likedList; let i = index">
+										<!-- <td [nzExpand]="expandSet.has(data.id)"
+												(nzExpandChange)="onExpandChange(data.id, $event, i)"></td> -->
+										<td *ngIf="likePageInd == 1">{{i+1}}</td>
+										<td *ngIf="likePageInd > 1">{{( (likePageInd-1) * likePageSize) +
+											(i+1)}}
+										</td>
+										<td>{{ data.user_details.name }}</td>
+										<!-- <td>{{ data.response_type }}</td>
+											<td>{{ data.user_details.user_id }}</td> -->
+										<td>{{ data.reaction_type }}</td>
+									</tr>
+								</ng-container>
+								<ng-container *ngIf="likedList?.length !== 0">
+									<tr *ngFor="let data of emptyLikedList; index as i">
+										<!-- <td>{{data || '-'}}</td> -->
+										<td>{{likedList?.length + i + 1}}</td>
+										<td>{{data || '-'}}</td>
+										<td>{{data || '-'}}</td>
+									</tr>
+								</ng-container>
 							</tbody>
 						</nz-table>
 					</nz-card>
@@ -288,27 +292,31 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr *ngFor="let data of commentList; let i = index">
-									<!-- <td [nzExpand]="expandSet.has(data.id)"
-											(nzExpandChange)="onExpandChange(data.id, $event, i)"></td> -->
-									<td *ngIf="commentPageInd == 1">{{i+1}}</td>
-									<td *ngIf="commentPageInd > 1">{{( (commentPageInd-1) * commentPageSize) +
-										(i+1)}}
-									</td>
-									<td>{{ data.user_details.name }}</td>
-									<!-- <td>{{ data.response_type }}</td>
-							<td>{{ data.user_details.user_id }}</td> -->
-									<td>
-										{{ data.comment_text ? (data.comment_text | slice:0:20): '-' }}
-										{{data.comment_text?.length > 20 ? '...' : ''}}
-									</td>
-								</tr>
-								<tr *ngFor="let data of emptyCommentList; index as i">
-									<!-- <td>{{data || '-'}}</td> -->
-									<td>{{commentList?.length + i + 1}}</td>
-									<td>{{data || '-'}}</td>
-									<td>{{data || '-'}}</td>
-								</tr>
+								<ng-container *ngIf="commentList !== 0">
+									<tr *ngFor="let data of commentList; let i = index">
+										<!-- <td [nzExpand]="expandSet.has(data.id)"
+												(nzExpandChange)="onExpandChange(data.id, $event, i)"></td> -->
+										<td *ngIf="commentPageInd == 1">{{i+1}}</td>
+										<td *ngIf="commentPageInd > 1">{{( (commentPageInd-1) * commentPageSize) +
+											(i+1)}}
+										</td>
+										<td>{{ data.user_details.name }}</td>
+										<!-- <td>{{ data.response_type }}</td>
+										<td>{{ data.user_details.user_id }}</td> -->
+										<td>
+											{{ data.comment_text ? (data.comment_text | slice:0:20): '-' }}
+											{{data.comment_text?.length > 20 ? '...' : ''}}
+										</td>
+									</tr>
+								</ng-container>
+								<ng-container *ngIf="commentList !== 0">
+									<tr *ngFor="let data of emptyCommentList; index as i">
+										<!-- <td>{{data || '-'}}</td> -->
+										<td>{{commentList?.length + i + 1}}</td>
+										<td>{{data || '-'}}</td>
+										<td>{{data || '-'}}</td>
+									</tr>
+								</ng-container>
 							</tbody>
 						</nz-table>
 					</nz-card>

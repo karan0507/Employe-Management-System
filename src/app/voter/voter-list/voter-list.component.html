@@ -5,7 +5,7 @@
 
                 <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
                     <input type="text" nz-input placeholder="Search By Full Name & Table details"
-                        [(ngModel)]="_currSearchValue" (keyup.enter)="getVotersList()" />
+                        [(ngModel)]="_currSearchValue" (keyup)="getVotersList()" />
                 </nz-input-group>
                 <ng-template #suffixIconButton>
                     <button nz-button nzType="secondary" nzSearch (click)="getVotersList()">
@@ -357,7 +357,7 @@
                         </nz-select>
                     </div>
 
-                    <div class="d-flex align-items-start flex-column mb-3">
+                    <!-- <div class="d-flex align-items-start flex-column mb-3">
                         <label>Assembly: </label>
                         <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_crrAssembly"
                             (nzFocus)="searchStaticDataGlobalFunction('Assembly')"
@@ -370,7 +370,7 @@
                             <nz-option *ngFor="let item of assemblyList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
                             </nz-option>
                         </nz-select>
-                    </div>
+                    </div> -->
 
                     <div class="d-flex align-items-start flex-column mb-3">
                         <label>Street: </label>
@@ -489,7 +489,7 @@
 
                         </div>
 
-                        <div class="col-md-12" *ngIf="currFormType == 'activity'">
+                        <!-- <div class="col-md-12" *ngIf="currFormType == 'activity'">
                             <nz-form-item>
                                 <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Mark Activity
                                 </nz-form-label>
@@ -502,7 +502,7 @@
                                     </nz-select>
                                 </nz-form-control>
                             </nz-form-item>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-12">
                             <nz-form-item>
@@ -519,7 +519,7 @@
                             </nz-form-item>
                         </div>
 
-                        <div class="col-md-12 mt-5" *ngIf="currFormType == 'followUp'">
+                        <!-- <div class="col-md-12 mt-5" *ngIf="currFormType == 'followUp'">
                             <nz-form-item>
                                 <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>Mark Followup
                                 </nz-form-label>
@@ -532,7 +532,7 @@
                                     </nz-select>
                                 </nz-form-control>
                             </nz-form-item>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-12">
                             <nz-form-item>

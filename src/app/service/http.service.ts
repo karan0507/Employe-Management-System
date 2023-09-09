@@ -152,8 +152,8 @@ export class HttpService {
     return this.http.get(this.url + 'votes/get-assembly-candidate', { params: data })
   }
 
-  public getDashboardMetrics4(){
-    return this.http.get(this.url+'/social_media/v1/post-detail/get-data-from-background');
+  public getDashboardMetrics4() {
+    return this.http.get(this.url + '/social_media/v1/post-detail/get-data-from-background');
   }
 
   public getDistrictWiseData() {
@@ -209,12 +209,12 @@ export class HttpService {
   }
 
   public editVoterActivity(id, data) {
-    return this.http.put(this.url + '/voters/v1/voter-activity/edit-voter-activity/' + id+`/`,data )
+    return this.http.put(this.url + '/voters/v1/voter-activity/edit-voter-activity/' + id + `/`, data)
   }
 
   public addVoterActivity(data) {
-   
-    return this.http.post(this.url + `/voters/v1/voter-activity/add-voter-activity`,data)
+
+    return this.http.post(this.url + `/voters/v1/voter-activity/add-voter-activity`, data)
   }
 
 
@@ -228,14 +228,14 @@ export class HttpService {
   }
 
   public editVoterFollowup(id, data) {
-    return this.http.put(this.url + `/voters/v1/voter-followup/edit-voter-followup/` + id+`/`, data)
+    return this.http.put(this.url + `/voters/v1/voter-followup/edit-voter-followup/` + id + `/`, data)
   }
 
   public addVoterFollowup(data) {
     return this.http.post(this.url + `/voters/v1/voter-followup/add-voter-followup`, data)
   }
 
-  
+
   public logOutUser() {
     return this.http.get(this.url + `/users/v1/auth/logout-user`);
   }
@@ -243,87 +243,87 @@ export class HttpService {
 
   // Get User Profile Details
   public getUserProfile(data) {
-    return this.http.get(this.url + `/users/v1/auth/get-user-profile`,{params:data})
+    return this.http.get(this.url + `/users/v1/auth/get-user-profile`, { params: data })
   }
 
   public getGlobalAdminData(data) {
-    return this.http.get(this.url + `/users/v1/user/add-global-account`,{params:data})
+    return this.http.get(this.url + `/users/v1/user/add-global-account`, { params: data })
   }
 
   public addGlobalAdminData(data) {
-    return this.http.post(this.url + `/users/v1/user/add-global-account`,data)
+    return this.http.post(this.url + `/users/v1/user/add-global-account`, data)
   }
 
 
-  public getVoterList(data){
-    return this.http.get(this.url + `/social_media/v1/post-detail/get-data-from-background`,{params:data})
+  public getVoterList(data) {
+    return this.http.get(this.url + `/social_media/v1/post-detail/get-data-from-background`, { params: data })
   }
 
-  public getVoterDetails(data){
-    return this.http.get(this.url + `/social_media/v1/post-detail/get-data-from-background`,{params:data})
+  public getVoterDetails(data) {
+    return this.http.get(this.url + `/social_media/v1/post-detail/get-data-from-background`, { params: data })
   }
 
   public putVoterFacebookLink(id: any, formData: any) {
     return this.http.put(`${this.url}/voters/v1/voter-data/edit-voter-data/${id}/`, formData)
   }
 
-  public addEditVoterActivityList(data){
-    return this.http.get(this.url + `/voters/v1/voter-activity/get-voter-activity`,{params:data})
+  public addEditVoterActivityList(data) {
+    return this.http.get(this.url + `/voters/v1/voter-activity/get-voter-activity`, { params: data })
   }
 
 
-  public getVoterFollowUp(data){
-    return this.http.get(this.url + `/voters/v1/voter-followup/get-voter-followup`,{params:data})
+  public getVoterFollowUp(data) {
+    return this.http.get(this.url + `/voters/v1/voter-followup/get-voter-followup`, { params: data })
   }
-  
-  public getMasterData(data){
-    return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`,{params:data})  
+
+  public getMasterData(data) {
+    return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`, { params: data })
   }
-  
+
   // Rating voter
-  public getVoterRating(data){
-    return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`,{params:data})  
+  public getVoterRating(data) {
+    return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`, { params: data })
   }
-  
-  public addVoterRating(data){
-    return this.http.get(this.url + `/voters/v1/voter-rating/add-voter-rating`,{params:data})  
-  }
-  
 
-  public editVoterRating(id,data){
+  public addVoterRating(data) {
+    return this.http.get(this.url + `/voters/v1/voter-rating/add-voter-rating`, { params: data })
+  }
+
+
+  public editVoterRating(id, data) {
     // data= {voter_id,  rating}
-    return this.http.put(this.url + `/voters/v1/voter-rating/edit-voter-rating/`+id+`/`,{params:data})  
+    return this.http.put(this.url + `/voters/v1/voter-rating/edit-voter-rating/` + id + `/`, { params: data })
   }
-  
-  public deleteoterRating(id){
-    return this.http.delete(this.url + `/voters/v1/voter-rating/delete-voter-rating/`+id+`/`)  
+
+  public deleteoterRating(id) {
+    return this.http.delete(this.url + `/voters/v1/voter-rating/delete-voter-rating/` + id + `/`)
   }
-  
+
 
   public editVoter(id, data) {
-    return this.http.put(this.url + `/voters/v1/voter-data/edit-voter-data/` + id+`/`, data)
+    return this.http.put(this.url + `/voters/v1/voter-data/edit-voter-data/` + id + `/`, data)
   }
 
   public addVoter(data) {
     return this.http.post(this.url + `/voters/v1/voter-data/add-voter-data`, data)
   }
 
-  public getVoterStatus(data){
-    return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`,data)
+  public getVoterStatus(data) {
+    return this.http.get(this.url + `/master/v1/master-get/get-master-data-global`, data)
   }
 
-  public getAuditTrail(data){
-    return this.http.get(this.url + `/platform_central/v1/audit-trail/get-audit-trail`, {params:data})
+  public getAuditTrail(data) {
+    return this.http.get(this.url + `/platform_central/v1/audit-trail/get-audit-trail`, { params: data })
   }
 
   // Task Management
-  
-  public getTaskList(data){
-    return this.http.get(this.url + `/users/v1/task-management/fetch-task-list`,{params:data})
+
+  public getTaskList(data) {
+    return this.http.get(this.url + `/users/v1/task-management/fetch-task-list`, { params: data })
   }
 
   public editTasks(id, data) {
-    return this.http.put(this.url + `/users/v1/task-management/edit-task/` + id+`/`, data)
+    return this.http.put(this.url + `/users/v1/task-management/edit-task/` + id + `/`, data)
   }
 
   public addTasks(data) {
@@ -331,17 +331,17 @@ export class HttpService {
   }
 
   public changeTaskStatus(id, data) {
-    return this.http.put(this.url + `/users/v1/task-management/edit-task/` + id+`/`, data)
+    return this.http.put(this.url + `/users/v1/task-management/edit-task/` + id + `/`, data)
   }
 
 
   // Team Management
-  public getTeamList(data){
-    return this.http.get(this.url + `/users/v1/user-management/get-user`,{params:data})
+  public getTeamList(data) {
+    return this.http.get(this.url + `/users/v1/user-management/get-user`, { params: data })
   }
 
   public editTeamMember(id, data) {
-    return this.http.put(this.url + `/users/v1/user-management/edit-user/` + id+`/`, data)
+    return this.http.put(this.url + `/users/v1/user-management/edit-user/` + id + `/`, data)
   }
 
   public addTeamMember(data) {
@@ -355,19 +355,19 @@ export class HttpService {
   public importTask(data) {
     return this.http.post(this.url + `/users/v1/task-management/import-task`, data)
   }
-  
-  public getAccountListt(data){
-    return this.http.get(this.url + `/social_media/v1/account-link/get-account-links`,{params:data})
+
+  public getAccountListt(data) {
+    return this.http.get(this.url + `/social_media/v1/account-link/get-account-links`, { params: data })
   }
 
   public editAccountList(id, data) {
-    return this.http.put(this.url + `/social_media/v1/account-link/edit-account-links/` + id+`/`, data)
+    return this.http.put(this.url + `/social_media/v1/account-link/edit-account-links/` + id + `/`, data)
   }
 
   public addAccountLink(data) {
     return this.http.post(this.url + `/social_media/v1/account-link/add-account-links`, data)
   }
-  
+
   public changeLanguage(data) {
     return this.http.post(this.url + `/users/v1/user/change-user-language`, data)
   }
@@ -375,43 +375,45 @@ export class HttpService {
   public addVoterTasg(data) {
     return this.http.post(this.url + `/voters/v1/voter-tag/add-voter-tag`, data)
   }
-  
-  
-  public getVotersTagList(data){
-    return this.http.get(this.url + `/voters/v1/voter-tag/get-voter-tag`,{params:data})
+
+
+  public getVotersTagList(data) {
+    return this.http.get(this.url + `/voters/v1/voter-tag/get-voter-tag`, { params: data })
   }
 
   public addRelationship(data) {
     return this.http.post(this.url + `/voters/v1/voter-tag/add-voter-relationship`, data)
   }
-  
-  
-  public getRelationshipTags(data){
-    return this.http.get(this.url + `/voters/v1/voter-tag/get-voter-primary-attributes`,{params:data})
-  }
-  
-  public getRelationList(data){
-    return this.http.get(this.url + `/voters/v1/voter-tag/get-voter-relationship`, {params:data})
-  }
-  
-  public getSubDomainData(data){
-    return this.http.get(this.url + `/users/v1/user/fetch-global-account-from-code`, {params:data})
+
+
+  public getRelationshipTags(data) {
+    return this.http.get(this.url + `/voters/v1/voter-tag/get-voter-primary-attributes`, { params: data })
   }
 
-  getLeaderTaskList(data){
-    return this.http.get(this.url + '/users/v1/leader-schedule/get-leader-schedule', {params:data})
+  public getRelationList(data) {
+    return this.http.get(this.url + `/voters/v1/voter-tag/get-voter-relationship`, { params: data })
   }
-  
+
+  public getSubDomainData(data) {
+    return this.http.get(this.url + `/users/v1/user/fetch-global-account-from-code`, { params: data })
+  }
+
+  getLeaderTaskList(data) {
+    return this.http.get(this.url + '/users/v1/leader-schedule/get-leader-schedule', { params: data })
+  }
+
   public addLeaderTasks(data) {
     return this.http.post(this.url + `/users/v1/leader-schedule/create-leader-schedule`, data)
   }
 
   getBoothList(data?: any) {
-    return this.http.get(`${this.url}/booth-profile/v1/import/get-source-file`, {params: data})
+    return this.http.get(`${this.url}/booth-profile/v1/import/get-source-file`, { params: data })
   }
 
   postBooth(formData: FormData) {
     return this.http.post(`${this.url}/booth-profile/v1/import/import-source-file`, formData)
   }
+
+
 
 }

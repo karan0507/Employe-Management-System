@@ -84,11 +84,9 @@ export class AddEditVoterComponent implements OnInit {
 
   submitForm() {
     if (this.voterForm.invalid) {
-      console.log(this.voterForm)
       return
     }
     this.api_loading['button'] = true;
-    console.log(this.voterForm.value);
     var form_data = new FormData();
 
     // for ( var key in this.voterForm.controls ) {
@@ -173,8 +171,9 @@ export class AddEditVoterComponent implements OnInit {
     let url = this.isEdit == false ? this.http.addVoter(form_data) : this.http.editVoter(this.curr_voterId, form_data);
     url.subscribe((res: any) => {
       if (res.success) {
+        console.log(res)
         this.message.success(res.message);
-        !this.isEdit ? this.router.navigate(['/voter']) : this.router.navigate(['/voter/view-profile'], {queryParams: {id: this.curr_voterId}})
+        !this.isEdit ? this.router.navigate(['/voter']) : this.router.navigate(['/voter/view-profile'], { queryParams: { id: this.curr_voterId } })
         this.api_loading['button'] = false;
       } else {
         this.api_loading['button'] = false;
@@ -207,8 +206,7 @@ export class AddEditVoterComponent implements OnInit {
   }
 
   cancelForm() {
-    // console.log(this.router.url.split('voter')[1].includes('/add-'));
-    !this.isEdit ? this.router.navigate(['/voter']) : this.router.navigate(['/voter/view-profile'], {queryParams: {id: this.curr_voterId}})
+    !this.isEdit ? this.router.navigate(['/voter']) : this.router.navigate(['/voter/view-profile'], { queryParams: { id: this.curr_voterId } })
     // this.router.navigate([this.router.url.split('?')[0]], { queryParams: { tabSection: this.curr_voterId } });
   }
 

@@ -3,11 +3,6 @@
 		<div class="d-flex justify-content-end mt-3">
 			<nz-select class="selectFilter" nzPlaceHolder="Select Social Media" [(ngModel)]="_currUser"
 				(nzFocus)="getSocialMedia()" (ngModelChange)="multipleAPICall()" nzShowSearch nzAllowClear>
-				<nz-option
-					*ngIf="userList?.length === 0"
-					[nzValue]="'https://www.facebook.com/dyadav.bhilai.official'"
-					[nzLabel]="'DYadav'"
-				></nz-option>
 				<nz-option *ngFor="let item of userList" [nzValue]="item?.id" [nzLabel]="item?.name">
 				</nz-option>
 			</nz-select>

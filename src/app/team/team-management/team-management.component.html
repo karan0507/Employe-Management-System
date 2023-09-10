@@ -166,6 +166,20 @@
                         </nz-option>
                     </nz-select>
                 </div>
+                <div class="d-flex align-items-start flex-column mb-3">
+                    <label>Status: </label>
+                    <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currStatus"
+                        (nzFocus)="searchStaticDataGlobalFunction('GlobalStatusMaster')"
+                        (keyup)="searchStaticDataGlobalFunction('GlobalStatusMaster',$event)" nzAllowClear
+                        nzPlaceHolder="Select Status">
+                        <nz-option *ngIf="isSelectLoader['GlobalStatusMaster']" nzDisabled nzCustomContent>
+                            <span nz-icon nzType="loading" class="loading-icon"></span>
+                            Loading Data...
+                        </nz-option>
+                        <nz-option *ngFor="let item of statusList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                        </nz-option>
+                    </nz-select>
+                </div>
 
                 <div class="d-flex align-items-start flex-column mb-3">
                     <label>Sector: </label>

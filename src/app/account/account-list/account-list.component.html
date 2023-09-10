@@ -126,7 +126,7 @@
             <span nz-icon nzType="close-circle" nzTheme="twotone" (click)="isFilters=false" class="cursor-pointer"></span>
         </div>
         <label>Social Media</label>
-        <nz-select nzShowSearch class="selectFilter mt-2 mb-3 mr-2 w-100" nzPlaceHolder="Select Social Media" [(ngModel)]="currSocialMedia" (ngModelChange)="getaccountList()" nzAllowClear>
+        <nz-select nzShowSearch class="selectFilter mt-2 mb-3 mr-2 w-100" nzPlaceHolder="Select Social Media" [(ngModel)]="currSocialMedia" nzAllowClear>
             <nz-option [nzValue]="'FACEBOOK'" [nzLabel]="'Facebook'">
             </nz-option>
             <nz-option [nzValue]="'TWITTER'" [nzLabel]="'Twitter'"></nz-option>
@@ -134,12 +134,18 @@
             </nz-option>
         </nz-select>
         <label>Link Type</label>
-        <nz-select nzShowSearch class="selectFilter mt-2 mb-3 mr-2 w-100" nzPlaceHolder="Select Link Type" [(ngModel)]="currLinkTpye" (ngModelChange)="getaccountList()" nzAllowClear>
+        <nz-select nzShowSearch class="selectFilter mt-2 mb-3 mr-2 w-100" nzPlaceHolder="Select Link Type" [(ngModel)]="currLinkTpye" nzAllowClear>
             <nz-option [nzValue]="'FOR'" [nzLabel]="'For'">
             </nz-option>
             <nz-option [nzValue]="'AGAINST'" [nzLabel]="'Against'">
             </nz-option>
         </nz-select>
+
+        <div class="d-flex justify-content-center mt-5 align-items-center">
+            <button nz-button nzType="primary" class="mr-3"
+                (click)="getaccountList()">Apply</button>
+            <button nz-button nzType="link" (click)="resetFilter()">Reset</button>
+        </div>
 
     </nz-drawer>
 </section>

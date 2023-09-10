@@ -15,6 +15,7 @@ export class TeamManagementComponent implements OnInit {
     "Lane":false,
     "Sector":false,
     "Assembly":false,
+    "GlobalStatusMaster":false
   }
 
 
@@ -30,6 +31,10 @@ export class TeamManagementComponent implements OnInit {
   _currWard: any;
   _currSector: any;
   _currLanguage: any;
+  _currStatus: any;
+  statusList = []
+
+
   constructor(private http: HttpService, private message: NzMessageService) { }
 
   ngOnInit(): void {
@@ -70,6 +75,10 @@ export class TeamManagementComponent implements OnInit {
     if (this._currStreet) {
       data['street'] = this._currStreet;
     }
+    if (this._currStatus) {
+      data['status'] = this._currStatus;
+    }
+    if(this._currStatus)
 
     if (this._currSearchValue) {
       data['search_param'] = this._currSearchValue;
@@ -132,6 +141,9 @@ export class TeamManagementComponent implements OnInit {
           }
           else if (event == 'Assembly') {
             this.assemblyList = res.data;
+          }
+          else if (event == 'GlobalStatusMaster') {
+            this.statusList = res.data;
           }
 
           this.isSelectLoader[event] = false;

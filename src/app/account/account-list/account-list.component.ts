@@ -84,6 +84,7 @@ export class AccountListComponent implements OnInit {
         this.api_loader['list'] = false
       }
     })
+    this.isFilters = false
   }
 
   // Table Dropdowns functions

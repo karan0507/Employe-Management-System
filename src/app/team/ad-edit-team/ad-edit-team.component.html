@@ -243,20 +243,25 @@
 <nz-modal [(nzVisible)]="isUpdateStatus" nzTitle="Update Status" (nzOnCancel)="isUpdateStatus = false;"
     (nzOnOk)="changeTaskStatus($event)">
     <ng-container *nzModalContent>
-        <div class="d-flex  justify-content-center align-items-center flex-column mb-5">
-
-            <div>
-                Select Status:
-                <nz-select nzShowSearch class="selectFilter mb-2 mx-3" [(ngModel)]="_curStatusId"
+        <div class="row mb-5">
+            <div class="col-md-3 d-flex justify-content-end p-0">
+                <span class="mt-2">
+                    Select Status:
+                </span>
+            </div>
+            <div class="col-md-9">
+                <nz-select nzShowSearch class="selectFilter mb-2 mx-3 w-100" [(ngModel)]="_curStatusId"
                     (nzFocus)="searchStaticDataGlobalFunction('UserStatus')"
                     nzAllowClear nzPlaceHolder="Select Status">
                     <nz-option *ngFor="let item of statusList" [nzValue]="item.id" [nzLabel]="item?.name">
                     </nz-option>
                 </nz-select>
             </div>
-            <div class="d-flex">
-                Remarks: <textarea rows="4" class="mx-3" nz-input [(ngModel)]="remarks" placeholder="Enter Remarks"></textarea>
-              
+            <div class="col-md-3 d-flex justify-content-end p-0">
+                Remarks:
+            </div>
+            <div class="col-md-9">
+                <textarea rows="4" class="mx-3" nz-input [(ngModel)]="remarks" placeholder="Enter Remarks"></textarea>             
             </div>
 
         </div>

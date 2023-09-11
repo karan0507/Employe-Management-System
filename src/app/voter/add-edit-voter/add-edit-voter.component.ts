@@ -171,7 +171,6 @@ export class AddEditVoterComponent implements OnInit {
     let url = this.isEdit == false ? this.http.addVoter(form_data) : this.http.editVoter(this.curr_voterId, form_data);
     url.subscribe((res: any) => {
       if (res.success) {
-        console.log(res)
         this.message.success(res.message);
         !this.isEdit ? this.router.navigate(['/voter']) : this.router.navigate(['/voter/view-profile'], { queryParams: { id: this.curr_voterId } })
         this.api_loading['button'] = false;

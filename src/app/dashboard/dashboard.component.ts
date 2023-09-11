@@ -47,7 +47,8 @@ export class DashboardComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this._currUser = 'https://www.facebook.com/dyadav.bhilai.official'
+        // this._currUser = 'https://www.facebook.com/dyadav.bhilai.official'
+        this.getSocialMedia()
         this.loadData(1);
         // this.getPostList();
         // this.getFollowerList()
@@ -68,9 +69,9 @@ export class DashboardComponent implements OnInit {
     multipleAPICall() {
         // console.log(this._currUser);
         
-        if(!this._currUser){
-            this._currUser = "https://www.facebook.com/dyadav.bhilai.official";
-        }
+        // if(!this._currUser){
+        //     this._currUser = "https://www.facebook.com/dyadav.bhilai.official";
+        // }
         this.getPostList();
         this.getFollowerList();
         this.getNegativeCount();
@@ -121,7 +122,7 @@ export class DashboardComponent implements OnInit {
         this.http.getAccountListt(data).subscribe((res:any)=>{
             if(res.success){
                 this.userList = res.data
-                this._currUser = this.globalService?.userData?.id
+                // this._currUser = this.globalService?.userData?.id
             }
         })
     }

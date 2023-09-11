@@ -109,7 +109,7 @@
     </div>
     <!-- </nz-card> -->
 
-    <div class="d-lg-flex d-none">
+    <div>
         <!-- <div class="d-flex jus"></div> -->
         <div class="row">
 
@@ -151,7 +151,9 @@
                                 <ng-container *ngFor="let data of votersList; index as i">
                                     <tr>
                                         <td [nzExpand]="expandSet.has(data.id)"
-                                            (nzExpandChange)="onExpandChange(data.id, $event, i)"></td>
+                                            (nzExpandChange)="onExpandChange(data.id, $event, i)"
+                                            class="mt-2"    
+                                        ></td>
                                         <td [nzChecked]="setOfCheckedId.has(data.id)"
                                             [nzDisabled]="data.disabled"
                                             (nzCheckedChange)="onItemChecked(data.id, $event)"></td>
@@ -169,7 +171,7 @@
                                         <td>{{data?.facebook_link || '-'}}</td>
                                         <td>{{data?.caste ? data?.caste : '-'}}</td>
                                         <td>{{data?.epic_no}}</td>
-                                        <td>{{data?.age + (data?.gender ? " / " + data?.gender : "")}} </td>
+                                        <td>{{data?.age + (data?.gender ? " / " + data?.gender : "/ -")}} </td>
                                         <td>
                                             <span nz-icon *ngIf="data?.is_benificary" nzType="check-circle"
                                                 class="text-success" nzTheme="outline"></span>
@@ -181,18 +183,18 @@
                                         </td>
                                         <td>{{data?.gali ? data?.gali : '-'}}</td>
                                         <td>{{data?.booth ? data?.booth : '-'}}</td>
-                                        <td>{{data?.part_no}}</td>
+                                        <td>{{data?.part_no || '-'}}</td>
                                         <td >
                                             <!-- <label *ngIf="data.section_name_en?.length > 18 ? data.section_name_hi?.length > 18 : ''" nz-tooltip
                                                 nzTooltipTitle="{{ data.stockist_name}}">{{
                                                 data.stockist_name | slice : 0:18}} <span
                                                     *ngIf="data.stockist_name?.length > 18">...</span></label> -->
                                             <label nz-tooltip [nzTooltipTitle]="data.stockist_name">
-                                                {{_currLanguage == 'en' ? (data?.section_name_en | slice : 0:18) :
-                                                ata?.section_name_hi}}
+                                                {{_currLanguage == 'en' ? (data?.section_name_en || '-' | slice : 0:18) :
+                                                ata?.section_name_hi || '-'}}
                                             </label>
                                         </td>
-                                        <td>{{_currLanguage == 'en' ? data?.section_no : data?.section_no}}</td>
+                                        <td>{{_currLanguage == 'en' ? data?.section_no || '-' : data?.section_no || '-'}}</td>
                                         <td nzRight>
                                             <div>
                                                 <a class="text-dark font-size-20" nz-dropdown [nzClickHide]="false"

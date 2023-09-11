@@ -260,6 +260,7 @@
 									(ngModelChange)="getCommentList()"
 									[nzPlaceHolder]="_currLanguage == 'en' ? 'Select Type' : 'प्रकार चुनें'"
 									class="w-100"
+									nzAllowClear
 								>
 									<nz-option
 										[nzValue]="'Reaction'"
@@ -292,7 +293,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<ng-container *ngIf="commentList !== 0">
+								<ng-container *ngIf="commentList?.length !== 0">
 									<tr *ngFor="let data of commentList; let i = index">
 										<!-- <td [nzExpand]="expandSet.has(data.id)"
 												(nzExpandChange)="onExpandChange(data.id, $event, i)"></td> -->
@@ -309,7 +310,7 @@
 										</td>
 									</tr>
 								</ng-container>
-								<ng-container *ngIf="commentList !== 0">
+								<ng-container *ngIf="commentList?.length !== 0">
 									<tr *ngFor="let data of emptyCommentList; index as i">
 										<!-- <td>{{data || '-'}}</td> -->
 										<td>{{commentList?.length + i + 1}}</td>

@@ -52,7 +52,7 @@
                 <div class="col-lg-6 col-12">
                     <nz-form-item>
                         <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
-                            'Mobile' : 'गतिमान'}}
+                            'Mobile Number' : 'मोबाइल नंबर'}}
                         </nz-form-label>
                         <nz-form-control [nzSm]="16" [nzXs]="24"
                             [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your Mobile' : 'कृपया अपना गतिमान दर्ज करें'">
@@ -66,12 +66,12 @@
                 <div class="col-lg-6 col-12">
                     <nz-form-item>
                         <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left" nzRequired>{{_currLanguage == 'en' ?
-                            'Caste' : 'लिंग'}}
+                            'Caste' : 'जाति'}}
                         </nz-form-label>
                         <nz-form-control [nzSm]="16" [nzXs]="24"
                             [nzErrorTip]="_currLanguage == 'en' ? 'Please enter your Caste' : 'कृपया अपनी जाति दर्ज करें'">
                             <input type="text"  nz-input formControlName="caste"
-                                [placeholder]="_currLanguage == 'en' ? 'Caste' : 'लिंग'" 
+                                [placeholder]="_currLanguage == 'en' ? 'Caste' : 'जाति'" 
                                 [readonly]="api_loading['button']"    
                             />
                         </nz-form-control>

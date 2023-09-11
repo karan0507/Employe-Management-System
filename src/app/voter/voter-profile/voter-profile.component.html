@@ -626,13 +626,16 @@
             <form [formGroup]="facebookForm" class="row">
                 <div class="col-12 mb-3">
                     <nz-form-item>
-                        <nz-form-label [nzSm]="8" [nzXs]="24" class=" text-left">{{_currLanguage == 'en' ?
+                        <nz-form-label [nzSm]="8" [nzXs]="24" class="text-left d-flex justify-content-end">
+                            <span>
+                                {{_currLanguage == 'en' ?
                             'Facebook link' : 'फेसबुक लिंक'}}   
+                            </span>
                         </nz-form-label>
                         <nz-form-control [nzSm]="16" [nzXs]="24"
                             [nzErrorTip]="facebookError">
                             <input type="text"  nz-input formControlName="facebook_link"
-                                [placeholder]="_currLanguage == 'en' ? 'Add facebook link' : 'फेसबुक लिंक डालो'" />
+                                [placeholder]="_currLanguage == 'en' ? 'Add facebook link' : 'फेसबुक लिंक डालो'" class="w-100"/>
                             <ng-template #facebookError let-control>
                                 <ng-container *ngIf="control.hasError('required')">
                                     {{_currLanguage == 'en' ? 'Please enter facebook link' : 'कृपया फेसबुक लिंक दर्ज करें'}}

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-12 col-12 mb-2 d-flex flex-wrap justify-content-end">
             <button (click)="isVisible = true" nz-button nzType="primary" nzSize="small">
-                Export
+                Import
             </button>
         </div>
     </div>
@@ -70,7 +70,7 @@
 
 <!-- export file -->
 <section *ngIf="isVisible">
-    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="'Export File'" [nzFooter]="null"
+    <nz-modal [(nzVisible)]="isVisible" [nzTitle]="'Import File'" [nzFooter]="null"
 		(nzOnCancel)="exportFileForm?.reset(); isVisible = false;">
 		<ng-container *nzModalContent>
             <form nz-form [formGroup]="exportFileForm">

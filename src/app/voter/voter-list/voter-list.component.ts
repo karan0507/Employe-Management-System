@@ -344,7 +344,7 @@ followUpList : any= []
       // console.log( moment(JSON.stringify(data?.followup_datetime)).format("HH:mm:ss"))
       this.followUpForm = this.fb.group({
         followup_datetime: [ '',   [Validators.required]],
-        activity_type: ['', [Validators.required]],
+        // activity_type: ['', [Validators.required]],
         task_type: ['', [Validators.required]],
         comments: ['', [Validators.required]]
       })
@@ -352,7 +352,7 @@ followUpList : any= []
       this.followUpForm = this.fb.group({
         followup_datetime: ['', [Validators.required]],
         followup_time : [null,[Validators.required]],
-        followup_type: [null, [Validators.required]],
+        // followup_type: [null, [Validators.required]],
         task_type: ['', [Validators.required]],
         comments: ['', [Validators.required]]
       })
@@ -404,7 +404,7 @@ followUpList : any= []
     let data = new FormData();
     data.append('voter_id' , JSON.stringify(Array.from(this.votersList_Array)))
    
-    this.currFormType == 'activity' ?   data.append('activity_type', this.followUpForm.get('activity_type').value) : data.append('followup_type', this.followUpForm.get('followup_type').value) ;
+    // this.currFormType == 'activity' ?   data.append('activity_type', this.followUpForm.get('activity_type').value) : data.append('followup_type', this.followUpForm.get('followup_type').value) ;
     data.append('comments', this.followUpForm.get('comments').value)
     data.append('task_type', this.followUpForm?.get('task_type')?.value)
     this.currFormType == 'activity' ? 

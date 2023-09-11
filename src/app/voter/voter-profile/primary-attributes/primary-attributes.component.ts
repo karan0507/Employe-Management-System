@@ -52,7 +52,9 @@ export class PrimaryAttributesComponent implements OnInit {
    
   }
 
+  isTagAdded: boolean = false
   addTagForAttribute(data, i){
+    this.isTagAdded = true
     this.attributeList[i]._isVisible = true;
     let param = {"voter_id":[this.voterId],"primary_attribute":data?.id, "tag":data?._currTagValue};
     this.http.addVoterTasg(param).subscribe((res:any)=>{
@@ -64,6 +66,7 @@ export class PrimaryAttributesComponent implements OnInit {
         this.message.error(res.message);
         this.attributeList[i]._isVisible = false;
       }
+      this.isTagAdded = false
     })
   }
 

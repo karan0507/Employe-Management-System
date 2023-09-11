@@ -67,7 +67,7 @@
                         <td nzWidth="4rem" *ngIf="page > 1">{{( (page-1) * globalPageSize) + (i+1)}}</td>
                         <td nzWidth="8rem" class="text-left">
                             <a [routerLink]="['/team-management/edit-team']" [queryParams]="{id:data.id}"> {{ _currLanguage == 'en' ?
-                                ((data?.first_name ? data?.first_name : ' ') + (data?.last_name ? ' ' + data?.last_name : '')) : data?.first_name + data?.last_name}}</a>
+                                ((data?.first_name ? data?.first_name : '-')  (data?.last_name ? ' ' + data?.last_name : ' -')) : data?.first_name +' '+ data?.last_name}}</a>
                         </td>
                         <td nzWidth="8rem">{{ data?.user_type?.name  ? data?.user_type?.name :
                             '-'}} </td>
@@ -163,6 +163,20 @@
                             Loading Data...
                         </nz-option>
                         <nz-option *ngFor="let item of wardList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
+                        </nz-option>
+                    </nz-select>
+                </div>
+                <div class="d-flex align-items-start flex-column mb-3">
+                    <label>Status: </label>
+                    <nz-select nzShowSearch class="selectFilter mb-2 mr-3" [(ngModel)]="_currStatus"
+                        (nzFocus)="searchStaticDataGlobalFunction('GlobalStatusMaster')"
+                        (keyup)="searchStaticDataGlobalFunction('GlobalStatusMaster',$event)" nzAllowClear
+                        nzPlaceHolder="Select Status">
+                        <nz-option *ngIf="isSelectLoader['GlobalStatusMaster']" nzDisabled nzCustomContent>
+                            <span nz-icon nzType="loading" class="loading-icon"></span>
+                            Loading Data...
+                        </nz-option>
+                        <nz-option *ngFor="let item of statusList" [nzValue]="item.id" [nzLabel]="item?.name?.en">
                         </nz-option>
                     </nz-select>
                 </div>

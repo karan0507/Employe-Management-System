@@ -5,7 +5,7 @@
             <img class="logo-fold" src="assets/images/logo/folded-logo-images.png" alt="Logo" style="height: 4.4rem">
         </a> -->
         <div>
-            {{isFolded ? 'CM' : 'Cadre Management'}}
+            {{isFolded ? (global?.globalUser?.name?.en | slice:0:2 | uppercase) || '-' : (global?.globalUser?.name?.en | titlecase) || '-'}}
         </div>
     </div>
     <div class="logo logo-white">

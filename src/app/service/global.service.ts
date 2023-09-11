@@ -20,6 +20,7 @@ export class GlobalService {
   api_call_loader: any = { 'selectLoader': false }
 
   userData: any = JSON.parse(localStorage.getItem('iyc_user_data'))
+  globalUser: any = JSON.parse(localStorage.getItem('global_account_data'))
 
   // Current App Nav;
   public globalNavValue = new BehaviorSubject<any>('');

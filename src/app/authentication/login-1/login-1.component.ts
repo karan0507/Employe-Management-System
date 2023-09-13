@@ -53,8 +53,8 @@ export class Login1Component {
 
   subDomainName : any;
   ngOnInit(): void {
-    let url = window.location.href;
-    // let url = "https://shksufiyan.CY.com"
+    // let url = window.location.href;
+    let url = "https://shksufiyan.CY.com"
     this.subDomainName = url.split('.');
     this.getSubDomain(this.subDomainName[0].replace(/^https:\/\//, ''));
     // console.log(this.active_route.snapshot.firstChild.url[0].path);
@@ -102,7 +102,7 @@ export class Login1Component {
     this.loginForm = this.fb.group({
       mobile_prefix: ['India', [Validators.required]],
       mobile: [null, [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{4}$')]],
-      full_name: ['', [Validators.required, Validators.minLength(3)]]
+      full_name: ['', [Validators.required, Validators.minLength(3), Validators.pattern(/^[a-zA-Z]*$/)]]
     });
 
     this.loginForm.controls['mobile'].valueChanges.subscribe(value => {

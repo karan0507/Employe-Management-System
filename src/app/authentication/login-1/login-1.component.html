@@ -81,18 +81,18 @@
                   </div>
                   <div class="col-md-12">
                     <nz-form-item>
-                      <nz-form-control [nzErrorTip]="loginPageContext?.login?.name_error">
+                      <nz-form-control [nzErrorTip]="nameError">
                         <nz-input-group [nzPrefix]="prefixUser">
                           <input type="text" nz-input formControlName="full_name"
                             [placeholder]="loginPageContext?.login?.placeholder_name">
                         </nz-input-group>
-                        <ng-template #globalError let-control>
+                        <ng-template #nameError let-control>
                           <ng-container *ngIf="control.hasError('required')">
                               Name is required
                           </ng-container>
-                          <ng-container *ngIf="control.hasError('minlength')">
+                          <!-- <ng-container *ngIf="control.hasError('minlength')">
                             Name can not be less than 3 letters 
-                          </ng-container>
+                          </ng-container> -->
                           <ng-container *ngIf="control.hasError('pattern')">
                             Please enter a valid name(Only letters allowed)
                           </ng-container>

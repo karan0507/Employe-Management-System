@@ -110,7 +110,7 @@ export class AddLeaderTaskComponent implements OnInit {
   createTask(data?) {
     this.taskForm = this.fb.group({
       task_type: [(data ? data?.model_name?.id : ''), [Validators.required]],
-      name: [(data ? (this._currLanguage == 'en' ? data?.name?.en : data?.name?.hi) : '')],
+      name: [(data ? (this._currLanguage == 'en' ? data?.name?.en : data?.name?.hi) : ''), [Validators.required]],
       discription: [(data ? (this._currLanguage == 'en' ? data?.discription?.en : data?.discription?.hi) : ''), [Validators.required]],
       internal_user: [data ? [data?.internal_user?.id] : [], [Validators.required]],
       voters: [data?.voters ? data?.voters : []],

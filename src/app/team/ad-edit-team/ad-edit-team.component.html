@@ -244,7 +244,7 @@
     (nzOnOk)="changeTaskStatus($event)">
     <ng-container *nzModalContent>
         <div class="row mb-5">
-            <div class="col-md-3 d-flex justify-content-end p-0">
+            <div class="col-md-3 d-flex justify-content-end">
                 <span class="mt-2">
                     Select Status:
                 </span>
@@ -257,8 +257,10 @@
                     </nz-option>
                 </nz-select>
             </div>
-            <div class="col-md-3 d-flex justify-content-end p-0">
-                Remarks:
+            <div class="col-md-3 d-flex ">
+                <span class="mt-auto mb-auto ml-2">
+                    Remarks:
+                </span>
             </div>
             <div class="col-md-9">
                 <textarea rows="4" class="mx-3" nz-input [(ngModel)]="remarks" placeholder="Enter Remarks"></textarea>             

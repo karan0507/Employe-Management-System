@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { GlobalService } from 'src/app/service/global.service';
 import { HttpService } from 'src/app/service/http.service';
 
 @Component({
@@ -20,7 +21,9 @@ export class AddLeaderTaskComponent implements OnInit {
   isEdit: boolean = false;
   api_loading = { card: false, button: false }
   constructor(private fb: FormBuilder, private router: Router, private acRoute: ActivatedRoute, private message: NzMessageService,
-    private http: HttpService, private modal: NzModalService) { }
+    private http: HttpService, private modal: NzModalService,
+    public globalService: GlobalService  
+  ) { }
 
   ngOnInit(): void {
     this._currLanguage = localStorage.getItem("appLanguage") || 'en';
@@ -109,7 +112,7 @@ export class AddLeaderTaskComponent implements OnInit {
 
   createTask(data?) {
     this.taskForm = this.fb.group({
-      task_type: [(data ? data?.model_name?.id : ''), [Validators.required]],
+      task_type: [(data ? data?.model_name : ''), [Validators.required]],
       name: [(data ? (this._currLanguage == 'en' ? data?.name?.en : data?.name?.hi) : ''), [Validators.required]],
       discription: [(data ? (this._currLanguage == 'en' ? data?.discription?.en : data?.discription?.hi) : ''), [Validators.required]],
       internal_user: [data ? [data?.internal_user?.id] : [], [Validators.required]],
@@ -140,6 +143,7 @@ export class AddLeaderTaskComponent implements OnInit {
     this.api_loading['button'] = true;
     var form_data = new FormData();
     form_data.append('model_name', this.taskForm.get('task_type').value);
+    // form_data.append('task_type', this.taskForm.get('task_type').value);
     form_data.append('name', this.taskForm.get('name').value);
     form_data.append('discription', this.taskForm.get('discription').value);
     form_data.append('internal_user', JSON.stringify(this.taskForm.get('internal_user').value));
@@ -162,8 +166,8 @@ export class AddLeaderTaskComponent implements OnInit {
     if (this.taskForm.get('sector').value[0]) {
       form_data.append('sector', JSON.stringify(this.taskForm.get('sector').value));
     }
-    if (this.taskForm.get('places').value?.length > 0) {
-      form_data.append('place', this.taskForm.get('places').value ? this.taskForm.get('places').value : '');
+    if (this.taskForm.get('places').value[0]) {
+      form_data.append('place', JSON.stringify(this.taskForm.get('places').value));
     }
 
     // let url = this.isEdit == false ? this.http.addTasks(form_data) : this.http.editTasks(this._currTaskId, form_data);
@@ -334,13 +338,13 @@ export class AddLeaderTaskComponent implements OnInit {
     } else {
       param = { model_name: event }
       this.http.getMasterData(param).subscribe((res: any) => {
-        console.log(event);
+        // console.log(event);
 
         if (res.success) {
           if (event == 'Booth') {
 
             this.boothList = res.data;
-            console.log(res.data, this.boothList);
+            // console.log(res.data, this.boothList);
 
           } else if (event == 'Ward') {
             this.wardList = res.data;
